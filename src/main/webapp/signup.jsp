@@ -14,8 +14,8 @@
 </head>
 <style><%@include file="resources/css/style.css"%></style>
 <body>
-<section class="content section">
-    <div class="centered-content container">
+<section class="content section centered-content">
+    <div class="centered-content container form__container">
         <h2 class="title">Signup your account</h2>
         <form action="handles-login" enctype="multipart/form-data" method="post">
             <label for="username">Username</label>
@@ -29,11 +29,13 @@
             <label for="confirm-password">Confirm Password</label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
 
-            <input type="submit" class="filled-button button" value="Register">
+            <input type="submit" class="light-filled-button button" value="Register">
         </form>
         <p>If you already have an account. <span><a href="login.jsp">Login now</a> </span></p>
 
     </div>
 </section>
+
+<%@include file="footer.jsp"%>
 </body>
 </html>

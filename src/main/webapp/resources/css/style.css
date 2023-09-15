@@ -1,22 +1,23 @@
 root {
-    --primary-color: #FF7F2D;
-    --secondary-color: #AC8978;
-    --tertiary-color: #97925F;
-    --neutral-color: #998F8A;
-    --text-color: #FFDBCA;
-    --background-color: #201A17;
-    --container-color: #2B221D;
-    --filled-button-color: #5C4132;
+    --primary-color: #ff7f2d;
+    --secondary-color: #ac8978;
+    --tertiary-color: #97925f;
+    --neutral-color: #998f8a;
+    --text-color: #201a17;
+    --background-color: #fffbff;
+    --container-color: #faf1f2;
+    --light-filled-color: #ffdbca;
+    --dark-filled-color: #9d4400;
 }
 
 * {
     font-family: 'Roboto', sans-serif;
-    color: #FFDBCA;
+    color: #201a17;
 }
 
 body {
     margin: 4rem 2rem 1rem 2rem;
-    background-color: #201A17;
+    background-color: #fffbff;
 }
 
 /* Top navigation bar */
@@ -30,9 +31,9 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px #FFDBCA solid;
+    border-bottom: 1px #ac8978 solid;
     z-index: 999;
-    background-color: #201A17;
+    background-color: #fffbff;
 }
 
 .top-nav > ul {
@@ -46,51 +47,75 @@ body {
 }
 
 .top-nav > ul > li {
-    margin: 0 2rem;
+    margin: 0 1rem;
 }
 
 .top-nav > ul > li > a {
+
     font-weight: 400;
     text-decoration: none;
     transition: 0.2s ease-out;
 }
 
+#already-login-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Footer */
+.footer {
+    background-color: #faf1f2;
+    border-radius: 1.875rem;
+    padding: 3rem;
+}
+
+.section.footer {
+    margin-top: 5rem;
+}
+
 /* Button */
 .button {
-    padding: 0.25rem 1rem;
+    padding: 0.5rem 1.25rem;
     transition: 0.2s ease-out;
 }
 
 .button:hover {
     letter-spacing: 2px;
+    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
 }
 
 .nav-button {
-    color: #FF7F2D;
+    color: #201a17;
     border-radius: 100px;
 }
 
 .nav-button:hover {
-    color: #FFDBCA;
-    background-color: #5C4132;
+    /*color: #201a17;*/
+    /*background-color: #ffdbca;*/
     border-radius: 100px;
     transition: 0.3s ease-out;
     letter-spacing: 2px;
-    font-weight: 500;
 }
 
-.filled-button {
-    background-color: #5C4132;
-    color: #FFDBCA;
+.light-filled-button {
+    background-color: #ffdbca;
+    color: #201a17;
+}
+
+.dark-filled-button {
+    background-color: #9d4400;
+    color: #fff;
 }
 
 /* Container */
 .container {
-    width: auto;
     height: auto;
     display: flex;
     flex-direction: column;
-    background-color: #2B221D;
+    background-color: #faf1f2;
     border-radius: 1.875rem;
     padding: 2rem
 }
@@ -102,9 +127,23 @@ body {
     justify-content: center;
 }
 
+/* Wrapper */
+.two-col__wrapper {
+    width: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2rem;
+    justify-items: center;
+}
+
+
 /* Form */
+.form__container {
+    width: calc(45vw);
+}
+
 form {
-    width: calc(40vw);
+    width: calc(30vw);
     height: auto;
     padding: 2rem;
     display: flex;
@@ -113,6 +152,7 @@ form {
 
 label {
     font-size: 1rem;
+    font-weight: 500;
 }
 
 input {
@@ -120,7 +160,7 @@ input {
     position: relative;
     border-radius: 0.5rem;
     height: 3rem;
-    color: #FFDBCA;
+    color: #201a17;
     margin: 0.5rem 0;
     transition: 0.2s ease-out;
 }
@@ -128,20 +168,26 @@ input {
 /*input[type="text"], input[type="password"], input[type="email"] {*/
 input:not([type="submit"]) {
     padding: 0 1.5rem;
-    background-color: #201A17 !important;
-    border: 2px #FFDBCA solid;
+    background-color: #faf1f2 !important;
+    border: 2px #201a17 solid;
 }
 
 /*input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {*/
 input:not([type="submit"]):focus {
     outline: none;
-    border: 2px #FF7F2D solid;
+    border: 2px #9d4400 solid;
     transition: 0.3s ease-out;
 }
 
 
 input[type="submit"] {
     border: none;
+}
+
+input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: #9d4400;
+    color: #fff;
 }
 
 /* headings */
@@ -157,17 +203,41 @@ h2 {
 
 a {
     font-weight: 500;
+    transition: 0.3s ease-out;
+}
+
+a:hover {
+    color: #9d4400;
+    transition: 0.3s ease-out;
 }
 
 /* custom scroll bar */
 ::-webkit-scrollbar {
     width: 0.5rem;
 }
+
 ::-webkit-scrollbar-track {
-    background: #201A17;
+    background: #fffbff;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #FF7F2D;
+    background: #9d4400;
     border-radius: 50px;
 }
 
+#link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#link-list > li {
+    margin: 0.5rem 0;
+}
+
+#link-list > li > a {
+    text-decoration: none;
+    color: #201a17;
+    transition: 0.3s ease-out;
+    font-weight: 400;
+}
