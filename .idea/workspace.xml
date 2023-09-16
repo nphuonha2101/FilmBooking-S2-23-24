@@ -9,18 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- adding forgot and reset password pages&#10;- create already login navigation bar">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesBackToTop.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSlideShow.js" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/IUserDAOServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/UserDAOServicesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesTab.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/footer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/forgot.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/forgot.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/head-links.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/head-links.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/not-login-nav.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/not-login-nav.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/signup.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,9 +34,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Class" />
         <option value="Jsp File" />
         <option value="JavaScript File" />
+        <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -76,6 +80,7 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -185,7 +190,8 @@
       <workItem from="1694704983433" duration="6484000" />
       <workItem from="1694747115721" duration="9278000" />
       <workItem from="1694786413624" duration="3890000" />
-      <workItem from="1694820335234" duration="8183000" />
+      <workItem from="1694820335234" duration="8856000" />
+      <workItem from="1694832039074" duration="12266000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -219,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694789950576</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar">
+      <option name="closed" value="true" />
+      <created>1694828966018</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1694828966018</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,6 +254,7 @@
     <MESSAGE value="add navigation bar when not login" />
     <MESSAGE value="add signup page" />
     <MESSAGE value="- adding forgot and reset password pages&#10;- create already login navigation bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding forgot and reset password pages&#10;- create already login navigation bar" />
+    <MESSAGE value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
   </component>
 </project>

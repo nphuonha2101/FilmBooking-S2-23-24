@@ -9,25 +9,30 @@
 <html>
 <head>
     <title>Signup your account</title>
-    <%@include file="head-links.jsp"%>
+    <%@include file="head-links.jsp" %>
     <%@include file="not-login-nav.jsp" %>
 </head>
-<style><%@include file="resources/css/style.css"%></style>
+<style>
+    <%@include file="resources/css/style.css" %>
+</style>
 <body>
 <section class="content section centered-content">
     <div class="centered-content container form__container">
         <h2 class="title">Signup your account</h2>
-        <form action="handles-login" enctype="multipart/form-data" method="post">
-            <label for="username">Username</label>
+        <span class="successful-span">${successfulMessage}</span>
+        <form action="handles-signup" method="post">
+            <label for="username">Username</label> <span class="error-span">${usernameError}</span>
             <input type="text" name="username" id="username" placeholder="Username" required>
-            <label for="user-full-name">Full name</label>
+            <label for="user-full-name">Full name</label> <span class="error-span">${fullnameError}</span>
             <input type="text" name="user-full-name" id="user-full-name" placeholder="Full name" required>
-            <label for="email">Email</label>
+            <label for="email">Email</label> <span class="error-span">${emailError}</span>
             <input type="email" name="email" id="email" placeholder="Email" required>
-            <label for="password">Password</label>
+            <label for="password">Password</label> <span class="error-span">${passwordError}</span>
             <input type="password" name="password" id="password" placeholder="Password" required>
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required>
+            <label for="confirm-password">Confirm Password</label> <span
+                class="error-span">${confirmPasswordError}</span>
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
+                   required>
 
             <input type="submit" class="light-filled-button button" value="Register">
         </form>
@@ -36,6 +41,6 @@
     </div>
 </section>
 
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>
 </body>
 </html>

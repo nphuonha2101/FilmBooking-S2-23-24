@@ -11,10 +11,10 @@
 <section class="content section centered-content">
     <div class="centered-content container form__container">
         <h2 class="title">Login to your account</h2>
-        <form action="handles-login" enctype="multipart/form-data" method="post">
-            <label for="username">Username</label>
+        <form action="handles-login" method="post">
+            <label for="username">Username</label> <span class="error-span">${usernameError}</span>
             <input type="text" name="username" id="username" placeholder="Username" required>
-            <label for="password">Password</label>
+            <label for="password">Password</label> <span class="error-span">${passwordError}</span>
             <input type="password" name="password" id="password" placeholder="Password" required>
             <input type="submit" class="light-filled-button button" value="Login">
         </form>

@@ -35,4 +35,6 @@ expand_less</span>
 <!-- JavaScript -->
 <script type="text/javascript">
     <%@include file="resources/js/handlesBackToTop.js"%>
+    <%@include file="resources/js/handlesSlideShow.js"%>
+    <%@include file="resources/js/handlesTab.js"%>
 </script>

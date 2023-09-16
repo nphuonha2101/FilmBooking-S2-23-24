@@ -7,7 +7,7 @@
 --%>
 <nav class="top-nav" id="already-login-nav">
     <div class="centered-content wrapper" id="left-welcome">
-        <p>Welcome ${welcome-user}</p>
+        <p>Welcome ${welcomeUser}</p>
     </div>
     <ul id="centered-nav-links">
         <li><a class="nav-button button" href="login.jsp">Film Project</a></li>

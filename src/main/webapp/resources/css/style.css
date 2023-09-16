@@ -332,6 +332,80 @@ a:hover {
 
 /* Animations */
 @keyframes fade {
-    from {opacity: 0.4}
-    to {opacity: 1}
+    from {
+        opacity: 0.4
+    }
+    to {
+        opacity: 1
+    }
 }
+
+/* Tab */
+.tab {
+    width: auto;
+    margin: 2rem
+}
+
+.tab-headers {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 4rem;
+    color: #ffdbca;
+    border-radius: 100px;
+    padding: 0;
+
+}
+
+.tab-headers > * {
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 100px;
+    transition: 0.3s ease-out;
+    /*margin: 0 0.25rem;*/
+}
+
+.tab-headers > *:hover, .tab-headers > *.active {
+    background-color: #ffdbca;
+    color: #201a17;
+    transition: 0.3s ease-out;
+}
+
+.tab-contents {
+    width: 100%;
+}
+
+.tab-content {
+    width: auto;
+    display: none;
+    padding: 1rem;
+    background-color: #faf1f2;
+    border-radius: 10px;
+
+    animation-name: fade;
+    animation-duration: 0.4s;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/*  Span */
+.error-span {
+    color: crimson;
+    font-size: 0.8rem;
+}
+
+.successful-span {
+    display: flex;
+    align-items: center;
+    color: limegreen;
+    font-size: 1rem;
+}
+
+.successful-span > * {
+    color: limegreen;
+    font-size: 1rem;
+}
+
