@@ -19,9 +19,20 @@
             <ul id="link-list">
                 <li><a href="https://github.com/conmuaxadan" target="_blank">Doan Quoc Dang's GitHub</a></li>
                 <li><a href="https://github.com/nphuonha2101" target="_blank">Nguyen Phuong Nha's GitHub</a></li>
-                <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">Project's-
+                <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">Project's
                     GitHub Link</a></li>
             </ul>
         </div>
     </div>
 </section>
+
+<!-- Back to Top -->
+<div id="back-to-top" class="back-to-top light-filled-button button">
+   <span class="material-symbols-outlined">
+expand_less</span>
+</div>
+
+<!-- JavaScript -->
+<script type="text/javascript">
+    <%@include file="resources/js/handlesBackToTop.js"%>
+</script>

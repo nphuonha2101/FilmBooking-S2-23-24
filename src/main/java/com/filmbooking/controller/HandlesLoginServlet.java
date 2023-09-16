@@ -2,6 +2,7 @@ package com.filmbooking.controller;
 
 import java.io.*;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
@@ -18,6 +19,8 @@ public class HandlesLoginServlet extends HttpServlet {
 
 
     }
+
+
     public void destroy() {
     }
 }

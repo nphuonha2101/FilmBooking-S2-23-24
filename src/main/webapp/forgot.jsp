@@ -17,7 +17,7 @@
 <section class="content section centered-content">
     <div class="centered-content container form__container">
         <h2 class="title">Forgot password</h2>
-        <p style="text-align: center">Forgot your password? No problem, keeping your smile and we will get your account back^^</p>
+        <p style="text-align: center">Forgot your password? No problem, keeping your smile, and we'll get your account back ^^</p>
         <form action="handles-login" enctype="multipart/form-data" method="post">
             <label for="username">Username</label>
             <input type="text" name="username" id="username" placeholder="Username" required>
