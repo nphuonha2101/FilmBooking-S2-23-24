@@ -9,20 +9,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/IUserDAOServices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/UserDAOServicesImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/admin.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesTab.js" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/FilmDAOServicesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/IFilmDAOServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesForgotPassServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLogoutServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesResetPassServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/RenderFilmsServlet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/IUserDAOServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/IUserDAOServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/UserDAOServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/UserDAOServicesImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/footer.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/forgot.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/forgot.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/head-links.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/head-links.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/login.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/reset-password.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/reset-password.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesBackToTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesBackToTop.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/signup.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +53,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JspContextManager">
+    <jsp-to-context jsp-file="file://$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" context-file="file://$PROJECT_DIR$/src/main/webapp/index.jsp" />
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
@@ -82,11 +95,18 @@
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp" />
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\WEB-INF" />
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\WEB-INF\jsp" />
       <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\resources" />
     </key>
   </component>
@@ -191,7 +211,10 @@
       <workItem from="1694747115721" duration="9278000" />
       <workItem from="1694786413624" duration="3890000" />
       <workItem from="1694820335234" duration="8856000" />
-      <workItem from="1694832039074" duration="12266000" />
+      <workItem from="1694832039074" duration="12646000" />
+      <workItem from="1694874465352" duration="7269000" />
+      <workItem from="1694912775273" duration="2695000" />
+      <workItem from="1694921371346" duration="10838000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -233,7 +256,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694828966018</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database">
+      <option name="closed" value="true" />
+      <created>1694865766502</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1694865766502</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,6 +286,8 @@
     <MESSAGE value="add signup page" />
     <MESSAGE value="- adding forgot and reset password pages&#10;- create already login navigation bar" />
     <MESSAGE value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
+    <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from databse" />
+    <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database" />
+    <option name="LAST_COMMIT_MESSAGE" value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database" />
   </component>
 </project>

@@ -2,9 +2,9 @@ package com.filmbooking.controller;
 
 import java.io.*;
 
-import com.filmbooking.model.IUserDAOServices;
+import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
-import com.filmbooking.model.UserDAOServicesImpl;
+import com.filmbooking.DAOservices.UserDAOServicesImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.*;
 public class HandlesLoginServlet extends HttpServlet {
 
     private IUserDAOServices userDAOServices;
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -36,20 +37,29 @@ public class HandlesLoginServlet extends HttpServlet {
             loginUser = userDAOServices.getUserByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
                 HttpSession userSession = request.getSession();
-                userSession.setAttribute("user", loginUser);
+                userSession.setAttribute("username", loginUser.getUsername());
+                userSession.setAttribute("userFullName", loginUser.getUserFullName());
+                userSession.setAttribute("userEmail", loginUser.getUserEmail());
+                userSession.setAttribute("accountRole", loginUser.getAccountRole());
 
-                request.setAttribute("welcomeUser", loginUser.getUserFullName());
+//                request.setAttribute("welcomeUser", loginUser.getUserFullName());
+                System.out.println(loginUser.getAccountRole());
+
+//                if (loginUser.getAccountRole().equalsIgnoreCase("admin")) {
+//                    request.setAttribute("moreContents", "<a href='admin.jsp'>Admin page</a>");
+//                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+//
+//                }
+
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
                 requestDispatcher.forward(request, response);
 
-            }
-            else {
+            } else {
                 request.setAttribute("passwordError", "Your password is wrong!");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
                 requestDispatcher.include(request, response);
             }
         }
-
 
 
     }

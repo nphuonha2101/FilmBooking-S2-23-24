@@ -1,6 +1,8 @@
-package com.filmbooking.model;
+package com.filmbooking.DAOservices;
 
+import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.databaseConfig.DatabaseServices;
+import com.filmbooking.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

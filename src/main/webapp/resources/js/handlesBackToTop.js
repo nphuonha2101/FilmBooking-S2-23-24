@@ -9,6 +9,8 @@ let handlesBacktoTop = {
         if (scrollY > 100) {
             backToTopElement.style.display = "block";
         } else {
+            backToTopElement.style.animationName = "fade";
+            backToTopElement.style.animationDuration = "0.75s";
             backToTopElement.style.display = "none";
         }
 

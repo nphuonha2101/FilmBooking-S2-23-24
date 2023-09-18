@@ -5,9 +5,11 @@
   Time: 9:14 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%--<%@ taglib prefix="c" uri="jakarta.tags.core" %>--%>
+
 <nav class="top-nav" id="already-login-nav">
     <div class="centered-content wrapper" id="left-welcome">
-        <p>Welcome ${welcomeUser}</p>
+        <p>Welcome ${sessionScope.userFullName} (${sessionScope.accountRole})</p>
     </div>
     <ul id="centered-nav-links">
         <li><a class="nav-button button" href="login.jsp">Film Project</a></li>
@@ -17,12 +19,18 @@
     <ul id="right-nav-link">
         <li>
             <div class="drop-down-menu">
-            <a>Feature</a>
+                <a>Feature</a>
                 <div class="drop-down-contents">
-                    <a>Registration history</a>
+                    <a class="drop-down-links">Registration history</a>
+                    <c:choose>
+                        <c:when test="${sessionScope.accountRole eq 'admin'}">
+                            <a class="drop-down-links" href="admin.jsp">Admin page</a>
+                        </c:when>
+                    </c:choose>
+
                 </div>
             </div>
         </li>
-        <li><a>Logout</a></li>
+        <li><a href="handles-logout">Logout</a></li>
     </ul>
 </nav>

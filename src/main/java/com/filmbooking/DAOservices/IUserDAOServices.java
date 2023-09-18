@@ -1,4 +1,6 @@
-package com.filmbooking.model;
+package com.filmbooking.DAOservices;
+
+import com.filmbooking.model.User;
 
 import java.util.List;
 

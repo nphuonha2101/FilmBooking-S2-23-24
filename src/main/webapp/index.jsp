@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.filmbooking.DAOservices.FilmDAOServicesImpl" %><%--
   Created by IntelliJ IDEA.
   User: NhaNguyen
   Date: 16-09-2023
@@ -21,38 +21,20 @@
     <div class="slides-show wrapper">
         <h1>Our new films: </h1>
         <div class="slides wrapper">
-            <!-- Card 1 -->
-            <div class="slide-cards container" id="card-1">
-                <h2>ABC1</h2>
-                <p>P.201</p>
-                <p>04:30</p>
-            </div>
+            <c:set var="filmList" value="<%=new FilmDAOServicesImpl().getAll()%>"/>
+            <c:forEach var="film" items="${filmList}" varStatus="loop">
+                <div class="slide-cards container" id="card-${loop.index}" onclick="">
 
-            <!-- Card 2 -->
-            <div class="slide-cards container" id="card-2">
-                <h2>ABC2</h2>
-                <p>P.201</p>
-                <p>04:30</p>
-            </div>
+                    <h2>${film.filmName}</h2>
+                    <p>${film.roomID}</p>
+                    <p>${film.price}</p>
+                    <form class="hidden-form" method="get">
+                        <input type="hidden" name="film-id" value="${film.filmID}">
+                        <input class="light-filled-button button" type="submit" value="Booking now">
+                    </form>
+                </div>
+            </c:forEach>
 
-            <!-- Card 1 -->
-            <div class="slide-cards container" id="card-3">
-                <h2>ABC3</h2>
-                <p>P.201</p>
-                <p>04:30</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="slide-cards container" id="card-4" onclick="">
-
-                <h2>ABC4</h2>
-                <p>P.201</p>
-                <p>04:30</p>
-                <form class="hidden-form" action="" method="get">
-                    <input type="hidden" name="film-id" value="F110">
-                    <input class="light-filled-button button" type="submit" value="Booking now">
-                </form>
-            </div>
         </div>
     </div>
 </section>

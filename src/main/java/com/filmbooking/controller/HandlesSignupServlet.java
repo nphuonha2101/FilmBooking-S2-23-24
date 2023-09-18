@@ -1,8 +1,8 @@
 package com.filmbooking.controller;
 
-import com.filmbooking.model.IUserDAOServices;
+import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
-import com.filmbooking.model.UserDAOServicesImpl;
+import com.filmbooking.DAOservices.UserDAOServicesImpl;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

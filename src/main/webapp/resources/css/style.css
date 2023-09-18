@@ -119,6 +119,10 @@ body {
     color: #fff;
 }
 
+.rounded-button {
+    border-radius: 10px;
+}
+
 /* Container */
 .container {
     height: auto;
@@ -281,18 +285,20 @@ a:hover {
     cursor: pointer;
 }
 
-/* Slides show */
 .slides {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
+    width: 100%;
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 0.5rem;
+    row-gap: 1rem;
 }
 
 .slide-cards {
     /*display:none;*/
     min-width: calc(18vw);
-    margin: 2rem;
-    max-width: calc(20vw);
+    margin: 0.5rem;
+    max-width: calc(22vw);
 }
 
 .slide-cards > * {
@@ -301,6 +307,7 @@ a:hover {
 
 /* Drop down menu */
 .drop-down-contents {
+    width: auto;
     display: none;
     padding: 1rem;
     background-color: #fffbff;
@@ -312,21 +319,23 @@ a:hover {
     animation-duration: 0.4s;
 }
 
-.drop-down-contents > a {
+.drop-down-links {
+    position: relative;
     padding: 0.5rem;
     text-decoration: none;
     border-radius: 5px;
     margin: 0.5rem;
 }
 
-.drop-down-contents > a:hover {
+.drop-down-links:hover {
     background-color: #ffdbca;
     color: #201a17;
 
 }
 
 .drop-down-menu:hover .drop-down-contents {
-    display: block;
+    display: flex;
+    flex-direction: column;
 
 }
 
