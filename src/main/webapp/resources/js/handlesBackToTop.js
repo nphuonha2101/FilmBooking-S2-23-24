@@ -1,18 +1,18 @@
 const $ = document.querySelector.bind(document);
 
-console.log("Test");
-
-let handlesBacktoTop = {
-    start: function() {
+let handlesBackToTop = {
+    start: function () {
         let backToTopElement = $("#back-to-top");
 
-        if (scrollY > 100) {
+        console.log(scrollY)
+
+        if (window.scrollY > 100) {
             backToTopElement.style.display = "block";
         } else {
-            backToTopElement.style.animationName = "fade";
-            backToTopElement.style.animationDuration = "0.75s";
             backToTopElement.style.display = "none";
         }
+        backToTopElement.style.animationName = "fade";
+        backToTopElement.style.animationDuration = "0.75s";
 
         backToTopElement.onclick = () => {
             window.scrollTo(0, 0);
@@ -21,4 +21,4 @@ let handlesBacktoTop = {
 
 }
 
-window.addEventListener("scroll", handlesBacktoTop.start)
+window.addEventListener("scroll", handlesBackToTop.start)

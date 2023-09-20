@@ -12,7 +12,6 @@
     <%@include file="head-links.jsp"%>
     <%@include file="not-login-nav.jsp" %>
 </head>
-<style><%@include file="resources/css/style.css"%></style>
 <body>
 <section class="content section centered-content">
     <div class="centered-content container form__container">
@@ -23,7 +22,7 @@
             <input type="password" name="new-password" id="new-password" placeholder="New password" required>
             <label for="confirm-new-password">Confirm new password</label> <span class="error-span" id="confirm-password-error">${confirmPasswordError}</span>
             <input type="password" name="confirm-new-password" id="confirm-new-password" placeholder="Confirm new password" required>
-            <input type="submit" class="light-filled-button button" value="Reset password">
+            <input type="submit" class="primary-filled-button button" value="Reset password">
         </form>
     <span>${additionElement}</span>
     </div>

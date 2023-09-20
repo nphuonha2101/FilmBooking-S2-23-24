@@ -63,9 +63,13 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
             preparedStatement.setString(4, film.getRoomID());
             preparedStatement.setString(5, film.getGenre());
 
+            databaseServices.disconnectDatabase();
             return preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+            databaseServices.disconnectDatabase();
         }
     }
 

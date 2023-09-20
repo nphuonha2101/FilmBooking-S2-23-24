@@ -51,8 +51,10 @@ public class HandlesLoginServlet extends HttpServlet {
 //
 //                }
 
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
-                requestDispatcher.forward(request, response);
+
+                response.sendRedirect("index.jsp");
+//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+//                requestDispatcher.forward(request, response);
 
             } else {
                 request.setAttribute("passwordError", "Your password is wrong!");

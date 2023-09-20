@@ -6,4 +6,9 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+    
+    <context-param>
+        <param-name>file-upload</param-name>
+        <param-value></param-value>
+    </context-param>
 </web-app>

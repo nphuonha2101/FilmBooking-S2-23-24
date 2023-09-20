@@ -21,8 +21,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         Connection connection = null;
 
         databaseServices.connectDatabase();
-        if (databaseServices.getConnection() != null)
-            connection = databaseServices.getConnection();
+        if (databaseServices.getConnection() != null) connection = databaseServices.getConnection();
 
         String queryGet = "SELECT * FROM user_info";
 
@@ -43,6 +42,8 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            databaseServices.disconnectDatabase();
         }
 
 
@@ -58,8 +59,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         userList.add(user);
 
         Connection connection = databaseServices.getConnection();
-        String queryInsert = "INSERT INTO user_info(username, user_fullname, user_email, user_password, user_role) " +
-                "VALUES(?, ?, ?, ?, ?)";
+        String queryInsert = "INSERT INTO user_info(username, user_fullname, user_email, user_password, user_role) " + "VALUES(?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = null;
         try {
@@ -73,14 +73,15 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             return preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            databaseServices.disconnectDatabase();
         }
 
     }
 
     @Override
     public User getUserByUsername(String username) {
-        for (User userInList : userList
-        ) {
+        for (User userInList : userList) {
             if (userInList.getUsername().equalsIgnoreCase(username)) {
                 return userInList;
             }
@@ -90,8 +91,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
 
     @Override
     public User getUserByEmail(String email) {
-        for (User userInList : userList
-        ) {
+        for (User userInList : userList) {
             if (userInList.getUserEmail().equalsIgnoreCase(email)) {
                 return userInList;
             }
@@ -113,6 +113,8 @@ public class UserDAOServicesImpl implements IUserDAOServices {
                 return preparedStatement.execute();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
+            } finally {
+                databaseServices.disconnectDatabase();
             }
 
         }
@@ -121,10 +123,8 @@ public class UserDAOServicesImpl implements IUserDAOServices {
 
     @Override
     public boolean changePassword(String username, String password) {
-        for (User userInList: userList
-             ) {
-            if (userInList.getUsername().equalsIgnoreCase(username))
-                userInList.setUserPassword(password);
+        for (User userInList : userList) {
+            if (userInList.getUsername().equalsIgnoreCase(username)) userInList.setUserPassword(password);
         }
 
         Connection connection = databaseServices.getConnection();
@@ -137,6 +137,8 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             return preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            databaseServices.disconnectDatabase();
         }
     }
 }
