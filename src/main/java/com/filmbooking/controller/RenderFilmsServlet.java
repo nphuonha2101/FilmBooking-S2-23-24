@@ -13,16 +13,16 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-//@WebServlet("/index.jsp")
+@WebServlet("/filmsData")
 public class RenderFilmsServlet extends HttpServlet {
 
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        IFilmDAOServices filmDAOServices = new FilmDAOServicesImpl();
-//
-//        List<Film> filmList = filmDAOServices.getAll();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("filmList", filmList);
-//        request.getRequestDispatcher("index.jsp").forward(request, response);
-//    }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        IFilmDAOServices filmDAOServices = new FilmDAOServicesImpl();
+
+        List<Film> filmList = filmDAOServices.getAll();
+
+        request.setAttribute("filmsData", filmList);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
 }

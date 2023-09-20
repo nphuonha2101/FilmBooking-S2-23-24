@@ -12,31 +12,32 @@
     <%@include file="head-links.jsp" %>
     <%@include file="already-login-nav.jsp" %>
 </head>
-<style>
-    <%@include file="resources/css/style.css" %>
-</style>
 <body>
 
-<section class="slides-show section">
-    <div class="slides-show wrapper">
-        <h1>Our new films: </h1>
-        <div class="slides wrapper">
-            <c:set var="filmList" value="<%=new FilmDAOServicesImpl().getAll()%>"/>
-            <c:forEach var="film" items="${filmList}" varStatus="loop">
-                <div class="slide-cards container" id="card-${loop.index}" onclick="">
+<section class="section">
+    <div class="wrapper">
+        <h1>Our new film: </h1>
+        <div class="grid-items wrapper">
+
+            <!-- create film cards -->
+            <c:set var="filmsData" value="<%= new FilmDAOServicesImpl().getAll()%>"/>
+            <c:forEach var="film" items="${filmsData}" varStatus="loop">
+                <div class="item-cards container" id="card-${loop.index}" onclick="">
 
                     <h2>${film.filmName}</h2>
-                    <p>${film.roomID}</p>
-                    <p>${film.price}</p>
-                    <form class="hidden-form" method="get">
-                        <input type="hidden" name="film-id" value="${film.filmID}">
-                        <input class="light-filled-button button" type="submit" value="Booking now">
+                    <p>Room: ${film.roomID}</p>
+                    <p>Ticket Price: ${film.price} VND/person</p>
+                    <form action="handles-data-modal" class="hidden-form" id="hidden-form" method="get">
+                        <input type="hidden" name="filmID" value="${film.filmID}">
                     </form>
+                        <button class="primary-filled-button button show-modal-button">Choose this film</button>
                 </div>
             </c:forEach>
 
         </div>
     </div>
+
+    <%@include file="register-modal.jsp"%>
 </section>
 
 <%@include file="footer.jsp" %>

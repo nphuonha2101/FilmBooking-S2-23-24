@@ -12,9 +12,6 @@
     <%@include file="head-links.jsp" %>
     <%@include file="not-login-nav.jsp" %>
 </head>
-<style>
-    <%@include file="resources/css/style.css" %>
-</style>
 <body>
 <section class="content section centered-content">
     <div class="centered-content container form__container">
@@ -29,14 +26,14 @@
             <input type="email" name="email" id="email" placeholder="Email" required>
             <label for="password">Password</label> <span class="error-span" id="password-error">${passwordError}</span>
             <input type="password" name="password" id="password" placeholder="Password" required>
-            <label for="confirm-password">Confirm Password</label> <span
+            <label for="confirm-password">Confirm password</label> <span
                 class="error-span" id="confirm-password-error">${confirmPasswordError}</span>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
                    required>
 
-            <input type="submit" class="light-filled-button button" value="Register">
+            <input type="submit" class="primary-filled-button button" value="Register">
         </form>
-        <p>If you already have an account. <span><a href="login.jsp">Login now</a> </span></p>
+        <p>If you already have an account. <span><a href="login.jsp">Login now!</a> </span></p>
 
     </div>
 </section>

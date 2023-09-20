@@ -17,9 +17,9 @@
         <div class="right-col__wrapper">
             <h2>Quick Links</h2>
             <ul id="link-list">
-                <li><a href="https://github.com/conmuaxadan" target="_blank">Doan Quoc Dang's GitHub</a></li>
-                <li><a href="https://github.com/nphuonha2101" target="_blank">Nguyen Phuong Nha's GitHub</a></li>
-                <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">Project's
+                <li><a href="https://github.com/conmuaxadan" target="_blank">-> Doan Quoc Dang's GitHub</a></li>
+                <li><a href="https://github.com/nphuonha2101" target="_blank">-> Nguyen Phuong Nha's GitHub</a></li>
+                <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">-> Project's
                     GitHub Link</a></li>
             </ul>
         </div>
@@ -33,8 +33,13 @@ expand_less</span>
 </div>
 
 <!-- JavaScript -->
-<script type="text/javascript">
-    <%@include file="resources/js/handlesBackToTop.js"%>
-    <%@include file="resources/js/handlesSlideShow.js"%>
-    <%@include file="resources/js/handlesTab.js"%>
-</script>
+<%--<script type="text/javascript">--%>
+<%--    <%@include file="resources/js/handlesBackToTop.js"%>--%>
+<%--    <%@include file="resources/js/handlesSlideShow.js"%>--%>
+<%--    <%@include file="resources/js/handlesTab.js"%>--%>
+<%--    <%@include file="resources/js/handlesShowModal.js"%>--%>
+<%--</script>--%>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesNavigationBar.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesBackToTop.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesShowModal.js'/>"></script>

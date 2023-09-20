@@ -5,12 +5,14 @@ public class Film {
     private String filmName;
     private double price;
     private String roomID;
+    private String genre;
 
-    public Film(String filmID, String filmName, double price, String roomID) {
+    public Film(String filmID, String filmName, double price, String roomID, String genre) {
         this.filmID = filmID;
         this.filmName = filmName;
         this.price = price;
         this.roomID = roomID;
+        this.genre = genre;
     }
 
     // ------ GETTER AND SETTER ------ //
@@ -45,5 +47,13 @@ public class Film {
 
     public void setRoomID(String roomID) {
         this.roomID = roomID;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

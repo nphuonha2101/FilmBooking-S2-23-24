@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAOServicesImpl implements IFilmDAOServices{
+public class FilmDAOServicesImpl implements IFilmDAOServices {
     private DatabaseServices databaseServices;
     private List<Film> filmList;
 
@@ -31,8 +31,9 @@ public class FilmDAOServicesImpl implements IFilmDAOServices{
                 String filmName = resultSet.getString("film_name");
                 double filmPrice = Double.parseDouble(resultSet.getString("film_price"));
                 String roomId = resultSet.getString("room_id");
+                String genre = resultSet.getString("genre");
 
-                Film film = new Film(filmID, filmName, filmPrice, roomId);
+                Film film = new Film(filmID, filmName, filmPrice, roomId, genre);
 
                 filmList.add(film);
             }
@@ -50,7 +51,26 @@ public class FilmDAOServicesImpl implements IFilmDAOServices{
 
     @Override
     public boolean saveFilm(Film film) {
-        return false;
+        filmList.add(film);
+
+        Connection connection = databaseServices.getConnection();
+        String queryAdd = "INSERT INTO film(film_id, film_name, film_price, room_id) VALUES(?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
+            preparedStatement.setString(1, film.getFilmID());
+            preparedStatement.setString(2, film.getFilmName());
+            preparedStatement.setString(3, String.valueOf(film.getPrice()));
+            preparedStatement.setString(4, film.getRoomID());
+            preparedStatement.setString(5, film.getGenre());
+
+            databaseServices.disconnectDatabase();
+            return preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            databaseServices.disconnectDatabase();
+        }
     }
 
     @Override

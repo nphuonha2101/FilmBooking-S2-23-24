@@ -6,14 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%--<%@ taglib prefix="c" uri="jakarta.tags.core" %>--%>
-
 <nav class="top-nav" id="already-login-nav">
     <div class="centered-content wrapper" id="left-welcome">
         <p>Welcome ${sessionScope.userFullName} (${sessionScope.accountRole})</p>
     </div>
     <ul id="centered-nav-links">
-        <li><a class="nav-button button" href="login.jsp">Film Project</a></li>
-        <li><a class="nav-button button" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
+        <li><a class="nav-links" href="login.jsp">Film Project</a></li>
+        <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
                target="_blank">GitHub</a></li>
     </ul>
     <ul id="right-nav-link">
