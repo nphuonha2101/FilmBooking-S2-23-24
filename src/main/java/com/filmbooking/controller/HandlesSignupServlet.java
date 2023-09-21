@@ -23,6 +23,15 @@ public class HandlesSignupServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("dynamicContents", "/views/pages/client/signup.jsp");
+
+        RequestDispatcher homeDispatcher = req.getRequestDispatcher("/views/layout/master.jsp");
+        homeDispatcher.forward(req, resp);
+
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String userFullName = request.getParameter("user-full-name");
@@ -45,8 +54,11 @@ public class HandlesSignupServlet extends HttpServlet {
         } else {
             request.setAttribute("confirmPasswordError", "Your confirm password doesn't match!");
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("signup.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/pages/client/signup.jsp");
         requestDispatcher.include(request, response);
+        request.setAttribute("dynamicContents", "/views/pages/client/signup.jsp");
+        RequestDispatcher masterDispatcher = request.getRequestDispatcher("/views/layout/master.jsp");
+        masterDispatcher.forward(request, response);
 
 
     }

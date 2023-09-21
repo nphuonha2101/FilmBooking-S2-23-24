@@ -1,13 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <%@include file="head-links.jsp" %>
-    <%@include file="not-login-nav.jsp" %>
-</head>
 
-<body>
 <section class="content section centered-content">
     <div class="centered-content container form__container">
         <h2 class="title">Login to your account</h2>
@@ -18,12 +10,8 @@
             <input type="password" name="password" id="password" placeholder="Password" required>
             <input type="submit" class="primary-filled-button button" value="Login">
         </form>
-        <p>If you don't have account? <span><a href="signup.jsp">Register now!</a> </span></p>
+        <p>If you don't have account? <span><a href="handles-signup">Register now!</a> </span></p>
         <p>Or <span><a href="forgot.jsp">you forgot your password?</a> </span></p>
 
     </div>
 </section>
-
-<%@include file="footer.jsp" %>
-</body>
-</html>

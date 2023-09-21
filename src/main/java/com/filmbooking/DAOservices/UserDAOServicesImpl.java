@@ -43,7 +43,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            databaseServices.disconnectDatabase();
+//            databaseServices.disconnectDatabase();
         }
 
 
@@ -74,7 +74,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            databaseServices.disconnectDatabase();
+//            databaseServices.disconnectDatabase();
         }
 
     }
@@ -114,7 +114,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
-                databaseServices.disconnectDatabase();
+//                databaseServices.disconnectDatabase();
             }
 
         }
@@ -138,7 +138,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            databaseServices.disconnectDatabase();
+//            databaseServices.disconnectDatabase();
         }
     }
 }

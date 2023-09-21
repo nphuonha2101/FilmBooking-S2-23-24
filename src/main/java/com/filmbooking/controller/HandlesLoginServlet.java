@@ -52,8 +52,8 @@ public class HandlesLoginServlet extends HttpServlet {
 //                }
 
 
-                response.sendRedirect("index.jsp");
-//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+                response.sendRedirect("home.jsp");
+//                RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
 //                requestDispatcher.forward(request, response);
 
             } else {
