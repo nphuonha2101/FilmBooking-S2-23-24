@@ -11,7 +11,7 @@
         <p>Welcome ${sessionScope.userFullName} (${sessionScope.accountRole})</p>
     </div>
     <ul id="centered-nav-links">
-        <li><a class="nav-links" href="login.jsp">Film Project</a></li>
+        <li><a class="nav-links" href="../../login.jsp">Film Project</a></li>
         <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
                target="_blank">GitHub</a></li>
     </ul>
@@ -23,7 +23,7 @@
                     <a class="drop-down-links">Registration history</a>
                     <c:choose>
                         <c:when test="${sessionScope.accountRole eq 'admin'}">
-                            <a class="drop-down-links" href="admin.jsp">Admin page</a>
+                            <a class="drop-down-links" href="../../admin.jsp">Admin page</a>
                         </c:when>
                     </c:choose>
 

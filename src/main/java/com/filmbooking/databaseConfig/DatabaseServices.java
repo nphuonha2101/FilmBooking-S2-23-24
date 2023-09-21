@@ -27,16 +27,14 @@ public class DatabaseServices {
         return false;
     }
 
-    public boolean disconnectDatabase() {
+    public void disconnectDatabase() {
         try {
             if (connection != null) {
                 connection.close();
-                return true;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return false;
     }
 
     public Connection getConnection() {

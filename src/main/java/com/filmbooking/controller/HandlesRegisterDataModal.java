@@ -18,6 +18,6 @@ public class HandlesRegisterDataModal extends HttpServlet {
         HttpSession session = req.getSession();
         session.setAttribute("filmID", filmId);
 
-        req.getRequestDispatcher("index.jsp").include(req, resp);
+        req.getRequestDispatcher("home.jsp").include(req, resp);
     }
 }
