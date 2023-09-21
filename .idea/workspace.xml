@@ -9,27 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- adding DAO Pattern for Film Services&#10;- adding render film to card&#10;- handling reset password, forgot password and logout&#10;- fixing some bugs about session handling">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HomeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- restruct project to separate dynamic content in only one layout">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesLoginServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesRegisterDataModal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesRegisterDataModal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/RenderFilmsServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/RenderFilmsServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/UserDAOServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/UserDAOServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/HandlesSignupServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/admin.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/admin.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/already-login-nav.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/already-login-nav.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/footer.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/forgot.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/forgot.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/head-links.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/head-links.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/not-login-nav.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/not-login-nav.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/reset-password.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/reset-password.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/signup.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/signup.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/reset-password.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/reset-password.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/login.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +207,7 @@
       <workItem from="1695206622890" duration="6283000" />
       <workItem from="1695217925886" duration="5910000" />
       <workItem from="1695248999044" duration="2391000" />
-      <workItem from="1695285331148" duration="2152000" />
+      <workItem from="1695285331148" duration="4399000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -278,7 +265,15 @@
       <option name="project" value="LOCAL" />
       <updated>1694935107818</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- restruct project to separate dynamic content in only one layout">
+      <option name="closed" value="true" />
+      <created>1695287689164</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1695287689164</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +298,8 @@
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from databse" />
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database" />
     <MESSAGE value="- adding DAO Pattern for Film Services&#10;- adding render film to card&#10;- handling reset password, forgot password and logout&#10;- fixing some bugs about session handling" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adding DAO Pattern for Film Services&#10;- adding render film to card&#10;- handling reset password, forgot password and logout&#10;- fixing some bugs about session handling" />
+    <MESSAGE value="- restruct project to separate dynamic content in only one layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="- restruct project to separate dynamic content in only one layout" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

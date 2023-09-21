@@ -1,3 +1,4 @@
+<%--<%@ taglib prefix="c" uri="jakarta.tags.core" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: QDang
@@ -10,7 +11,13 @@
 <head>
     <title>Film Booking</title>
     <jsp:include page="/views/components/head-links.jsp" />
-    <jsp:include page="${navigationComponent}" />
+    <c:when test="${not empty sessionScope.username}">
+        <jsp:include page="/views/components/already-login-nav.jsp"/>
+    </c:when>
+    <c:when test="${empty sessionScope.username}">
+        <jsp:include page="/views/components/not-login-nav.jsp"/>
+    </c:when>
+
 </head>
 <body>
 

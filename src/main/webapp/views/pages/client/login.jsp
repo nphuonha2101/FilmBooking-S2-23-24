@@ -10,7 +10,7 @@
             <input type="password" name="password" id="password" placeholder="Password" required>
             <input type="submit" class="primary-filled-button button" value="Login">
         </form>
-        <p>If you don't have account? <span><a href="signup.jsp">Register now!</a> </span></p>
+        <p>If you don't have account? <span><a href="handles-signup">Register now!</a> </span></p>
         <p>Or <span><a href="forgot.jsp">you forgot your password?</a> </span></p>
 
     </div>
