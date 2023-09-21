@@ -23,6 +23,6 @@ public class RenderFilmsServlet extends HttpServlet {
         List<Film> filmList = filmDAOServices.getAll();
 
         request.setAttribute("filmsData", filmList);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 }

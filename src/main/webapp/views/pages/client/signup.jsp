@@ -6,13 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Signup your account</title>
-    <%@include file="head-links.jsp" %>
-    <%@include file="not-login-nav.jsp" %>
-</head>
-<body>
 <section class="content section centered-content">
     <div class="centered-content container form__container">
         <h2 class="title">Signup your account</h2>
@@ -38,6 +31,3 @@
     </div>
 </section>
 
-<%@include file="footer.jsp" %>
-</body>
-</html>
