@@ -3,6 +3,7 @@ package com.filmbooking.controller;
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
 import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.ultils.ContextPathUltil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "handlesSignup", value = "/handles-signup")
-public class HandlesSignupServlet extends HttpServlet {
+@WebServlet(name = "signup", value = "/signup")
+public class SignupController extends HttpServlet {
 
     private IUserDAOServices userDAOServices;
 
@@ -24,9 +25,9 @@ public class HandlesSignupServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("dynamicContents", "/views/pages/client/signup.jsp");
+        req.setAttribute("dynamicContents", ContextPathUltil.getClientPagesPath("signup.jsp"));
 
-        RequestDispatcher homeDispatcher = req.getRequestDispatcher("/views/layout/master.jsp");
+        RequestDispatcher homeDispatcher = req.getRequestDispatcher(ContextPathUltil.getLayoutPath("master.jsp"));
         homeDispatcher.forward(req, resp);
 
     }
@@ -38,7 +39,6 @@ public class HandlesSignupServlet extends HttpServlet {
         String userEmail = request.getParameter("email");
         String userPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirm-password");
-
 
         userDAOServices = new UserDAOServicesImpl();
 
@@ -54,10 +54,11 @@ public class HandlesSignupServlet extends HttpServlet {
         } else {
             request.setAttribute("confirmPasswordError", "Your confirm password doesn't match!");
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/pages/client/signup.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher(ContextPathUltil.getClientPagesPath("signup.jsp"));
         requestDispatcher.include(request, response);
-        request.setAttribute("dynamicContents", "/views/pages/client/signup.jsp");
-        RequestDispatcher masterDispatcher = request.getRequestDispatcher("/views/layout/master.jsp");
+
+        request.setAttribute("dynamicContents", ContextPathUltil.getClientPagesPath("signup.jsp"));
+        RequestDispatcher masterDispatcher = request.getRequestDispatcher(ContextPathUltil.getLayoutPath("master.jsp"));
         masterDispatcher.forward(request, response);
 
 

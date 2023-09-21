@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(name = "handlesForgotPass", value = "/handles-forgot")
-public class HandlesForgotPassServlet extends HttpServlet {
+@WebServlet(name = "forgotPassword", value = "/forgot-password")
+public class ForgotPasswordController extends HttpServlet {
     private IUserDAOServices userDAOServices;
 
     @Override

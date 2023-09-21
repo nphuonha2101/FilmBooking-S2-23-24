@@ -5,19 +5,29 @@ import java.io.*;
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
 import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.ultils.ContextPathUltil;
+import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "handlesLogin", value = "/handles-login")
-public class HandlesLoginServlet extends HttpServlet {
+@WebServlet(name = "login", value = "/login")
+public class LoginController extends HttpServlet {
 
     private IUserDAOServices userDAOServices;
+
+    private String viewPath = ContextPathUltil.getClientPagesPath("login.jsp");
+    private String layoutPath = ContextPathUltil.getLayoutPath("master.jsp");
 
     @Override
     public void init() throws ServletException {
         super.init();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
     }
 
     @Override
@@ -31,8 +41,7 @@ public class HandlesLoginServlet extends HttpServlet {
 
         if (userDAOServices.getUserByUsername(username) == null) {
             request.setAttribute("usernameError", "Username is not existed!");
-            RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
-            requestDispatcher.include(request, response);
+            RenderViewUtils.updateView(request, response, viewPath);
         } else {
             loginUser = userDAOServices.getUserByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
@@ -51,16 +60,18 @@ public class HandlesLoginServlet extends HttpServlet {
 //
 //                }
 
-
-                response.sendRedirect("home.jsp");
+                String homeViewPath = ContextPathUltil.getClientPagesPath("home.jsp");
+                RenderViewUtils.renderViewToLayout(request, response, homeViewPath, layoutPath);
+//                response.sendRedirect("home.jsp");
 //                RequestDispatcher requestDispatcher = request.getRequestDispatcher("home.jsp");
 //                requestDispatcher.forward(request, response);
 
             } else {
                 request.setAttribute("passwordError", "Your password is wrong!");
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("login.jsp");
-                requestDispatcher.include(request, response);
+                RenderViewUtils.updateView(request, response, viewPath);
+                RenderViewUtils.renderViewToLayout(request, response, viewPath, layoutPath);
             }
+
         }
 
 

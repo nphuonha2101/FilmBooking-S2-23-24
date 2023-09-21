@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name="handlesResetPass", value = "/handles-reset-password")
-public class HandlesResetPassServlet extends HttpServlet {
+@WebServlet(name="resetPassword", value = "/reset-password")
+public class ResetPasswordController extends HttpServlet {
     private IUserDAOServices userDAOServices;
     @Override
     public void init() throws ServletException {
