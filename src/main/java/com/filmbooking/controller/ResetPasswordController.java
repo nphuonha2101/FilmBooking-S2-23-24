@@ -2,7 +2,8 @@ package com.filmbooking.controller;
 
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.DAOservices.UserDAOServicesImpl;
-import jakarta.servlet.RequestDispatcher;
+import com.filmbooking.ultils.ContextPathUtils;
+import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,26 +21,37 @@ public class ResetPasswordController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String newPassword = request.getParameter("new-password");
-        String confirmNewPassword = request.getParameter("confirm-new-password");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("pageTitle", "Film Booking - Đặt lại mật khẩu");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("reset-password.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String newPassword = req.getParameter("new-password");
+        String confirmNewPassword = req.getParameter("confirm-new-password");
 
         userDAOServices = new UserDAOServicesImpl();
 
-        String usernameForgot = (String) request.getSession().getAttribute("forgot-username");
+        String usernameForgot = (String) req.getSession().getAttribute("forgot-username");
 
         if (newPassword.equals(confirmNewPassword)) {
             userDAOServices.changePassword(usernameForgot, newPassword);
-            request.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
+            req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
                     "task_alt\n" +
-                    "</span> Your password was reset successfully!");
-            request.setAttribute("additionElement", "<a href='login.jsp'>Login now");
+                    "</span> Mật khẩu của bạn đã được đặt lại thành công");
+            req.setAttribute("additionElement", "<a class=\"links\" href='login'>Đăng nhập ngay</a>");
         } else {
-            request.setAttribute("confirmPasswordError", "Your confirm password is not match!");
+            req.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không khớp!");
         }
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("reset-password.jsp");
-        requestDispatcher.include(request, response);
+        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("reset-password.jsp"));
+
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("reset-password.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
 
     }
 }

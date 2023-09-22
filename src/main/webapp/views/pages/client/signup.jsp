@@ -6,27 +6,29 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <section class="content section centered-content">
     <div class="centered-content container form__container">
-        <h2 class="title">Signup your account</h2>
+        <h2 class="title">Đăng ký tài khoản</h2>
         <span class="successful-span">${successfulMessage}</span>
         <form action="signup" method="post">
             <label for="username">Username</label> <span class="error-span" id="username-error">${usernameError}</span>
             <input type="text" name="username" id="username" placeholder="Username" required>
-            <label for="user-full-name">Full name</label> <span class="error-span" id="fullname-error">${fullnameError}</span>
-            <input type="text" name="user-full-name" id="user-full-name" placeholder="Full name" required>
+            <label for="user-full-name">Họ và tên</label> <span class="error-span" id="fullname-error">${fullnameError}</span>
+            <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" required>
             <label for="email">Email</label> <span class="error-span" id="email-error">${emailError}</span>
             <input type="email" name="email" id="email" placeholder="Email" required>
-            <label for="password">Password</label> <span class="error-span" id="password-error">${passwordError}</span>
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <label for="confirm-password">Confirm password</label> <span
+            <label for="password">Mật khẩu</label> <span class="error-span" id="password-error">${passwordError}</span>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
+            <label for="confirm-password">Xác nhận mật khẩu</label> <span
                 class="error-span" id="confirm-password-error">${confirmPasswordError}</span>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password"
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Xác nhận mật khẩu"
                    required>
 
-            <input type="submit" class="primary-filled-button button" value="Register">
+            <input type="submit" class="primary-filled-button button" value="Đăng ký">
         </form>
-        <p>If you already have an account. <span><a href="login">Login now!</a> </span></p>
+        <p>Nếu bạn đã có tài khoản. <span><a class="links" href="login">Đăng nhập ngay!</a> </span></p>
 
     </div>
 </section>
