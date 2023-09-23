@@ -97,19 +97,8 @@
                     </div>
 
                     <div class="centered-content" id="film-add right">
-                        <form method="post">
-                            <label for="film-id">Film ID</label>
-                            <input type="text" placeholder="Film ID | Text" name="film-id" id="film-id" required/>
-                            <label for="film-name">Film Name</label>
-                            <input type="text" placeholder="Film Name | Text" name="film-name" id="film-name" required/>
-                            <label for="film-price">Ticket Price</label>
-                            <input type="number" placeholder="Film Price | Number" name="film-price" id="film-price"
-                                   required/>
-                            <label for="film-genre">Genre</label>
-                            <input type="text" placeholder="Film Genre | Text" name="film-genre" id="film-genre"
-                                   required/>
-                            <input type="submit" class="primary-filled-button button" value="Add Film">
-                        </form>
+                        <span class="successful-span">${successfulMessage}</span>
+                        <jsp:include page="/views/pages/admin/add-film.jsp"/>
                     </div>
 
                 </div>

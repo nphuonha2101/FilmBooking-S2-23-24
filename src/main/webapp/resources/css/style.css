@@ -296,12 +296,12 @@ input {
 /*input[type="text"], input[type="password"], input[type="email"] {*/
 input:not([type="submit"]) {
     padding: 0 1.5rem;
-    background-color: #fff !important;
+    background-color: #fff;
     border: 2px #222222 solid;
 }
 
 /*input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {*/
-input:not([type="submit"]):focus {
+input:not([type="submit"]):focus, input:not([type="file"]):focus {
     outline: none;
     border: 2px #0556f3 solid;
     transition: 0.3s ease-out;
@@ -319,6 +319,9 @@ input:not([type="sumbit"]):hover::placeholder {
     -moz-transition: 0.3s ease-out;
 }
 
+input[type="file"] {
+    display: none;
+}
 
 input[type="submit"] {
     border: none;
@@ -616,6 +619,21 @@ input[type="submit"]:hover {
     -moz-transition: 0.3s ease-out;
     background-color: #ccedff;
     border: 2px solid transparent;
+}
+
+/* Image Wrapper
+ */
+
+
+.img.wrapper {
+    width: 12rem;
+    height: 16rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid #2b324d;
+    border-radius: 10px;
+    background-size: contain;
+
 }
 
 

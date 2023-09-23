@@ -32,8 +32,9 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
                 double filmPrice = Double.parseDouble(resultSet.getString("film_price"));
                 String roomId = resultSet.getString("room_id");
                 String genre = resultSet.getString("genre");
+                String imgPath = resultSet.getString("img_path");
 
-                Film film = new Film(filmID, filmName, filmPrice, roomId, genre);
+                Film film = new Film(filmID, filmName, filmPrice, roomId, genre, imgPath);
 
                 filmList.add(film);
             }
@@ -54,7 +55,7 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
         filmList.add(film);
 
         Connection connection = databaseServices.getConnection();
-        String queryAdd = "INSERT INTO film(film_id, film_name, film_price, room_id) VALUES(?, ?, ?, ?, ?)";
+        String queryAdd = "INSERT INTO film(film_id, film_name, film_price, room_id,genre, img_path) VALUES(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
             preparedStatement.setString(1, film.getFilmID());
@@ -62,14 +63,14 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
             preparedStatement.setString(3, String.valueOf(film.getPrice()));
             preparedStatement.setString(4, film.getRoomID());
             preparedStatement.setString(5, film.getGenre());
+            preparedStatement.setString(6, film.getImgPath());
 
-            databaseServices.disconnectDatabase();
             return preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         finally {
-            databaseServices.disconnectDatabase();
+//            databaseServices.disconnectDatabase();
         }
     }
 
