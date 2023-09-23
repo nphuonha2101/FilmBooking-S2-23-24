@@ -68,24 +68,75 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
             return preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
 //            databaseServices.disconnectDatabase();
         }
     }
 
     @Override
     public Film getFilmByID(String filmID) {
+        for (Film filmInList : filmList
+        ) {
+            if (filmInList.getFilmID().equalsIgnoreCase(filmID))
+                return filmInList;
+        }
         return null;
     }
 
     @Override
     public List<Film> getFilmByName(String filmName) {
-        return null;
+        List<Film> result = new ArrayList<>();
+        for (Film filmInList : filmList
+        ) {
+            if (filmInList.getFilmName().startsWith(filmName))
+                result.add(filmInList);
+        }
+        return result;
     }
 
     @Override
     public boolean deleteFilm(Film film) {
+        if (filmList.contains(film)) {
+            filmList.remove(film);
+
+            Connection connection = databaseServices.getConnection();
+            String queryDelete = "DELETE FROM film WHERE film_id = ?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
+                preparedStatement.setString(1, film.getFilmID());
+
+                return preparedStatement.execute();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteFilmByFilmID(String filmID) {
+        Film foundedFilm = null;
+        for (Film filmInList : filmList
+        ) {
+            if (filmInList.getFilmID().equalsIgnoreCase(filmID)) {
+                foundedFilm = filmInList;
+                break;
+            }
+
+        }
+
+        if (foundedFilm != null) {
+            Connection connection = databaseServices.getConnection();
+            String queryDelete = "DELETE FROM film WHERE film_id = ?";
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
+                preparedStatement.setString(1, foundedFilm.getFilmID());
+
+                return preparedStatement.execute();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return false;
     }
 }

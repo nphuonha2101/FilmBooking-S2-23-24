@@ -20,6 +20,7 @@
                     <h2>${film.filmName}</h2>
                     <p>Phòng: ${film.roomID}</p>
                     <p>Giá vé: ${film.price} VNĐ/người</p>
+                    <p>Thể loại: ${film.genre}</p>
                     <form action="" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="filmID" value="${film.filmID}">
                     </form>

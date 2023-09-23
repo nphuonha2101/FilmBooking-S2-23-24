@@ -49,10 +49,6 @@ public class AddFilmController extends HttpServlet {
 //        if (saveSuccessful)
 //            req.setAttribute("successfulMessage", "Thêm phim " + "\"" + fileName + "\"" + " thành công!");
 
-        RenderViewUtils.updateView(req, resp, ContextPathUtils.getAdminPagesPath("admin.jsp"));
-
-        RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("admin.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+        resp.sendRedirect("admin");
     }
 }

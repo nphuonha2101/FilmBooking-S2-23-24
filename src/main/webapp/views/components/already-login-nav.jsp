@@ -14,7 +14,7 @@
         <p>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</p>
     </div>
     <ul id="centered-nav-links">
-        <li><a class="nav-links" href="home">Film Project</a></li>
+        <li><a class="nav-links" href="home">Trang chủ</a></li>
         <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
                target="_blank">GitHub</a></li>
     </ul>

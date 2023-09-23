@@ -6,10 +6,7 @@ const hiddenImgFileName = $("#film-img-path");
 console.log(filmImgElement, uploadElement)
 let handleImgInput = {
     start: () => {
-        uploadElement.addEventListener("change", handleImgInput.handleInput)
-
-
-
+        uploadElement.addEventListener("change", handleImgInput.handleInput);
 },
     handleInput : function() {
         let imgFile = this.files[0];

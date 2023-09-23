@@ -173,10 +173,10 @@ button {
     transition: 0.2s ease-out;
     -moz-transition: 0.2s ease-out;
     text-align: center;
+    text-decoration: none;
 }
 
 .button:hover {
-    letter-spacing: 2px;
     box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
 }
 
@@ -240,6 +240,13 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+}
+
+.row-align {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .wrapper {
@@ -378,8 +385,8 @@ input[type="submit"]:hover {
     position: fixed;
     bottom: 2rem;
     right: 2rem;
-    padding: 1rem;
-    border-radius: 20px;
+    padding: 0.5rem;
+    border-radius: 100px;
     animation-name: fade;
     animation-duration: 0.6s;
     -moz-animation-name: fade;
@@ -390,6 +397,15 @@ input[type="submit"]:hover {
 .back-to-top > * {
     cursor: pointer;
 }
+
+.back-to-top:hover {
+    background-color: #2b324d;
+    > * {
+      color: #ccedff;
+    }
+    transition: 0.3s ease-out;
+}
+
 
 .grid-items {
     width: 100%;
@@ -594,7 +610,7 @@ input[type="submit"]:hover {
 
 /* Slide */
 .slide {
-    height: calc(75vh);
+    height: calc(100vh);
     overflow-y: auto;
 }
 

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <section class="section">
     <div class="tab wrapper centered-content">
@@ -24,83 +25,30 @@
                 <div class="two-col__wrapper content">
                     <div class="centered-content wrapper" id="film-list left">
                         <div class="slide wrapper">
-                            <div class="film-card two-col__wrapper" id="card-1">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
+                            <c:forEach var="film" items="${filmsData}" varStatus="loop">
+                                <div class="film-card two-col__wrapper" id="card-${loop.index}">
+                                    <div class="row-align wrapper">
+                                        <h4>${film.filmName}</h4>
+                                        <p>${film.price}</p>
+                                        <p>${film.genre}</p>
+                                        <form class="hide hidden-form" method="get">
+                                            <input type="hidden" name="film-id_hidden"
+                                                   value="${film.filmID}"/>
+                                        </form>
+                                    </div>
+                                    <div class="wrapper align-center">
+                                        <button class="outlined-button rounded-button button submit-button delete-button" >Delete</button>
+                                        <button class="primary-filled-button rounded-button button submit-button edit-button" >Edit</button>
+                                    </div>
                                 </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-2">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-3">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-4">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-5">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-6">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
-
-                            <div class="film-card two-col__wrapper" id="card-7">
-                                <div class="wrapper">
-                                    <h2>Iron man</h2>
-                                </div>
-                                <div class="wrapper align-center">
-                                    <button class="outlined-button rounded-button button">Delete</button>
-                                    <button class="light-filled-button rounded-button button">Edit</button>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                     </div>
 
+
                     <div class="centered-content" id="film-add right">
-                        <span class="successful-span">${successfulMessage}</span>
                         <jsp:include page="/views/pages/admin/add-film.jsp"/>
                     </div>
-
                 </div>
             </div>
 
@@ -109,4 +57,6 @@
             </div>
         </div>
     </div>
+
+
 </section>

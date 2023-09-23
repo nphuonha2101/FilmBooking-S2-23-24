@@ -47,3 +47,4 @@ expand_less</span>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>
 <%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
