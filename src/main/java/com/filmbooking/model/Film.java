@@ -6,13 +6,15 @@ public class Film {
     private double price;
     private String roomID;
     private String genre;
+    private String imgPath;
 
-    public Film(String filmID, String filmName, double price, String roomID, String genre) {
+    public Film(String filmID, String filmName, double price, String roomID, String genre, String imgPath) {
         this.filmID = filmID;
         this.filmName = filmName;
         this.price = price;
         this.roomID = roomID;
         this.genre = genre;
+        this.imgPath = imgPath;
     }
 
     // ------ GETTER AND SETTER ------ //
@@ -55,5 +57,13 @@ public class Film {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public String getImgPath() {
+        return imgPath;
+    }
+
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
     }
 }

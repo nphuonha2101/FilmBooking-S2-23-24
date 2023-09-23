@@ -14,7 +14,14 @@ import java.io.IOException;
 public class AdminController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.setAttribute("pageTitle", "Film Booking - Trang Admin");
+//        req.setAttribute("formContentPage",
+//                ContextPathUtils.getAdminPagesPath("add-film.jsp"));
+//
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getAdminPagesPath("admin.jsp"));
+
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("admin.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

@@ -36,11 +36,6 @@ public class HomeController extends HttpServlet {
 
         }
         else {
-//            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("not-login-nav.jsp"));
-//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
-//            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-//            RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("login.jsp"),
-//                    ContextPathUtils.getLayoutPath("master.jsp"));
             resp.sendRedirect("login");
 
         }

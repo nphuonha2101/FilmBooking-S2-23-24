@@ -40,10 +40,10 @@ expand_less</span>
 <%--    <%@include file="resources/js/handlesBackToTop.js"%>--%>
 <%--    <%@include file="resources/js/handlesSlideShow.js"%>--%>
 <%--    <%@include file="resources/js/handlesTab.js"%>--%>
-<%--    <%@include file="resources/js/handlesShowModal.js"%>--%>
+<%--    <%@include file="resources/js/handlesUploadFilmImg.js"%>--%>
 <%--</script>--%>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesNavigationBar.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesBackToTop.js'/>"></script>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesShowModal.js'/>"></script>
+<%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>

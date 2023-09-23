@@ -33,8 +33,8 @@ public class LoginController extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String username = req.getParameter("username").trim();
+        String password = req.getParameter("password").trim();
 
         User loginUser = null;
 
@@ -63,10 +63,7 @@ public class LoginController extends HttpServlet {
                 RenderViewUtils.updateView(req, resp, viewPath);
                 RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
             }
-
         }
-
-
     }
 
 
