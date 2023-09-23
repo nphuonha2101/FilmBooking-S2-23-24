@@ -3,6 +3,8 @@ package com.filmbooking.controller;
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
 import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.ultils.ContextPathUtils;
+import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,28 +25,39 @@ public class ForgotPasswordController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("pageTitle", "Film Booking - Quên mật khẩu");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("forgot.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String email = req.getParameter("email");
 
         userDAOServices = new UserDAOServicesImpl();
 
         if (userDAOServices.getUserByUsername(username) == null) {
-            request.setAttribute("usernameError", "This username doesn't exist!");
+            req.setAttribute("usernameError", "Username không tồn tại!");
         } else {
             User foundUser = userDAOServices.getUserByUsername(username);
             if (foundUser.getUserEmail().equals(email)) {
-                HttpSession session = request.getSession();
+                HttpSession session = req.getSession();
                 session.setAttribute("forgot-username", foundUser.getUsername());
 
-                RequestDispatcher requestDispatcher = request.getRequestDispatcher("reset-password.jsp");
-                requestDispatcher.forward(request, response);
+                resp.sendRedirect("reset-password");
             } else {
-                request.setAttribute("emailError", "This email is not match with username!");
+                req.setAttribute("emailError", "Email này không khớp với username trong hệ thống");
+                RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
+                RenderViewUtils.renderViewToLayout(req, resp,
+                        ContextPathUtils.getClientPagesPath("forgot.jsp"),
+                        ContextPathUtils.getLayoutPath("master.jsp"));
             }
         }
 
-        request.getRequestDispatcher("forgot.jsp").include(request, response);
     }
 
     @Override

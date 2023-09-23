@@ -1,17 +1,18 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <section class="content section centered-content">
     <div class="centered-content container form__container">
-        <h2 class="title">Login to your account</h2>
+        <h2 class="title">Đăng nhập</h2>
         <form action="login" method="post">
             <label for="username">Username</label> <span class="error-span" id="username-error">${usernameError}</span>
             <input type="text" name="username" id="username" placeholder="Username" required>
-            <label for="password">Password</label> <span class="error-span" id="password-error">${passwordError}</span>
-            <input type="password" name="password" id="password" placeholder="Password" required>
-            <input type="submit" class="primary-filled-button button" value="Login">
+            <label for="password">Mật khẩu</label> <span class="error-span" id="password-error">${passwordError}</span>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
+            <input type="submit"  class="primary-filled-button button" value="Đăng nhập">
         </form>
-        <p>If you don't have account? <span><a href="signup">Register now!</a> </span></p>
-        <p>Or <span><a href="forgot.jsp">you forgot your password?</a> </span></p>
+        <p>Nếu bạn chưa có tài khoản <span><a class="links" href="signup">Đăng ký ngay!</a> </span></p>
+        <p>Hoặc <span><a class="links" href="forgot-password">bạn quên mật khẩu?</a> </span></p>
 
     </div>
 </section>

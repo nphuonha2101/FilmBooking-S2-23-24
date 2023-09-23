@@ -23,6 +23,7 @@ root {
 
 html {
     scroll-behavior: smooth;
+    transition: 0.3s ease-out;
 }
 
 * {
@@ -55,8 +56,24 @@ h4 {
     font-size: 1rem;
 }
 
+.title {
+    margin: 2rem auto;
+}
+
 a {
-    color: #222222;
+    cursor: pointer;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+}
+
+.links {
+    color: #0556f3;
+}
+
+.links:hover {
+    color: #03338f;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
 }
 
 
@@ -64,10 +81,14 @@ a {
     display: none;
     animation-name: fade;
     animation-duration: 0.5s;
+    -moz-animation: fade;
+    -moz-animation-duration: 0.5s;
 }
 
 .float {
     box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.3);
+    -moz-animation: fade;
+    -moz-animation-duration: 0.4s;
     animation-name: fade;
     animation-duration: 0.4s;
 }
@@ -85,6 +106,8 @@ a {
     justify-content: center;
     z-index: 9;
     background-color: #fff;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.4s;
     animation-name: fade;
     animation-duration: 0.4s;
 }
@@ -108,6 +131,7 @@ a {
     font-weight: 400;
     text-decoration: none;
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
 }
 
 #already-login-nav {
@@ -122,6 +146,7 @@ a {
 .footer {
     background-color: #2b324d;
     padding: 3rem;
+    margin-top: 5rem;
 }
 
 .footer > *, .footer > ul > li > a {
@@ -132,11 +157,7 @@ a {
     font-size: 1rem;
 }
 
-.section.footer {
-    margin-top: 5rem;
-}
-
-section:not(.section.footer) {
+section {
     margin: 2rem 2rem;
 }
 
@@ -150,6 +171,7 @@ button {
     border: none;
     padding: 0.5rem 1.25rem;
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
     text-align: center;
 }
 
@@ -170,6 +192,7 @@ button {
     background-color: #e6f5ff;
     text-decoration: dashed;
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
     /*letter-spacing: 2px;*/
 }
 
@@ -267,6 +290,7 @@ input {
     color: #222222;
     margin: 0.5rem 0;
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
 }
 
 /*input[type="text"], input[type="password"], input[type="email"] {*/
@@ -281,15 +305,18 @@ input:not([type="submit"]):focus {
     outline: none;
     border: 2px #0556f3 solid;
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
 }
 
 input:not([type="submit"])::placeholder {
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
 }
 
 input:not([type="sumbit"]):hover::placeholder {
     letter-spacing: 2px;
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
 }
 
 
@@ -303,26 +330,8 @@ input[type="submit"]:hover {
     color: #fff;
 }
 
-/* headings */
-h1 {
-    font-size: 2rem;
-    font-weight: 500;
-}
 
-h2 {
-    font-size: 1.5rem;
-    font-weight: 500;
-}
 
-a {
-    cursor: pointer;
-    transition: 0.3s ease-out;
-}
-
-a:hover {
-    color: #0556f3;
-    transition: 0.3s ease-out;
-}
 
 /*!* custom scroll bar *!*/
 /*::-webkit-scrollbar {*/
@@ -351,6 +360,7 @@ a:hover {
     text-decoration: none;
     color: #ccedff;
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
     font-weight: 400;
 }
 
@@ -369,6 +379,9 @@ a:hover {
     border-radius: 20px;
     animation-name: fade;
     animation-duration: 0.6s;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.6s;
+    border: 2px solid #2b324d;
 }
 
 .back-to-top > * {
@@ -400,7 +413,10 @@ a:hover {
     box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
     animation-name: fade;
     animation-duration: 0.4s;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.4s;
     transition: 0.4s ease-out;
+    -moz-transition: 0.4s ease-out;
     border: 2px solid #0556f3;
 }
 
@@ -416,6 +432,8 @@ a:hover {
     box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
     animation-name: fade;
     animation-duration: 0.4s;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.4s;
 }
 
 .drop-down-links {
@@ -424,11 +442,11 @@ a:hover {
     text-decoration: none;
     border-radius: 5px;
     margin: 0.5rem;
+    color: #222222;
 }
 
 .drop-down-links:hover {
     background-color: #e6f5ff;
-    color: #222222;
 
 }
 
@@ -481,6 +499,7 @@ a:hover {
     padding: 1rem;
     border-radius: 100px;
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
     /*margin: 0 0.25rem;*/
 }
 
@@ -488,12 +507,14 @@ a:hover {
     background-color: #0556f3;
     color: #fff;
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
 }
 
 .tab-headers > *.active {
     background-color: #03338f;
     color: #fff;
     transition: 0.2s ease-out;
+    -moz-transition: 0.2s ease-out;
 }
 
 .tab-contents {
@@ -505,6 +526,8 @@ a:hover {
     display: none;
     animation-name: fade;
     animation-duration: 0.4s;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.4s;
 }
 
 .tab-content.active {
@@ -543,6 +566,8 @@ a:hover {
     z-index: 99;
     animation-name: fade;
     animation-duration: 0.5s;
+    -moz-animation-name: fade;
+    -moz-animation-duration: 0.5s;
 }
 
 .modal-content {
@@ -588,6 +613,7 @@ a:hover {
 
 .film-card:hover {
     transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
     background-color: #ccedff;
     border: 2px solid transparent;
 }

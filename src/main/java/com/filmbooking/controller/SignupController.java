@@ -3,7 +3,8 @@ package com.filmbooking.controller;
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
 import com.filmbooking.DAOservices.UserDAOServicesImpl;
-import com.filmbooking.ultils.ContextPathUltil;
+import com.filmbooking.ultils.ContextPathUtils;
+import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,10 +26,10 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("dynamicContents", ContextPathUltil.getClientPagesPath("signup.jsp"));
-
-        RequestDispatcher homeDispatcher = req.getRequestDispatcher(ContextPathUltil.getLayoutPath("master.jsp"));
-        homeDispatcher.forward(req, resp);
+        req.setAttribute("pageTitle", "Film Booking - Đăng ký");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("signup.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
 
     }
 
@@ -43,23 +44,22 @@ public class SignupController extends HttpServlet {
         userDAOServices = new UserDAOServicesImpl();
 
         if (userDAOServices.getUserByUsername(username) != null) {
-            request.setAttribute("usernameError", "Username existed. Please choose other username!");
+            request.setAttribute("usernameError", "Username đã tồn tại! Vui lòng chọn một username khác.");
 
         } else if (userPassword.equals(confirmPassword)) {
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
             userDAOServices.saveUser(newUser);
             request.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
                     "task_alt </span>" +
-                    " Congratulation! Your account was created.");
+                    " Chúc mừng! Tài khoản của bạn đã được khởi tạo.");
         } else {
-            request.setAttribute("confirmPasswordError", "Your confirm password doesn't match!");
+            request.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không đúng!");
         }
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher(ContextPathUltil.getClientPagesPath("signup.jsp"));
-        requestDispatcher.include(request, response);
+        RenderViewUtils.updateView(request, response, ContextPathUtils.getClientPagesPath("signup.jsp"));
 
-        request.setAttribute("dynamicContents", ContextPathUltil.getClientPagesPath("signup.jsp"));
-        RequestDispatcher masterDispatcher = request.getRequestDispatcher(ContextPathUltil.getLayoutPath("master.jsp"));
-        masterDispatcher.forward(request, response);
+        RenderViewUtils.renderViewToLayout(request, response,
+                ContextPathUtils.getClientPagesPath("signup.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
 
 
     }

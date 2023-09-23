@@ -1,6 +1,6 @@
 package com.filmbooking.ultils;
 
-public class ContextPathUltil {
+public class ContextPathUtils {
     private static final String COMPONENT_PAGES_BASE_PATH = "/views/components/";
     private static final String CLIENT_PAGES_BASE_PATH = "/views/pages/client/";
     private static final String ADMIN_PAGES_BASE_PATH = "/views/pages/admin/";
