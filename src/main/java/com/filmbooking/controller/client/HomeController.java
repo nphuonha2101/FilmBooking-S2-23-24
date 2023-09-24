@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.client;
 
 import com.filmbooking.DAOservices.FilmDAOServicesImpl;
 import com.filmbooking.DAOservices.IFilmDAOServices;

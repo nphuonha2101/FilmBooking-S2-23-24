@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.admin;
 
 import com.filmbooking.DAOservices.FilmDAOServicesImpl;
 import com.filmbooking.DAOservices.IFilmDAOServices;
@@ -19,7 +19,6 @@ public class DeleteFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String filmID = req.getParameter("film-id_hidden");
-        ;
         System.out.println(filmID);
         filmDAOServices = new FilmDAOServicesImpl();
 

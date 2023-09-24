@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.client;
 
 import java.io.*;
 

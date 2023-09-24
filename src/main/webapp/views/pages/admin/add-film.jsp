@@ -12,7 +12,7 @@
 
 <form method="post" action="add-film" enctype="multipart/form-data">
     <div class="two-col__wrapper align-center">
-        <label for="upload-img" class="light-filled-button button rounded-button">Chọn ảnh</label>
+        <label for="upload-img" class="primary-filled-button button rounded-button">Chọn ảnh</label>
         <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
         <div class="img wrapper" id="film-img"></div>
     </div>

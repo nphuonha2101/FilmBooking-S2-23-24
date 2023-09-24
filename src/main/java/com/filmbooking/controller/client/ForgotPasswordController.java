@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.client;
 
 import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;

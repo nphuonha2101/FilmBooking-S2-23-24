@@ -46,4 +46,5 @@
     <jsp:include page="/views/components/footer.jsp"/>
 </footer>
 </body>
+<script type="text/javascript">${additionScript}</script>
 </html>

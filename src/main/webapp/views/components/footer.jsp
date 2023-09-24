@@ -37,14 +37,14 @@ expand_less</span>
 
 <!-- JavaScript -->
 <%--<script type="text/javascript">--%>
-<%--    <%@include file="resources/js/handlesBackToTop.js"%>--%>
+<%--    <%@include file="resources/js/utils.js"%>--%>
 <%--    <%@include file="resources/js/handlesSlideShow.js"%>--%>
 <%--    <%@include file="resources/js/handlesTab.js"%>--%>
 <%--    <%@include file="resources/js/handlesUploadFilmImg.js"%>--%>
 <%--</script>--%>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesNavigationBar.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesBackToTop.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesScrolls.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/utils.js'/>"></script>
+<%--<script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>--%>
 <%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>

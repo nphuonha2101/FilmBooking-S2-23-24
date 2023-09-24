@@ -93,6 +93,17 @@ a {
     animation-duration: 0.4s;
 }
 
+.float-tab-dynamic {
+    box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.3);
+    position: fixed;
+    animation-name: fade;
+    animation-duration: 0.4s;
+    top: 2rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 9;
+}
+
 /* Top navigation bar */
 .top-nav {
     position: fixed;
@@ -228,6 +239,7 @@ button {
     padding: 2rem
 }
 
+
 .centered-content {
     display: flex;
     flex-direction: column;
@@ -265,6 +277,14 @@ button {
     grid-gap: 2rem;
     justify-items: center;
 }
+
+/*.admin_two-col__wrapper {*/
+/*    display: grid;*/
+/*    grid-template-columns: 0.5fr 2fr;*/
+/*    grid-gap: 2rem;*/
+/*    justify-content: center;*/
+/*    align-items: normal;*/
+/*}*/
 
 
 /* Form */
@@ -341,8 +361,6 @@ input[type="submit"]:hover {
 }
 
 
-
-
 /*!* custom scroll bar *!*/
 /*::-webkit-scrollbar {*/
 /*    width: 0.5rem;*/
@@ -400,9 +418,11 @@ input[type="submit"]:hover {
 
 .back-to-top:hover {
     background-color: #2b324d;
+
     > * {
-      color: #ccedff;
+        color: #ccedff;
     }
+
     transition: 0.3s ease-out;
 }
 
@@ -507,9 +527,10 @@ input[type="submit"]:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 1rem 4rem;
+    margin: 2rem auto;
     border-radius: 100px;
     padding: 0;
+    width: fit-content;
 
 }
 

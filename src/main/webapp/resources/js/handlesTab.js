@@ -1,4 +1,4 @@
-const $$ = document.querySelectorAll.bind(document);
+
 
 let handlesTab = {
     start: function () {
