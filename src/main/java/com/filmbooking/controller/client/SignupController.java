@@ -44,7 +44,8 @@ public class SignupController extends HttpServlet {
         userDAOServices = new UserDAOServicesImpl();
 
         if (userDAOServices.getUserByUsername(username) != null) {
-            request.setAttribute("usernameError", "Username đã tồn tại! Vui lòng chọn một username khác.");
+            request.setAttribute("usernameError", "Tên người dùng đã tồn tại!" +
+                    " Vui lòng chọn một tên người dùng khác.");
 
         } else if (userPassword.equals(confirmPassword)) {
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");

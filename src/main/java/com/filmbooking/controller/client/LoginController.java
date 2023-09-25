@@ -41,7 +41,7 @@ public class LoginController extends HttpServlet {
         userDAOServices = new UserDAOServicesImpl();
 
         if (userDAOServices.getUserByUsername(username) == null) {
-            req.setAttribute("usernameError", "Username không tồn tại!");
+            req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
             RenderViewUtils.updateView(req, resp, viewPath);
             RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
         } else {

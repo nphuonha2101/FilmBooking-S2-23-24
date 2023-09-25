@@ -20,6 +20,18 @@ public class AdminController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        String username = (String) req.getSession().getAttribute("username");
+        String accountRole = (String) req.getSession().getAttribute("accountRole");
+
+        System.out.println(accountRole);
+        if (accountRole == null) {
+            resp.sendRedirect("login");
+            return;
+        }
+        if (!accountRole.equals("admin")) {
+            resp.sendRedirect("home");
+            return;
+        }
         resp.sendRedirect("film-management");
     }
 }

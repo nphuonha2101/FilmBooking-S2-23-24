@@ -5,7 +5,7 @@ public class ContextPathUtils {
     private static final String CLIENT_PAGES_BASE_PATH = "/views/pages/client/";
     private static final String ADMIN_PAGES_BASE_PATH = "/views/pages/admin/";
     private static final String LAYOUT_BASE_PATH = "/views/layout/";
-    private static final String UPLOAD_FOLDER_PATH = "resources/upload/";
+    private static final String UPLOAD_FOLDER_PATH = "D:/upload/";
 
     public static String getComponentPagesPath(String page) {
         return COMPONENT_PAGES_BASE_PATH + page;

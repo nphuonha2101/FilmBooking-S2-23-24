@@ -9,40 +9,40 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="/views/pages/admin/admin.jsp"/>
 
-<section class="section container centered-content">
+<section class="section container centered-vertical-content">
     <h1>${sectionTitle}</h1>
-    <div class="two-col__wrapper header centered-content">
-        <h3>Danh sách phim</h3>
-        <h3>Thêm phim</h3>
-    </div>
-    <div class="two-col__wrapper content">
-        <div class="centered-content wrapper" id="film-list left">
-            <div class="slide wrapper">
-                <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                    <div class="film-card two-col__wrapper" id="card-${loop.index}">
-                        <div class="row-align wrapper">
-                            <h4>${film.filmName}</h4>
-                            <p>${film.price}</p>
-                            <p>${film.genre}</p>
-                            <form class="hide hidden-form" method="get">
-                                <input type="hidden" name="film-id_hidden"
-                                       value="${film.filmID}"/>
-                            </form>
+
+
+    <div class="centered-vertical-content wrapper">
+        <div class="slide wrapper centered-vertical-content">
+            <c:forEach var="film" items="${filmsData}" varStatus="loop">
+                <div class="wide-card align-left" id="card-${loop.index}">
+                    <div class="centered-vertical-content wrapper">
+                        <div class="card-header align-left">
+                            <h3>${film.filmName}</h3>
                         </div>
-                        <div class="wrapper align-center">
+                        <div class="card-main align-left">
+                            <p class="description">${film.price}</p>
+                            <p class="description">${film.genre}</p>
+<%--                            <p>${film.releaseDate}</p>--%>
+                        </div>
+                        <div class="card-footer align-right">
                             <button class="outlined-button rounded-button button submit-button delete-button">Delete
                             </button>
                             <button class="primary-filled-button rounded-button button submit-button edit-button">Edit
                             </button>
                         </div>
+<%--                            <p>${film.description}</p>--%>
+                        <form class="hide hidden-form" method="get">
+                            <input type="hidden" name="film-id_hidden"
+                                   value="${film.filmID}"/>
+                        </form>
                     </div>
-                </c:forEach>
-            </div>
-        </div>
+                    <div class=>
 
-        <div class="centered-content" id="film-add right">
-            <span class="successful-span">${successfulMessage}</span>
-            <jsp:include page="/views/pages/admin/add-film.jsp"/>
+                    </div>
+                </div>
+            </c:forEach>
         </div>
     </div>
 </section>

@@ -35,9 +35,14 @@ body {
     background-color: #fff;
 }
 
+main {
+    margin: 0 2rem;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Fira Sans', sans-serif;
     font-weight: 700;
+    color: #222222;
 }
 
 h1 {
@@ -56,6 +61,10 @@ h4 {
     font-size: 1rem;
 }
 
+.description {
+    font-size: 0.9rem;
+}
+
 .title {
     margin: 2rem auto;
 }
@@ -66,6 +75,9 @@ a {
     -moz-transition: 0.3s ease-out;
 }
 
+button {
+    background-color: transparent;
+}
 .links {
     color: #0556f3;
 }
@@ -111,16 +123,17 @@ a {
     left: 0;
     width: 100%;
     height: 3rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
     z-index: 9;
     background-color: #fff;
     -moz-animation-name: fade;
     -moz-animation-duration: 0.4s;
     animation-name: fade;
     animation-duration: 0.4s;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    column-gap: 2rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .top-nav > ul {
@@ -145,13 +158,7 @@ a {
     -moz-transition: 0.2s ease-out;
 }
 
-#already-login-nav {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    column-gap: 2rem;
-    justify-content: center;
-    align-items: center;
-}
+
 
 /* Footer */
 .footer {
@@ -170,6 +177,10 @@ a {
 
 section {
     margin: 2rem 2rem;
+}
+
+.hero {
+    margin: 5rem 2rem;
 }
 
 /* Button */
@@ -209,12 +220,12 @@ button {
 
 .light-filled-button {
     background-color: #e6f5ff;
-    color: #222222;
+    color: #222222 !important;
 }
 
 .primary-filled-button {
     background-color: #0556f3;
-    color: #fff;
+    color: #fff !important;
 }
 
 .rounded-button {
@@ -233,18 +244,24 @@ button {
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    box-shadow: 5px 5px 60px #d9d9d9,
-    -10px -10px 60px #ffffff;;
+    box-shadow: 5px 5px 60px #d9d9d9;
     border-radius: 10px;
-    padding: 2rem
+    padding: 0.5rem
 }
 
 
-.centered-content {
+.centered-vertical-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.centered-horizontal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
 }
 
 .align-center {
@@ -254,11 +271,30 @@ button {
     justify-content: center;
 }
 
-.row-align {
+.align-left {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.align-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+.col-align {
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+.block-list {
+    display: inline-block;
 }
 
 .wrapper {
@@ -631,12 +667,17 @@ input[type="submit"]:hover {
 
 /* Slide */
 .slide {
-    height: calc(100vh);
+    position: relative;
+
+    padding-top: 17rem;
+    /*padding: 2rem;*/
+    height: calc(70vh);
     overflow-y: auto;
 }
 
 
-.film-card {
+.wide-card {
+    width: calc(50vw);
     padding: 1rem;
     margin: 1rem;
     align-items: center;
@@ -647,14 +688,22 @@ input[type="submit"]:hover {
     /*justify-content: center;*/
 }
 
-.film-card.two-col__wrapper {
-    grid-template-columns: 1.5fr 1fr !important;
+.card-header, .card-main, .card-footer {
+    position: relative;
+    width: 100%;
+    > * {
+        margin: 0.5rem;
+    }
 }
 
-.film-card:hover {
+/*.wide-card.two-col__wrapper {*/
+/*    grid-template-columns: 1.5fr 1fr !important;*/
+/*}*/
+
+.wide-card:hover {
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
-    background-color: #ccedff;
+    background-color: #daebf3;
     border: 2px solid transparent;
 }
 

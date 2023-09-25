@@ -8,13 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<section class="content section centered-content">
-    <div class="centered-content container form__container">
+<section class="content section centered-vertical-content">
+    <div class="centered-vertical-content container form__container">
         <h2 class="title">Đăng ký tài khoản</h2>
         <span class="successful-span">${successfulMessage}</span>
         <form action="signup" method="post">
-            <label for="username">Username</label> <span class="error-span" id="username-error">${usernameError}</span>
-            <input type="text" name="username" id="username" placeholder="Username" required>
+            <label for="username">Tên người dùng</label> <span class="error-span" id="username-error">${usernameError}</span>
+            <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
             <label for="user-full-name">Họ và tên</label> <span class="error-span" id="fullname-error">${fullnameError}</span>
             <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" required>
             <label for="email">Email</label> <span class="error-span" id="email-error">${emailError}</span>

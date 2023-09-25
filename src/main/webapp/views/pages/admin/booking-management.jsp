@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="/views/pages/admin/admin.jsp"/>
 
-<section class="section container centered-content">
+<section class="section container centered-vertical-content">
     <h1>${sectionTitle}</h1>
     <div class="slide wrapper">
 <%--        <c:forEach var="film" items="${filmsData}" varStatus="loop">--%>
@@ -29,7 +29,7 @@
 <%--                </div>--%>
 <%--            </div>--%>
 <%--        </c:forEach>--%>
-    <div class="film-card two-col__wrapper" >
+    <div class="wide-card two-col__wrapper" >
         <div class="row-align wrapper">
             <h4>Test</h4>
             <p>4567</p>

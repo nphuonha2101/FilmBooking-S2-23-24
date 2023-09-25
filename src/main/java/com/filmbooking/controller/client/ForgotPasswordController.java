@@ -41,7 +41,7 @@ public class ForgotPasswordController extends HttpServlet {
         userDAOServices = new UserDAOServicesImpl();
 
         if (userDAOServices.getUserByUsername(username) == null) {
-            req.setAttribute("usernameError", "Username không tồn tại!");
+            req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
         } else {
             User foundUser = userDAOServices.getUserByUsername(username);
             if (foundUser.getUserEmail().equals(email)) {
@@ -50,7 +50,7 @@ public class ForgotPasswordController extends HttpServlet {
 
                 resp.sendRedirect("reset-password");
             } else {
-                req.setAttribute("emailError", "Email này không khớp với username trong hệ thống");
+                req.setAttribute("emailError", "Email này không khớp với tên người dùng trong hệ thống");
                 RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
                 RenderViewUtils.renderViewToLayout(req, resp,
                         ContextPathUtils.getClientPagesPath("forgot.jsp"),

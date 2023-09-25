@@ -25,21 +25,31 @@
 </head>
 <body>
 <header>
-    <c:choose>
-        <c:when test="${not empty sessionScope.username}">
-            <jsp:include page="/views/components/already-login-nav.jsp"/>
-        </c:when>
-        <c:when test="${empty sessionScope.username}">
-            <jsp:include page="/views/components/not-login-nav.jsp"/>
-        </c:when>
-    </c:choose>
-    <jsp:include page="${navigationComponent}"/>
+    <jsp:include page="/views/components/navigation-bar.jsp"/>
 </header>
+<main>
+    <section class="hero section">
+<%--        <div class="wrapper" id="welcome">--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${not empty sessionScope.username}">--%>
+<%--                    <h1>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</h1>--%>
+<%--                </c:when>--%>
+<%--                <c:when test="${empty sessionScope.username}">--%>
+<%--                    <h1>Xin chào, khách</h1>--%>
+<%--                </c:when>--%>
+<%--            </c:choose>--%>
+<%--        </div>--%>
 
-<jsp:include page="${dynamicContents}"/>
+        <div class="wrapper" id="banner">
+            <jsp:include page="${bannerPage}"/>
+        </div>
+    </section>
+    <jsp:include page="${dynamicContents}"/>
+    <jsp:include page="${modalName}"/>
+
+</main>
 
 <!-- Modal -->
-<jsp:include page="${modalName}"/>
 <%--<jsp:include page="/views/pages/client/home.jsp"/>--%>
 
 <footer class="footer">

@@ -19,7 +19,7 @@
     </div>
 
     <div class="right-col__wrapper">
-        <h2>Quick Links</h2>
+        <h2>Liên kết nhanh</h2>
         <ul id="link-list">
             <li><a href="https://github.com/conmuaxadan" target="_blank">-> Trang GitHub của Đoàn Quốc Đăng</a></li>
             <li><a href="https://github.com/nphuonha2101" target="_blank">-> Trang GitHub của Nguyễn Phương Nhã</a></li>
