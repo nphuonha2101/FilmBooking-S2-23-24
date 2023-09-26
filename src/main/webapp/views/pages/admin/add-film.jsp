@@ -22,7 +22,7 @@
         <form method="post" action="add-film" enctype="multipart/form-data">
             <div class="two-col__wrapper centered-vertical-content">
                 <!-- text form in left -->
-                <div >
+                <div>
                     <label for="film-id">Phim ID</label>
                     <input type="text" placeholder="Phim ID" name="film-id" id="film-id" required/>
                     <label for="film-name">Tên phim</label>
@@ -40,16 +40,19 @@
                     <input type="number" min="0" placeholder="Độ dài phim" name="film-length" id="film-length"
                            required/>
 
-                    <input type="submit" class="primary-filled-button button" value="Thêm phim">
                 </div>
+
 
                 <!-- hidden form in right -->
                 <div class="centered-vertical-content">
-                    <label style="margin: 2rem;" for="upload-img" class="primary-filled-button button rounded-button">Chọn ảnh</label>
+                    <label style="margin: 2rem;" for="upload-img" class="primary-filled-button button rounded-button">Chọn
+                        ảnh</label>
                     <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
                     <div class="img wrapper" id="film-img"></div>
                     <input type="hidden" name="film-img-path" id="film-img-path" value="">
                 </div>
+
+                <input type="submit" class="primary-filled-button button" value="Thêm phim">
             </div>
         </form>
 

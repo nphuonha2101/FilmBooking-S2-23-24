@@ -42,7 +42,6 @@ main {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Fira Sans', sans-serif;
     font-weight: 700;
-    color: #222222;
 }
 
 h1 {
@@ -78,6 +77,7 @@ a {
 button {
     background-color: transparent;
 }
+
 .links {
     color: #0556f3;
 }
@@ -157,7 +157,6 @@ button {
     transition: 0.2s ease-out;
     -moz-transition: 0.2s ease-out;
 }
-
 
 
 /* Footer */
@@ -246,7 +245,7 @@ button {
     background-color: #fff;
     box-shadow: 5px 5px 60px #d9d9d9;
     border-radius: 10px;
-    padding: 0.5rem
+    padding: 1rem
 }
 
 
@@ -697,7 +696,7 @@ input[type="submit"]:hover {
 
 .wide-card_contents {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 0.75fr 0.75fr;
+    grid-template-columns: 2fr 1fr 1fr 0.75fr 0.75fr;
     grid-column-gap: 5px;
     align-items: center;
     justify-content: center;
@@ -706,7 +705,6 @@ input[type="submit"]:hover {
 .wide-card_contents > * {
     text-overflow: ellipsis;
 }
-
 
 
 /*.wide-card.two-col__wrapper {*/
@@ -750,5 +748,11 @@ input[type="submit"]:hover {
     background-color: #0556f3;
     color: #fff;
 }
-
+.site-logo {
+    color: #0556f3;
+    font-size: 1.25rem;
+    text-decoration: none;
+    font-family: 'Fira Sans', sans-serif;
+    font-weight: 700;
+}
 

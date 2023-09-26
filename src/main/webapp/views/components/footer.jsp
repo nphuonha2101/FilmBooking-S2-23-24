@@ -13,7 +13,7 @@
 <div class="two-col__wrapper">
     <div class="left-col__wrapper">
         <div class="footer-text">
-            <h2>Film Booking</h2>
+            <h2>FilmBooking</h2>
             <p>&copy; 2023 - Đoàn Quốc Đăng và Nguyễn Phương Nhã. Mọi quyền được bảo lưu.</p>
         </div>
     </div>

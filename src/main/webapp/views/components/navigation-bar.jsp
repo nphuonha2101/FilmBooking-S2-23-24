@@ -11,7 +11,7 @@
 
 <nav class="top-nav" id="navigation-bar">
     <div class="centered-horizontal-content wrapper" id="left-nav-elements">
-        <h4 class="site-logo">FilmBooking</h4>
+        <a class="site-logo" href="home">FilmBooking</a>
     </div>
 
 
@@ -24,7 +24,8 @@
         <c:if test="${not empty sessionScope.username}">
             <li>
                 <div class="drop-down-menu">
-                    <a class="nav-links">Tính năng</a>
+                    <a class="nav-links light-filled-button">
+                            ${sessionScope.userFullName}</a>
                     <div class="drop-down-contents">
                         <a class="drop-down-links">Lịch sử đăng ký</a>
                         <c:choose>

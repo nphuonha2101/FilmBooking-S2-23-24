@@ -24,11 +24,11 @@
                             <h5>${film.filmName}</h5>
                             <p class="description">${film.genre}</p>
                             <p class="description">${film.price}</p>
-                            <p class="description">Mô tả</p>
-                            <button class="outlined-button rounded-button button submit-button delete-button">Delete
+<%--                            <p class="description">Mô tả</p>--%>
+                            <button class="outlined-button rounded-button button submit-button delete-button">Xoá
                             </button>
                             <button class="primary-filled-button rounded-button button submit-button edit-button">
-                                Edit
+                                Sửa
                             </button>
 
                         </div>
@@ -41,9 +41,7 @@
                 </c:forEach>
             </div>
         </div>
-
-    </div>
-    </div>
+        <a href="add-film" class="primary-filled-button rounded-button button submit-button">Thêm phim mới</a>
     </div>
 </section>
 
