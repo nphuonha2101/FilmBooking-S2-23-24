@@ -39,7 +39,7 @@
                        value="test"/>
             </form>
         </div>
-        <div class="wrapper align-center">
+        <div class="wrapper justify-center-row">
             <button class="primary-filled-button rounded-button button submit-button">In hoá đơn
             </button>
         </div>

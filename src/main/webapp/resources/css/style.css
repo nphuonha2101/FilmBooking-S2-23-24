@@ -264,21 +264,28 @@ button {
     flex-direction: row;
 }
 
-.align-center {
+.align-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.justify-center-row {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 }
 
-.align-left {
+.justify-left-row {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
 }
 
-.align-right {
+.justify-right-row {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -669,32 +676,38 @@ input[type="submit"]:hover {
 .slide {
     position: relative;
 
-    padding-top: 17rem;
+    padding-top: 2rem;
     /*padding: 2rem;*/
     height: calc(70vh);
     overflow-y: auto;
+    margin-bottom: 2rem;
 }
 
 
 .wide-card {
     width: calc(50vw);
-    padding: 1rem;
-    margin: 1rem;
+    padding: 0.5rem;
+    margin: 0.25rem;
     align-items: center;
     background-color: #fffbff;
-    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
-    border-radius: 10px;
-    border: 2px solid #0556f3;
+    border: 1px solid #222222;
+    border-radius: 5px;
     /*justify-content: center;*/
 }
 
-.card-header, .card-main, .card-footer {
-    position: relative;
-    width: 100%;
-    > * {
-        margin: 0.5rem;
-    }
+.wide-card_contents {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.75fr 0.75fr;
+    grid-column-gap: 5px;
+    align-items: center;
+    justify-content: center;
 }
+
+.wide-card_contents > * {
+    text-overflow: ellipsis;
+}
+
+
 
 /*.wide-card.two-col__wrapper {*/
 /*    grid-template-columns: 1.5fr 1fr !important;*/
@@ -703,8 +716,7 @@ input[type="submit"]:hover {
 .wide-card:hover {
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
-    background-color: #daebf3;
-    border: 2px solid transparent;
+    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
 }
 
 /* Image Wrapper
@@ -719,7 +731,24 @@ input[type="submit"]:hover {
     border: 2px solid #2b324d;
     border-radius: 10px;
     background-size: contain;
+}
 
+.admin-two-cols__wrapper {
+    display: grid;
+    grid-template-columns: 2fr 7fr;
+    grid-column-gap: 1rem;
+}
+
+.admin-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.link-active {
+    background-color: #0556f3;
+    color: #fff;
 }
 
 

@@ -14,7 +14,7 @@ public class ExtensionFilter implements FilenameFilter {
     public boolean accept(File dir, String name) {
         for (String extension : extensions
         ) {
-            if (name.endsWith(extension))
+            if (name.toLowerCase().endsWith(extension))
                 return true;
         }
         return false;

@@ -12,20 +12,22 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name="filmManagement", value = "/film-management")
+@WebServlet(name = "filmManagement", value = "/film-management")
 public class FilmManagementController extends HttpServlet {
     private IFilmDAOServices filmDAOServices;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmDAOServices = new FilmDAOServicesImpl();
-        req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
         req.setAttribute("sectionTitle", "Quản lý phim");
-//        req.setAttribute("adminPage", ContextPathUtils.getAdminPagesPath("film-management.jsp"));
         req.setAttribute("filmsData", filmDAOServices.getAll());
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getAdminPagesPath("film-management.jsp"));
+        req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
+
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("film-management.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        RenderViewUtils.updateView(req, resp,
                 ContextPathUtils.getLayoutPath("master.jsp"));
     }
 

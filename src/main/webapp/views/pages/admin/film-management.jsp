@@ -7,43 +7,43 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<jsp:include page="/views/pages/admin/admin.jsp"/>
 
-<section class="section container centered-vertical-content">
-    <h1>${sectionTitle}</h1>
+<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+    <div class="container ">
+        <jsp:include page="/views/components/admin-panel.jsp"/>
+    </div>
+    <div class="container centered-vertical-content">
 
+        <h1>${sectionTitle}</h1>
 
-    <div class="centered-vertical-content wrapper">
-        <div class="slide wrapper centered-vertical-content">
-            <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                <div class="wide-card align-left" id="card-${loop.index}">
-                    <div class="centered-vertical-content wrapper">
-                        <div class="card-header align-left">
-                            <h3>${film.filmName}</h3>
-                        </div>
-                        <div class="card-main align-left">
-                            <p class="description">${film.price}</p>
+        <div class="centered-vertical-content wrapper">
+            <div class="slide wrapper centered-vertical-content">
+                <c:forEach var="film" items="${filmsData}" varStatus="loop">
+                    <div class="wide-card " id="card-${loop.index}">
+                        <div class="wide-card_contents">
+                            <h5>${film.filmName}</h5>
                             <p class="description">${film.genre}</p>
-<%--                            <p>${film.releaseDate}</p>--%>
-                        </div>
-                        <div class="card-footer align-right">
+                            <p class="description">${film.price}</p>
+                            <p class="description">Mô tả</p>
                             <button class="outlined-button rounded-button button submit-button delete-button">Delete
                             </button>
-                            <button class="primary-filled-button rounded-button button submit-button edit-button">Edit
+                            <button class="primary-filled-button rounded-button button submit-button edit-button">
+                                Edit
                             </button>
+
                         </div>
-<%--                            <p>${film.description}</p>--%>
+
                         <form class="hide hidden-form" method="get">
                             <input type="hidden" name="film-id_hidden"
                                    value="${film.filmID}"/>
                         </form>
                     </div>
-                    <div class=>
-
-                    </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
         </div>
+
+    </div>
+    </div>
     </div>
 </section>
 
