@@ -1,5 +1,7 @@
 package com.filmbooking.model;
 
+import java.io.File;
+
 public class Film {
     private String filmID;
     private String filmName;
@@ -14,7 +16,7 @@ public class Film {
         this.price = price;
         this.roomID = roomID;
         this.genre = genre;
-        this.imgPath = imgPath;
+        this.imgPath = new File(imgPath).toURI().toString();
     }
 
     // ------ GETTER AND SETTER ------ //

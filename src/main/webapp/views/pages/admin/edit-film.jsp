@@ -1,13 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
-  User: QDang
-  Date: 23-09-2023
-  Time: 09:48
+  User: NhaNguyen
+  Date: 27-09-2023
+  Time: 10:34 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
+<!-- Button upload file -->
+<c:set var="filmData" value='${filmData}'/>
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
         <jsp:include page="/views/components/admin-panel.jsp"/>
@@ -23,13 +25,14 @@
                     <!-- text form in left -->
                     <div class="left-col">
                         <label for="film-id">Phim ID</label>
-                        <input type="text" placeholder="Phim ID" name="film-id" id="film-id"
+                        <input type="text" placeholder="Phim ID" name="film-id" id="film-id" value="${filmData.filmID}"
                                required/>
                         <label for="film-name">Tên phim</label>
                         <input type="text" placeholder="Tên phim" name="film-name" id="film-name"
-                               required/>
+                               value="${filmData.filmName}" required/>
                         <label for="film-price">Giá vé</label>
                         <input type="number" min="0" placeholder="Giá vé" name="film-price" id="film-price"
+                               value="${filmPrice.price}"
                                required/>
                         <label for="director">Đạo diễn</label>
                         <input type="text" placeholder="Đạo diễn" name="director" id="director"

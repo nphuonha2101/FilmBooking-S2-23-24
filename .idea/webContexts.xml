@@ -7,6 +7,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/layout" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin/admin.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/client" />
       </map>
     </option>
   </component>

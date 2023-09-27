@@ -9,6 +9,7 @@ public class FileUtils {
 
     public FileUtils(String directoryPath) {
         this.dir = new File(directoryPath);
+        System.out.println(dir.toURI());
     }
 
     private int countDuplicateFile(String fileName) {
@@ -33,5 +34,10 @@ public class FileUtils {
             fileName = "Copy " + duplicateFiles + "-" + fileName;
         }
         return fileName;
+    }
+
+    public static void main(String[] args) {
+        FileUtils fileUtils = new FileUtils("D:\\upload\\DoanQuocDang.png");
+
     }
 }

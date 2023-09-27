@@ -25,7 +25,8 @@
                             <p class="description">${film.genre}</p>
                             <p class="description">${film.price}</p>
 <%--                            <p class="description">Mô tả</p>--%>
-                            <button class="outlined-button rounded-button button submit-button delete-button">Xoá
+                            <!-- handles in JS file name = handlesSubmitHiddenForm.js -->
+                            <button class="outlined-warning-button rounded-button button submit-button delete-button">Xoá
                             </button>
                             <button class="primary-filled-button rounded-button button submit-button edit-button">
                                 Sửa

@@ -28,11 +28,12 @@ html {
 
 * {
     font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
 }
 
 body {
     margin: 5rem 0 0 0;
-    background-color: #fff;
+    background-color: #f6f9fc;
 }
 
 main {
@@ -60,9 +61,6 @@ h4 {
     font-size: 1rem;
 }
 
-.description {
-    font-size: 0.9rem;
-}
 
 .title {
     margin: 2rem auto;
@@ -130,7 +128,7 @@ button {
     animation-name: fade;
     animation-duration: 0.4s;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 1fr 2fr;
     column-gap: 2rem;
     justify-content: center;
     align-items: center;
@@ -210,7 +208,7 @@ button {
 .nav-links:hover {
     /*color: #201a17;*/
     /*background-color: #ffdbca;*/
-    background-color: #e6f5ff;
+    background-color: #f6f9fc;
     text-decoration: dashed;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
@@ -222,7 +220,26 @@ button {
     color: #222222 !important;
 }
 
-.primary-filled-button {
+.outlined-warning-button {
+    border: 2px solid #ff3333;
+    color: #ff3333;
+    background-color: transparent;
+}
+
+.filled-warning-button, .outlined-warning-button:hover {
+    background-color: #e02323;
+    color: #fff;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+}
+
+.filled-warning-button:hover {
+    background-color: #e30f0f;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+}
+
+.primary-filled-button, .outlined-button:hover {
     background-color: #0556f3;
     color: #fff !important;
 }
@@ -243,7 +260,6 @@ button {
     display: flex;
     flex-direction: column;
     background-color: #fff;
-    box-shadow: 5px 5px 60px #d9d9d9;
     border-radius: 10px;
     padding: 1rem
 }
@@ -291,6 +307,27 @@ button {
     justify-content: flex-end;
 }
 
+.justify-center-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.justify-left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.justify-right-col {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
 
 .col-align {
     display: flex;
@@ -316,7 +353,7 @@ button {
     width: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 2rem;
+    column-gap: 2rem;
     justify-items: center;
 }
 
@@ -344,6 +381,7 @@ form {
 
 .hidden-form {
     width: auto;
+    height: 0 !important;
 }
 
 label {
@@ -473,9 +511,9 @@ input[type="submit"]:hover {
     width: 100%;
     display: grid;
     grid-auto-rows: auto;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 0.5rem;
-    row-gap: 1rem;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 0.2rem;
+    row-gap: 0.2rem;
 }
 
 .item-cards {
@@ -483,22 +521,17 @@ input[type="submit"]:hover {
     min-width: calc(18vw);
     margin: 0.5rem;
     max-width: calc(22vw);
-    border: 2px solid transparent;
 }
 
 .item-cards > * {
     text-overflow: ellipsis;
+    margin: 0.35rem;
 }
 
 .item-cards:hover {
-    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
-    animation-name: fade;
-    animation-duration: 0.4s;
-    -moz-animation-name: fade;
-    -moz-animation-duration: 0.4s;
+    box-shadow: 5px 5px 60px #d9d9d9;
     transition: 0.4s ease-out;
     -moz-transition: 0.4s ease-out;
-    border: 2px solid #0556f3;
 }
 
 /* Drop down menu */
@@ -674,10 +707,10 @@ input[type="submit"]:hover {
 /* Slide */
 .slide {
     position: relative;
-
+    height: 100%;
     padding-top: 2rem;
     /*padding: 2rem;*/
-    height: calc(70vh);
+    max-height: calc(70vh);
     overflow-y: auto;
     margin-bottom: 2rem;
 }
@@ -730,6 +763,18 @@ input[type="submit"]:hover {
     border-radius: 10px;
     background-size: contain;
 }
+.film-img-in-card {
+    min-width: calc(17vw);
+    max-width: calc(21vw);
+    min-height: calc(23vw);
+    max-height: calc(36vw);
+    height: 16rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 2px solid #2b324d;
+    border-radius: 10px;
+    background-size: contain;
+}
 
 .admin-two-cols__wrapper {
     display: grid;
@@ -748,6 +793,7 @@ input[type="submit"]:hover {
     background-color: #0556f3;
     color: #fff;
 }
+
 .site-logo {
     color: #0556f3;
     font-size: 1.25rem;

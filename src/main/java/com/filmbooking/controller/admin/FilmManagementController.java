@@ -17,6 +17,11 @@ public class FilmManagementController extends HttpServlet {
     private IFilmDAOServices filmDAOServices;
 
     @Override
+    public void init() throws ServletException {
+
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmDAOServices = new FilmDAOServicesImpl();
         req.setAttribute("sectionTitle", "Quản lý phim");
@@ -34,5 +39,10 @@ public class FilmManagementController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+    }
+
+    @Override
+    public void destroy() {
+        filmDAOServices = null;
     }
 }

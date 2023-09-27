@@ -2,7 +2,9 @@ let hiddenForms = $$(".hidden-form");
 // let submitButtons = $$(".submit-button");
 let deleteButtons = $$(".delete-button");
 let editButtons = $$(".edit-button");
-let handlesSubmitHiddenForm = {
+
+
+let handlesFilmManagementHiddenForm = {
     start: () => {
         for (let i = 0; i < deleteButtons.length; i++) {
             deleteButtons[i].addEventListener("click", ()=> {
@@ -13,14 +15,15 @@ let handlesSubmitHiddenForm = {
 
         for (let i = 0; i < editButtons.length; i++) {
             editButtons[i].addEventListener("click", () => {
-                alert("Test hehe");
+                hiddenForms[i].action = 'edit-film';
+                hiddenForms[i].submit();
             })
 
         }
     }
 }
 
-handlesSubmitHiddenForm.start();
+handlesFilmManagementHiddenForm.start();
 
 
 

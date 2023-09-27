@@ -23,7 +23,13 @@ public class AddFilmController extends HttpServlet {
     private FileUtils fileUtils;
 
     @Override
+    public void init() throws ServletException {
+
+    }
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        filmDAOServices = new FilmDAOServicesImpl();
         req.setAttribute("sectionTitle", "Thêm phim");
         req.setAttribute("pageTitle", "Trang Admin - Thêm phim");
 
@@ -54,20 +60,24 @@ public class AddFilmController extends HttpServlet {
 //                    ContextPathUtils.getLayoutPath("master.jsp"));
         } else {
 
-        String filmID = req.getParameter("film-id");
-        String filmName = req.getParameter("film-name");
-        double filmPrice = Double.parseDouble(req.getParameter("film-price"));
-        String filmGenre = req.getParameter("film-genre");
+            String filmID = req.getParameter("film-id");
+            String filmName = req.getParameter("film-name");
+            double filmPrice = Double.parseDouble(req.getParameter("film-price"));
+            String filmGenre = req.getParameter("film-genre");
 
-        Film newFilm = new Film(filmID, filmName, filmPrice, "", filmGenre, filePath);
-        filmDAOServices = new FilmDAOServicesImpl();
+            Film newFilm = new Film(filmID, filmName, filmPrice, "", filmGenre, filePath);
 
-        filmDAOServices.saveFilm(newFilm);
-        FileUploadUtils.uploadFile(req, filePath, "upload-img");
-        System.out.println(filmID + "\t" + filmGenre);
+            filmDAOServices.saveFilm(newFilm);
+            FileUploadUtils.uploadFile(req, filePath, "upload-img");
+            System.out.println(filmID + "\t" + filmGenre);
 
         }
 
         resp.sendRedirect("admin");
+    }
+
+    @Override
+    public void destroy() {
+        filmDAOServices = null;
     }
 }

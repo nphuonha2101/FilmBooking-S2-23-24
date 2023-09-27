@@ -9,21 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- handles delete film">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/DateAndTimeUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/components/admin-panel.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- improving ui and adding &quot;add film&quot; button in film-management.jsp">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/EditFilmController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/utils/RenderImages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ImageUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/DeleteFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/DeleteFilmController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/FilmManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/FilmManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ExtensionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ExtensionFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/booking-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/booking-management.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/film-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/film-management.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,9 +39,9 @@
       <list>
         <option value="CSS File" />
         <option value="Interface" />
-        <option value="Class" />
-        <option value="Jsp File" />
         <option value="JavaScript File" />
+        <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -121,6 +125,19 @@
   <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.10">
     <configuration name="DateAndTimeUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.DateAndTimeUtils" />
+      <module name="FilmBooking-WebProgramming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.filmbooking.ultils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FileUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.FileUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
@@ -221,6 +238,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.FileUtils" />
         <item itemvalue="Application.DateAndTimeUtils" />
       </list>
     </recent_temporary>
@@ -266,6 +284,10 @@
       <workItem from="1695644473273" duration="586000" />
       <workItem from="1695650959962" duration="12661000" />
       <workItem from="1695711213085" duration="8202000" />
+      <workItem from="1695727298152" duration="3560000" />
+      <workItem from="1695737601760" duration="319000" />
+      <workItem from="1695774220232" duration="196000" />
+      <workItem from="1695824521100" duration="11271000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -379,7 +401,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695481948218</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="- improving ui and adding &quot;add film&quot; button in film-management.jsp">
+      <option name="closed" value="true" />
+      <created>1695737759703</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1695737759703</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -408,7 +438,8 @@
     <MESSAGE value="- fix some bugs" />
     <MESSAGE value="- complete to handles login, reset password, and signup" />
     <MESSAGE value="- handles delete film" />
-    <option name="LAST_COMMIT_MESSAGE" value="- handles delete film" />
+    <MESSAGE value="- improving ui and adding &quot;add film&quot; button in film-management.jsp" />
+    <option name="LAST_COMMIT_MESSAGE" value="- improving ui and adding &quot;add film&quot; button in film-management.jsp" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
