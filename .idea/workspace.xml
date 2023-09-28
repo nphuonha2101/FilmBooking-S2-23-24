@@ -9,23 +9,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- improving ui and adding &quot;add film&quot; button in film-management.jsp">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/EditFilmController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/utils/RenderImages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ImageUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webContexts.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webContexts.xml" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- restyling film management page and add film page&#10;- having an issue about handles file name">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/FilmGenreDAOServicesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/GenreDetailDAOServicesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/IFilmGenreDAOServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/IGenreDetailDAOServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/FilmGenre.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/GenreDetail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/FilmDAOServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/FilmDAOServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/UserDAOServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/UserDAOServicesImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/DeleteFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/DeleteFilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/FilmManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/FilmManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/film-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/film-management.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" afterDir="false" />
     </list>
@@ -38,9 +40,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Interface" />
         <option value="JavaScript File" />
         <option value="Jsp File" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -288,6 +290,11 @@
       <workItem from="1695737601760" duration="319000" />
       <workItem from="1695774220232" duration="196000" />
       <workItem from="1695824521100" duration="11271000" />
+      <workItem from="1695869271156" duration="8231000" />
+      <workItem from="1695878111803" duration="472000" />
+      <workItem from="1695880428325" duration="46000" />
+      <workItem from="1695882612480" duration="3448000" />
+      <workItem from="1695886269282" duration="1640000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />

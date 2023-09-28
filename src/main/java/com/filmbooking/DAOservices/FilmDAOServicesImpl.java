@@ -30,11 +30,12 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
                 String filmID = resultSet.getString("film_id");
                 String filmName = resultSet.getString("film_name");
                 double filmPrice = Double.parseDouble(resultSet.getString("film_price"));
-                String roomId = resultSet.getString("room_id");
-                String genre = resultSet.getString("genre");
+               String filmDirector = resultSet.getString("film_director");
+                String filmActors= resultSet.getString("film_actors");
+                int filmLength = resultSet.getInt("film_length");
+                String filmDescription = resultSet.getString("film_description");
                 String imgPath = resultSet.getString("img_path");
-
-                Film film = new Film(filmID, filmName, filmPrice, roomId, genre, imgPath);
+                Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmActors,filmLength,filmDescription, imgPath);
 
                 filmList.add(film);
             }
@@ -55,15 +56,17 @@ public class FilmDAOServicesImpl implements IFilmDAOServices {
         filmList.add(film);
 
         Connection connection = databaseServices.getConnection();
-        String queryAdd = "INSERT INTO film(film_id, film_name, film_price, room_id,genre, img_path) VALUES(?, ?, ?, ?, ?, ?)";
+        String queryAdd = "INSERT INTO film(film_id, film_name, film_price, film_director,film_actors,film_length,film_description, img_path) VALUES(?, ?, ?, ?, ?, ?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
             preparedStatement.setString(1, film.getFilmID());
             preparedStatement.setString(2, film.getFilmName());
-            preparedStatement.setString(3, String.valueOf(film.getPrice()));
-            preparedStatement.setString(4, film.getRoomID());
-            preparedStatement.setString(5, film.getGenre());
-            preparedStatement.setString(6, film.getImgPath());
+            preparedStatement.setDouble(3, film.getFilmPrice());
+            preparedStatement.setString(4, film.getDirector());
+            preparedStatement.setString(5, film.getActors());
+            preparedStatement.setInt(6, film.getFilmLength());
+            preparedStatement.setString(7,film.getFilmDescription());
+            preparedStatement.setString(8, film.getImgPath());
 
             return preparedStatement.execute();
         } catch (SQLException e) {

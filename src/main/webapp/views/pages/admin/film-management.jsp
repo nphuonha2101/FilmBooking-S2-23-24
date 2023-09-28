@@ -22,9 +22,9 @@
                     <div class="wide-card " id="card-${loop.index}">
                         <div class="wide-card_contents">
                             <h5>${film.filmName}</h5>
-                            <p class="description">${film.genre}</p>
-                            <p class="description">${film.price}</p>
-<%--                            <p class="description">Mô tả</p>--%>
+                            <p class="description">dsjhfd</p>
+
+                            <p class="description">Mô tả</p>
                             <!-- handles in JS file name = handlesSubmitHiddenForm.js -->
                             <button class="outlined-warning-button rounded-button button submit-button delete-button">Xoá
                             </button>

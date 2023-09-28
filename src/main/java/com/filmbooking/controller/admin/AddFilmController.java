@@ -1,8 +1,11 @@
 package com.filmbooking.controller.admin;
 
 import com.filmbooking.DAOservices.FilmDAOServicesImpl;
+import com.filmbooking.DAOservices.FilmGenreDAOServicesImpl;
 import com.filmbooking.DAOservices.IFilmDAOServices;
+import com.filmbooking.DAOservices.IFilmGenreDAOServices;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmGenre;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.FileUploadUtils;
 import com.filmbooking.ultils.FileUtils;
@@ -20,6 +23,7 @@ import java.io.IOException;
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
     private IFilmDAOServices filmDAOServices;
+    private IFilmGenreDAOServices filmGenreDAOServices;
     private FileUtils fileUtils;
 
     @Override
@@ -30,6 +34,8 @@ public class AddFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmDAOServices = new FilmDAOServicesImpl();
+        filmGenreDAOServices = new FilmGenreDAOServicesImpl();
+
         req.setAttribute("sectionTitle", "Thêm phim");
         req.setAttribute("pageTitle", "Trang Admin - Thêm phim");
 
@@ -43,6 +49,9 @@ public class AddFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        filmDAOServices = new FilmDAOServicesImpl();
+        filmGenreDAOServices = new FilmGenreDAOServicesImpl();
+
 //        String fileName = req.getParameter("film-img-path");
 //        System.out.println(fileName);
         String fileName = req.getParameter("film-img-path");
@@ -63,13 +72,24 @@ public class AddFilmController extends HttpServlet {
             String filmID = req.getParameter("film-id");
             String filmName = req.getParameter("film-name");
             double filmPrice = Double.parseDouble(req.getParameter("film-price"));
-            String filmGenre = req.getParameter("film-genre");
+            String filmDirector = req.getParameter("director");
+            String filmActors = req.getParameter("actors");
+            int filmLength = Integer.parseInt(req.getParameter("film-length"));
+//            String filmDescription = req.getParameter();
 
-            Film newFilm = new Film(filmID, filmName, filmPrice, "", filmGenre, filePath);
+            String filmGenreIDs = req.getParameter("genre-ids");
+//
+            Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, "", filePath);
 
-            filmDAOServices.saveFilm(newFilm);
-            FileUploadUtils.uploadFile(req, filePath, "upload-img");
-            System.out.println(filmID + "\t" + filmGenre);
+
+            if (filmDAOServices.saveFilm(newFilm)) {
+                FilmGenre filmGenre = new FilmGenre(filmID, filmGenreIDs);
+                filmGenreDAOServices.saveFilmGenre(filmGenre);
+                FileUploadUtils.uploadFile(req, filePath, "upload-img");
+
+            };
+
+//            System.out.println(filmID + "\t" + filmGenre);
 
         }
 

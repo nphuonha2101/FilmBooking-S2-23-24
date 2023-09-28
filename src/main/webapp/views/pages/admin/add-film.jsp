@@ -34,8 +34,8 @@
                         <label for="director">Đạo diễn</label>
                         <input type="text" placeholder="Đạo diễn" name="director" id="director"
                                required/>
-                        <label for="actor">Diễn viên</label>
-                        <input type="text" placeholder="Diễn viên" name="actor" id="actor"
+                        <label for="actors">Diễn viên</label>
+                        <input type="text" placeholder="Diễn viên" name="actors" id="actors"
                                required/>
 
                     </div>
@@ -57,8 +57,8 @@
                                required/>
                     </div>
                     <div class="right-col">
-                        <label for="genre-id">Mã thể loại</label>
-                        <input type="text" placeholder="Mã thể loại" name="genre-id" id="genre-id"
+                        <label for="genre-ids">Mã thể loại</label>
+                        <input type="text" placeholder="Mã thể loại" name="genre-ids" id="genre-ids"
                                required/>
                     </div>
                 </div>
