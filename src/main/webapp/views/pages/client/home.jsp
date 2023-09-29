@@ -15,16 +15,20 @@
 
             <!-- create film cards -->
             <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                <div class="item-cards container" id="card-${loop.index}" >
-<%--                    <img class="img wrapper film-img-in-card" src="render-images" id="film-img-card-${loop.index}" alt="Hình của phim"/>--%>
-                    <h4>${film.filmName}</h4>
-<%--                    <p>Phòng: ${film.roomID}</p>--%>
-<%--                    <p>Giá vé: ${film.price} VNĐ/người</p>--%>
-<%--                    <p>Thể loại: ${film.genre}</p>--%>
-                    <form action="" class="hidden-form" id="hidden-form" method="get">
-                        <input type="hidden" name="filmID" value="${film.filmID}">
-                    </form>
-                        <button class="outlined-button button show-modal-button">Đặt phim</button>
+                <div class="item-cards container centered-vertical-content" id="card-${loop.index}">
+                    <div class=" film-img-in-card"
+                         style="background-image: url('<c:url value="/resources/images/DoanQuocDang.png"/>')"
+                         id="film-img-card-${loop.index}"></div>
+                    <div class="wrapper">
+                        <h4>${film.filmName}</h4>
+                            <%--                    <p>Phòng: ${film.roomID}</p>--%>
+                        <p>Giá vé: ${film.filmPrice} VNĐ/người</p>
+                            <%--                    <p>Thể loại: ${film.genre}</p>--%>
+                        <form action="" class="hidden-form" id="hidden-form" method="get">
+                            <input type="hidden" name="filmID" value="${film.filmID}">
+                        </form>
+                    </div>
+                    <button class="outlined-button button show-modal-button">Đặt phim</button>
                 </div>
             </c:forEach>
 

@@ -82,9 +82,6 @@ public class FilmGenreDAOServicesImpl implements IFilmGenreDAOServices {
     @Override
     public void removeFilmGenresWithFilmID(String filmID) {
         System.out.println(filmGenreList.size());
-
-//        filmGenreList.removeIf(filmGenre -> filmGenre.getFilmID().equalsIgnoreCase(filmID));
-
         filmGenreList.removeIf(new Predicate<FilmGenre>() {
             @Override
             public boolean test(FilmGenre filmGenre) {

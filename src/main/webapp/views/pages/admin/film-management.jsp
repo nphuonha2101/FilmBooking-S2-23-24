@@ -26,10 +26,11 @@
 
                             <p class="description">Mô tả</p>
                             <!-- handles in JS file name = handlesSubmitHiddenForm.js -->
-                            <button class="outlined-warning-button rounded-button button submit-button delete-button">Xoá
+                            <button class="submit-button delete-button">
+                                <span class="material-symbols-outlined warning-color">delete</span>
                             </button>
-                            <button class="primary-filled-button rounded-button button submit-button edit-button">
-                                Sửa
+                            <button class="submit-button edit-button">
+                                <span class="material-symbols-outlined primary-color">edit</span>
                             </button>
 
                         </div>
