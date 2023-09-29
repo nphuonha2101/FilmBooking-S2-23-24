@@ -762,26 +762,18 @@ input[type="submit"]:hover {
  */
 
 
-.img.wrapper {
-    width: 12rem;
-    height: 16rem;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 2px solid #2b324d;
-    border-radius: 10px;
-    background-size: contain;
-}
+
 .film-img-in-card {
-    min-width: calc(17vw);
-    max-width: calc(21vw);
-    min-height: calc(23vw);
-    max-height: calc(36vw);
-    height: 16rem;
+    min-width: calc(18vw);
+    max-width: calc(22vw);
+    min-height: calc(18vw);
+    max-height: calc(22vw);
+
     background-position: center;
     background-repeat: no-repeat;
     border: none;
     border-radius: 10px;
-    background-size: contain;
+    background-size: cover;
 }
 
 

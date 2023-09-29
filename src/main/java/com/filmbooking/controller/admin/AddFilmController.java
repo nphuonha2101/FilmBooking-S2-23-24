@@ -57,17 +57,9 @@ public class AddFilmController extends HttpServlet {
         String fileName = req.getParameter("film-img-path");
 
         fileUtils = new FileUtils(ContextPathUtils.getUploadFolderPath());
-        fileName = fileUtils.handlesFileName(fileName);
+//        fileName = fileUtils.handlesFileName(fileName);
         String filePath = ContextPathUtils.getFileUploadPath(fileName);
 
-        boolean validFile = fileUtils.isValidFile(fileName);
-//
-//        if (!validFile) {
-////            req.setAttribute("additionScript", "alert('Ảnh được chọn không đúng định dạng!')");
-////            resp.setCharacterEncoding("UTF-8");
-////            RenderViewUtils.updateView(req, resp,
-////                    ContextPathUtils.getLayoutPath("master.jsp"));
-//        } else {
 
         String filmID = req.getParameter("film-id");
         String filmName = req.getParameter("film-name");
@@ -75,40 +67,28 @@ public class AddFilmController extends HttpServlet {
         String filmDirector = req.getParameter("director");
         String filmActors = req.getParameter("actors");
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
-//            String filmDescription = req.getParameter();
 
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(",");
-//
+
         Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, "", filePath);
 
-        System.out.println(filmDAOServices.saveFilm(newFilm));
+        boolean addFilmResult = filmDAOServices.saveFilm(newFilm);
+
         for (String filmGenreID : filmGenreIDArr
         ) {
             FilmGenre filmGenre = new FilmGenre(filmID, filmGenreID);
             System.out.println(filmGenreDAOServices.saveFilmGenre(filmGenre));
         }
-
-
-//            if (filmDAOServices.saveFilm(newFilm)) {
-//                for (String filmGenreID : filmGenreIDArr
-//                ) {
-//                    FilmGenre filmGenre = new FilmGenre(filmID, filmGenreID);
-//                    filmGenreDAOServices.saveFilmGenre(filmGenre);
-//                }
-//                FileUploadUtils.uploadFile(req, filePath, "upload-img");
-
-//        }
-//
-//            System.out.println(filmID + "\t" + filmName + "\t" + filmPrice + "\t" + filmDirector + "\t" + filmActors + "\t" + filmLength + "\t" + filePath);
-//            System.out.println(filmGenreIDs);
-//            ;
-
-//            System.out.println(filmID + "\t" + filmGenre);
-
+        if (fileUtils.countDuplicateFile(fileName) == 0)
+            FileUploadUtils.uploadFile(req, filePath, "upload-img");
+        else {
+            fileUtils.handlesFileName(fileName);
+            FileUploadUtils.uploadFile(req, filePath, "upload-img");
+        }
 
         resp.sendRedirect("admin");
-    }
+}
 
     @Override
     public void destroy() {

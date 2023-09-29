@@ -102,62 +102,62 @@ public class FilmGenreDAOServicesImpl implements IFilmGenreDAOServices {
 
     }
 
-    @Override
-    public void removeFilmGenreWithFilmIDAndGenreID(String filmID, String genreID) {
-        for (FilmGenre filmGenre : filmGenreList
-        ) {
-            if (filmGenre.getFilmID().equalsIgnoreCase(filmID) && filmGenre.getGenreID().equalsIgnoreCase(genreID))
-                filmGenreList.remove(filmGenre);
-        }
-
-        Connection connection = databaseServices.getConnection();
-        String queryDelete = "DELETE FROM film_genre WHERE film_id = ? AND genre_id = ?";
-        try {
-            PreparedStatement deleteStatement = connection.prepareStatement(queryDelete);
-            deleteStatement.setString(1, filmID);
-            deleteStatement.setString(2, genreID);
-
-            deleteStatement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    @Override
-    public void changeGenre(String filmID, String genreIDs) {
-        String[] genreIDArray = genreIDs.split("/");
-
-        removeFilmGenresWithFilmID(filmID);
-
-        for (String genreID : genreIDArray
-        ) {
-            FilmGenre filmGenre = new FilmGenre(filmID, genreID);
-            filmGenreList.add(filmGenre);
-        }
-
-
-        String queryDelete = "DELETE FROM film_genre WHERE film_id = ? ";
-        Connection connection = databaseServices.getConnection();
-
-        try {
-            PreparedStatement deleteStatement = connection.prepareStatement(queryDelete);
-            deleteStatement.setString(1, filmID);
-
-            if (deleteStatement.execute()) {
-                for (String genreID : genreIDArray
-                ) {
-                    String queryAdd = "INSERT INTO film_genre(genre_id, film_id) VALUES(?, ?)";
-                    PreparedStatement addStatement = connection.prepareStatement(queryAdd);
-
-                    addStatement.setString(1, genreID);
-                    addStatement.setString(2, filmID);
-
-                    addStatement.execute();
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    @Override
+//    public void removeFilmGenreWithFilmIDAndGenreID(String filmID, String genreID) {
+//        for (FilmGenre filmGenre : filmGenreList
+//        ) {
+//            if (filmGenre.getFilmID().equalsIgnoreCase(filmID) && filmGenre.getGenreID().equalsIgnoreCase(genreID))
+//                filmGenreList.remove(filmGenre);
+//        }
+//
+//        Connection connection = databaseServices.getConnection();
+//        String queryDelete = "DELETE FROM film_genre WHERE film_id = ? AND genre_id = ?";
+//        try {
+//            PreparedStatement deleteStatement = connection.prepareStatement(queryDelete);
+//            deleteStatement.setString(1, filmID);
+//            deleteStatement.setString(2, genreID);
+//
+//            deleteStatement.execute();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//
+//    @Override
+//    public void changeGenre(String filmID, String genreIDs) {
+//        String[] genreIDArray = genreIDs.split("/");
+//
+//        removeFilmGenresWithFilmID(filmID);
+//
+//        for (String genreID : genreIDArray
+//        ) {
+//            FilmGenre filmGenre = new FilmGenre(filmID, genreID);
+//            filmGenreList.add(filmGenre);
+//        }
+//
+//
+//        String queryDelete = "DELETE FROM film_genre WHERE film_id = ? ";
+//        Connection connection = databaseServices.getConnection();
+//
+//        try {
+//            PreparedStatement deleteStatement = connection.prepareStatement(queryDelete);
+//            deleteStatement.setString(1, filmID);
+//
+//            if (deleteStatement.execute()) {
+//                for (String genreID : genreIDArray
+//                ) {
+//                    String queryAdd = "INSERT INTO film_genre(genre_id, film_id) VALUES(?, ?)";
+//                    PreparedStatement addStatement = connection.prepareStatement(queryAdd);
+//
+//                    addStatement.setString(1, genreID);
+//                    addStatement.setString(2, filmID);
+//
+//                    addStatement.execute();
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 }

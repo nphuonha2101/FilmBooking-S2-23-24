@@ -12,7 +12,7 @@ public class FileUtils {
         System.out.println(dir.toURI());
     }
 
-    private int countDuplicateFile(String fileName) {
+    public int countDuplicateFile(String fileName) {
         int result = 0;
 
         if (Objects.requireNonNull(dir.listFiles()).length > 0)

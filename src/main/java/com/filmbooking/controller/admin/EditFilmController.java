@@ -28,6 +28,7 @@ public class EditFilmController extends HttpServlet {
 
         Film film = filmDAOServices.getFilmByID(filmId);
         req.setAttribute("filmData", film);
+        req.setAttribute("imgPath", film.getImgPath());
 
         req.setAttribute("pageTitle", "Film Booking - Chỉnh sửa phim");
         req.setAttribute("sectionTitle", "Chỉnh sửa phim");
