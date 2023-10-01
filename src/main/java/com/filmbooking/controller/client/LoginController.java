@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
                 userSession.setAttribute("userEmail", loginUser.getUserEmail());
                 userSession.setAttribute("accountRole", loginUser.getAccountRole());
 
-                System.out.println(loginUser.getAccountRole());
+                System.out.println("Login Controller Test: " + loginUser.getAccountRole());
 
                 resp.sendRedirect("home");
 

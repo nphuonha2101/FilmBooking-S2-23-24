@@ -56,7 +56,7 @@ public class AddFilmController extends HttpServlet {
 //        System.out.println(fileName);
         String fileName = req.getParameter("film-img-path");
 
-        fileUtils = new FileUtils(ContextPathUtils.getUploadFolderPath());
+        fileUtils = new FileUtils(req.getServletContext().getRealPath("/")+ContextPathUtils.getUploadFolderPath());
 //        fileName = fileUtils.handlesFileName(fileName);
         String filePath = ContextPathUtils.getFileUploadPath(fileName);
 
@@ -78,7 +78,7 @@ public class AddFilmController extends HttpServlet {
         for (String filmGenreID : filmGenreIDArr
         ) {
             FilmGenre filmGenre = new FilmGenre(filmID, filmGenreID);
-            System.out.println(filmGenreDAOServices.saveFilmGenre(filmGenre));
+            System.out.println("AddFilmController Test: " + filmGenreDAOServices.saveFilmGenre(filmGenre));
         }
         if (fileUtils.countDuplicateFile(fileName) == 0)
             FileUploadUtils.uploadFile(req, filePath, "upload-img");

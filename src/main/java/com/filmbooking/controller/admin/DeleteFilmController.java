@@ -30,7 +30,7 @@ public class DeleteFilmController extends HttpServlet {
         filmGenreDAOServices = new FilmGenreDAOServicesImpl();
 
         String filmID = req.getParameter("film-id_hidden");
-        System.out.println(filmID);
+        System.out.println("DeleteFilmController Test: " + filmID);
 
         filmGenreDAOServices.removeFilmGenresWithFilmID(filmID);
         filmDAOServices.deleteFilmByFilmID(filmID);

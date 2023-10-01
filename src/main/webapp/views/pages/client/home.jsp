@@ -17,7 +17,7 @@
             <c:forEach var="film" items="${filmsData}" varStatus="loop">
                 <div class="item-cards container centered-vertical-content" id="card-${loop.index}">
                     <div class="film-img-in-card"
-                         style="background-image: url('<c:url value="/resources/images/DoanQuocDang.png"/>')"
+                         style="background-image: url('<c:url value="${film.imgPath}"/>')"
                          id="film-img-card-${loop.index}"></div>
                     <div class="wrapper">
                         <h4>${film.filmName}</h4>

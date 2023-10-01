@@ -35,16 +35,16 @@ let handlesBackToTop = {
 
 window.addEventListener("scroll", handlesBackToTop.start)
 
-let handlesFloatingTabDynamic = {
-    start: function () {
-        let floatingElement = $("#float-tab");
-        console.log(floatingElement.offsetTop + floatingElement.offsetHeight, window.scrollY)
-        if (window.scrollY > (floatingElement.offsetTop + floatingElement.offsetHeight)) {
-            floatingElement.classList.add("float-tab-dynamic");
-        } else {
-            floatingElement.classList.remove("float-tab-dynamic");
-        }
-    }
-}
-
-window.addEventListener("scroll", handlesFloatingTabDynamic.start)
+// let handlesFloatingTabDynamic = {
+//     start: function () {
+//         let floatingElement = $("#float-tab");
+//         console.log(floatingElement.offsetTop + floatingElement.offsetHeight, window.scrollY)
+//         if (window.scrollY > (floatingElement.offsetTop + floatingElement.offsetHeight)) {
+//             floatingElement.classList.add("float-tab-dynamic");
+//         } else {
+//             floatingElement.classList.remove("float-tab-dynamic");
+//         }
+//     }
+// }
+//
+// window.addEventListener("scroll", handlesFloatingTabDynamic.start)
