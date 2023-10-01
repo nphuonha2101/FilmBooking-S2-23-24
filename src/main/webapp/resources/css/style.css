@@ -985,6 +985,8 @@ table {
 thead {
     background-color: #0556f3;
     padding: 0.5rem;
+    position: sticky;
+    top: 3rem;
 }
 
 td {
