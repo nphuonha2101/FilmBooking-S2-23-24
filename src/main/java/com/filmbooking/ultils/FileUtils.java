@@ -1,5 +1,7 @@
 package com.filmbooking.ultils;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Objects;
@@ -34,6 +36,15 @@ public class FileUtils {
             fileName = "Copy " + duplicateFiles + "-" + fileName;
         }
         return fileName;
+    }
+
+    public static String getRealContextPath(HttpServletRequest req) {
+        String[] realContextPathArr = req.getServletContext().getRealPath("/").split("\\\\");
+        String realContextPath = "";
+        for (int i = 0; i < realContextPathArr.length - 2; i++) {
+            realContextPath += realContextPathArr[i] + "/";
+        }
+        return realContextPath;
     }
 
     public static void main(String[] args) {

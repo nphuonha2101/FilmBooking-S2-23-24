@@ -52,13 +52,9 @@ public class AddFilmController extends HttpServlet {
         filmDAOServices = new FilmDAOServicesImpl();
         filmGenreDAOServices = new FilmGenreDAOServicesImpl();
 
-//        String fileName = req.getParameter("film-img-path");
-//        System.out.println(fileName);
-        String fileName = req.getParameter("film-img-path");
-
-        fileUtils = new FileUtils(req.getServletContext().getRealPath("/")+ContextPathUtils.getUploadFolderPath());
-//        fileName = fileUtils.handlesFileName(fileName);
-        String filePath = ContextPathUtils.getFileUploadPath(fileName);
+        String fileName = req.getParameter("film-img-name");
+        String relativeFilePath = ContextPathUtils.getUploadFileRelativePath(fileName);
+        fileUtils = new FileUtils(FileUtils.getRealContextPath(req) + ContextPathUtils.getUploadFolderPath());
 
 
         String filmID = req.getParameter("film-id");
@@ -71,7 +67,7 @@ public class AddFilmController extends HttpServlet {
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(",");
 
-        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, "", filePath);
+        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, "", relativeFilePath);
 
         boolean addFilmResult = filmDAOServices.saveFilm(newFilm);
 
@@ -81,10 +77,10 @@ public class AddFilmController extends HttpServlet {
             System.out.println("AddFilmController Test: " + filmGenreDAOServices.saveFilmGenre(filmGenre));
         }
         if (fileUtils.countDuplicateFile(fileName) == 0)
-            FileUploadUtils.uploadFile(req, filePath, "upload-img");
+            FileUploadUtils.uploadFile(req, fileName, "upload-img");
         else {
             fileUtils.handlesFileName(fileName);
-            FileUploadUtils.uploadFile(req, filePath, "upload-img");
+            FileUploadUtils.uploadFile(req, fileName, "upload-img");
         }
 
         resp.sendRedirect("admin");

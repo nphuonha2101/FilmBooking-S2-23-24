@@ -4,19 +4,22 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 
-import java.io.*;
-import java.util.zip.InflaterInputStream;
+import java.io.IOException;
 
 public class FileUploadUtils {
 
-    public static void uploadFile(HttpServletRequest req, String filePath, String uploadElementName) {
+    public static void uploadFile(HttpServletRequest req, String fileName, String uploadElementName) {
         try {
-            filePath =  req.getServletContext().getRealPath("/") + filePath;
+            String realFilePath = FileUtils.getRealContextPath(req) + ContextPathUtils.getFileUploadPath(fileName);
+            System.out.println("TEST UPLOAD UTILS: " + realFilePath);
+            System.out.println("TEST UPLOAD UTILS: " + fileName);
             Part filePart = req.getPart(uploadElementName);
-            filePart.write(filePath);
+            filePart.write(realFilePath);
 
         } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 }

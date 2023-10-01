@@ -44,7 +44,7 @@
                     <div class="centered-vertical-content right-col">
                         <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
                         <div class="film-img-in-card" id="film-img"></div>
-                        <input type="hidden" name="film-img-path" id="film-img-path" value="">
+                        <input type="hidden" name="film-img-name" id="film-img-name" value="">
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button">Chọn
                             ảnh</label>

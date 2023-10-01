@@ -1,7 +1,7 @@
 const uploadElement = $("#upload-img");
 const filmImgElement = $("#film-img");
 const imgForm = $("#img-form");
-const hiddenImgFileName = $("#film-img-path");
+const hiddenImgFileName = $("#film-img-name");
 
 console.log(filmImgElement, uploadElement)
 let handleImgInput = {
