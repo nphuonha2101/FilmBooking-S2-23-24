@@ -13,8 +13,13 @@ public class DatabaseServices {
             String DB_URL = "jdbc:postgresql://localhost:5432/FilmBooking";
             String USER_NAME = "postgres";
             String PASSWORD = "nphuonha";
-
             connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+
+//            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            String DB_URL = "jdbc:sqlserver://localhost;databaseName=FilmBooking;user=sqlserver;password=nphuonha2101" +
+//                    ";encrypt=true;trustServerCertificate=true;loginTimeout=30";
+//
+//            connection = DriverManager.getConnection(DB_URL);
 
             if (connection != null) {
                 System.out.println("Connect successfully!");

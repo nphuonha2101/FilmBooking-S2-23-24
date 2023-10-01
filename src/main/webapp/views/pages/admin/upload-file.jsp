@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<div class="container centered-content">
-    <div class="centered-content wrapper">
+<div class="container centered-vertical-content">
+    <div class="centered-vertical-content wrapper">
         <h1>${title}</h1>
         <form action="upload-file" enctype="multipart/form-data" id="form">
             <input type="file" id="file-upload" name="file-upload"/>

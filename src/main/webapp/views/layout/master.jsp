@@ -21,29 +21,41 @@
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 
     <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+    <link rel="icon" href="<c:url value='/resources/images/site-logo.png'/>"/>
 
 </head>
 <body>
 <header>
-    <c:choose>
-        <c:when test="${not empty sessionScope.username}">
-            <jsp:include page="/views/components/already-login-nav.jsp"/>
-        </c:when>
-        <c:when test="${empty sessionScope.username}">
-            <jsp:include page="/views/components/not-login-nav.jsp"/>
-        </c:when>
-    </c:choose>
-    <jsp:include page="${navigationComponent}"/>
+    <jsp:include page="/views/components/navigation-bar.jsp"/>
 </header>
+<main>
+    <section class="hero section">
+<%--        <div class="wrapper" id="welcome">--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${not empty sessionScope.username}">--%>
+<%--                    <h1>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</h1>--%>
+<%--                </c:when>--%>
+<%--                <c:when test="${empty sessionScope.username}">--%>
+<%--                    <h1>Xin chào, khách</h1>--%>
+<%--                </c:when>--%>
+<%--            </c:choose>--%>
+<%--        </div>--%>
 
-<jsp:include page="${dynamicContents}"/>
+        <div class="wrapper" id="banner">
+            <jsp:include page="${bannerPage}"/>
+        </div>
+    </section>
+    <jsp:include page="${dynamicContents}"/>
+    <jsp:include page="${modalName}"/>
+
+</main>
 
 <!-- Modal -->
-<jsp:include page="${modalName}"/>
 <%--<jsp:include page="/views/pages/client/home.jsp"/>--%>
 
 <footer class="footer">
     <jsp:include page="/views/components/footer.jsp"/>
 </footer>
 </body>
+<script type="text/javascript">${additionScript}</script>
 </html>

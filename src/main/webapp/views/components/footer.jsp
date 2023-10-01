@@ -13,13 +13,13 @@
 <div class="two-col__wrapper">
     <div class="left-col__wrapper">
         <div class="footer-text">
-            <h2>Film Booking</h2>
+            <h2>FilmBooking</h2>
             <p>&copy; 2023 - Đoàn Quốc Đăng và Nguyễn Phương Nhã. Mọi quyền được bảo lưu.</p>
         </div>
     </div>
 
     <div class="right-col__wrapper">
-        <h2>Quick Links</h2>
+        <h2>Liên kết nhanh</h2>
         <ul id="link-list">
             <li><a href="https://github.com/conmuaxadan" target="_blank">-> Trang GitHub của Đoàn Quốc Đăng</a></li>
             <li><a href="https://github.com/nphuonha2101" target="_blank">-> Trang GitHub của Nguyễn Phương Nhã</a></li>
@@ -37,14 +37,14 @@ expand_less</span>
 
 <!-- JavaScript -->
 <%--<script type="text/javascript">--%>
-<%--    <%@include file="resources/js/handlesBackToTop.js"%>--%>
+<%--    <%@include file="resources/js/utils.js"%>--%>
 <%--    <%@include file="resources/js/handlesSlideShow.js"%>--%>
 <%--    <%@include file="resources/js/handlesTab.js"%>--%>
 <%--    <%@include file="resources/js/handlesUploadFilmImg.js"%>--%>
 <%--</script>--%>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesNavigationBar.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesBackToTop.js'/>"></script>
-<script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/handlesScrolls.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/resources/js/utils.js'/>"></script>
+<%--<script type="text/javascript" src="<c:url value='/resources/js/handlesTab.js'/>"></script>--%>
 <%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>

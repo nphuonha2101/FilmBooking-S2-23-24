@@ -9,8 +9,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <body>
-<section class="content section centered-content">
-    <div class="centered-content container form__container">
+<section class="content section centered-vertical-content">
+    <div class="centered-vertical-content container form__container">
         <h2 class="title">Đặt lại mật khẩu</h2>
         <span class="successful-span">${successfulMessage}</span>
         <form action="reset-password" method="post">

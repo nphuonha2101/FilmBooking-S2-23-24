@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.admin;
 
 import com.filmbooking.DAOservices.FilmDAOServicesImpl;
 import com.filmbooking.DAOservices.IFilmDAOServices;
@@ -10,31 +10,41 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(name = "admin", value = "/admin")
-public class AdminController extends HttpServlet {
+@WebServlet(name = "edit-film", value = "/edit-film")
+public class EditFilmController extends HttpServlet {
     private IFilmDAOServices filmDAOServices;
+
+    @Override
+    public void init() throws ServletException {
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmDAOServices = new FilmDAOServicesImpl();
+        String filmId = req.getParameter("film-id_hidden");
 
-        req.setAttribute("pageTitle", "Film Booking - Trang Admin");
+        Film film = filmDAOServices.getFilmByID(filmId);
+        req.setAttribute("filmData", film);
+        req.setAttribute("imgPath", film.getImgPath());
 
-        System.out.println(filmDAOServices.getAll().size());
-        req.setAttribute("filmsData", filmDAOServices.getAll());
-//        req.setAttribute("formContentPage",
-//                ContextPathUtils.getAdminPagesPath("add-film.jsp"));
-//
-
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getAdminPagesPath("admin.jsp"));
+        req.setAttribute("pageTitle", "Film Booking - Chỉnh sửa phim");
+        req.setAttribute("sectionTitle", "Chỉnh sửa phim");
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("admin.jsp"),
+                ContextPathUtils.getAdminPagesPath("edit-film.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        RenderViewUtils.updateView(req, resp,
+                ContextPathUtils.getLayoutPath("master.jsp"));
+
+    }
+
+    @Override
+    public void destroy() {
+        filmDAOServices = null;
     }
 }
+

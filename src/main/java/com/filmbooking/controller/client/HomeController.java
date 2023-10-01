@@ -1,4 +1,4 @@
-package com.filmbooking.controller;
+package com.filmbooking.controller.client;
 
 import com.filmbooking.DAOservices.FilmDAOServicesImpl;
 import com.filmbooking.DAOservices.IFilmDAOServices;
@@ -14,31 +14,27 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(name="home", value = "/home")
+@WebServlet(name = "home", value = "/home")
 public class HomeController extends HttpServlet {
     private IFilmDAOServices filmDAOServices;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession userLoginSession = req.getSession();
         String loginUsername = (String) userLoginSession.getAttribute("username");
         filmDAOServices = new FilmDAOServicesImpl();
-        if (loginUsername != null) {
-//            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("already-login-nav.jsp"));
-            req.setAttribute("title", "Phim mới ra rạp");
-            req.setAttribute("filmsData", filmDAOServices.getAll());
 
-            RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
-            req.setAttribute("pageTitle", "Film Booking - Trang chủ");
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    ContextPathUtils.getClientPagesPath("home.jsp"),
-                    ContextPathUtils.getLayoutPath("master.jsp"));
+//            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("navigation-bar.jsp"));
+        req.setAttribute("title", "Phim mới ra rạp");
+        req.setAttribute("filmsData", filmDAOServices.getAll());
 
 
-        }
-        else {
-            resp.sendRedirect("login");
+        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
+        req.setAttribute("pageTitle", "Film Booking - Trang chủ");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("home.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
 
-        }
 
     }
 }
