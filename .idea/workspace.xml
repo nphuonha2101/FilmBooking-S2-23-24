@@ -10,16 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add film function work not correctly, small changes about UI">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/UUIDUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/databaseConfig/DatabaseServices.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ContextPathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/ContextPathUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUploadUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUploadUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/FileUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesUploadFilmImg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesUploadFilmImg.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,38 +85,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "experiment",
-    "last_opened_file_path": "E:/Java Workspace/Experiment/FilmBooking-WebProgramming/src/main/webapp/resources/images",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.toDoOptions",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;experiment&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Java Workspace/Experiment/FilmBooking-WebProgramming/src/main/webapp/resources/images&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.toDoOptions&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql",
-      "sqlserver"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;,
+      &quot;sqlserver&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Java Workspace\Experiment\FilmBooking-WebProgramming\src\main\webapp\resources\images" />
@@ -162,6 +158,19 @@
     </configuration>
     <configuration name="FileUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.FileUtils" />
+      <module name="FilmBooking-WebProgramming" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.filmbooking.ultils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UUIDUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.UUIDUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
@@ -262,6 +271,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.UUIDUtils" />
         <item itemvalue="Application.FileUploadUtils" />
         <item itemvalue="Application.FileUtils" />
         <item itemvalue="Application.DateAndTimeUtils" />
@@ -326,6 +336,7 @@
       <workItem from="1696090990383" duration="2597000" />
       <workItem from="1696122256745" duration="2938000" />
       <workItem from="1696167729326" duration="3996000" />
+      <workItem from="1696311641807" duration="1437000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />

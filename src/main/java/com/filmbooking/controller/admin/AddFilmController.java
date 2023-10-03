@@ -6,10 +6,7 @@ import com.filmbooking.DAOservices.IFilmDAOServices;
 import com.filmbooking.DAOservices.IFilmGenreDAOServices;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.FileUploadUtils;
-import com.filmbooking.ultils.FileUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.ultils.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -53,6 +50,11 @@ public class AddFilmController extends HttpServlet {
         filmGenreDAOServices = new FilmGenreDAOServicesImpl();
 
         String fileName = req.getParameter("film-img-name");
+
+        // generate uuid from filename
+        fileName = UUIDUtils.generateRandomUUID(fileName);
+
+
         String relativeFilePath = ContextPathUtils.getUploadFileRelativePath(fileName);
         fileUtils = new FileUtils(FileUtils.getRealContextPath(req) + ContextPathUtils.getUploadFolderPath());
 
