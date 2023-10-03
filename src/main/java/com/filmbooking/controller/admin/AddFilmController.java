@@ -65,11 +65,12 @@ public class AddFilmController extends HttpServlet {
         String filmDirector = req.getParameter("director");
         String filmActors = req.getParameter("actors");
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
+        String filmDescription = req.getParameter("film-description");
 
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(",");
 
-        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, "", relativeFilePath);
+        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, relativeFilePath);
 
         boolean addFilmResult = filmDAOServices.saveFilm(newFilm);
 
@@ -86,7 +87,7 @@ public class AddFilmController extends HttpServlet {
         }
 
         resp.sendRedirect("admin");
-}
+    }
 
     @Override
     public void destroy() {

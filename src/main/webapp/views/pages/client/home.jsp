@@ -25,11 +25,11 @@
                         <p>Giá vé: ${film.filmPrice} VNĐ/người</p>
                         <p>Đạo diễn: ${film.director}</p>
                             <%--                    <p>Thể loại: ${film.genre}</p>--%>
-                        <form action="" class="hidden-form" id="hidden-form" method="get">
-                            <input type="hidden" name="filmID" value="${film.filmID}">
-                        </form>
                     </div>
-                    <button class="outlined-button button show-modal-button">Đặt phim</button>
+                    <form action="book-film" class="hidden-form" id="hidden-form" method="get">
+                        <input type="hidden" name="film-id" value="${film.filmID}">
+                        <input type="submit" class="outlined-button button" value="Đặt phim"/>
+                    </form>
                 </div>
             </c:forEach>
 

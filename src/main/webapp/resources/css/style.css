@@ -457,6 +457,12 @@ input[type="submit"]:hover {
 }
 
 
+.readonly-input {
+    background-color: #e6f5ff !important;
+    border: 2px solid #0556f3 !important;
+}
+
+
 /*!* custom scroll bar *!*/
 /*::-webkit-scrollbar {*/
 /*    width: 0.5rem;*/
@@ -514,13 +520,14 @@ input[type="submit"]:hover {
 
 .back-to-top:hover {
     background-color: #2b324d;
-
-    > * {
-        color: #ccedff;
-    }
-
     transition: 0.3s ease-out;
 }
+
+.back-to-top:hover span {
+    color: #ccedff;
+    transition: 0.3s ease-out;
+}
+
 
 
 .grid-items {
