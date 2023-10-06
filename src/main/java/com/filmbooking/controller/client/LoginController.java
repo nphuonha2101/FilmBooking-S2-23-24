@@ -2,27 +2,23 @@ package com.filmbooking.controller.client;
 
 import java.io.*;
 
-import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
-import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.services.UserServicesImpl;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
-
-    private IUserDAOServices userDAOServices;
-
+    private UserServicesImpl userServices;
     private String viewPath = ContextPathUtils.getClientPagesPath("login.jsp");
     private String layoutPath = ContextPathUtils.getLayoutPath("master.jsp");
 
     @Override
     public void init() throws ServletException {
-        super.init();
+
     }
 
     @Override
@@ -38,14 +34,14 @@ public class LoginController extends HttpServlet {
 
         User loginUser = null;
 
-        userDAOServices = new UserDAOServicesImpl();
+        userServices = new UserServicesImpl();
 
-        if (userDAOServices.getUserByUsername(username) == null) {
+        if (userServices.getByUsername(username) == null) {
             req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
             RenderViewUtils.updateView(req, resp, viewPath);
             RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
         } else {
-            loginUser = userDAOServices.getUserByUsername(username);
+            loginUser = userServices.getByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
                 HttpSession userSession = req.getSession();
                 userSession.setAttribute("username", loginUser.getUsername());

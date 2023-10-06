@@ -1,7 +1,8 @@
 package com.filmbooking.controller.admin;
 
-import com.filmbooking.DAOservices.FilmDAOServicesImpl;
-import com.filmbooking.DAOservices.IFilmDAOServices;
+
+import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.IFilmServices;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "filmManagement", value = "/film-management")
 public class FilmManagementController extends HttpServlet {
-    private IFilmDAOServices filmDAOServices;
+    private IFilmServices filmServices;
 
     @Override
     public void init() throws ServletException {
@@ -23,9 +24,9 @@ public class FilmManagementController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmDAOServices = new FilmDAOServicesImpl();
+        filmServices= new FilmServicesImpl();
         req.setAttribute("sectionTitle", "Quản lý phim");
-        req.setAttribute("filmsData", filmDAOServices.getAll());
+        req.setAttribute("filmsData", filmServices.getAll());
         req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
 
         RenderViewUtils.renderViewToLayout(req, resp,
@@ -43,6 +44,6 @@ public class FilmManagementController extends HttpServlet {
 
     @Override
     public void destroy() {
-        filmDAOServices = null;
+        filmServices = null;
     }
 }

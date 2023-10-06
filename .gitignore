@@ -38,3 +38,7 @@ build/
 ### Mac OS ###
 .DS_Store
 /src/main/webapp/resources/upload/
+
+
+### ignore upload items ###
+/src/main/webapp/resources/images/upload/

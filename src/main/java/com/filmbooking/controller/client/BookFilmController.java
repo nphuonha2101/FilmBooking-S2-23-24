@@ -1,8 +1,8 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.DAOservices.FilmDAOServicesImpl;
-import com.filmbooking.DAOservices.IFilmDAOServices;
 import com.filmbooking.model.Film;
+import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.IFilmServices;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "bookFilm", value="/book-film")
 public class BookFilmController extends HttpServlet {
-    private IFilmDAOServices filmDAOServices;
+    private IFilmServices filmServices;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -23,9 +23,10 @@ public class BookFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmDAOServices = new FilmDAOServicesImpl();
+        filmServices = new FilmServicesImpl();
+
         String filmID = req.getParameter("film-id");
-        Film bookedFilm = filmDAOServices.getFilmByID(filmID);
+        Film bookedFilm = filmServices.getByFilmID(filmID);
 
         req.setAttribute("filmData", bookedFilm);
 
