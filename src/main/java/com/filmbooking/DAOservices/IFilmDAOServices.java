@@ -10,5 +10,6 @@ public interface IFilmDAOServices {
     Film getFilmByID(String filmID);
     List<Film> getFilmByName(String filmName);
     boolean deleteFilm(Film film);
+    boolean deleteFilmByFilmID(String filmID);
 
 }

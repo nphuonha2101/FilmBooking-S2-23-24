@@ -1,15 +1,12 @@
 const uploadElement = $("#upload-img");
 const filmImgElement = $("#film-img");
 const imgForm = $("#img-form");
-const hiddenImgFileName = $("#film-img-path");
+const hiddenImgFileName = $("#film-img-name");
 
 console.log(filmImgElement, uploadElement)
 let handleImgInput = {
     start: () => {
-        uploadElement.addEventListener("change", handleImgInput.handleInput)
-
-
-
+        uploadElement.addEventListener("change", handleImgInput.handleInput);
 },
     handleInput : function() {
         let imgFile = this.files[0];

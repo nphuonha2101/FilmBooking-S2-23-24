@@ -34,7 +34,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
                 String userFullName = resultSet.getString("user_fullname");
                 String userEmail = resultSet.getString("user_email");
                 String userPassword = resultSet.getString("user_password");
-                String userRole = resultSet.getString("user_role");
+                String userRole = resultSet.getString("account_role");
 
                 User user = new User(username, userFullName, userEmail, userPassword, userRole);
 
@@ -59,7 +59,7 @@ public class UserDAOServicesImpl implements IUserDAOServices {
         userList.add(user);
 
         Connection connection = databaseServices.getConnection();
-        String queryInsert = "INSERT INTO user_info(username, user_fullname, user_email, user_password, user_role) " + "VALUES(?, ?, ?, ?, ?)";
+        String queryInsert = "INSERT INTO user_info(username, user_fullname, user_email, user_password, account_role) " + "VALUES(?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = null;
         try {

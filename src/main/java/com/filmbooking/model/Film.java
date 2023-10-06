@@ -1,23 +1,29 @@
 package com.filmbooking.model;
 
+import java.io.File;
+
 public class Film {
     private String filmID;
     private String filmName;
-    private double price;
-    private String roomID;
-    private String genre;
+    private double filmPrice;
+    private String director;
+    private String actors;
+    private int filmLength;
+    private String filmDescription;
     private String imgPath;
 
-    public Film(String filmID, String filmName, double price, String roomID, String genre, String imgPath) {
+
+    public Film(String filmID, String filmName, double filmPrice, String director, String actors, int filmLength, String filmDescription, String imgPath) {
         this.filmID = filmID;
         this.filmName = filmName;
-        this.price = price;
-        this.roomID = roomID;
-        this.genre = genre;
+        this.filmPrice = filmPrice;
+        this.director = director;
+        this.actors = actors;
+        this.filmLength = filmLength;
+        this.filmDescription = filmDescription;
         this.imgPath = imgPath;
     }
 
-    // ------ GETTER AND SETTER ------ //
 
     public String getFilmID() {
         return filmID;
@@ -35,28 +41,44 @@ public class Film {
         this.filmName = filmName;
     }
 
-    public double getPrice() {
-        return price;
+    public double getFilmPrice() {
+        return filmPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setFilmPrice(double filmPrice) {
+        this.filmPrice = filmPrice;
     }
 
-    public String getRoomID() {
-        return roomID;
+    public String getDirector() {
+        return director;
     }
 
-    public void setRoomID(String roomID) {
-        this.roomID = roomID;
+    public void setDirector(String director) {
+        this.director = director;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getActors() {
+        return actors;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
+
+    public int getFilmLength() {
+        return filmLength;
+    }
+
+    public void setFilmLength(int filmLength) {
+        this.filmLength = filmLength;
+    }
+
+    public String getFilmDescription() {
+        return filmDescription;
+    }
+
+    public void setFilmDescription(String filmDescription) {
+        this.filmDescription = filmDescription;
     }
 
     public String getImgPath() {
