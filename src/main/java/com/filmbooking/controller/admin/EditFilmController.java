@@ -1,8 +1,7 @@
 package com.filmbooking.controller.admin;
 
-import com.filmbooking.DAOservices.FilmDAOServicesImpl;
-import com.filmbooking.DAOservices.IFilmDAOServices;
 import com.filmbooking.model.Film;
+import com.filmbooking.services.FilmServicesImpl;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -14,7 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "edit-film", value = "/edit-film")
 public class EditFilmController extends HttpServlet {
-    private IFilmDAOServices filmDAOServices;
+    private FilmServicesImpl filmDAOServices;
 
     @Override
     public void init() throws ServletException {
@@ -23,12 +22,12 @@ public class EditFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmDAOServices = new FilmDAOServicesImpl();
+        filmDAOServices = new FilmServicesImpl();
         String filmId = req.getParameter("film-id_hidden");
 
-        Film film = filmDAOServices.getFilmByID(filmId);
-        req.setAttribute("filmData", film);
-        req.setAttribute("imgPath", film.getImgPath());
+//        Film film = filmDAOServices.getFilmByID(filmId);
+//        req.setAttribute("filmData", film);
+//        req.setAttribute("imgPath", film.getImgPath());
 
         req.setAttribute("pageTitle", "Film Booking - Chỉnh sửa phim");
         req.setAttribute("sectionTitle", "Chỉnh sửa phim");

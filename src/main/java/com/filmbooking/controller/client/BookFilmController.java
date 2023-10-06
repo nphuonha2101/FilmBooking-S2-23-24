@@ -1,6 +1,6 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.client;
 
-
+import com.filmbooking.model.Film;
 import com.filmbooking.services.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.ultils.ContextPathUtils;
@@ -13,37 +13,40 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "filmManagement", value = "/film-management")
-public class FilmManagementController extends HttpServlet {
+@WebServlet(name = "bookFilm", value="/book-film")
+public class BookFilmController extends HttpServlet {
     private IFilmServices filmServices;
-
     @Override
     public void init() throws ServletException {
-
+        super.init();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices= new FilmServicesImpl();
-        req.setAttribute("sectionTitle", "Quản lý phim");
-        req.setAttribute("filmsData", filmServices.getAll());
-        req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
+        filmServices = new FilmServicesImpl();
+
+        String filmID = req.getParameter("film-id");
+        Film bookedFilm = filmServices.getByFilmID(filmID);
+
+        req.setAttribute("filmData", bookedFilm);
+
+        req.setAttribute("sectionTitle", "Thông tin đặt phim");
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("film-management.jsp"),
+                ContextPathUtils.getClientPagesPath("book-film.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        super.doPost(req, resp);
     }
 
     @Override
     public void destroy() {
-        filmServices = null;
+        super.destroy();
     }
 }

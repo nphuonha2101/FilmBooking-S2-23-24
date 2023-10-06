@@ -1,7 +1,8 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.DAOservices.IUserDAOServices;
-import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.model.User;
+import com.filmbooking.services.IUserServices;
+import com.filmbooking.services.UserServicesImpl;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name="resetPassword", value = "/reset-password")
 public class ResetPasswordController extends HttpServlet {
-    private IUserDAOServices userDAOServices;
+    private IUserServices userServices;
     @Override
     public void init() throws ServletException {
         super.init();
@@ -33,12 +34,17 @@ public class ResetPasswordController extends HttpServlet {
         String newPassword = req.getParameter("new-password");
         String confirmNewPassword = req.getParameter("confirm-new-password");
 
-        userDAOServices = new UserDAOServicesImpl();
+        userServices = new UserServicesImpl();
 
         String usernameForgot = (String) req.getSession().getAttribute("forgot-username");
 
+        User foundUser = userServices.getByUsername(usernameForgot);
+
         if (newPassword.equals(confirmNewPassword)) {
-            userDAOServices.changePassword(usernameForgot, newPassword);
+            foundUser.setUserPassword(newPassword);
+
+            userServices.update(foundUser);
+
             req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
                     "task_alt\n" +
                     "</span> Mật khẩu của bạn đã được đặt lại thành công");

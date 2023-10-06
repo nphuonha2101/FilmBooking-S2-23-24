@@ -1,11 +1,10 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
-import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.services.IUserServices;
+import com.filmbooking.services.UserServicesImpl;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet(name = "forgotPassword", value = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
-    private IUserDAOServices userDAOServices;
+    private IUserServices userServices;
 
     @Override
     public void init() throws ServletException {
@@ -38,13 +37,14 @@ public class ForgotPasswordController extends HttpServlet {
         String username = req.getParameter("username");
         String email = req.getParameter("email");
 
-        userDAOServices = new UserDAOServicesImpl();
+        userServices = new UserServicesImpl();
 
-        if (userDAOServices.getUserByUsername(username) == null) {
+        if (userServices.getByUsername(username) == null) {
             req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
         } else {
-            User foundUser = userDAOServices.getUserByUsername(username);
+            User foundUser = userServices.getByUsername(username);
             if (foundUser.getUserEmail().equals(email)) {
+
                 HttpSession session = req.getSession();
                 session.setAttribute("forgot-username", foundUser.getUsername());
 
