@@ -1,8 +1,7 @@
 package com.filmbooking.controller.admin;
 
-import com.filmbooking.DAOservices.FilmDAOServicesImpl;
-import com.filmbooking.DAOservices.IFilmDAOServices;
 import com.filmbooking.model.Film;
+import com.filmbooking.services.IFilmServices;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "admin", value = "/admin")
 public class AdminController extends HttpServlet {
-    private IFilmDAOServices filmDAOServices;
+
 
 
     @Override

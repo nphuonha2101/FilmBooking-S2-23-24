@@ -1,4 +1,4 @@
-package com.filmbooking.databaseConfig;
+package com.filmbooking.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

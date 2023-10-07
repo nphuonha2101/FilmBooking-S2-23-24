@@ -1,8 +1,8 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.DAOservices.IUserDAOServices;
 import com.filmbooking.model.User;
-import com.filmbooking.DAOservices.UserDAOServicesImpl;
+import com.filmbooking.services.IUserServices;
+import com.filmbooking.services.UserServicesImpl;
 import com.filmbooking.ultils.ContextPathUtils;
 import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.RequestDispatcher;
@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet(name = "signup", value = "/signup")
 public class SignupController extends HttpServlet {
 
-    private IUserDAOServices userDAOServices;
+    private IUserServices userServices;
 
     @Override
     public void init() throws ServletException {
@@ -41,15 +41,15 @@ public class SignupController extends HttpServlet {
         String userPassword = request.getParameter("password");
         String confirmPassword = request.getParameter("confirm-password");
 
-        userDAOServices = new UserDAOServicesImpl();
+        userServices = new UserServicesImpl();
 
-        if (userDAOServices.getUserByUsername(username) != null) {
+        if (userServices.getByUsername(username) != null) {
             request.setAttribute("usernameError", "Tên người dùng đã tồn tại!" +
                     " Vui lòng chọn một tên người dùng khác.");
 
         } else if (userPassword.equals(confirmPassword)) {
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
-            userDAOServices.saveUser(newUser);
+            userServices.save(newUser);
             request.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
                     "task_alt </span>" +
                     " Chúc mừng! Tài khoản của bạn đã được khởi tạo.");

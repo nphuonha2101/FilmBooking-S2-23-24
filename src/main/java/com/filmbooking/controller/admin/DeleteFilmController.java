@@ -1,11 +1,8 @@
 package com.filmbooking.controller.admin;
 
-import com.filmbooking.DAOservices.FilmDAOServicesImpl;
-import com.filmbooking.DAOservices.FilmGenreDAOServicesImpl;
-import com.filmbooking.DAOservices.IFilmDAOServices;
-import com.filmbooking.DAOservices.IFilmGenreDAOServices;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+
+import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.IFilmServices;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,8 +13,7 @@ import java.io.IOException;
 
 @WebServlet(name = "deleteFilm", value = "/delete-film")
 public class DeleteFilmController extends HttpServlet {
-    private IFilmDAOServices filmDAOServices;
-    private IFilmGenreDAOServices filmGenreDAOServices;
+    private IFilmServices filmServices;
 
     @Override
     public void init() throws ServletException {
@@ -26,16 +22,15 @@ public class DeleteFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmDAOServices = new FilmDAOServicesImpl();
-        filmGenreDAOServices = new FilmGenreDAOServicesImpl();
+        filmServices = new FilmServicesImpl();
 
         String filmID = req.getParameter("film-id_hidden");
         System.out.println("DeleteFilmController Test: " + filmID);
 
-        filmGenreDAOServices.removeFilmGenresWithFilmID(filmID);
-        filmDAOServices.deleteFilmByFilmID(filmID);
+        System.out.println(filmServices.getByFilmID(filmID));
 
-
+        filmServices.delete(filmServices.getByFilmID(filmID));
+//
         resp.sendRedirect("admin");
 
 
@@ -43,6 +38,6 @@ public class DeleteFilmController extends HttpServlet {
 
     @Override
     public void destroy() {
-        filmDAOServices = null;
+        filmServices = null;
     }
 }

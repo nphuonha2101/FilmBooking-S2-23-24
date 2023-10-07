@@ -1,7 +1,6 @@
-package com.filmbooking.DAOservices;
+package com.filmbooking.dao;
 
-import com.filmbooking.DAOservices.IUserDAOServices;
-import com.filmbooking.databaseConfig.DatabaseServices;
+import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.User;
 
 import java.sql.Connection;
@@ -11,19 +10,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOServicesImpl implements IUserDAOServices {
+public class UserDAOImpl implements IDAO<User> {
     private List<User> userList;
-    private DatabaseServices databaseServices = null;
+    private DatabaseServices databaseServices;
+    private static final String TABLE_NAME = "user_info";
 
-    public UserDAOServicesImpl() {
+    public UserDAOImpl() {
         userList = new ArrayList<>();
         databaseServices = new DatabaseServices();
+        databaseServices.connectDatabase();
+    }
+
+    @Override
+    public List<User> getAll() {
         Connection connection = null;
 
-        databaseServices.connectDatabase();
         if (databaseServices.getConnection() != null) connection = databaseServices.getConnection();
 
-        String queryGet = "SELECT * FROM user_info";
+        String queryGet = "SELECT * FROM " + TABLE_NAME;
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryGet);
@@ -46,20 +50,25 @@ public class UserDAOServicesImpl implements IUserDAOServices {
 //            databaseServices.disconnectDatabase();
         }
 
-
-    }
-
-    @Override
-    public List<User> getAll() {
         return userList;
     }
 
     @Override
-    public boolean saveUser(User user) {
-        userList.add(user);
+    public User getByID(String username) {
+        for (User userInList : userList) {
+            if (userInList.getUsername().equalsIgnoreCase(username)) {
+                return userInList;
+            }
+        }
+        return null;
+
+    }
+
+    @Override
+    public void save(User user) {
 
         Connection connection = databaseServices.getConnection();
-        String queryInsert = "INSERT INTO user_info(username, user_fullname, user_email, user_password, account_role) " + "VALUES(?, ?, ?, ?, ?)";
+        String queryInsert = "INSERT INTO " + TABLE_NAME + " (username, user_fullname, user_email, user_password, account_role) " + "VALUES(?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = null;
         try {
@@ -70,47 +79,42 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             preparedStatement.setString(4, user.getUserPassword());
             preparedStatement.setString(5, user.getAccountRole());
 
-            return preparedStatement.execute();
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
 //            databaseServices.disconnectDatabase();
         }
-
     }
 
     @Override
-    public User getUserByUsername(String username) {
-        for (User userInList : userList) {
-            if (userInList.getUsername().equalsIgnoreCase(username)) {
-                return userInList;
-            }
+    public void update(User user) {
+        Connection connection = databaseServices.getConnection();
+        String sql = "UPDATE " + TABLE_NAME + " SET user_fullname = ?, user_email = ?, user_password = ? WHERE username= ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user.getUserFullName());
+            preparedStatement.setString(2, user.getUserEmail());
+            preparedStatement.setString(3, user.getUserPassword());
+            preparedStatement.setString(4, user.getUsername());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        for (User userInList : userList) {
-            if (userInList.getUserEmail().equalsIgnoreCase(email)) {
-                return userInList;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public boolean deleteUser(User user) {
+    public void delete(User user) {
         if (userList.contains(user)) {
-            userList.remove(user);
 
             Connection connection = databaseServices.getConnection();
-            String queryDelete = "DELETE FROM user_info WHERE username = ?";
+            String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE username = ?";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
                 preparedStatement.setString(1, user.getUsername());
 
-                return preparedStatement.execute();
+                preparedStatement.execute();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {
@@ -118,27 +122,6 @@ public class UserDAOServicesImpl implements IUserDAOServices {
             }
 
         }
-        return false;
-    }
 
-    @Override
-    public boolean changePassword(String username, String password) {
-        for (User userInList : userList) {
-            if (userInList.getUsername().equalsIgnoreCase(username)) userInList.setUserPassword(password);
-        }
-
-        Connection connection = databaseServices.getConnection();
-        String queryChangePassword = "UPDATE user_info SET user_password = ? WHERE username = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryChangePassword);
-            preparedStatement.setString(1, password);
-            preparedStatement.setString(2, username);
-
-            return preparedStatement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-//            databaseServices.disconnectDatabase();
-        }
     }
 }
