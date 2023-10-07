@@ -59,7 +59,6 @@ public class AddFilmController extends HttpServlet {
         String filmActors = req.getParameter("actors");
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
         String filmDescription = req.getParameter("film-description");
-
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(",");
 

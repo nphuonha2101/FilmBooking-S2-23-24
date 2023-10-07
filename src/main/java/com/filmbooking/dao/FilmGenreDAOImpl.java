@@ -71,12 +71,12 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
     @Override
     public void update(FilmGenre filmGenre) {
         Connection connection = databaseServices.getConnection();
-        String qyerySet = "UPDATE " + TABLE_NAME + " SET genre_id = ?, film_id = ? WHERE genre_id = ? AND film_id = ?";
+        String querySet = "UPDATE " + TABLE_NAME + " SET genre_id = ?, film_id = ? WHERE genre_id = ? AND film_id = ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(qyerySet);
+            PreparedStatement preparedStatement = connection.prepareStatement(querySet);
 
             preparedStatement.setString(1, filmGenre.getGenreID());
-            preparedStatement.setString(1, filmGenre.getFilmID());
+            preparedStatement.setString(2, filmGenre.getFilmID());
             preparedStatement.setString(3, filmGenre.getGenreID());
             preparedStatement.setString(4, filmGenre.getFilmID());
 
