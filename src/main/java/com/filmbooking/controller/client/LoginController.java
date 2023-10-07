@@ -51,6 +51,12 @@ public class LoginController extends HttpServlet {
 
                 System.out.println("Login Controller Test: " + loginUser.getAccountRole());
 
+                // return to previous page that was visited before login
+                String previousPage = (String) userSession.getAttribute("previousPage");
+                if (previousPage != null && !previousPage.equals("/login")) {
+                    resp.sendRedirect(previousPage);
+                    return;
+                }
                 resp.sendRedirect("home");
 
 
