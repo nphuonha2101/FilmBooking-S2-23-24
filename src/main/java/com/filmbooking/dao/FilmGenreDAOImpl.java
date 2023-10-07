@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.databaseConfig.DatabaseServices;
+import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.FilmGenre;
 
 import java.sql.Connection;

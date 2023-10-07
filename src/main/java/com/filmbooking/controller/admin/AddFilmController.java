@@ -1,12 +1,11 @@
 package com.filmbooking.controller.admin;
 
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenre;
-import com.filmbooking.services.FilmGenreServicesImpl;
 import com.filmbooking.services.FilmServicesImpl;
-import com.filmbooking.services.IFilmGenreServices;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.ultils.*;
+import com.filmbooking.ultils.fileUtils.FileUploadUtils;
+import com.filmbooking.ultils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;

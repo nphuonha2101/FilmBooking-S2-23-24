@@ -1,10 +1,10 @@
-package com.filmbooking.ultils;
+package com.filmbooking.ultils.fileUtils;
 
+import com.filmbooking.ultils.ContextPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
 
-import java.io.File;
 import java.io.IOException;
 
 public class FileUploadUtils {

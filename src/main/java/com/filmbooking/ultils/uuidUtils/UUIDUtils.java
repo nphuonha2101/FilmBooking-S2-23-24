@@ -1,4 +1,4 @@
-package com.filmbooking.ultils;
+package com.filmbooking.ultils.uuidUtils;
 
 import java.util.UUID;
 
