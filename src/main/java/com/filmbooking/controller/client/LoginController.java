@@ -4,8 +4,8 @@ import java.io.*;
 
 import com.filmbooking.model.User;
 import com.filmbooking.services.UserServicesImpl;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -13,18 +13,13 @@ import jakarta.servlet.annotation.*;
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
     private UserServicesImpl userServices;
-    private String viewPath = ContextPathUtils.getClientPagesPath("login.jsp");
-    private String layoutPath = ContextPathUtils.getLayoutPath("master.jsp");
-
-    @Override
-    public void init() throws ServletException {
-
-    }
+    private final String VIEW_PATH = ContextPathUtils.getClientPagesPath("login.jsp");
+    private final String LAYOUT_PATH = ContextPathUtils.getLayoutPath("master.jsp");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-        RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+        RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
     }
 
     @Override
@@ -38,8 +33,8 @@ public class LoginController extends HttpServlet {
 
         if (userServices.getByUsername(username) == null) {
             req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
-            RenderViewUtils.updateView(req, resp, viewPath);
-            RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+            RenderViewUtils.updateView(req, resp, VIEW_PATH);
+            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         } else {
             loginUser = userServices.getByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
@@ -62,14 +57,11 @@ public class LoginController extends HttpServlet {
 
             } else {
                 req.setAttribute("passwordError", "Mật khẩu của bạn không đúng!");
-                RenderViewUtils.updateView(req, resp, viewPath);
-                RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+                RenderViewUtils.updateView(req, resp, VIEW_PATH);
+                RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
             }
         }
     }
 
 
-    @Override
-    public void destroy() {
-    }
 }

@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
-    private List<FilmGenre> filmGenreList;
-    private DatabaseServices databaseServices;
-    private static String TABLE_NAME = "film_genre";
+    private final List<FilmGenre> filmGenreList;
+    private final DatabaseServices databaseServices;
+    private static final String TABLE_NAME = "film_genre";
 
 
     public FilmGenreDAOImpl() {

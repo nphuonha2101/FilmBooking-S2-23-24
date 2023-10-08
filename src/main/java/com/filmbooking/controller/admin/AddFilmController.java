@@ -3,9 +3,9 @@ package com.filmbooking.controller.admin;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
-import com.filmbooking.ultils.*;
-import com.filmbooking.ultils.fileUtils.FileUploadUtils;
-import com.filmbooking.ultils.uuidUtils.UUIDUtils;
+import com.filmbooking.utils.*;
+import com.filmbooking.utils.fileUtils.FileUploadUtils;
+import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,11 +19,6 @@ import java.io.IOException;
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
     private IFilmServices filmServices;
-
-    @Override
-    public void init() throws ServletException {
-
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -60,7 +55,7 @@ public class AddFilmController extends HttpServlet {
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
         String filmDescription = req.getParameter("film-description");
         String filmGenreIDs = req.getParameter("genre-ids");
-        String[] filmGenreIDArr = filmGenreIDs.split(",");
+        String[] filmGenreIDArr = filmGenreIDs.split(" ");
 
         Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, relativeFilePath);
 

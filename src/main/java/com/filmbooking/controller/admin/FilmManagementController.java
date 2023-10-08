@@ -3,8 +3,8 @@ package com.filmbooking.controller.admin;
 
 import com.filmbooking.services.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,11 +16,6 @@ import java.io.IOException;
 @WebServlet(name = "filmManagement", value = "/film-management")
 public class FilmManagementController extends HttpServlet {
     private IFilmServices filmServices;
-
-    @Override
-    public void init() throws ServletException {
-
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

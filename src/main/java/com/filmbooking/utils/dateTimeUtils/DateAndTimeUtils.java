@@ -1,4 +1,4 @@
-package com.filmbooking.ultils.dateTimeUtils;
+package com.filmbooking.utils.dateTimeUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

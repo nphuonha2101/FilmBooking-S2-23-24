@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements IDAO<User> {
-    private List<User> userList;
-    private DatabaseServices databaseServices;
+    private final List<User> userList;
+    private final DatabaseServices databaseServices;
     private static final String TABLE_NAME = "user_info";
 
     public UserDAOImpl() {

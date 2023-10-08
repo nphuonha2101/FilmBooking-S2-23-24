@@ -4,10 +4,10 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
 import com.filmbooking.services.FilmGenreServicesImpl;
 import com.filmbooking.services.FilmServicesImpl;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
-import com.filmbooking.ultils.fileUtils.FileUploadUtils;
-import com.filmbooking.ultils.uuidUtils.UUIDUtils;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.fileUtils.FileUploadUtils;
+import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,11 +23,6 @@ import java.util.List;
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
     private FilmGenreServicesImpl filmGenreServices;
-
-    @Override
-    public void init() throws ServletException {
-
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,7 +43,7 @@ public class EditFilmController extends HttpServlet {
             if (filmGenre.getFilmID().equalsIgnoreCase(filmId)) {
                 countGenre++;
                 if (countGenre > 1)
-                    filmGenreIDs.append(filmGenre.getGenreID()).append(",");
+                    filmGenreIDs.append(filmGenre.getGenreID()).append(" ");
                 else filmGenreIDs.append(filmGenre.getGenreID());
             }
         }
@@ -78,7 +73,7 @@ public class EditFilmController extends HttpServlet {
         String filmImgName = req.getParameter("film-img-name");
         String filmGenres = req.getParameter("genre-ids");
 
-        String[] filmGenreIDArr = filmGenres.split(",");
+        String[] filmGenreIDArr = filmGenres.split(" ");
         Film editFilm = filmServices.getByFilmID(filmId);
 
         editFilm.setFilmName(filmName);

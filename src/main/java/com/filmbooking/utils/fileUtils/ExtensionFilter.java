@@ -1,4 +1,4 @@
-package com.filmbooking.ultils.fileUtils;
+package com.filmbooking.utils.fileUtils;
 
 import java.io.File;
 import java.io.FilenameFilter;

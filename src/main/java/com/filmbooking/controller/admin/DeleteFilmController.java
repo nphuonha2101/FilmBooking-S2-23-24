@@ -16,11 +16,6 @@ public class DeleteFilmController extends HttpServlet {
     private IFilmServices filmServices;
 
     @Override
-    public void init() throws ServletException {
-
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
 

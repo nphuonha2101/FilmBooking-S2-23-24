@@ -1,4 +1,4 @@
-package com.filmbooking.ultils.fileUtils;
+package com.filmbooking.utils.fileUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

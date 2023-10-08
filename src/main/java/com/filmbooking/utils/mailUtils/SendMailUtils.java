@@ -1,12 +1,9 @@
-package com.filmbooking.ultils.mailUtils;
+package com.filmbooking.utils.mailUtils;
 
-import com.google.api.client.repackaged.org.apache.commons.codec.binary.Base64;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 public class SendMailUtils {

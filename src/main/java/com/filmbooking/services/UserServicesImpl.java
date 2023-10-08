@@ -7,7 +7,7 @@ import com.filmbooking.model.User;
 import java.util.List;
 
 public class UserServicesImpl implements IUserServices {
-    private IDAO<User> userDAO;
+    private final IDAO<User> userDAO;
 
     public UserServicesImpl() {
         userDAO = new UserDAOImpl();

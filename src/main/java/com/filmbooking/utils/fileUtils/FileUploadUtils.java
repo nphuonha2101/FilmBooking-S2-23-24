@@ -1,6 +1,6 @@
-package com.filmbooking.ultils.fileUtils;
+package com.filmbooking.utils.fileUtils;
 
-import com.filmbooking.ultils.ContextPathUtils;
+import com.filmbooking.utils.ContextPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;

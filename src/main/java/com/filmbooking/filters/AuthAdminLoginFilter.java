@@ -1,6 +1,6 @@
 package com.filmbooking.filters;
 
-import com.filmbooking.ultils.RedirectPageUtils;
+import com.filmbooking.utils.RedirectPageUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
@@ -36,8 +36,4 @@ public class AuthAdminLoginFilter extends HttpFilter {
         chain.doFilter(req, resp);
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }
