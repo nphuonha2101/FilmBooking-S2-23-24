@@ -72,7 +72,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             preparedStatement.setString(2, showtime.getRoomID());
             preparedStatement.setDate(3, (java.sql.Date) showtime.getShowtimeDate());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -91,7 +91,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             preparedStatement.setDate(3, (java.sql.Date) showtime.getShowtimeDate());
             preparedStatement.setString(4, showtime.getShowtimeID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +107,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
             preparedStatement.setString(1, showtime.getShowtimeID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

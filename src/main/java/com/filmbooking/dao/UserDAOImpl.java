@@ -81,7 +81,7 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.setString(4, user.getUserPassword());
             preparedStatement.setString(5, user.getAccountRole());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -100,7 +100,7 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.setString(3, user.getUserPassword());
             preparedStatement.setString(4, user.getUsername());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -116,7 +116,7 @@ public class UserDAOImpl implements IDAO<User> {
                 PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
                 preparedStatement.setString(1, user.getUsername());
 
-                preparedStatement.execute();
+                preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {

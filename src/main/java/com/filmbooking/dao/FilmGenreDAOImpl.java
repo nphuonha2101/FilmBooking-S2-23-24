@@ -62,7 +62,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(1, filmGenre.getGenreID());
             preparedStatement.setString(2, filmGenre.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +80,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(3, filmGenre.getGenreID());
             preparedStatement.setString(4, filmGenre.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,7 +95,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             deleteStatement.setString(1, filmGenre.getFilmID());
             deleteStatement.setString(2, filmGenre.getGenreID());
 
-            deleteStatement.execute();
+            deleteStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

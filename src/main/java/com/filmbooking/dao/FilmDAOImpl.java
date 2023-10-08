@@ -78,7 +78,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.setString(7, film.getFilmDescription());
             preparedStatement.setString(8, film.getImgPath());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +102,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.setString(7, film.getImgPath());
             preparedStatement.setString(8, film.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -117,7 +117,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             PreparedStatement preparedStatement = connection.prepareStatement(queryDel);
             preparedStatement.setString(1, film.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
