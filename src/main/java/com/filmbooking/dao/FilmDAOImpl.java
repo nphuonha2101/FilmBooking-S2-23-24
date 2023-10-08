@@ -53,6 +53,8 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public Film getByID(String id) {
+        getAll();
+
         for (Film filmInList : filmList
         ) {
             if (filmInList.getFilmID().equalsIgnoreCase(id))

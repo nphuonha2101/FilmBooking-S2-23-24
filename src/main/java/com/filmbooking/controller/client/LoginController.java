@@ -1,14 +1,18 @@
 package com.filmbooking.controller.client;
 
-import java.io.*;
-
 import com.filmbooking.model.User;
-import com.filmbooking.services.UserServicesImpl;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
@@ -46,13 +50,10 @@ public class LoginController extends HttpServlet {
 
                 System.out.println("Login Controller Test: " + loginUser.getAccountRole());
 
-                // return to previous page that was visited before login
-                String previousPage = (String) userSession.getAttribute("previousPage");
-                if (previousPage != null && !previousPage.equals("/login")) {
-                    resp.sendRedirect(previousPage);
-                    return;
-                }
-                resp.sendRedirect("home");
+                /* return to previous page that was visited before login
+                 * if it has no previous page, return to home page
+                 */
+                RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
 
 
             } else {

@@ -1,13 +1,14 @@
-package com.filmbooking.services;
+package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.FilmGenreDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.FilmGenre;
+import com.filmbooking.services.IFilmGenreServices;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmGenreServicesImpl implements IFilmGenreServices{
+public class FilmGenreServicesImpl implements IFilmGenreServices {
     private IDAO<FilmGenre> filmGenreDAO;
 
      public FilmGenreServicesImpl() {

@@ -13,18 +13,27 @@
         <h2 class="title">Đăng ký tài khoản</h2>
         <span class="successful-span">${successfulMessage}</span>
         <form action="signup" method="post">
-            <label for="username">Tên người dùng</label> <span class="error-span" id="username-error">${usernameError}</span>
+            <label for="username">Tên người dùng</label>
             <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
-            <label for="user-full-name">Họ và tên</label> <span class="error-span" id="fullname-error">${fullnameError}</span>
+            <span class="error-span message-span" id="username-error">${usernameError}</span>
+
+            <label for="user-full-name">Họ và tên</label>
             <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" required>
-            <label for="email">Email</label> <span class="error-span" id="email-error">${emailError}</span>
+            <span class="error-span message-span" id="fullname-error">${fullnameError}</span>
+
+            <label for="email">Email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
-            <label for="password">Mật khẩu</label> <span class="error-span" id="password-error">${passwordError}</span>
+            <span class="error-span message-span" id="email-error">${emailError}</span>
+
+            <label for="password">Mật khẩu</label>
             <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
-            <label for="confirm-password">Xác nhận mật khẩu</label> <span
-                class="error-span" id="confirm-password-error">${confirmPasswordError}</span>
+            <span class="error-span message-span" id="password-error">${passwordError}</span>
+
+            <label for="confirm-password">Xác nhận mật khẩu</label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="Xác nhận mật khẩu"
                    required>
+            <span class="error-span message-span" id="confirm-password-error">${confirmPasswordError}</span>
+
 
             <input type="submit" class="primary-filled-button button" value="Đăng ký">
         </form>

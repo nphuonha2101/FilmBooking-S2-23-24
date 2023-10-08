@@ -13,10 +13,14 @@
         <h2 class="title">Quên mật khẩu</h2>
 <%--        <p style="text-align: center">Forgot your password? No problem, keeping your smile, and we'll get your account back ^^</p>--%>
         <form action="forgot-password" method="post">
-            <label for="username">Tên người dùng</label> <span class="error-span" id="username-error">${usernameError}</span>
+            <label for="username">Tên người dùng</label>
             <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
-            <label for="email">Email</label> <span class="error-span" id="email-error">${emailError}</span>
+            <span class="error-span message-span" id="username-error">${usernameError}</span>
+
+            <label for="email">Email</label>
             <input type="email" name="email" id="email" placeholder="Email" required>
+            <span class="error-span message-span" id="email-error">${emailError}</span>
+
             <input type="submit" class="primary-filled-button button" value="Gửi">
         </form>
     </div>

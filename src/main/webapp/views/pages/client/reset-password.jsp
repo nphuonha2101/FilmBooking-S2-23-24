@@ -14,10 +14,15 @@
         <h2 class="title">Đặt lại mật khẩu</h2>
         <span class="successful-span">${successfulMessage}</span>
         <form action="reset-password" method="post">
-            <label for="new-password">Mật khẩu mới</label> <span class="error-span" id="password-error">${passwordError}</span>
+            <label for="new-password">Mật khẩu mới</label>
             <input type="password" name="new-password" id="new-password" placeholder="Mật khẩu mới" required>
-            <label for="confirm-new-password">Xác nhận mật khẩu</label> <span class="error-span" id="confirm-password-error">${confirmPasswordError}</span>
+            <span class="error-span message-span" id="password-error">${passwordError}</span>
+
+            <label for="confirm-new-password">Xác nhận mật khẩu</label>
             <input type="password" name="confirm-new-password" id="confirm-new-password" placeholder="Xác nhận mật khẩu" required>
+            <span class="error-span message-span"
+                  id="confirm-password-error">${confirmPasswordError}</span>
+
             <input type="submit" class="primary-filled-button button" value="Đặt lại mật khẩu">
         </form>
     <span>${additionElement}</span>

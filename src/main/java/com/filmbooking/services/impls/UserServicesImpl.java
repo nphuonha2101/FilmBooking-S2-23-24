@@ -1,8 +1,9 @@
-package com.filmbooking.services;
+package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.UserDAOImpl;
 import com.filmbooking.model.User;
+import com.filmbooking.services.IUserServices;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public User getByUsername(String id) {
-        getAll();
         return userDAO.getByID(id);
     }
 

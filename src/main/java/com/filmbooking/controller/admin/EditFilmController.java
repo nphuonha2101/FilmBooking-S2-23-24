@@ -2,8 +2,8 @@ package com.filmbooking.controller.admin;
 
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
-import com.filmbooking.services.FilmGenreServicesImpl;
-import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.impls.FilmGenreServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;

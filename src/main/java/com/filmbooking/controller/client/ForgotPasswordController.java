@@ -2,7 +2,7 @@ package com.filmbooking.controller.client;
 
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
-import com.filmbooking.services.UserServicesImpl;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;

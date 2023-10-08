@@ -1,7 +1,7 @@
 package com.filmbooking.controller.admin;
 
 
-import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;

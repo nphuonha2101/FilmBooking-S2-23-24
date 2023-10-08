@@ -13,4 +13,14 @@ public class RedirectPageUtils {
 
         resp.sendRedirect(pageName);
     }
+
+    public static void redirectPreviousPageIfExist(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        HttpSession userSession = req.getSession(false);
+        String previousPage = (String) userSession.getAttribute("previousPage");
+        if (previousPage != null) {
+            resp.sendRedirect(previousPage);
+            return;
+        }
+        resp.sendRedirect("home");
+    }
 }

@@ -55,6 +55,8 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public User getByID(String username) {
+        getAll();
+
         for (User userInList : userList) {
             if (userInList.getUsername().equalsIgnoreCase(username)) {
                 return userInList;

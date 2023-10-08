@@ -1,9 +1,12 @@
-package com.filmbooking.services;
+package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.FilmDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
+import com.filmbooking.services.IFilmGenreServices;
+import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.impls.FilmGenreServicesImpl;
 
 import java.util.List;
 
@@ -27,7 +30,6 @@ public class FilmServicesImpl implements IFilmServices {
 
     @Override
     public Film getByFilmID(String id) {
-        getAll();
         return filmDAO.getByID(id);
     }
 

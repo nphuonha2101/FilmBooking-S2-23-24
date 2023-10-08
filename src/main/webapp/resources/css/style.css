@@ -868,9 +868,14 @@ input[type="submit"]:hover {
 }
 
 /*  Span */
+.message-span {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
 .error-span {
     color: #ff3333;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 .successful-span {
