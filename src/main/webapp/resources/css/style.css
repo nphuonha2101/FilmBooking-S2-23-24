@@ -1085,3 +1085,8 @@ thead > tr > th {
     display: inline;
 }
 
+/* TEST */
+.deactiv {
+    background-color: #2b324d;
+}
+
