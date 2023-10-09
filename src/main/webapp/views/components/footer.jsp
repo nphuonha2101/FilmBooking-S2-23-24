@@ -38,7 +38,7 @@ expand_less</span>
 <!-- JavaScript -->
 <%--<script type="text/javascript">--%>
 <%--    <%@include file="resources/js/utils.js"%>--%>
-<%--    <%@include file="resources/js/main.js"%>--%>
+<%--    <%@include file="resources/js/handlesChooseSeats.js"%>--%>
 <%--    <%@include file="resources/js/handlesTab.js"%>--%>
 <%--    <%@include file="resources/js/handlesUploadFilmImg.js"%>--%>
 <%--</script>--%>
@@ -48,3 +48,4 @@ expand_less</span>
 <%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
 <script type="text/javascript" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>

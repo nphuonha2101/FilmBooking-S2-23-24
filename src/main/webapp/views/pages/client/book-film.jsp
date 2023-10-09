@@ -23,7 +23,8 @@
                     <h3> ${film.filmName}</h3>
                     <br>
                     <p>Giá vé: ${film.filmPrice} VNĐ/người</p>
-                    <p>Đạo diễn: ${film.actors} </p>
+                    <p>Đạo diễn: ${film.director} </p>
+                    <p>Diễn viên: ${film.actors}</p>
                     <p>Độ dài phim: ${film.filmLength} phút</p>
                     <br>
                     <p>Mô tả: ${film.filmDescription}</p>
@@ -39,7 +40,7 @@
 
                 <div class="wrapper">
                     <h3>Chon ghe</h3>
-                    <table>
+                    <table class="seats-table">
                         <tbody>
                         <c:forEach var="row" begin="0" end="10" varStatus="loop">
                             <tr>
@@ -47,10 +48,10 @@
                                     <td style="padding: 0">
                                         <c:choose>
                                             <c:when test="${col eq '5'}">
-                                                <button class="outlined-button deactiv" onclick="alert(this.textContent + ' Not available')">${row} ${col}</button>
+                                                <button class="seats seats-unavailable">${row} ${col}</button>
                                             </c:when>
                                             <c:otherwise>
-                                                <button class="outlined-button" onclick="alert(this.textContent); if (this.classList.contains('primary-filled-button')) {this.classList.remove('primary-filled-button')} else {this.classList.add('primary-filled-button')};">${row} ${col}</button>
+                                                <button class="seats" onclick="alert(this.textContent);">${row} ${col}</button>
                                             </c:otherwise>
                                         </c:choose>
 
@@ -60,6 +61,13 @@
                             </tr>
                         </c:forEach>
                         </tbody>
+                        
+                        <div class="wrapper">
+                            <form>
+                                <input type="hidden" name="seat" id="seat">
+                                <input type="submit" value="Đặt vé">
+                            </form>
+                        </div>
 
                     </table>
                 </div>

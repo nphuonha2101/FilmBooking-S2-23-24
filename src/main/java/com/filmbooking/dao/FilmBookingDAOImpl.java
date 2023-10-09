@@ -69,7 +69,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.setString(1, filmBooking.getShowtimeID());
             preparedStatement.setString(2, filmBooking.getUsername());
             preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
-            preparedStatement.setString(4,filmBooking.getSeat());
+//            preparedStatement.setString(4,filmBooking.getSeat());
             preparedStatement.setDouble(5,filmBooking.getTotalPrice());
 
             preparedStatement.executeUpdate();
@@ -92,7 +92,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.setString(1, filmBooking.getShowtimeID());
             preparedStatement.setString(2, filmBooking.getUsername());
             preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
-            preparedStatement.setString(4, filmBooking.getSeat());
+//            preparedStatement.setString(4, filmBooking.getSeat());
             preparedStatement.setDouble(5, filmBooking.getTotalPrice());
 
 
@@ -117,4 +117,4 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
         }
     }
     }
-}
+
