@@ -41,7 +41,7 @@ public class FilmDAOImpl implements IDAO<Film> {
                 String imgPath = resultSet.getString("img_path");
                 Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, imgPath);
 
-                filmList.add(film);
+                filmList.add(0, film);
             }
 
         } catch (SQLException e) {

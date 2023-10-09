@@ -73,10 +73,10 @@
                 </div>
 
                 <div class="wrapper centered-vertical-content">
-                    <label for="film-description">
+                    <label for="film-description_textarea">
                         Mô tả phim
                     </label>
-                    <textarea name="film-description" id="film-description" cols="200" rows="200"
+                    <textarea class="none-resize_textarea" name="film-description" id="film-description_textarea"
                               placeholder="Nhập mô tả phim">${editFilm.filmDescription}</textarea>
                     <input type="submit" class="primary-filled-button button" value="Sửa phim">
                 </div>

@@ -64,10 +64,11 @@
                 </div>
 
                 <div class="wrapper centered-vertical-content">
-                    <label for="film-description">
+                    <label for="film-description_textarea">
                         Mô tả phim
                     </label>
-                    <textarea name="film-description" id="film-description" cols="200" rows="200" placeholder="Nhập mô tả phim"></textarea>
+                    <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
+                               placeholder="Nhập mô tả phim"></textarea>
                     <input type="submit" class="primary-filled-button button" value="Thêm phim">
                 </div>
             </div>

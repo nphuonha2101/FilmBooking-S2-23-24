@@ -422,6 +422,15 @@ input, textarea {
     -moz-transition: 0.2s ease-out;
 }
 
+.none-resize_textarea {
+    resize: none;
+}
+
+#film-description_textarea {
+    width: calc(40vw) !important;
+    height: calc(18vw);
+}
+
 /*input[type="text"], input[type="password"], input[type="email"] {*/
 input:not([type="submit"]), textarea {
     padding: 0 1.5rem;

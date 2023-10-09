@@ -38,7 +38,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
                 Theater theater = new Theater(theaterID, theaterName, taxNumber, address);
 
-                theaterList.add(theater);
+                theaterList.add(0, theater);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -42,7 +42,7 @@ public class UserDAOImpl implements IDAO<User> {
 
                 User user = new User(username, userFullName, userEmail, userPassword, userRole);
 
-                userList.add(user);
+                userList.add(0, user);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -37,7 +37,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
                 FilmGenre filmGenre = new FilmGenre(filmID, genreID);
 
-                filmGenreList.add(filmGenre);
+                filmGenreList.add(0, filmGenre);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
