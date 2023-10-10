@@ -123,6 +123,16 @@ button {
     z-index: 9;
 }
 
+.fade-in {
+    opacity: 0;
+    transition: 0.3s ease-out;
+}
+
+.not-fade-in {
+    opacity: 1;
+    transition: 0.3s ease-out;
+}
+
 /* Top navigation bar */
 .top-nav {
     position: fixed;
@@ -555,7 +565,6 @@ input[type="submit"]:hover {
 }
 
 .item-cards {
-    /*display:none;*/
     min-width: calc(18vw);
     margin: 0.5rem;
     max-width: calc(22vw);

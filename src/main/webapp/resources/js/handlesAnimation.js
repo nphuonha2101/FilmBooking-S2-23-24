@@ -1,0 +1,22 @@
+let handlesItemCardsFadeIn = {
+    init: function () {
+        let itemCards = $$(".item-cards");
+
+        for (const itemCard of itemCards) {
+            let elementTop = itemCard.offsetTop;
+            let elementBottom = itemCard.offsetTop + itemCard.offsetHeight;
+            let limitTop = window.scrollY + 200;
+            let limitBottom = window.scrollY + window.innerHeight - 200;
+
+            // if element offset is not in the limit of window scrollY
+            if ((elementTop > limitTop) || (elementBottom < limitBottom)) {
+                // itemCard.classList.add("fade-in");
+                console.log("scrollY: " + window.scrollY + " itemCard.offsetTop: " + itemCard.offsetTop + " " + itemCard.id);
+                itemCard.classList.add("fade-in");
+            } else
+                itemCard.classList.remove("fade-in");
+        }
+    }
+}
+
+window.addEventListener("scroll", handlesItemCardsFadeIn.init);

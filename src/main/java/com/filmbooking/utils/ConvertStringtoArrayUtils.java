@@ -11,15 +11,13 @@ public class ConvertStringtoArrayUtils {
         for (int i = 0; i < rows.length; i++) {
             String[] cols = rows[i].split("");
             result[i] = new String[cols.length];
-            for (int j = 0; j < cols.length; j++) {
-                result[i][j]= cols[j];
-            }
+            System.arraycopy(cols, 0, result[i], 0, cols.length);
         }
         return result;
     }
 private static void printArr(String[][] arr){
-    for (int i = 0; i < arr.length; i++) {
-        System.out.println(Arrays.toString(arr[i]));
+    for (String[] strings : arr) {
+        System.out.println(Arrays.toString(strings));
         System.out.println();
     }
 
