@@ -4,30 +4,34 @@ let handlesChooseSeats = {
         let seatHiddenInput = $('#seat');
         for (let i = 0; i < seats.length; i++) {
             seats[i].addEventListener('click', function () {
-                if (this.classList.contains('seats-unavailable')) {
+                if (this.classList.contains('seats-unavailable'))
                     alert('This seat is not available!');
-                } else if
+                else if
                 (this.classList.contains('seats-active')) {
                     this.classList.remove('seats-active')
-                    seatHiddenInput.value = this.getSeats();
+                    seatHiddenInput.value = getSelectedSeats();
                 } else {
                     this.classList.add('seats-active')
-                    seatHiddenInput.value = this.getSeats();
+                    seatHiddenInput.value = getSelectedSeats();
                 }
             });
         }
     },
-
-    getSeats: function () {
-        let seats = $$('.seats-active');
-        let seatValue = '';
-        for (let i = 0; i < seats.length; i++) {
-            seatValue += seats[i].textContent + '-';
-        }
-        return seatValue;
-    }
 }
 
 handlesChooseSeats.init();
 
-alert("chọn ghế " + handlesChooseSeats.getSeats());
+// get selectedSeats
+let getSelectedSeats = function () {
+    let seats = $$('.seats-active');
+    let seatValue = '';
+    for (let i = 0; i < seats.length; i++) {
+        if (seatValue === '')
+            seatValue += seats[i].textContent;
+        else
+            seatValue += '-' + seats[i].textContent;
+    }
+
+    alert(seatValue);
+    return seatValue;
+}

@@ -51,7 +51,7 @@
                                                 <button class="seats seats-unavailable">${row} ${col}</button>
                                             </c:when>
                                             <c:otherwise>
-                                                <button class="seats" onclick="alert(this.textContent);">${row} ${col}</button>
+                                                <button class="seats" >${row} ${col}</button>
                                             </c:otherwise>
                                         </c:choose>
 

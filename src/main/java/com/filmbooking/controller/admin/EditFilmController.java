@@ -43,7 +43,7 @@ public class EditFilmController extends HttpServlet {
             if (filmGenre.getFilmID().equalsIgnoreCase(filmId)) {
                 countGenre++;
                 if (countGenre > 1)
-                    filmGenreIDs.append(filmGenre.getGenreID()).append(" ");
+                    filmGenreIDs.append(" ").append(filmGenre.getGenreID());
                 else filmGenreIDs.append(filmGenre.getGenreID());
             }
         }
