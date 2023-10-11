@@ -5,11 +5,11 @@ let handlesItemCardsFadeIn = {
         for (const itemCard of itemCards) {
             let elementTop = itemCard.offsetTop;
             let elementBottom = itemCard.offsetTop + itemCard.offsetHeight;
-            let limitTop = window.scrollY + 200;
-            let limitBottom = window.scrollY + window.innerHeight - 200;
+            let limitTop = window.scrollY + 100;
+            let limitBottom = window.scrollY + window.innerHeight - 100;
 
             // if element offset is not in the limit of window scrollY
-            if ((elementTop > limitTop) || (elementBottom < limitBottom)) {
+            if ((elementTop < limitTop) || (elementBottom > limitBottom)) {
                 // itemCard.classList.add("fade-in");
                 console.log("scrollY: " + window.scrollY + " itemCard.offsetTop: " + itemCard.offsetTop + " " + itemCard.id);
                 itemCard.classList.add("fade-in");
