@@ -5,11 +5,17 @@
     <div class="centered-vertical-content container form__container">
         <h2 class="title">Đăng nhập</h2>
         <form action="login" method="post">
-            <label for="username">Tên người dùng</label>
+            <label for="username">
+                <span class="material-symbols-outlined">person</span>
+                Tên người dùng
+            </label>
             <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
             <span class="error-span message-span" id="username-error">${usernameError}</span>
 
-            <label for="password">Mật khẩu</label>
+            <label for="password">
+                <span class="material-symbols-outlined">password</span>
+                Mật khẩu
+            </label>
             <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
             <span class="error-span message-span" id="password-error">${passwordError}</span>
 

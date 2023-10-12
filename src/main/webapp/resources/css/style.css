@@ -411,6 +411,12 @@ form {
 label {
     font-size: 1rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.material-symbols-outlined {
+    margin: 0 0.5rem;
 }
 
 textarea {
