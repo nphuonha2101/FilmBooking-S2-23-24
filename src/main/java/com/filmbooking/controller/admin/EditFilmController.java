@@ -79,7 +79,7 @@ public class EditFilmController extends HttpServlet {
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);
         editFilm.setDirector(filmDirector);
-        editFilm.setActors(filmActors);
+        editFilm.setCast(filmActors);
         editFilm.setFilmLength(filmLength);
         editFilm.setFilmDescription(filmDescription);
 

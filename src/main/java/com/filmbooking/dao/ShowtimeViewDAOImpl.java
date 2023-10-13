@@ -35,9 +35,10 @@ public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
                 String showtimeID = resultSet.getString("showtime_id");
                 String filmName = resultSet.getString("film_name");
                 String roomName = resultSet.getString("room_name");
+                String theaterName = resultSet.getString("theater_name");
                 Date showtimeDate = resultSet.getDate("showtime_date");
 
-                ShowtimeView newShowtimeView = new ShowtimeView(showtimeID, filmName, roomName, showtimeDate);
+                ShowtimeView newShowtimeView = new ShowtimeView(showtimeID, filmName, roomName, theaterName, showtimeDate);
                 showtimeViewList.add(newShowtimeView);
             }
         } catch (SQLException e) {

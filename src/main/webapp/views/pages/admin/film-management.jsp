@@ -40,7 +40,7 @@
                         <td>${film.filmName}</td>
                         <td>${film.filmPrice} VNĐ</td>
                         <td>${film.director}</td>
-                        <td>${film.actors}</td>
+                        <td>${film.cast}</td>
                         <td>${film.filmLength} phút</td>
                         <td>
                             <form class="hide hidden-form" method="get">

@@ -6,12 +6,14 @@ public class ShowtimeView {
     private String showtimeID;
     private String filmName;
     private String roomName;
+    private String theaterName;
     private Date showtimeDate;
 
-    public ShowtimeView(String showtimeID, String filmName, String roomName, Date showtimeDate) {
+    public ShowtimeView(String showtimeID, String filmName, String roomName, String theaterName, Date showtimeDate) {
         this.showtimeID = showtimeID;
         this.filmName = filmName;
         this.roomName = roomName;
+        this.theaterName = theaterName;
         this.showtimeDate = showtimeDate;
     }
 

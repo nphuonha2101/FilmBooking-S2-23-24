@@ -3,13 +3,13 @@ package com.filmbooking.model;
 public class Theater {
     private String theaterID;
     private String theaterName;
-    private String taxNumber;
+    private String taxCode;
     private String theaterAddress;
 
-    public Theater(String theaterID, String theaterName, String taxNumber, String theaterAddress) {
+    public Theater(String theaterID, String theaterName, String taxCode, String theaterAddress) {
         this.theaterID = theaterID;
         this.theaterName = theaterName;
-        this.taxNumber = taxNumber;
+        this.taxCode = taxCode;
         this.theaterAddress = theaterAddress;
     }
 
@@ -21,12 +21,12 @@ public class Theater {
         this.theaterName = theaterName;
     }
 
-    public String getTaxNumber() {
-        return taxNumber;
+    public String getTaxCode() {
+        return taxCode;
     }
 
-    public void setTaxNumber(String taxNumber) {
-        this.taxNumber = taxNumber;
+    public void setTaxCode(String taxCode) {
+        this.taxCode = taxCode;
     }
 
     public String getTheaterAddress() {

@@ -39,6 +39,7 @@
                         <td>${showtimeView.showtimeID}</td>
                         <td>${showtimeView.filmName}</td>
                         <td>${showtimeView.roomName}</td>
+                        <td>${showtimeView.theaterName}</td>
 <%--                        <td>${showtimeView.showtimeDate}</td>--%>
 
                         <td>

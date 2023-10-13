@@ -41,7 +41,7 @@
                                required/>
                         <label for="actors">Diễn viên</label>
                         <input type="text" placeholder="Diễn viên" name="actors" id="actors"
-                               value="${editFilm.actors}"
+                               value="${editFilm.cast}"
                                required/>
 
                     </div>

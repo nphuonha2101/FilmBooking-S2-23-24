@@ -35,11 +35,11 @@ public class FilmDAOImpl implements IDAO<Film> {
                 String filmName = resultSet.getString("film_name");
                 double filmPrice = Double.parseDouble(resultSet.getString("film_price"));
                 String filmDirector = resultSet.getString("film_director");
-                String filmActors = resultSet.getString("film_actors");
+                String filmCast = resultSet.getString("film_cast");
                 int filmLength = resultSet.getInt("film_length");
                 String filmDescription = resultSet.getString("film_description");
                 String imgPath = resultSet.getString("img_path");
-                Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, imgPath);
+                Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmCast, filmLength, filmDescription, imgPath);
 
                 filmList.add(0, film);
             }
@@ -66,14 +66,14 @@ public class FilmDAOImpl implements IDAO<Film> {
     @Override
     public void save(Film film) {
         Connection connection = databaseServices.getConnection();
-        String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_id, film_name, film_price, film_director,film_actors,film_length,film_description, img_path) VALUES(?, ?, ?, ?, ?, ?,?,?)";
+        String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_id, film_name, film_price, film_director, film_cast ,film_length,film_description, img_path) VALUES(?, ?, ?, ?, ?, ?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
             preparedStatement.setString(1, film.getFilmID());
             preparedStatement.setString(2, film.getFilmName());
             preparedStatement.setDouble(3, film.getFilmPrice());
             preparedStatement.setString(4, film.getDirector());
-            preparedStatement.setString(5, film.getActors());
+            preparedStatement.setString(5, film.getCast());
             preparedStatement.setInt(6, film.getFilmLength());
             preparedStatement.setString(7, film.getFilmDescription());
             preparedStatement.setString(8, film.getImgPath());
@@ -88,7 +88,7 @@ public class FilmDAOImpl implements IDAO<Film> {
     public void update(Film film) {
         Connection connection = databaseServices.getConnection();
         String querySet = "UPDATE " + TABLE_NAME
-                + " SET film_name = ?, film_price = ?, film_director = ?, film_actors = ?, film_length = ?, film_description = ?,img_path = ? WHERE film_id = ?";
+                + " SET film_name = ?, film_price = ?, film_director = ?, film_cast = ?, film_length = ?, film_description = ?,img_path = ? WHERE film_id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(querySet);
@@ -96,7 +96,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.setString(1, film.getFilmName());
             preparedStatement.setDouble(2, film.getFilmPrice());
             preparedStatement.setString(3, film.getDirector());
-            preparedStatement.setString(4, film.getActors());
+            preparedStatement.setString(4, film.getCast());
             preparedStatement.setInt(5, film.getFilmLength());
             preparedStatement.setString(6, film.getFilmDescription());
             preparedStatement.setString(7, film.getImgPath());

@@ -243,26 +243,26 @@ button {
 }
 
 .outlined-warning-button {
-    border: 2px solid #ff3333;
-    color: #ff3333;
+    border: 2px solid #ff3333 !important;
+    color: #ff3333 !important;
     background-color: transparent;
 }
 
 .filled-warning-button, .outlined-warning-button:hover {
-    background-color: #e02323;
-    color: #fff;
+    background-color: #e02323 !important;
+    color: #fff !important;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
 }
 
 .filled-warning-button:hover {
-    background-color: #e30f0f;
+    background-color: #e30f0f !important;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
 }
 
 .primary-filled-button, .outlined-button:hover {
-    background-color: #0556f3;
+    background-color: #0556f3 !important;
     color: #fff !important;
 }
 
@@ -271,9 +271,9 @@ button {
 }
 
 .outlined-button {
-    border: 2px solid #0556f3;
-    color: #0556f3;
-    background-color: transparent;
+    border: 2px solid #0556f3 !important;
+    color: #0556f3 !important;
+    background-color: transparent !important;
 }
 
 /* Container */

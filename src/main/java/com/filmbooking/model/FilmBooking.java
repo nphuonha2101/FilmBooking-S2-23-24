@@ -8,15 +8,15 @@ public class FilmBooking {
     String username;
     Date bookingDate;
     String[] seat;
-    double totalPrice;
+    double totalFee;
 
-    public FilmBooking(String filmBookingID, String showtimeID, String username,Date bookingDate, String[] seat, double totalPrice) {
+    public FilmBooking(String filmBookingID, String username, String showtimeID, Date bookingDate, String[] seat, double totalFee) {
         this.filmBookingID = filmBookingID;
         this.showtimeID = showtimeID;
         this.username = username;
         this.bookingDate = bookingDate;
         this.seat = seat;
-        this.totalPrice = totalPrice;
+        this.totalFee = totalFee;
     }
 
     public String getFilmBookingID() {
@@ -59,12 +59,12 @@ public class FilmBooking {
         this.seat = seat;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getTotalFee() {
+        return totalFee;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setTotalFee(double totalFee) {
+        this.totalFee = totalFee;
     }
 
 

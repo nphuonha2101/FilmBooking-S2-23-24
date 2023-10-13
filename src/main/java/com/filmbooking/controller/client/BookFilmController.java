@@ -4,6 +4,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,11 +39,17 @@ public class BookFilmController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
 
 
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        String seats = req.getParameter("seats");
+        String showtimeID = req.getParameter("showtime-id");
+
+        System.out.println("Seats: " + seats + "\n" + "Showtime ID: " + showtimeID);
+
+        RedirectPageUtils.redirectPage("book-film", req, resp);
     }
 
     @Override

@@ -1,24 +1,22 @@
 package com.filmbooking.model;
 
-import java.io.File;
-
 public class Film {
     private String filmID;
     private String filmName;
     private double filmPrice;
     private String director;
-    private String actors;
+    private String cast;
     private int filmLength;
     private String filmDescription;
     private String imgPath;
 
 
-    public Film(String filmID, String filmName, double filmPrice, String director, String actors, int filmLength, String filmDescription, String imgPath) {
+    public Film(String filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String imgPath) {
         this.filmID = filmID;
         this.filmName = filmName;
         this.filmPrice = filmPrice;
         this.director = director;
-        this.actors = actors;
+        this.cast = cast;
         this.filmLength = filmLength;
         this.filmDescription = filmDescription;
         this.imgPath = imgPath;
@@ -57,12 +55,12 @@ public class Film {
         this.director = director;
     }
 
-    public String getActors() {
-        return actors;
+    public String getCast() {
+        return cast;
     }
 
-    public void setActors(String actors) {
-        this.actors = actors;
+    public void setCast(String cast) {
+        this.cast = cast;
     }
 
     public int getFilmLength() {

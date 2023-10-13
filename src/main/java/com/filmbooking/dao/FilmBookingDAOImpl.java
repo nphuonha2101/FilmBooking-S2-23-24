@@ -36,8 +36,8 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
                 String showtimeID = resultSet.getString("showtime_id");
                 String username = resultSet.getString("username");
                 Date bookingDate = resultSet.getDate("booking_date");
-                String seat = resultSet.getString("seat");
-                double totalPrice = resultSet.getDouble("total_price");
+                String seat = resultSet.getString("seats");
+                double totalPrice = resultSet.getDouble("total_fee");
 
                 FilmBooking newFilmBooking = new FilmBooking(filmBookingID, showtimeID, username, bookingDate, seat.split(" "), totalPrice);
 
@@ -63,14 +63,14 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
     @Override
     public void save(FilmBooking filmBooking) {
         Connection connection = databaseServices.getConnection();
-        String queryAdd = "INSERT INTO " + TABLE_NAME + "(showtime_id, username, booking_date, seat, total_price) VALUES(?,?,?,?,?)";
+        String queryAdd = "INSERT INTO " + TABLE_NAME + "(username, showtime_id, booking_date, seat, total_price) VALUES(?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
-            preparedStatement.setString(1, filmBooking.getShowtimeID());
-            preparedStatement.setString(2, filmBooking.getUsername());
+            preparedStatement.setString(1, filmBooking.getUsername());
+            preparedStatement.setString(2, filmBooking.getShowtimeID());
             preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
 //            preparedStatement.setString(4,filmBooking.getSeat());
-            preparedStatement.setDouble(5,filmBooking.getTotalPrice());
+            preparedStatement.setDouble(5,filmBooking.getTotalFee());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -93,7 +93,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.setString(2, filmBooking.getUsername());
             preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
 //            preparedStatement.setString(4, filmBooking.getSeat());
-            preparedStatement.setDouble(5, filmBooking.getTotalPrice());
+            preparedStatement.setDouble(5, filmBooking.getTotalFee());
 
 
             preparedStatement.executeUpdate();

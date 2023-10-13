@@ -33,10 +33,10 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             while (resultSet.next()) {
                 String theaterID = resultSet.getString("theater_id");
                 String theaterName = resultSet.getString("theater_name");
-                String taxNumber = resultSet.getString("tax_number");
+                String taxCode = resultSet.getString("tax_code");
                 String address = resultSet.getString("address");
 
-                Theater theater = new Theater(theaterID, theaterName, taxNumber, address);
+                Theater theater = new Theater(theaterID, theaterName, taxCode, address);
 
                 theaterList.add(0, theater);
             }
@@ -69,7 +69,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
             preparedStatement.setString(1, theater.getTheaterID());
             preparedStatement.setString(2, theater.getTheaterName());
-            preparedStatement.setString(3, theater.getTaxNumber());
+            preparedStatement.setString(3, theater.getTaxCode());
             preparedStatement.setString(4, theater.getTheaterAddress());
 
             preparedStatement.executeUpdate();
@@ -88,7 +88,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
 
             preparedStatement.setString(1, theater.getTheaterName());
-            preparedStatement.setString(2, theater.getTaxNumber());
+            preparedStatement.setString(2, theater.getTaxCode());
             preparedStatement.setString(3, theater.getTheaterAddress());
             preparedStatement.setString(4, theater.getTheaterID());
 
