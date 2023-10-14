@@ -1180,3 +1180,8 @@ thead > tr > th {
     background-color: #2b324d;
 }
 
+
+/* Film Booking page */
+#film-details {
+    width: calc(70vw);
+}

@@ -13,12 +13,9 @@ public class FileUploadUtils {
         try {
             String realFilePath = FileUtils.getRealContextPath(req) + ContextPathUtils.getFileUploadPath(fileName);
 
-            // create upload folder if not exist!
-//            File uploadDir = new File(FileUtils.getRealContextPath(req) + ContextPathUtils.getUploadFolderPath());
-
-            System.out.println("TEST UPLOAD UTILS: " + realFilePath);
-            System.out.println("TEST UPLOAD UTILS: " + fileName);
             Part filePart = req.getPart(uploadElementName);
+  
+            // write file to real directory
             filePart.write(realFilePath);
 
         } catch (IOException | ServletException e) {

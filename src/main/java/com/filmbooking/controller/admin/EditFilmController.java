@@ -89,9 +89,8 @@ public class EditFilmController extends HttpServlet {
         if (filmImgName == null || filmImgName.isEmpty())
             filmServices.update(editFilm, filmGenreIDArr);
         else {
-            String filmImgPath = "";
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
-            filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
+            String filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
 
             editFilm.setImgPath(filmImgPath);
             filmServices.update(editFilm, filmGenreIDArr);
