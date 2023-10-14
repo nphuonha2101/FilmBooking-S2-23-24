@@ -43,7 +43,7 @@ public class FileUtils {
      * Get real context path of the project
      * the path will be used to save file to the server.
      * <br>
-     * Example: E:/Java Workspace/FilmBooking-WebProgramming/
+     * Example: [E:/Java Workspace]/FilmBooking-WebProgramming/
      * @param req HttpServletRequest use to get servlet context and get real path
      * @return a real context path of the project
      */
@@ -59,6 +59,16 @@ public class FileUtils {
         return realContextPath.toString();
     }
 
+    /**
+     * Get real webapp path of the project
+     * <br>
+     * Example: [E:/Java Workspace]/FilmBooking-WebProgramming/src/main/webapp
+     * @param req HttpServletRequest use to get servlet context and get real path
+     * @return a real webapp path of the project
+     */
+    public static String getRealWebappPath(HttpServletRequest req) {
+        return getRealContextPath(req) + "src/main/webapp";
+    }
 
     public static void main(String[] args) {
         FileUtils fileUtils = new FileUtils("D:\\upload\\DoanQuocDang.png");

@@ -32,7 +32,7 @@ public class DeleteFilmController extends HttpServlet {
         filmServices.delete(deletedFilm);
 
         // delete film image
-        String filmImgFilePath = FileUtils.getRealContextPath(req)  + "src/main/webapp" + deletedFilm.getImgPath();
+        String filmImgFilePath = FileUtils.getRealWebappPath(req) + deletedFilm.getImgPath();
         System.out.println("DeleteFilmController Test: " + filmImgFilePath);
         File file = new File(filmImgFilePath);
         file.delete();
