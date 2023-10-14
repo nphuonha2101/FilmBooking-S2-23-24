@@ -27,6 +27,7 @@
                     <p>Đạo diễn: ${film.director} </p>
                     <p>Diễn viên: ${film.cast}</p>
                     <p>Độ dài phim: ${film.filmLength} phút</p>
+                    <p>Thể loại: ${filmGenreNames}</p>
                 </div>
             </div>
 

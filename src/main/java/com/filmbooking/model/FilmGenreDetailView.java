@@ -1,12 +1,12 @@
 package com.filmbooking.model;
 
-public class GenreDetail {
+public class FilmGenreDetailView {
     private String genreID;
     private String genreName;
     private String filmID;
 
 
-    public GenreDetail(String genreID, String genreName, String filmID) {
+    public FilmGenreDetailView(String genreID, String genreName, String filmID) {
         this.genreID = genreID;
         this.genreName = genreName;
         this.filmID = filmID;
