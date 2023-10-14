@@ -38,7 +38,7 @@
             <br>
 
             <div class="wrapper">
-                <c:if test="${film.filmTrailerLink != null}">
+                <c:if test="${not empty film.filmTrailerLink}">
                     <h3>Trailer: </h3>
                     <div class="centered-vertical-content wrapper">
                         <iframe class="trailer-frame"
