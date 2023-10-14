@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>404</title>
+
+    <jsp:include page="../components/head-links.jsp"/>
 </head>
 <body>
+
+<h2 class="code">404</h2>
 
 </body>
 </html>

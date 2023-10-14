@@ -53,10 +53,12 @@ public class AddFilmController extends HttpServlet {
         String filmActors = req.getParameter("actors");
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
         String filmDescription = req.getParameter("film-description");
+        String filmTrailerLink = req.getParameter("film-trailer-link");
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(" ");
 
-        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, relativeFilePath);
+        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
+                relativeFilePath);
 
         filmServices.save(newFilm, filmGenreIDArr);
         FileUploadUtils.uploadFile(req, fileName, "upload-img");

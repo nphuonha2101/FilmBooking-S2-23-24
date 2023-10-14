@@ -8,10 +8,11 @@ public class Film {
     private String cast;
     private int filmLength;
     private String filmDescription;
+    private String filmTrailerLink;
     private String imgPath;
 
 
-    public Film(String filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String imgPath) {
+    public Film(String filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath) {
         this.filmID = filmID;
         this.filmName = filmName;
         this.filmPrice = filmPrice;
@@ -19,8 +20,10 @@ public class Film {
         this.cast = cast;
         this.filmLength = filmLength;
         this.filmDescription = filmDescription;
+        this.filmTrailerLink = filmTrailerLink;
         this.imgPath = imgPath;
     }
+
 
 
     public String getFilmID() {
@@ -85,5 +88,11 @@ public class Film {
 
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
+    }
+    public String getFilmTrailerLink() {
+        return filmTrailerLink;
+    }
+    public void setFilmTrailerLink(String filmTrailerLink) {
+        this.filmTrailerLink = filmTrailerLink;
     }
 }

@@ -29,6 +29,7 @@ html {
 * {
     font-family: 'Inter', sans-serif;
     font-size: 0.95rem;
+    /*font-family: 'Work Sans', sans-serif;*/
 }
 
 body {
@@ -390,6 +391,14 @@ button {
 /*}*/
 
 
+/* Trailer Frame */
+.trailer-frame {
+    width: calc(70vw) !important;
+    height: calc(30vw) !important;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
 /* Form */
 .form__container {
     width: calc(45vw);
@@ -515,18 +524,27 @@ input[type="submit"]:hover {
 
 #link-list > li {
     margin: 0.5rem 0;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+}
+
+#link-list > li:hover {
+    transform: translateX(5px) !important;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
 }
 
 #link-list > li > a {
     text-decoration: none;
     color: #ccedff;
-    transition: 0.3s ease-out;
-    -moz-transition: 0.3s ease-out;
+
     font-weight: 400;
 }
 
 #link-list > li > a:hover {
     color: #fff;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
 }
 
 /* Back to Top */
@@ -893,20 +911,29 @@ input[type="submit"]:hover {
 
 /*  Span */
 .message-span {
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 0.5rem;
+
+    padding: 0.1rem;
 }
 
 .error-span {
     color: #ff3333;
-    font-size: 0.85rem;
+    width: fit-content;
+    width: -moz-fit-content;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace !important;
+    background-color: #ffeded;
 }
 
 .successful-span {
     display: flex;
+    width: fit-content;
+    width: -moz-fit-content;
     align-items: center;
     color: limegreen;
     font-size: 1rem;
+    background-color: #e9ffe9;
 }
 
 .successful-span > * {
@@ -914,6 +941,10 @@ input[type="submit"]:hover {
     font-size: 1rem;
 }
 
+.code {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 1rem;
+}
 /* Modal */
 .modal {
     display: none;
@@ -1018,7 +1049,7 @@ input[type="submit"]:hover {
 .admin-two-cols__wrapper {
     display: grid;
     grid-template-columns: 2fr 7fr;
-    grid-column-gap: 1rem;
+    grid-column-gap: 0;
 }
 
 .admin-panel {

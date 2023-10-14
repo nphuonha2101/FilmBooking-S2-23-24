@@ -19,4 +19,4 @@ let handlesItemCardsFadeIn = {
     }
 }
 
-window.addEventListener("scroll", handlesItemCardsFadeIn.init);
+// window.addEventListener("scroll", handlesItemCardsFadeIn.init);

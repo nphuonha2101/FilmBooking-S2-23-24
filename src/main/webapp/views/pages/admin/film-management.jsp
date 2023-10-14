@@ -26,6 +26,7 @@
             <table>
                 <thead>
                 <tr>
+                    <th>Phim ID</th>
                     <th>Tên phim</th>
                     <th>Giá vé</th>
                     <th>Đạo diễn</th>
@@ -37,6 +38,7 @@
                 <tbody>
                 <c:forEach var="film" items="${filmsData}" varStatus="loop">
                     <tr>
+                        <td>${film.filmID}</td>
                         <td>${film.filmName}</td>
                         <td>${film.filmPrice} VNĐ</td>
                         <td>${film.director}</td>

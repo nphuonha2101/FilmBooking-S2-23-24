@@ -39,10 +39,6 @@
                         <input type="text" placeholder="Đạo diễn" name="director" id="director"
                                value="${editFilm.director}"
                                required/>
-                        <label for="actors">Diễn viên</label>
-                        <input type="text" placeholder="Diễn viên" name="actors" id="actors"
-                               value="${editFilm.cast}"
-                               required/>
 
                     </div>
 
@@ -55,6 +51,20 @@
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button">Chọn
                             ảnh</label>
+                    </div>
+
+                    <div class="left-col">
+                        <label for="actors">Diễn viên</label>
+                        <input type="text" placeholder="Diễn viên" name="actors" id="actors"
+                               value="${editFilm.cast}"
+                               required/>
+                    </div>
+
+                    <div class="right-col">
+                        <label for="film-trailer-link">Link YouTube trailer: </label>
+                        <input type="text" placeholder="Link YouTube trailer" name="film-trailer-link" id="film-trailer-link"
+                               value="${editFilm.filmTrailerLink}"
+                               />
                     </div>
 
 

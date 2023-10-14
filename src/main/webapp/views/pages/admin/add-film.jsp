@@ -34,14 +34,12 @@
                         <label for="director">Đạo diễn</label>
                         <input type="text" placeholder="Đạo diễn" name="director" id="director"
                                required/>
-                        <label for="actors">Diễn viên</label>
-                        <input type="text" placeholder="Diễn viên" name="actors" id="actors"
-                               required/>
 
                     </div>
 
+
                     <!-- hidden form in right -->
-                    <div class="centered-vertical-content right-col">
+                    <div class="right-col">
                         <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
                         <div class="film-img-in-card" id="film-img"></div>
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
@@ -50,6 +48,16 @@
                             ảnh</label>
                     </div>
 
+                    <div class="left-col">
+                        <label for="actors">Diễn viên</label>
+                        <input type="text" placeholder="Diễn viên" name="actors" id="actors"
+                               required/>
+                    </div>
+
+                    <div class="right-col">
+                        <label for="genre-ids">Link YouTube trailer: </label>
+                        <input type="text" placeholder="Link YouTube trailer" name="film-trailer-link" id="film-trailer-link"/>
+                    </div>
 
                     <div class="left-col">
                         <label for="film-length">Độ dài phim</label>
@@ -68,7 +76,7 @@
                         Mô tả phim
                     </label>
                     <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
-                               placeholder="Nhập mô tả phim"></textarea>
+                              placeholder="Nhập mô tả phim"></textarea>
                     <input type="submit" class="primary-filled-button button" value="Thêm phim">
                 </div>
             </div>

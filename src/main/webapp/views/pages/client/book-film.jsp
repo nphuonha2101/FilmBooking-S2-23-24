@@ -14,8 +14,9 @@
 
         <h1>${sectionTitle}</h1>
 
-        <div id="film-details" class="wrapper">
-            <div class="wrapper two-col__wrapper">
+
+        <div id="film-details" class="centered-vertical-content">
+            <div class="two-col__wrapper">
 
                 <div class="film-img-in-card" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
@@ -26,16 +27,30 @@
                     <p>Đạo diễn: ${film.director} </p>
                     <p>Diễn viên: ${film.cast}</p>
                     <p>Độ dài phim: ${film.filmLength} phút</p>
-                    <br>
-                    <p>Mô tả: ${film.filmDescription}</p>
+                </div>
+            </div>
 
-                </div>
-                </div>
+            <div class="wrapper" id="film-description">
+                <h3>Mô tả: </h3>
+                <p>${film.filmDescription}</p>
+            </div>
 
             <br>
-            <hr>
-            <br>
 
+            <div class="wrapper">
+                <c:if test="${film.filmTrailerLink != null}">
+                    <h3>Trailer: </h3>
+                    <div class="centered-vertical-content wrapper">
+                        <iframe class="trailer-frame"
+                                src="${film.filmTrailerLink}"
+                                title="${film.filmName} Trailer" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen></iframe>
+                    </div>
+                </c:if>
+            </div>
+
+            <br>
             <div class="wrapper two-col__wrapper">
                 <div class="wrapper">
                     <h3>Chọn ghế:</h3>
@@ -65,7 +80,7 @@
 
                 <div class="wrapper">
                     <h3>Chi tiết đặt vé</h3>
-                    <p>Số ghế: <span id="selected-seat"></span> </p>
+                    <p>Số ghế: <span id="selected-seat"></span></p>
                     <p>Suất chiếu: <span id="selected-showtime"></span></p>
                     <p>Tổng tiền: <span id="total-fee"></span></p>
                     <select name="select-showtime" id="select-showtime">

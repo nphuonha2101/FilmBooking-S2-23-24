@@ -70,6 +70,7 @@ public class EditFilmController extends HttpServlet {
         String filmActors = req.getParameter("actors");
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
         String filmDescription = req.getParameter("film-description");
+        String filmTrailerLink = req.getParameter("film-trailer-link");
         String filmImgName = req.getParameter("film-img-name");
         String filmGenres = req.getParameter("genre-ids");
 
@@ -82,6 +83,7 @@ public class EditFilmController extends HttpServlet {
         editFilm.setCast(filmActors);
         editFilm.setFilmLength(filmLength);
         editFilm.setFilmDescription(filmDescription);
+        editFilm.setFilmTrailerLink(filmTrailerLink);
 
         // if not change image
         if (filmImgName == null || filmImgName.isEmpty())
