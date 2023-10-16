@@ -29,19 +29,30 @@
         <%--                </div>--%>
         <%--            </div>--%>
         <%--        </c:forEach>--%>
-        <table>
-            <c:forEach var="row" begin="1" end="10" varStatus="loop">
-                <tr>
-                    <c:forEach var="col" begin="1" end="8" varStatus="loop">
-                        <td>
-                            <button class="primary-filled-button button" onclick="alert(this.textContent)">${row}${col}</button>
-                        </td>
-                    </c:forEach>
+<%--        <table>--%>
+<%--            <c:forEach var="row" begin="1" end="10" varStatus="loop">--%>
+<%--                <tr>--%>
+<%--                    <c:forEach var="col" begin="1" end="8" varStatus="loop">--%>
+<%--                        <td>--%>
+<%--                            <button class="primary-filled-button button" onclick="alert(this.textContent)">${row}${col}</button>--%>
+<%--                        </td>--%>
+<%--                    </c:forEach>--%>
 
-                </tr>
-            </c:forEach>
+<%--                </tr>--%>
+<%--            </c:forEach>--%>
 
-        </table>
+<%--        </table>--%>
+
+        <form action="test">
+<%--            <label for="date">Choose a date for your booking:</label>--%>
+<%--            <input type="date" name="date" id="date">--%>
+<%--            <label for="time">Choose a time for your booking:</label>--%>
+<%--            <input type="time" name="time" id="time">--%>
+<%--            <input type="submit" value="submit">--%>
+            <label for="date-time">Choose a datetime for your booking</label>
+            <input type="datetime-local" name="date-time" id="date-time">
+            <input type="submit" value="submit">
+        </form>
     </div>
 </section>
 

@@ -9,18 +9,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- small changes about UI">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddShowtimeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/ShowtimeManagementController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/ShowtimeViewDAOImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/ShowtimeView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IShowtimeViewServices.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/ShowtimeViewServicesImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/showtime-management.jsp" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- small changes">
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/checkCookiesEnabled.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/components/cookies-disabled.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/components/admin-panel.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/admin-panel.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesAnimation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesAnimation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesChooseSeats.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesChooseSeats.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesScrolls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesScrolls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesSubmitHiddenForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesUploadFilmImg.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesUploadFilmImg.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesValidateForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesValidateForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/components/footer.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/footer.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/test.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/test.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,10 +39,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="JavaScript File" />
-        <option value="Jsp File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JavaScript File" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -101,7 +109,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;experiment&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;last_opened_file_path&quot;: &quot;E:/Java Workspace/Experiment/FilmBooking-WebProgramming/src/main/webapp/resources/images&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -130,11 +138,11 @@
       <recent name="E:\Java Workspace\Experiment\FilmBooking-WebProgramming\src\main\webapp\resources\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\views\error" />
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp" />
       <recent name="E:\Java Workspace\Experiment\FilmBooking-WebProgramming\src\main\webapp\resources\images" />
       <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\resources\upload" />
       <recent name="C:\Users\QDang\Downloads\FilmBooking-WebProgramming\src\main\webapp\views\components" />
-      <recent name="C:\Users\QDang\Desktop\Project\FilmBooking-WebPRogramming\src\main\webapp\views\pages\client" />
-      <recent name="C:\Users\QDang\Desktop\Project\FilmBooking-WebPRogramming\src\main\webapp\views\pages\admin" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.10">
@@ -374,6 +382,11 @@
       <workItem from="1696771110765" duration="3487000" />
       <workItem from="1696908090246" duration="59000" />
       <workItem from="1696908156406" duration="4985000" />
+      <workItem from="1697253934702" duration="10705000" />
+      <workItem from="1697273227707" duration="650000" />
+      <workItem from="1697281054784" duration="2705000" />
+      <workItem from="1697285356026" duration="10254000" />
+      <workItem from="1697465338027" duration="10084000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -551,7 +564,55 @@
       <option name="project" value="LOCAL" />
       <updated>1696751923150</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="- add trailer for Film">
+      <option name="closed" value="true" />
+      <created>1697271180704</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1697271180704</updated>
+    </task>
+    <task id="LOCAL-00024" summary="- small changes about style">
+      <option name="closed" value="true" />
+      <created>1697285944542</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1697285944542</updated>
+    </task>
+    <task id="LOCAL-00025" summary="- display genres' name for film">
+      <option name="closed" value="true" />
+      <created>1697289777893</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1697289777893</updated>
+    </task>
+    <task id="LOCAL-00026" summary="- delete film img on server when delete film">
+      <option name="closed" value="true" />
+      <created>1697293155289</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293155289</updated>
+    </task>
+    <task id="LOCAL-00027" summary="- small changes">
+      <option name="closed" value="true" />
+      <created>1697293311218</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293311218</updated>
+    </task>
+    <task id="LOCAL-00028" summary="- small changes">
+      <option name="closed" value="true" />
+      <created>1697293489127</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293489127</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,7 +650,12 @@
     <MESSAGE value="- test redirect to previous page (safe)" />
     <MESSAGE value="- fix bugs (film genres not update correctly) of edit film" />
     <MESSAGE value="- small changes about UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="- small changes about UI" />
+    <MESSAGE value="- add trailer for Film" />
+    <MESSAGE value="- small changes about style" />
+    <MESSAGE value="- display genres' name for film" />
+    <MESSAGE value="- delete film img on server when delete film" />
+    <MESSAGE value="- small changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="- small changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

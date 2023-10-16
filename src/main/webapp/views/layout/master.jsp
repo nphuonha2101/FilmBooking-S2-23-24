@@ -39,6 +39,8 @@
     <jsp:include page="${dynamicContents}"/>
     <jsp:include page="${modalName}"/>
 
+    <jsp:include page="/views/components/cookies-disabled.jsp"/>
+
 </main>
 
 <!-- Modal -->

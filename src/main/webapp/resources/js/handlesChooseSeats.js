@@ -1,31 +1,37 @@
+import {$, $$} from "./utils.js";
+
 let handlesChooseSeats = {
-    init: function () {
-        let seats = $$('.seats');
-        let seatHiddenInput = $('#seat');
+    start: function () {
+        try {
+            let seats = $$('.seats');
+            let seatHiddenInput = $('#seat');
 
-        for (let i = 0; i < seats.length; i++) {
-            seats[i].addEventListener('click', function () {
+            for (let i = 0; i < seats.length; i++) {
+                seats[i].addEventListener('click', function () {
 
 
-                if (this.classList.contains('seats-unavailable'))
-                    alert('This seat is not available!');
-                else if
-                (this.classList.contains('seats-active')) {
-                    this.classList.remove('seats-active')
-                    seatHiddenInput.value = displaySelectedSeats();
+                    if (this.classList.contains('seats-unavailable'))
+                        alert('This seat is not available!');
+                    else if
+                    (this.classList.contains('seats-active')) {
+                        this.classList.remove('seats-active')
+                        seatHiddenInput.value = displaySelectedSeats();
 
-                } else {
+                    } else {
 
-                    this.classList.add('seats-active')
-                    seatHiddenInput.value = displaySelectedSeats();
-                }
-                displayTotalFee();
-            });
+                        this.classList.add('seats-active')
+                        seatHiddenInput.value = displaySelectedSeats();
+                    }
+                    displayTotalFee();
+                });
+            }
+        } catch (e) {
+            console.log(e);
         }
-    },
+    }
 }
+handlesChooseSeats.start();
 
-handlesChooseSeats.init();
 
 // get selectedSeats
 let displaySelectedSeats = function () {
@@ -45,7 +51,7 @@ let displayTotalFee = () => {
     totalFeeElement.innerText = filmPrice * numberOfSeat + " VNĐ";
 }
 
-let displaySelectedSeat = function (){
+let displaySelectedSeat = function () {
     let seats = $$('.seats-active');
     let seatValue = '';
     for (let i = 0; i < seats.length; i++) {
@@ -60,15 +66,19 @@ let displaySelectedSeat = function (){
 }
 
 
-let  handlesSelectShowtime = {
+let handlesSelectShowtime = {
     init: function () {
-     let selectElement = $('#select-showtime')
-        let selectedShowtimeElement = $('#selected-showtime');
-     let showtimeHiddenInput = $('#showtime-id');
-     selectElement.addEventListener("change", function () {
-         selectedShowtimeElement.innerText = selectElement.options[selectElement.selectedIndex].text;
-        showtimeHiddenInput.value = selectElement.options[selectElement.selectedIndex].value;
-     })
+        try {
+            let selectElement = $('#select-showtime')
+            let selectedShowtimeElement = $('#selected-showtime');
+            let showtimeHiddenInput = $('#showtime-id');
+            selectElement.addEventListener("change", function () {
+                selectedShowtimeElement.innerText = selectElement.options[selectElement.selectedIndex].text;
+                showtimeHiddenInput.value = selectElement.options[selectElement.selectedIndex].value;
+            })
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 

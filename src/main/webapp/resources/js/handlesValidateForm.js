@@ -1,3 +1,4 @@
+import { $, $$ } from "./utils.js";
 function validateUsername() {
     let usernameField = $("#username");
     let usernameError = $("#username-error");

@@ -290,6 +290,19 @@ button {
     padding: 1rem;
 }
 
+.outlined-container {
+    border: 2px solid #222222;
+    border-radius: 10px;
+}
+
+.film-description_container {
+    background-color: #f2ebbf;
+}
+
+.film-description_container > * {
+    color: #222222;
+}
+
 
 .centered-vertical-content {
     display: flex;
@@ -366,6 +379,7 @@ button {
     display: inline-block;
 }
 
+/* Wrapper */
 .wrapper {
     width: 100%;
 }
@@ -374,9 +388,21 @@ button {
     margin: 0.5rem;
 }
 
-/* Wrapper */
+.border-wrapper {
+    border-top: 1px solid #222222 !important;
+    border-bottom: 1px solid #222222 !important;
+    margin: 0.5rem !important;
+}
+
+.title-filled_wrapper {
+    margin-top: 1rem ! important;
+    background-color: #ffe2cd !important;
+    padding: 0.3rem;
+
+}
+
+/* Grid */
 .two-col__wrapper {
-    width: auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
@@ -579,7 +605,6 @@ input[type="submit"]:hover {
 }
 
 
-
 .grid-items {
     width: 100%;
     display: grid;
@@ -598,6 +623,7 @@ input[type="submit"]:hover {
 
     animation-name: slide-up;
     animation-duration: 0.3s;
+    border: 2px solid transparent;
 }
 
 .item-cards > * {
@@ -611,6 +637,7 @@ input[type="submit"]:hover {
     -moz-transition: 0.2s ease-out;
     /*transform: translateY(-2px);*/
     transform: scale(1.05);
+    border: 2px solid #0556f3;
 }
 
 
@@ -721,6 +748,7 @@ input[type="submit"]:hover {
         opacity: 1;
     }
 }
+
 @keyframes slide-in-elliptic-top-fwd {
     0% {
         -webkit-transform: translateY(-600px) rotateX(-30deg) scale(0);
@@ -737,7 +765,6 @@ input[type="submit"]:hover {
         opacity: 1;
     }
 }
-
 
 
 /* ----------------------------------------------
@@ -948,6 +975,7 @@ input[type="submit"]:hover {
     font-family: 'JetBrains Mono', monospace !important;
     font-size: 1rem;
 }
+
 /* Modal */
 .modal {
     display: none;
@@ -1114,6 +1142,7 @@ table {
     animation-duration: 0.3s;
     margin-bottom: 2rem;
 }
+
 .seats-table > tr > td {
     width: 3rem !important;
     height: 3rem !important;
@@ -1186,5 +1215,19 @@ thead > tr > th {
 
 /* Film Booking page */
 #film-details {
-    width: calc(70vw);
+    width: calc(75vw);
+}
+
+/* Cookies Disabled Popup */
+#cookies-disabled-popup {
+    display: none;
+    position: fixed !important;
+    bottom: 5rem;
+    right: 2rem;
+    max-width: calc(30vw) !important;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: #222;
+    padding: 1.2rem;
+    z-index: 99;
+    backdrop-filter: blur(10px);
 }
