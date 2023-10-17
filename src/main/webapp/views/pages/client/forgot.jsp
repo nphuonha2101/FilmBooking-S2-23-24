@@ -17,14 +17,14 @@
                 <span class="material-symbols-outlined">person</span>
                 Tên người dùng
             </label>
-            <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
+            <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
             <span class="error-span message-span" id="username-error">${usernameError}</span>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
                 Email
             </label>
-            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
             <span class="error-span message-span" id="email-error">${emailError}</span>
 
             <input type="submit" class="primary-filled-button button" value="Gửi">

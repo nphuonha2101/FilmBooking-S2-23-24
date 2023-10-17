@@ -17,9 +17,9 @@
         <h1>${sectionTitle}</h1>
 
 
-        <form method="post" action="add-film" enctype="multipart/form-data">
-            <div class="centered-vertical-content wrapper">
-                <div>
+        <div class="centered-vertical-content wrapper">
+            <div>
+                <form method="post" action="add-film" enctype="multipart/form-data">
                     <label for="showtime-id">ID Suất chiếu</label>
                     <input type="text" placeholder="ID Suất chiếu" name="showtime-id" id="showtime-id"
                            required/>
@@ -41,9 +41,9 @@
                     <div class="centered-vertical-content">
                         <input class="primary-filled-button button" type="submit" value="Thêm suất chiếu">
                     </div>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
 
     </div>
 </section>

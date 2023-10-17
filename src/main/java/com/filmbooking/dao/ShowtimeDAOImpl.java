@@ -39,7 +39,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
 
                 Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate);
 
-                showtimeList.add(showtime);
+                showtimeList.add(0, showtime);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -36,6 +36,7 @@
                 </tr>
                 </thead>
                 <tbody>
+                <c:set var="roomAvailableSeatsMap" value="${roomAvailableSeatsMap}"/>
                 <c:forEach var="room" items="${roomData}" varStatus="loop">
                     <tr>
                         <td>${room.roomID}</td>
@@ -43,8 +44,7 @@
                         <td>${room.seatRows}</td>
                         <td>${room.seatCols}</td>
                         <td>${room.theaterName}</td>
-                        <td><%--${availableSeats} --%> test hehe</td>
-                            <%--                        <td>${showtimeView.showtimeDate}</td>--%>
+                        <td>${roomAvailableSeatsMap[room.roomID]}</td>
 
                         <td>
                             <form class="hide hidden-form" method="get">

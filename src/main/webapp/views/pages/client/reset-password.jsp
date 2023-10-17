@@ -17,14 +17,15 @@
                 <span class="material-symbols-outlined">password</span>
                 Mật khẩu mới
             </label>
-            <input type="password" name="new-password" id="new-password" placeholder="Mật khẩu mới" required>
+            <input type="password" name="new-password" id="new-password" placeholder="Mật khẩu mới" autocomplete="true" required>
             <span class="error-span message-span" id="password-error">${passwordError}</span>
 
             <label for="confirm-new-password">
                 <span class="material-symbols-outlined">password</span>
                 Xác nhận mật khẩu
             </label>
-            <input type="password" name="confirm-new-password" id="confirm-new-password" placeholder="Xác nhận mật khẩu" required>
+            <input type="password" name="confirm-new-password" id="confirm-new-password"
+                   placeholder="Xác nhận mật khẩu" autocomplete="true" required>
             <span class="error-span message-span"
                   id="confirm-password-error">${confirmPasswordError}</span>
 

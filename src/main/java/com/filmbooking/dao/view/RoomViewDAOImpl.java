@@ -42,7 +42,7 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
                 String theaterName = resultSet.getString("theater_name");
 
                 RoomView newRooView = new RoomView(roomID,roomName,seatRows,seatCols,theaterName);
-                roomViewList.add(newRooView);
+                roomViewList.add(0, newRooView);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

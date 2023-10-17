@@ -426,15 +426,16 @@ button {
     overflow: hidden;
 }
 
-/* Form */
+/*Form */
 .form__container {
-    width: calc(45vw);
+    width: calc(41vw);
+    padding: 1rem;
 }
 
 form {
-    width: calc(30vw);
+    max-width: calc(30vw);
+    width: 100%;
     height: auto;
-    padding: 2rem;
     display: flex;
     flex-direction: column;
 }
@@ -472,6 +473,7 @@ input, textarea, select {
     margin: 0.5rem 0;
     transition: 0.2s ease-out;
     -moz-transition: 0.2s ease-out;
+    background-color: #f6f9fc;
 }
 
 .none-resize_textarea {
@@ -484,18 +486,18 @@ input, textarea, select {
 }
 
 /*input[type="text"], input[type="password"], input[type="email"] {*/
-input:not([type="submit"]), textarea {
+input:not([type="submit"]), textarea, select {
     padding: 0 1.5rem;
-    background-color: #fff;
-    border: 2px #222222 solid;
+    border: 2px solid transparent;
 }
 
 /*input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {*/
-input:not([type="submit"]):focus, input:not([type="file"]):focus, textarea:focus, select:focus{
+input:not([type="submit"]):focus, input:not([type="file"]):focus, textarea:focus, select:focus {
     outline: none;
     border: 2px #0556f3 solid;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
+    background-color: #fff;
 }
 
 input:not([type="submit"])::placeholder {
@@ -523,24 +525,17 @@ input[type="submit"]:hover {
     color: #fff;
 }
 
+select {
+    width: 100%;
+    background-color: #f6f9fc;
+}
+
 
 .readonly-input {
     background-color: #e6f5ff !important;
     border: 2px solid #0556f3 !important;
 }
 
-select {
-    width: 100%;
-    background-color: #e6f5ff !important;
-    padding: 0 1.5rem;
-    border: 2px #222222 solid;
-}
-
-option {
-    border-radius: 10px;
-    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
-    padding: 0.25rem;
-}
 
 /*!* custom scroll bar *!*/
 /*::-webkit-scrollbar {*/
@@ -599,7 +594,6 @@ option {
     animation-duration: 0.6s;
     -moz-animation-name: fade;
     -moz-animation-duration: 0.6s;
-    border: 2px solid #2b324d;
 }
 
 .back-to-top > * {

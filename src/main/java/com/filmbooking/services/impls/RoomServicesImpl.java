@@ -5,6 +5,7 @@ import com.filmbooking.dao.RoomDAOImpl;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class RoomServicesImpl implements IRoomServices {
@@ -13,6 +14,7 @@ public class RoomServicesImpl implements IRoomServices {
     public RoomServicesImpl() {
         roomDAO = new RoomDAOImpl();
     }
+
     @Override
     public List<Room> getAll() {
         return roomDAO.getAll();
@@ -39,18 +41,14 @@ public class RoomServicesImpl implements IRoomServices {
     }
 
     @Override
-    public int countAvailableSeats(Room room) {
-        int count = 0;
-        String[][] seatMatrix = room.getSeatMatrix();
+    public HashMap<String, Integer> countAvailableSeats() {
+        HashMap<String, Integer> result = new HashMap<>();
 
-        for (int i = 0; i < seatMatrix.length; i++) {
-            for (int j = 0; j < seatMatrix[i].length; j++) {
-                if (seatMatrix[i][j].equalsIgnoreCase("1"))
-                    count++;
-            }
-
+        for (Room room : getAll()
+        ) {
+            int availableSeats = room.countAvailableSeats();
+            result.put(room.getRoomID(), availableSeats);
         }
-
-        return count;
+        return result;
     }
 }

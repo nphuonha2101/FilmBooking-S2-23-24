@@ -3,6 +3,7 @@ package com.filmbooking.services;
 
 import com.filmbooking.model.Room;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IRoomServices {
@@ -11,5 +12,5 @@ public interface IRoomServices {
     void save(Room room);
     void update(Room room);
     void delete(Room room);
-    int countAvailableSeats(Room room);
+    HashMap<String, Integer> countAvailableSeats();
 }

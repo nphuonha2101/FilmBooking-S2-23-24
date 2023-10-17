@@ -38,7 +38,7 @@ public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
 
                 FilmGenreDetailView newFilmGenreDetailView = new FilmGenreDetailView(genreID, genreName, filmID);
 
-                filmGenreDetailViewList.add(newFilmGenreDetailView);
+                filmGenreDetailViewList.add(0, newFilmGenreDetailView);
             }
             return filmGenreDetailViewList;
 

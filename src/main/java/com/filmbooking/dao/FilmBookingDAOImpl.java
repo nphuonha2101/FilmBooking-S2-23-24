@@ -41,7 +41,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
                 FilmBooking newFilmBooking = new FilmBooking(filmBookingID, showtimeID, username, bookingDate, seat.split(" "), totalPrice);
 
-                filmBookingList.add(newFilmBooking);
+                filmBookingList.add(0, newFilmBooking);
             }
 
         } catch (SQLException e) {

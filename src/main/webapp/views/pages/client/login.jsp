@@ -9,14 +9,14 @@
                 <span class="material-symbols-outlined">person</span>
                 Tên người dùng
             </label>
-            <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
+            <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
             <span class="error-span message-span" id="username-error">${usernameError}</span>
 
             <label for="password">
                 <span class="material-symbols-outlined">password</span>
                 Mật khẩu
             </label>
-            <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
             <span class="error-span message-span" id="password-error">${passwordError}</span>
 
             <input type="submit" class="primary-filled-button button" value="Đăng nhập">

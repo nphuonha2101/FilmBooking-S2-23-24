@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin;
 
+import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IRoomViewServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
@@ -27,7 +28,9 @@ public class RoomManagementController extends HttpServlet {
         req.setAttribute("pageTitle", "Film Booking - Quản lý phòng");
         req.setAttribute("sectionTitle", "Quản lý phòng");
         req.setAttribute("roomData", roomViewServices.getAll());
-//        req.setAttribute("availableSeats", roomServices.countAvailableSeats());
+
+        req.setAttribute("roomAvailableSeatsMap", roomServices.countAvailableSeats());
+
         RenderViewUtils.updateView(req, resp,
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,

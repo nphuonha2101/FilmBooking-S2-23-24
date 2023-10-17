@@ -17,28 +17,28 @@
                 <span class="material-symbols-outlined">person</span>
                 Tên người dùng
             </label>
-            <input type="text" name="username" id="username" placeholder="Tên người dùng" required>
+            <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
             <span class="error-span message-span" id="username-error">${usernameError}</span>
 
             <label for="user-full-name">
                 <span class="material-symbols-outlined">badge</span>
                 Họ và tên
             </label>
-            <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" required>
+            <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" autocomplete="true" required>
             <span class="error-span message-span" id="fullname-error">${fullnameError}</span>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
                 Email
             </label>
-            <input type="email" name="email" id="email" placeholder="Email" required>
+            <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
             <span class="error-span message-span" id="email-error">${emailError}</span>
 
             <label for="password">
                 <span class="material-symbols-outlined">password</span>
                 Mật khẩu
             </label>
-            <input type="password" name="password" id="password" placeholder="Mật khẩu" required>
+            <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
             <span class="error-span message-span" id="password-error">${passwordError}</span>
 
             <label for="confirm-password">
@@ -46,7 +46,7 @@
                 Xác nhận mật khẩu
             </label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="Xác nhận mật khẩu"
-                   required>
+                   autocomplete="true" required>
             <span class="error-span message-span" id="confirm-password-error">${confirmPasswordError}</span>
 
 

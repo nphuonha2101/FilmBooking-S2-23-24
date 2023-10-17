@@ -87,4 +87,16 @@ public class Room {
     public void setSeatData(String seatData) {
         this.seatData = seatData;
     }
+
+    public int countAvailableSeats() {
+        int count = 0;
+        String[][] seatMatrix = this.getSeatMatrix();
+        for (String[] row : seatMatrix) {
+            for (String s : row) {
+                if (s.equalsIgnoreCase("0"))
+                    count++;
+            }
+        }
+        return count;
+    }
 }
