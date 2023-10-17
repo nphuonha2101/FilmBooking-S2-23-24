@@ -1,0 +1,142 @@
+package com.filmbooking.dao;
+
+import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.model.Room;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
+public class RoomDAOImpl implements IDAO<Room> {
+    private DatabaseServices databaseServices;
+    private List<Room> roomList;
+    private static final String TABLE_NAME = "room";
+
+    public RoomDAOImpl() {
+        this.roomList = new ArrayList<>();
+        this.databaseServices = new DatabaseServices();
+        this.databaseServices.connectDatabase();
+    }
+    @Override
+    public List<Room> getAll() {
+
+        Connection connection = databaseServices.getConnection();
+
+        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                String roomID = resultSet.getString("room_id");
+                String roomName = resultSet.getString("room_name");
+                int seatRows = resultSet.getInt("seat_rows");
+                int seatCols = resultSet.getInt("seat_cols");
+                String seatData = resultSet.getString("seat_data");
+                String theaterID = resultSet.getString("theater_id");
+
+                Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theaterID);
+
+                roomList.add(0, newRoom);
+
+            }
+
+            preparedStatement.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return roomList;
+    }
+
+    @Override
+    public Room getByID(String id) {
+        getAll();
+
+        for (Room room: roomList
+             ) {
+            if (room.getRoomID().equalsIgnoreCase(id))
+                return room;
+        }
+        return null;
+    }
+
+    @Override
+    public void save(Room room) {
+        Connection connection = databaseServices.getConnection();
+
+        String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seat_data, theater_id)" +
+                " VALUES(?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
+
+            preparedStatement.setString(1, room.getRoomID());
+            preparedStatement.setString(2, room.getRoomName());
+            preparedStatement.setInt(3, room.getSeatRows());
+            preparedStatement.setInt(4, room.getSeatCols());
+            preparedStatement.setString(5, room.getSeatData());
+            preparedStatement.setString(6, room.getTheaterID());
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public void update(Room room) {
+        Connection connection = databaseServices.getConnection();
+
+        String queryUpdate = "UPDATE " + TABLE_NAME +
+                " SET room_name = ?, seat_rows = ?, seat_cols = ?, seat_data = ?, theater_id = ? WHERE room_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
+
+
+            preparedStatement.setString(1, room.getRoomName());
+            preparedStatement.setInt(2, room.getSeatRows());
+            preparedStatement.setInt(3, room.getSeatCols());
+            preparedStatement.setString(4, room.getSeatData());
+            preparedStatement.setString(5, room.getTheaterID());
+
+            preparedStatement.setString(6, room.getRoomID());
+
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void delete(Room room) {
+        Connection connection = databaseServices.getConnection();
+
+        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE room_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
+
+            preparedStatement.setString(1, room.getRoomID());
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+}

@@ -1,8 +1,8 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.FilmGenreDetailViewDAOImpl;
+import com.filmbooking.dao.view.FilmGenreDetailViewDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.model.FilmGenreDetailView;
+import com.filmbooking.model.view.FilmGenreDetailView;
 import com.filmbooking.services.IFilmGenreDetailViewServices;
 
 import java.util.ArrayList;

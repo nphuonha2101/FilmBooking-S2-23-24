@@ -1,6 +1,6 @@
 package com.filmbooking.services;
 
-import com.filmbooking.model.FilmGenreDetailView;
+import com.filmbooking.model.view.FilmGenreDetailView;
 
 import java.util.List;
 

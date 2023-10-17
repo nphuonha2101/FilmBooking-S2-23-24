@@ -4,8 +4,10 @@ import com.filmbooking.dao.FilmDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
+import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmGenreServices;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 
 import java.util.List;
@@ -13,10 +15,12 @@ import java.util.List;
 public class FilmServicesImpl implements IFilmServices {
     private final IDAO<Film> filmDAO;
     private final IFilmGenreServices filmGenreServices;
+    private final IShowtimeServices showtimeServices;
 
     public FilmServicesImpl() {
         filmDAO = new FilmDAOImpl();
         filmGenreServices = new FilmGenreServicesImpl();
+        showtimeServices = new ShowtimeServicesImpl();
     }
 
     /**
@@ -69,6 +73,13 @@ public class FilmServicesImpl implements IFilmServices {
     @Override
     public void delete(Film film) {
         List<FilmGenre> filmGenreList = filmGenreServices.getAll();
+        List<Showtime> showtimeList = showtimeServices.getAll();
+
+        for (Showtime showtimeInList : showtimeList) {
+            if (showtimeInList.getFilmID().equalsIgnoreCase(film.getFilmID()))
+                showtimeServices.delete(showtimeInList);
+        }
+
         for (FilmGenre filmGenreInList : filmGenreList) {
             if (filmGenreInList.getFilmID().equalsIgnoreCase(film.getFilmID())) {
                 filmGenreServices.delete(filmGenreInList);

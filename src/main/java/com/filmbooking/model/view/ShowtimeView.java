@@ -1,4 +1,4 @@
-package com.filmbooking.model;
+package com.filmbooking.model.view;
 
 import java.util.Date;
 
@@ -27,6 +27,10 @@ public class ShowtimeView {
 
     public String getRoomName() {
         return roomName;
+    }
+
+    public String getTheaterName() {
+        return theaterName;
     }
 
     public Date getShowtimeDate() {

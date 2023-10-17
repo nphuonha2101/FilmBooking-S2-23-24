@@ -1,7 +1,8 @@
-package com.filmbooking.dao;
+package com.filmbooking.dao.view;
 
+import com.filmbooking.dao.IDAO;
 import com.filmbooking.database.DatabaseServices;
-import com.filmbooking.model.FilmGenreDetailView;
+import com.filmbooking.model.view.FilmGenreDetailView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,8 +1,8 @@
-package com.filmbooking.dao;
+package com.filmbooking.dao.view;
 
+import com.filmbooking.dao.IDAO;
 import com.filmbooking.database.DatabaseServices;
-import com.filmbooking.model.Showtime;
-import com.filmbooking.model.ShowtimeView;
+import com.filmbooking.model.view.ShowtimeView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

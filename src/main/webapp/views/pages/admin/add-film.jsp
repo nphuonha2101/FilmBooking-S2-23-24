@@ -17,11 +17,11 @@
         <h1>${sectionTitle}</h1>
 
 
-        <form method="post" action="add-film" enctype="multipart/form-data">
-            <div class="centered-vertical-content wrapper">
-                <div class="two-col__wrapper centered-vertical-content">
+        <div class="centered-vertical-content wrapper">
+            <form method="post" action="add-film" enctype="multipart/form-data">
+                <div class="two-col__wrapper centered-vertical-content wrapper">
                     <!-- text form in left -->
-                    <div class="left-col">
+                    <div class="wrapper">
                         <label for="film-id">Phim ID</label>
                         <input type="text" placeholder="Phim ID" name="film-id" id="film-id"
                                required/>
@@ -39,7 +39,7 @@
 
 
                     <!-- hidden form in right -->
-                    <div class="right-col">
+                    <div class="wrapper">
                         <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
                         <div class="film-img-in-card" id="film-img"></div>
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
@@ -48,23 +48,24 @@
                             ảnh</label>
                     </div>
 
-                    <div class="left-col">
+                    <div class="wrapper">
                         <label for="actors">Diễn viên</label>
                         <input type="text" placeholder="Diễn viên" name="actors" id="actors"
                                required/>
                     </div>
 
-                    <div class="right-col">
+                    <div class="wrapper">
                         <label for="genre-ids">Link YouTube trailer: </label>
-                        <input type="text" placeholder="Link YouTube trailer" name="film-trailer-link" id="film-trailer-link"/>
+                        <input type="text" placeholder="Link YouTube trailer" name="film-trailer-link"
+                               id="film-trailer-link"/>
                     </div>
 
-                    <div class="left-col">
+                    <div class="wrapper">
                         <label for="film-length">Độ dài phim</label>
                         <input type="number" min="0" placeholder="Độ dài phim" name="film-length" id="film-length"
                                required/>
                     </div>
-                    <div class="right-col">
+                    <div class="wrapper">
                         <label for="genre-ids">Mã thể loại</label>
                         <input type="text" placeholder="Mã thể loại" name="genre-ids" id="genre-ids"
                                required/>
@@ -79,8 +80,9 @@
                               placeholder="Nhập mô tả phim"></textarea>
                     <input type="submit" class="primary-filled-button button" value="Thêm phim">
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
+
 
     </div>
 </section>

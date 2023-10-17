@@ -1,8 +1,8 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.dao.ShowtimeViewDAOImpl;
-import com.filmbooking.model.ShowtimeView;
+import com.filmbooking.dao.view.ShowtimeViewDAOImpl;
+import com.filmbooking.model.view.ShowtimeView;
 import com.filmbooking.services.IShowtimeViewServices;
 
 import java.util.List;

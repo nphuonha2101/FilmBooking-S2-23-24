@@ -1,7 +1,7 @@
 package com.filmbooking.controller.client;
 
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenreDetailView;
+import com.filmbooking.model.view.FilmGenreDetailView;
 import com.filmbooking.services.IFilmGenreDetailViewServices;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmGenreDetailViewServicesImpl;

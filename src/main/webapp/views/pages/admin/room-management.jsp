@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: QDang
-  Date: 10-10-2023
-  Time: 10:27
+  Date: 17-10-2023
+  Time: 14:14
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,32 +20,36 @@
             <div class="justify-right-row wrapper">
                 <a href="add-showtime" class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-outlined">add</span>
-                    <span class="hidden-span">Thêm suất chiếu mới</span>
+                    <span class="hidden-span">Thêm phòng mới</span>
                 </a>
             </div>
             <table>
                 <thead>
                 <tr>
-                    <th>Showtime ID</th>
-                    <th>Tên phim</th>
+                    <th>ID Phòng</th>
                     <th>Tên phòng</th>
-                    <th>Ngày chiếu</th>
+                    <th>Số hàng</th>
+                    <th>Số cột</th>
+                    <th>Chi nhánh</th>
+                    <th>Số ghế trống</th>
                     <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="showtimeView" items="${showtimeViewDetails}" varStatus="loop">
+                <c:forEach var="room" items="${roomData}" varStatus="loop">
                     <tr>
-                        <td>${showtimeView.showtimeID}</td>
-                        <td>${showtimeView.filmName}</td>
-                        <td>${showtimeView.roomName}</td>
-                        <td>${showtimeView.theaterName}</td>
-<%--                        <td>${showtimeView.showtimeDate}</td>--%>
+                        <td>${room.roomID}</td>
+                        <td>${room.roomName}</td>
+                        <td>${room.seatRows}</td>
+                        <td>${room.seatCols}</td>
+                        <td>${room.theaterName}</td>
+                        <td><%--${availableSeats} --%> test hehe</td>
+                            <%--                        <td>${showtimeView.showtimeDate}</td>--%>
 
                         <td>
                             <form class="hide hidden-form" method="get">
                                 <input type="hidden" name="film-id_hidden"
-                                       value="${showtimeView.showtimeID}"/>
+                                       value="${room.roomID}"/>
                             </form>
                             <button class="submit-button delete-button">
                                 <span class="material-symbols-outlined warning-color">delete</span>

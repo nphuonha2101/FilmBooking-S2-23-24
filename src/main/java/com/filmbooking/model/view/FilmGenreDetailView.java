@@ -1,4 +1,4 @@
-package com.filmbooking.model;
+package com.filmbooking.model.view;
 
 public class FilmGenreDetailView {
     private String genreID;

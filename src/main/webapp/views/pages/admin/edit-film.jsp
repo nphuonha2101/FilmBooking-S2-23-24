@@ -21,7 +21,7 @@
 
         <form method="post" action="edit-film" enctype="multipart/form-data">
             <div class="centered-vertical-content">
-                <div class="two-col__wrapper centered-vertical-content">
+                <div class="two-col__wrapper centered-vertical-content wrapper">
                     <!-- text form in left -->
                     <div class="left-col">
                         <label for="film-id">Phim ID</label>
