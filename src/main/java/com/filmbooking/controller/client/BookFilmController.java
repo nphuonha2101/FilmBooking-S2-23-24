@@ -4,8 +4,10 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.view.FilmGenreDetailView;
 import com.filmbooking.services.IFilmGenreDetailViewServices;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.FilmGenreDetailViewServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -22,6 +24,7 @@ import java.util.List;
 public class BookFilmController extends HttpServlet {
     private IFilmServices filmServices;
     private IFilmGenreDetailViewServices filmGenreDetailViewServices;
+    private IShowtimeViewServices showtimeViewServices;
 
     @Override
     public void init() throws ServletException {
@@ -32,6 +35,7 @@ public class BookFilmController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
         filmGenreDetailViewServices = new FilmGenreDetailViewServicesImpl();
+        showtimeViewServices = new ShowtimeViewServicesImpl();
 
         String filmID = req.getParameter("film-id");
         Film bookedFilm = filmServices.getByFilmID(filmID);
@@ -52,6 +56,7 @@ public class BookFilmController extends HttpServlet {
 
         req.setAttribute("filmData", bookedFilm);
         req.setAttribute("filmGenreNames", filmGenreNames.toString());
+        req.setAttribute("showtimeViewDetails", showtimeViewServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("book-film.jsp"),

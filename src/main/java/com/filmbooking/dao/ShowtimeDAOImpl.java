@@ -3,10 +3,8 @@ package com.filmbooking.dao;
 import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.Showtime;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,12 +33,13 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
                 String showtimeID = resultSet.getString("showtime_id");
                 String filmID = resultSet.getString("film_id");
                 String roomID = resultSet.getString("room_id");
-                Date showtimeDate = resultSet.getDate("showtime_date");
+                LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
 
                 Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate);
 
                 showtimeList.add(0, showtime);
             }
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -63,16 +62,19 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
     public void save(Showtime showtime) {
         Connection connection = databaseServices.getConnection();
 
-        String querySave = "INSERT INTO " + TABLE_NAME + "(film_id, room_id, showtime_date)"
-                + " VALUES(?, ?, ?)";
+        String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date)"
+                + " VALUES(?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(querySave);
 
-            preparedStatement.setString(1, showtime.getFilmID());
-            preparedStatement.setString(2, showtime.getRoomID());
-            preparedStatement.setDate(3, (java.sql.Date) showtime.getShowtimeDate());
+            preparedStatement.setString(1, showtime.getShowtimeID());
+            preparedStatement.setString(2, showtime.getFilmID());
+            preparedStatement.setString(3, showtime.getRoomID());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(showtime.getShowtimeDate()));
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -88,10 +90,12 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
             preparedStatement.setString(1, showtime.getFilmID());
             preparedStatement.setString(2, showtime.getRoomID());
-            preparedStatement.setDate(3, (java.sql.Date) showtime.getShowtimeDate());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(showtime.getShowtimeDate()));
             preparedStatement.setString(4, showtime.getShowtimeID());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -108,6 +112,8 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             preparedStatement.setString(1, showtime.getShowtimeID());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

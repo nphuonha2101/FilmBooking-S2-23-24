@@ -1,16 +1,17 @@
 package com.filmbooking.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FilmBooking {
     String filmBookingID;
     String showtimeID;
     String username;
-    Date bookingDate;
+    LocalDateTime bookingDate;
     String[] seat;
     double totalFee;
 
-    public FilmBooking(String filmBookingID, String username, String showtimeID, Date bookingDate, String[] seat, double totalFee) {
+    public FilmBooking(String filmBookingID, String username, String showtimeID, LocalDateTime bookingDate, String[] seat, double totalFee) {
         this.filmBookingID = filmBookingID;
         this.showtimeID = showtimeID;
         this.username = username;
@@ -43,11 +44,11 @@ public class FilmBooking {
         this.username = username;
     }
 
-    public Date getBookingDate() {
+    public LocalDateTime getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(Date bookingDate) {
+    public void setBookingDate(LocalDateTime bookingDate) {
         this.bookingDate = bookingDate;
     }
 

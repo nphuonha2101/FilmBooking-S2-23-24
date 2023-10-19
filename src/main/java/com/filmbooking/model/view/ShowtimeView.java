@@ -1,5 +1,6 @@
 package com.filmbooking.model.view;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ShowtimeView {
@@ -7,9 +8,9 @@ public class ShowtimeView {
     private String filmName;
     private String roomName;
     private String theaterName;
-    private Date showtimeDate;
+    private LocalDateTime showtimeDate;
 
-    public ShowtimeView(String showtimeID, String filmName, String roomName, String theaterName, Date showtimeDate) {
+    public ShowtimeView(String showtimeID, String filmName, String roomName, String theaterName, LocalDateTime showtimeDate) {
         this.showtimeID = showtimeID;
         this.filmName = filmName;
         this.roomName = roomName;
@@ -33,7 +34,7 @@ public class ShowtimeView {
         return theaterName;
     }
 
-    public Date getShowtimeDate() {
+    public LocalDateTime getShowtimeDate() {
         return showtimeDate;
     }
 }

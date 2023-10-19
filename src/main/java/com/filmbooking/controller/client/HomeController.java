@@ -1,8 +1,10 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -20,8 +22,6 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        System.out.println("dfhjdhf" + new FilmGenreServicesImpl().getAll().size());
 
 
         HttpSession userLoginSession = req.getSession();

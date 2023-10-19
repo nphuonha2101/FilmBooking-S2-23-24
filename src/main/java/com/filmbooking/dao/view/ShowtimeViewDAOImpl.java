@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
                 String filmName = resultSet.getString("film_name");
                 String roomName = resultSet.getString("room_name");
                 String theaterName = resultSet.getString("theater_name");
-                Date showtimeDate = resultSet.getDate("showtime_date");
+                LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
 
                 ShowtimeView newShowtimeView = new ShowtimeView(showtimeID, filmName, roomName, theaterName, showtimeDate);
                 showtimeViewList.add(0, newShowtimeView);

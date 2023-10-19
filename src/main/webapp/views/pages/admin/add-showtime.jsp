@@ -19,7 +19,7 @@
 
         <div class="centered-vertical-content wrapper">
             <div>
-                <form method="post" action="add-film" enctype="multipart/form-data">
+                <form method="post" action="add-showtime">
                     <label for="showtime-id">ID Suất chiếu</label>
                     <input type="text" placeholder="ID Suất chiếu" name="showtime-id" id="showtime-id"
                            required/>
@@ -35,8 +35,8 @@
                             <option value="${room.roomID}">${room.roomName} - ${room.theaterName}</option>
                         </c:forEach>
                     </select>
-                    <label for="date">Ngày chiếu</label>
-                    <input type="datetime-local" placeholder="Ngày" name="date" id="date"
+                    <label for="showtime-datetime">Ngày chiếu</label>
+                    <input type="datetime-local" placeholder="Ngày" name="showtime-datetime" id="showtime-datetime"
                            required/>
                     <div class="centered-vertical-content">
                         <input class="primary-filled-button button" type="submit" value="Thêm suất chiếu">

@@ -96,6 +96,8 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             deleteStatement.setString(2, filmGenre.getGenreID());
 
             deleteStatement.executeUpdate();
+
+            deleteStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

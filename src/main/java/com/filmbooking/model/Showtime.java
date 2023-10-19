@@ -1,14 +1,14 @@
 package com.filmbooking.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Showtime {
     private String showtimeID;
     private String filmID;
     private String roomID;
-    private Date showtimeDate;
+    private LocalDateTime showtimeDate;
 
-    public Showtime(String showtimeID, String filmID, String roomID, Date showtimeDate) {
+    public Showtime(String showtimeID, String filmID, String roomID, LocalDateTime showtimeDate) {
         this.showtimeID = showtimeID;
         this.filmID = filmID;
         this.roomID = roomID;
@@ -39,11 +39,11 @@ public class Showtime {
         this.roomID = roomID;
     }
 
-    public Date getShowtimeDate() {
+    public LocalDateTime getShowtimeDate() {
         return showtimeDate;
     }
 
-    public void setShowtimeDate(Date showtimeDate) {
+    public void setShowtimeDate(LocalDateTime showtimeDate) {
         this.showtimeDate = showtimeDate;
     }
 }

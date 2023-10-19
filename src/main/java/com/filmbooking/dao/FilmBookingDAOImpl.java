@@ -3,10 +3,8 @@ package com.filmbooking.dao;
 import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.FilmBooking;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +33,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
                 String filmBookingID = resultSet.getString("booking_film_id");
                 String showtimeID = resultSet.getString("showtime_id");
                 String username = resultSet.getString("username");
-                Date bookingDate = resultSet.getDate("booking_date");
+                LocalDateTime bookingDate = resultSet.getTimestamp("booking_date").toLocalDateTime();
                 String seat = resultSet.getString("seats");
                 double totalPrice = resultSet.getDouble("total_fee");
 
@@ -43,6 +41,8 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
                 filmBookingList.add(0, newFilmBooking);
             }
+
+            preparedStatement.close();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -68,11 +68,13 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
             preparedStatement.setString(1, filmBooking.getUsername());
             preparedStatement.setString(2, filmBooking.getShowtimeID());
-            preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(filmBooking.getBookingDate()));
 //            preparedStatement.setString(4,filmBooking.getSeat());
             preparedStatement.setDouble(5,filmBooking.getTotalFee());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -91,12 +93,14 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
             preparedStatement.setString(1, filmBooking.getShowtimeID());
             preparedStatement.setString(2, filmBooking.getUsername());
-            preparedStatement.setDate(3,(java.sql.Date) filmBooking.getBookingDate());
+            preparedStatement.setTimestamp(3,Timestamp.valueOf(filmBooking.getBookingDate()));
 //            preparedStatement.setString(4, filmBooking.getSeat());
             preparedStatement.setDouble(5, filmBooking.getTotalFee());
 
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -112,6 +116,8 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.setString(1, filmBooking.getFilmBookingID());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -97,10 +97,11 @@
                             <p>Tổng tiền: <span id="total-fee">0 VNĐ</span></p>
                         </div>
                         <div class="wrapper">
+                            <c:set var="showtimeDetailsViews" value="${showtimeViewDetails}"/>
                             <label for="select-showtime">Chọn suất chiếu</label>
                             <select name="select-showtime" id="select-showtime">
-                                <c:forEach var="test" begin="1" end="10" varStatus="loop">
-                                    <option value="test ${test}"> ${test} Option</option>
+                                <c:forEach var="showtimeDetails" items="${showtimeDetailsViews}" varStatus="loop">
+                                    <option value="${showtimeDetails.showtimeID}">${showtimeDetails.roomName} - ${showtimeDetails.theaterName} - ${showtimeDetails.showtimeDate}</option>
                                 </c:forEach>
                             </select>
                         </div>

@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin;
 
+import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IRoomViewServices;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @WebServlet("/add-showtime")
 public class AddShowtimeController extends HttpServlet {
@@ -48,6 +51,18 @@ public class AddShowtimeController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        showtimeServices = new ShowtimeServicesImpl();
+
+        String showtimeID = req.getParameter("showtime-id");
+        String filmID = req.getParameter("film-id");
+        String roomID = req.getParameter("room-id");
+        String showtimeDate = req.getParameter("showtime-datetime");
+        LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
+
+        Showtime newShowtime = new Showtime(showtimeID, filmID, roomID, showtimeLDT);
+        showtimeServices.save(newShowtime);
+
+        resp.sendRedirect("showtime-management");
 
     }
 

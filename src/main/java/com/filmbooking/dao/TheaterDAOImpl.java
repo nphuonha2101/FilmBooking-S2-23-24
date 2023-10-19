@@ -40,6 +40,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
                 theaterList.add(0, theater);
             }
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,6 +75,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.setString(4, theater.getTheaterAddress());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -93,6 +97,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.setString(4, theater.getTheaterID());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -109,6 +115,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.setString(1, theater.getTheaterID());
 
             preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

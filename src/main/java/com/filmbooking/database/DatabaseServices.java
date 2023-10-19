@@ -12,7 +12,7 @@ public class DatabaseServices {
             Class.forName("org.postgresql.Driver");
             String DB_URL = "jdbc:postgresql://localhost:5432/FilmBooking";
             String USER_NAME = "postgres";
-            String PASSWORD = "nphuonha";
+            String PASSWORD = "quocdang3110";
             connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
