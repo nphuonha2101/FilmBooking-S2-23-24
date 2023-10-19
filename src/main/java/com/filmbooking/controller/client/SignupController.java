@@ -66,6 +66,6 @@ public class SignupController extends HttpServlet {
 
     @Override
     public void destroy() {
-        super.destroy();
+        userServices = null;
     }
 }

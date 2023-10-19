@@ -31,7 +31,7 @@
             </div>
 
             <div class="wrapper centered-vertical-content" id="film-description">
-                    <div class="wrapper border-wrapper title-filled_wrapper centered-vertical-content">
+                <div class="wrapper border-wrapper title-filled_wrapper centered-vertical-content">
                     <h3>Mô tả</h3>
                 </div>
                 <div class="wrapper">
@@ -91,14 +91,19 @@
                         <div class="centered-vertical-content">
                             <h3>Chi tiết đặt vé</h3>
                         </div>
-                        <p>Số ghế: <span id="selected-seat"></span></p>
-                        <p>Suất chiếu: <span id="selected-showtime"></span></p>
-                        <p>Tổng tiền: <span id="total-fee">0 VNĐ</span></p>
-                        <select name="select-showtime" id="select-showtime">
-                            <c:forEach var="test" begin="1" end="10" varStatus="loop">
-                                <option value="test ${test}"> ${test} Option</option>
-                            </c:forEach>
-                        </select>
+                        <div class="wrapper">
+                            <p>Số ghế: <span id="selected-seat"></span></p>
+                            <p>Suất chiếu: <span id="selected-showtime"></span></p>
+                            <p>Tổng tiền: <span id="total-fee">0 VNĐ</span></p>
+                        </div>
+                        <div class="wrapper">
+                            <label for="select-showtime">Chọn suất chiếu</label>
+                            <select name="select-showtime" id="select-showtime">
+                                <c:forEach var="test" begin="1" end="10" varStatus="loop">
+                                    <option value="test ${test}"> ${test} Option</option>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>

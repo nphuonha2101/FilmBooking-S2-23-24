@@ -41,4 +41,9 @@ public class HomeController extends HttpServlet {
 
 
     }
+
+    @Override
+    public void destroy() {
+        filmServices = null;
+    }
 }

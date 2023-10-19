@@ -39,12 +39,12 @@
                         <td>${showtimeView.showtimeID}</td>
                         <td>${showtimeView.filmName}</td>
                         <td>${showtimeView.roomName}</td>
-                        <td>${showtimeView.theaterName}</td>
-<%--                        <td>${showtimeView.showtimeDate}</td>--%>
+<%--                        <td>${showtimeView.theaterName}</td>--%>
+                        <td>${showtimeView.showtimeDate}</td>
 
                         <td>
                             <form class="hide hidden-form" method="get">
-                                <input type="hidden" name="film-id_hidden"
+                                <input type="hidden" name="showtime-id_hidden"
                                        value="${showtimeView.showtimeID}"/>
                             </form>
                             <button class="submit-button delete-button">

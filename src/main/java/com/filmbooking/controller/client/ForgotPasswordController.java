@@ -62,6 +62,6 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     public void destroy() {
-        super.destroy();
+        userServices = null;
     }
 }

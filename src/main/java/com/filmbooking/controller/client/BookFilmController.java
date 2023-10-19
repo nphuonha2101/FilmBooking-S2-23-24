@@ -70,6 +70,8 @@ public class BookFilmController extends HttpServlet {
 
     @Override
     public void destroy() {
-        super.destroy();
+        filmServices = null;
+        filmGenreDetailViewServices = null;
+
     }
 }

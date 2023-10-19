@@ -60,4 +60,9 @@ public class ResetPasswordController extends HttpServlet {
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
     }
+
+    @Override
+    public void destroy() {
+        userServices = null;
+    }
 }

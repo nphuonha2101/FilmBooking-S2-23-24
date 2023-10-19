@@ -32,10 +32,10 @@
                     <label for="room-id">Phòng</label>
                     <select name="room-id" id="room-id">
                         <c:forEach var="room" items="${roomData}" varStatus="loop">
-                            <option value="${room.roomID}">${room.roomName}</option>
+                            <option value="${room.roomID}">${room.roomName} - ${room.theaterName}</option>
                         </c:forEach>
                     </select>
-                    <label for="date">Ngày</label>
+                    <label for="date">Ngày chiếu</label>
                     <input type="datetime-local" placeholder="Ngày" name="date" id="date"
                            required/>
                     <div class="centered-vertical-content">

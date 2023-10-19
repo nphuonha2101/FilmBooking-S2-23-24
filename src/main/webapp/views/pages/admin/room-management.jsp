@@ -48,7 +48,7 @@
 
                         <td>
                             <form class="hide hidden-form" method="get">
-                                <input type="hidden" name="film-id_hidden"
+                                <input type="hidden" name="room-id_hidden"
                                        value="${room.roomID}"/>
                             </form>
                             <button class="submit-button delete-button">

@@ -104,6 +104,7 @@ public class EditFilmController extends HttpServlet {
     @Override
     public void destroy() {
         filmServices = null;
+        filmGenreServices = null;
     }
 }
 

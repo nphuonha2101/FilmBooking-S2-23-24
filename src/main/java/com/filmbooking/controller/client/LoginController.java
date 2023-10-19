@@ -64,5 +64,8 @@ public class LoginController extends HttpServlet {
         }
     }
 
-
+    @Override
+    public void destroy() {
+        userServices = null;
+    }
 }

@@ -30,4 +30,9 @@ public class ShowtimeManagementController extends HttpServlet {
         RenderViewUtils.updateView(req, resp,
                 ContextPathUtils.getLayoutPath("master.jsp"));
     }
+
+    @Override
+    public void destroy() {
+        showtimeViewServices = null;
+    }
 }

@@ -18,7 +18,7 @@ public class DeleteShowtimeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showtimeServices = new ShowtimeServicesImpl();
 
-        String showtimeID = req.getParameter("showtime-id");
+        String showtimeID = req.getParameter("showtime-id_hidden");
 
         Showtime deleteShowtime = showtimeServices.getByID(showtimeID);
 
@@ -26,5 +26,10 @@ public class DeleteShowtimeController extends HttpServlet {
 
         resp.sendRedirect("showtime-management");
 
+    }
+
+    @Override
+    public void destroy() {
+        showtimeServices = null;
     }
 }

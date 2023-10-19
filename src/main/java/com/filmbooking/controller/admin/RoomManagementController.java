@@ -37,4 +37,10 @@ public class RoomManagementController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
     }
+
+    @Override
+    public void destroy() {
+        roomServices = null;
+        roomViewServices = null;
+    }
 }
