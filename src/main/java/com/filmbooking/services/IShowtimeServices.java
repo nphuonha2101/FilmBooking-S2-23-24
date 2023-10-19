@@ -8,6 +8,7 @@ public interface IShowtimeServices {
     List<Showtime> getAll();
 
     Showtime getByID(String id);
+    List<Showtime> getByFilmID(String filmID);
 
     void save(Showtime showtime);
 

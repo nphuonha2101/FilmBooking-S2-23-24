@@ -5,6 +5,7 @@ import com.filmbooking.dao.ShowtimeDAOImpl;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeServicesImpl implements IShowtimeServices {
@@ -22,6 +23,17 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     @Override
     public Showtime getByID(String id) {
         return showtimeDAO.getByID(id);
+    }
+
+    @Override
+    public List<Showtime> getByFilmID(String filmID) {
+        List<Showtime> result = new ArrayList<>();
+        for (Showtime showtime: this.getAll()
+             ) {
+            if (showtime.getFilmID().equalsIgnoreCase(filmID))
+                result.add(showtime);
+        }
+        return result;
     }
 
     @Override

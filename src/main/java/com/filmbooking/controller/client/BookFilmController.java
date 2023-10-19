@@ -1,12 +1,16 @@
 package com.filmbooking.controller.client;
 
 import com.filmbooking.model.Film;
+import com.filmbooking.model.Showtime;
 import com.filmbooking.model.view.FilmGenreDetailView;
+import com.filmbooking.model.view.ShowtimeView;
 import com.filmbooking.services.IFilmGenreDetailViewServices;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.FilmGenreDetailViewServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
@@ -24,6 +28,7 @@ import java.util.List;
 public class BookFilmController extends HttpServlet {
     private IFilmServices filmServices;
     private IFilmGenreDetailViewServices filmGenreDetailViewServices;
+    private IShowtimeServices showtimeServices;
     private IShowtimeViewServices showtimeViewServices;
 
     @Override
@@ -36,9 +41,13 @@ public class BookFilmController extends HttpServlet {
         filmServices = new FilmServicesImpl();
         filmGenreDetailViewServices = new FilmGenreDetailViewServicesImpl();
         showtimeViewServices = new ShowtimeViewServicesImpl();
+        showtimeServices = new ShowtimeServicesImpl();
 
         String filmID = req.getParameter("film-id");
         Film bookedFilm = filmServices.getByFilmID(filmID);
+
+        List<Showtime> showtimeListOfThisFilm = showtimeServices.getByFilmID(filmID);
+        List<ShowtimeView> showtimeViewsOfThisFilm = showtimeViewServices.getViewFromShowtimes(showtimeListOfThisFilm);
 
         // get film genre names
         StringBuilder filmGenreNames = new StringBuilder();
@@ -56,7 +65,7 @@ public class BookFilmController extends HttpServlet {
 
         req.setAttribute("filmData", bookedFilm);
         req.setAttribute("filmGenreNames", filmGenreNames.toString());
-        req.setAttribute("showtimeViewDetails", showtimeViewServices.getAll());
+        req.setAttribute("showtimeViewDetails", showtimeViewsOfThisFilm);
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("book-film.jsp"),

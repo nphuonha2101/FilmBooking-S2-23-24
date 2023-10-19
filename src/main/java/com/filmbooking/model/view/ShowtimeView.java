@@ -1,7 +1,7 @@
 package com.filmbooking.model.view;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 public class ShowtimeView {
     private String showtimeID;
