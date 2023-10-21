@@ -14,7 +14,6 @@
 
         <h1>${sectionTitle}</h1>
 
-
         <div id="film-details" class="centered-vertical-content">
             <div class="two-col__wrapper">
                 <div class="film-img-in-card" style="background-image: url('<c:url value="${film.imgPath}"/>')"
@@ -101,7 +100,8 @@
                             <label for="select-showtime">Chọn suất chiếu</label>
                             <select name="select-showtime" id="select-showtime">
                                 <c:forEach var="showtimeDetails" items="${showtimeDetailsViews}" varStatus="loop">
-                                    <option value="${showtimeDetails.showtimeID}">${showtimeDetails.roomName} - ${showtimeDetails.theaterName} - ${showtimeDetails.showtimeDate}</option>
+                                    <option value="${showtimeDetails.showtimeID}">${showtimeDetails.roomName}
+                                        - ${showtimeDetails.theaterName} - ${showtimeDetails.showtimeDate}</option>
                                 </c:forEach>
                             </select>
                         </div>

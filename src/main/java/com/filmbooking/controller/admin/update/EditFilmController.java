@@ -1,4 +1,4 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmGenre;
@@ -23,6 +23,7 @@ import java.util.List;
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
     private FilmGenreServicesImpl filmGenreServices;
+    private Film editFilm;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,7 +32,7 @@ public class EditFilmController extends HttpServlet {
 
         String filmId = req.getParameter("film-id_hidden");
 
-        Film editFilm = filmServices.getByFilmID(filmId);
+        editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
 
@@ -62,8 +63,6 @@ public class EditFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filmId = req.getParameter("film-id");
-
         String filmName = req.getParameter("film-name");
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
         String filmDirector = req.getParameter("director");
@@ -75,7 +74,6 @@ public class EditFilmController extends HttpServlet {
         String filmGenres = req.getParameter("genre-ids");
 
         String[] filmGenreIDArr = filmGenres.split(" ");
-        Film editFilm = filmServices.getByFilmID(filmId);
 
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);

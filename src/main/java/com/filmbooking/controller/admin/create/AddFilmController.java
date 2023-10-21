@@ -1,4 +1,4 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;

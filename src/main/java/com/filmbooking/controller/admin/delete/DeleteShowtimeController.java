@@ -1,4 +1,4 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.admin.delete;
 
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;

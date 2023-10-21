@@ -1,4 +1,4 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.ShowtimeViewServicesImpl;

@@ -44,6 +44,7 @@ public class BookFilmController extends HttpServlet {
         showtimeServices = new ShowtimeServicesImpl();
 
         String filmID = req.getParameter("film-id");
+
         Film bookedFilm = filmServices.getByFilmID(filmID);
 
         List<Showtime> showtimeListOfThisFilm = showtimeServices.getByFilmID(filmID);

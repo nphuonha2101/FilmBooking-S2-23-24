@@ -1,4 +1,4 @@
-package com.filmbooking.controller.admin;
+package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;

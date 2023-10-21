@@ -23,8 +23,12 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-        RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
+        if (req.getSession().getAttribute("username") != null)
+            resp.sendRedirect("home");
+        else {
+            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
+            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
+        }
     }
 
     @Override
