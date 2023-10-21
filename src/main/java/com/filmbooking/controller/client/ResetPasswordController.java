@@ -4,6 +4,7 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.HashTextGeneratorUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -41,6 +42,7 @@ public class ResetPasswordController extends HttpServlet {
         User foundUser = userServices.getByUsername(usernameForgot);
 
         if (newPassword.equals(confirmNewPassword)) {
+            newPassword = HashTextGeneratorUtils.generateSHA256String(newPassword);
             foundUser.setUserPassword(newPassword);
 
             userServices.update(foundUser);

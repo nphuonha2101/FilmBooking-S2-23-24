@@ -2,7 +2,7 @@ create table user_info(
 	username varchar(50) not null primary key,
 	user_fullname varchar(100) not null, 
 	user_email varchar(50) not null,
-	user_password varchar(50) not null,
+	user_password varchar not null,
 	account_role varchar(10) not null
 );
 
@@ -22,7 +22,7 @@ create table theater(
 	theater_id varchar(50) primary key,
 	theater_name varchar(255) not null,
 	tax_code varchar(20) not null,
-	theater_address varchar(255) not null
+	theater_address varchar not null
 );
 
 create table room(

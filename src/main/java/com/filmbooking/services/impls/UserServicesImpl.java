@@ -25,6 +25,16 @@ public class UserServicesImpl implements IUserServices {
     }
 
     @Override
+    public User getByEmail(String email) {
+        for (User user: getAll()
+             ) {
+            if (user.getUserEmail().equalsIgnoreCase(email))
+                return user;
+        }
+        return null;
+    }
+
+    @Override
     public void save(User user) {
         userDAO.save(user);
     }

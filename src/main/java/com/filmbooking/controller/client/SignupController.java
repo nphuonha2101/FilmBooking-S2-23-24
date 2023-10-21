@@ -4,6 +4,7 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.HashTextGeneratorUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,31 +34,35 @@ public class SignupController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String userFullName = request.getParameter("user-full-name");
-        String userEmail = request.getParameter("email");
-        String userPassword = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirm-password");
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String userFullName = req.getParameter("user-full-name");
+        String userEmail = req.getParameter("email");
+        String userPassword = req.getParameter("password");
+        String confirmPassword = req.getParameter("confirm-password");
         userServices = new UserServicesImpl();
 
         if (userServices.getByUsername(username) != null) {
-            request.setAttribute("usernameError", "Tên người dùng đã tồn tại!" +
+            req.setAttribute("usernameError", "Tên người dùng đã tồn tại!" +
                     " Vui lòng chọn một tên người dùng khác.");
 
+        }
+        if (userServices.getByEmail(userEmail) != null) {
+            req.setAttribute("emailError", "Email đã tồn tại!" +
+                    " Vui lòng chọn một email khác.");
         } else if (userPassword.equals(confirmPassword)) {
+            userPassword = HashTextGeneratorUtils.generateSHA256String(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
             userServices.save(newUser);
-            request.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
+            req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
                     "task_alt </span>" +
                     " Chúc mừng! Tài khoản của bạn đã được khởi tạo.");
         } else {
-            request.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không đúng!");
+            req.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không đúng!");
         }
-        RenderViewUtils.updateView(request, response, ContextPathUtils.getClientPagesPath("signup.jsp"));
+        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("signup.jsp"));
 
-        RenderViewUtils.renderViewToLayout(request, response,
+        RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 

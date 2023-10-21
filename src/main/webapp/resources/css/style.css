@@ -430,6 +430,7 @@ button {
 .form__container {
     width: calc(41vw);
     padding: 1rem;
+    padding: 1rem;
 }
 
 form {
@@ -949,8 +950,8 @@ select {
 .message-span {
     font-weight: 500;
     margin-bottom: 0.5rem;
-
-    padding: 0.1rem;
+    border-radius: 0.1rem;
+    text-align: justify-all;
 }
 
 .error-span {

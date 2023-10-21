@@ -3,6 +3,7 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.HashTextGeneratorUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -30,6 +31,9 @@ public class LoginController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
+        password = HashTextGeneratorUtils.generateSHA256String(password);
+
+        System.out.println(password);
 
         User loginUser = null;
 
