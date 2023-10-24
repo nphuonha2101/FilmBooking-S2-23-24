@@ -28,14 +28,11 @@
                     </div>
                     <form action="book-film" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="film-id" value="${film.filmID}">
-                        <input type="submit" class="outlined-button button" value="Đặt phim"/>
                     </form>
                 </div>
             </c:forEach>
 
         </div>
     </div>
-
-
 </section>
 

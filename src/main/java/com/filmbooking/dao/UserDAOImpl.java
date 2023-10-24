@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements IDAO<User> {
-    private List<User> userList;
-    private DatabaseServices databaseServices;
+    private final List<User> userList;
+    private final DatabaseServices databaseServices;
     private static final String TABLE_NAME = "user_info";
 
     public UserDAOImpl() {
@@ -42,8 +42,10 @@ public class UserDAOImpl implements IDAO<User> {
 
                 User user = new User(username, userFullName, userEmail, userPassword, userRole);
 
-                userList.add(user);
+                userList.add(0, user);
             }
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -55,6 +57,8 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public User getByID(String username) {
+        getAll();
+
         for (User userInList : userList) {
             if (userInList.getUsername().equalsIgnoreCase(username)) {
                 return userInList;
@@ -79,7 +83,9 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.setString(4, user.getUserPassword());
             preparedStatement.setString(5, user.getAccountRole());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -98,7 +104,9 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.setString(3, user.getUserPassword());
             preparedStatement.setString(4, user.getUsername());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -114,7 +122,9 @@ public class UserDAOImpl implements IDAO<User> {
                 PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
                 preparedStatement.setString(1, user.getUsername());
 
-                preparedStatement.execute();
+                preparedStatement.executeUpdate();
+
+                preparedStatement.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {

@@ -2,9 +2,10 @@ package com.filmbooking.controller.client;
 
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
-import com.filmbooking.services.UserServicesImpl;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.HashTextGeneratorUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -41,6 +42,7 @@ public class ResetPasswordController extends HttpServlet {
         User foundUser = userServices.getByUsername(usernameForgot);
 
         if (newPassword.equals(confirmNewPassword)) {
+            newPassword = HashTextGeneratorUtils.generateSHA256String(newPassword);
             foundUser.setUserPassword(newPassword);
 
             userServices.update(foundUser);
@@ -59,5 +61,10 @@ public class ResetPasswordController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("reset-password.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+    }
+
+    @Override
+    public void destroy() {
+        userServices = null;
     }
 }

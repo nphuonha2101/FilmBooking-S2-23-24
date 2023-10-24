@@ -27,8 +27,4 @@ public class HideFileExtensionFilter extends HttpFilter {
         chain.doFilter(req, res);
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }

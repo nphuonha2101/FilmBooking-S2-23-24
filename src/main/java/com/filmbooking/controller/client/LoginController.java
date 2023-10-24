@@ -1,36 +1,43 @@
 package com.filmbooking.controller.client;
 
-import java.io.*;
-
 import com.filmbooking.model.User;
-import com.filmbooking.services.UserServicesImpl;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.HashTextGeneratorUtils;
+import com.filmbooking.utils.RedirectPageUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
     private UserServicesImpl userServices;
-    private String viewPath = ContextPathUtils.getClientPagesPath("login.jsp");
-    private String layoutPath = ContextPathUtils.getLayoutPath("master.jsp");
-
-    @Override
-    public void init() throws ServletException {
-
-    }
+    private final String VIEW_PATH = ContextPathUtils.getClientPagesPath("login.jsp");
+    private final String LAYOUT_PATH = ContextPathUtils.getLayoutPath("master.jsp");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-        RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+        if (req.getSession().getAttribute("username") != null)
+            resp.sendRedirect("home");
+        else {
+            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
+            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
+        }
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password").trim();
+        password = HashTextGeneratorUtils.generateSHA256String(password);
+
+        System.out.println(password);
 
         User loginUser = null;
 
@@ -38,8 +45,8 @@ public class LoginController extends HttpServlet {
 
         if (userServices.getByUsername(username) == null) {
             req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
-            RenderViewUtils.updateView(req, resp, viewPath);
-            RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+            RenderViewUtils.updateView(req, resp, VIEW_PATH);
+            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         } else {
             loginUser = userServices.getByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
@@ -51,19 +58,22 @@ public class LoginController extends HttpServlet {
 
                 System.out.println("Login Controller Test: " + loginUser.getAccountRole());
 
-                resp.sendRedirect("home");
+                /* return to previous page that was visited before login
+                 * if it has no previous page, return to home page
+                 */
+                RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
 
 
             } else {
                 req.setAttribute("passwordError", "Mật khẩu của bạn không đúng!");
-                RenderViewUtils.updateView(req, resp, viewPath);
-                RenderViewUtils.renderViewToLayout(req, resp, viewPath, layoutPath);
+                RenderViewUtils.updateView(req, resp, VIEW_PATH);
+                RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
             }
         }
     }
 
-
     @Override
     public void destroy() {
+        userServices = null;
     }
 }

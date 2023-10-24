@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
-    private List<FilmGenre> filmGenreList;
-    private DatabaseServices databaseServices;
-    private static String TABLE_NAME = "film_genre";
+    private final List<FilmGenre> filmGenreList;
+    private final DatabaseServices databaseServices;
+    private static final String TABLE_NAME = "film_genre";
 
 
     public FilmGenreDAOImpl() {
@@ -37,7 +37,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
                 FilmGenre filmGenre = new FilmGenre(filmID, genreID);
 
-                filmGenreList.add(filmGenre);
+                filmGenreList.add(0, filmGenre);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -62,7 +62,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(1, filmGenre.getGenreID());
             preparedStatement.setString(2, filmGenre.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -80,7 +80,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(3, filmGenre.getGenreID());
             preparedStatement.setString(4, filmGenre.getFilmID());
 
-            preparedStatement.execute();
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,7 +95,9 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             deleteStatement.setString(1, filmGenre.getFilmID());
             deleteStatement.setString(2, filmGenre.getGenreID());
 
-            deleteStatement.execute();
+            deleteStatement.executeUpdate();
+
+            deleteStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

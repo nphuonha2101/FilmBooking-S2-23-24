@@ -1,7 +1,5 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

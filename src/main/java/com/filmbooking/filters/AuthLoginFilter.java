@@ -1,5 +1,6 @@
 package com.filmbooking.filters;
 
+import com.filmbooking.utils.RedirectPageUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -10,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter("/")
+@WebFilter()
 public class AuthLoginFilter extends HttpFilter {
     @Override
     public void init() throws ServletException {
@@ -21,15 +22,13 @@ public class AuthLoginFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession userSession = req.getSession();
         if (userSession.getAttribute("username") == null) {
-            res.sendRedirect("login");
+            RedirectPageUtils.redirectPage("login", req, res);
             return;
         } else {
-            String referer = req.getHeader("Referer");
-            res.sendRedirect(referer);
-
+            RedirectPageUtils.redirectPreviousPageIfExist(req, res);
+            chain.doFilter(req, res);
         }
 
-        chain.doFilter(req, res);
     }
 
     @Override

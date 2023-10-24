@@ -11,7 +11,7 @@
 <div class="admin-panel">
     <h4>Công cụ quản lý</h4>
     <a class="links button rounded-button" href="film-management">Quản lý phim</a>
-    <a class="links button rounded-button" href="">Quản lý suất chiếu</a>
-    <a class="links button rounded-button" href="">Quản lý phòng</a>
+    <a class="links button rounded-button" href="showtime-management">Quản lý suất chiếu</a>
+    <a class="links button rounded-button" href="room-management">Quản lý phòng</a>
 
 </div>

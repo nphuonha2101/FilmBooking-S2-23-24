@@ -2,9 +2,9 @@ package com.filmbooking.controller.client;
 
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
-import com.filmbooking.services.UserServicesImpl;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -62,6 +62,6 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     public void destroy() {
-        super.destroy();
+        userServices = null;
     }
 }

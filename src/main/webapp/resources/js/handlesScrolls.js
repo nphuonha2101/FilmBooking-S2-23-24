@@ -1,11 +1,17 @@
+import {$, $$} from "./utils.js";
+
 let handlesNavigationBar = {
     start: () => {
-        let navElement = $$(".top-nav")[0];
+        try {
+            let navElement = $$(".top-nav")[0];
 
-        if (window.scrollY > navElement.offsetHeight)
-            navElement.classList.add("float");
-        else
-            navElement.classList.remove("float");
+            if (window.scrollY > navElement.offsetHeight)
+                navElement.classList.add("float");
+            else
+                navElement.classList.remove("float");
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
@@ -14,26 +20,31 @@ window.addEventListener("scroll", handlesNavigationBar.start);
 
 let handlesBackToTop = {
     start: function () {
-        let backToTopElement = $("#back-to-top");
+        try {
+            let backToTopElement = $("#back-to-top");
 
-        console.log(scrollY)
+            console.log(scrollY)
 
-        if (window.scrollY > 100) {
-            backToTopElement.style.display = "block";
-        } else {
-            backToTopElement.style.display = "none";
-        }
-        backToTopElement.style.animationName = "fade";
-        backToTopElement.style.animationDuration = "0.75s";
+            if (window.scrollY > 100) {
+                backToTopElement.style.display = "block";
+            } else {
+                backToTopElement.style.display = "none";
+            }
+            backToTopElement.style.animationName = "fade";
+            backToTopElement.style.animationDuration = "0.75s";
 
-        backToTopElement.onclick = () => {
-            window.scrollTo(0, 0);
+            backToTopElement.onclick = () => {
+                window.scrollTo(0, 0);
+            }
+        } catch (e) {
+            console.log(e);
         }
     }
 
 }
 
 window.addEventListener("scroll", handlesBackToTop.start)
+
 
 // let handlesFloatingTabDynamic = {
 //     start: function () {

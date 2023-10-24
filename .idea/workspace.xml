@@ -9,15 +9,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- experiment send email">
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add room, delete room, edit room.&#10;- fix some bugs.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddRoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/delete/DeleteRoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/update/EditRoomController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/ITheaterServices.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/TheaterServicesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-room.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-room.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/EditFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/EditFilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmGenreDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmGenreDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/edit-film.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/update/EditFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/update/EditFilmController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-showtime.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-showtime.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/room-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/room-management.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,9 +37,9 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="Jsp File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -99,7 +107,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "develop",
-    "last_opened_file_path": "E:/Java Workspace/Experiment/FilmBooking-WebProgramming/src/main/webapp/resources/images",
+    "last_opened_file_path": "C:/Users/ConMuaXaDan/Desktop/clone/FilmBooking-WebProgramming/src/main/webapp/views/pages/admin",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -109,7 +117,7 @@
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -124,23 +132,26 @@
       <recent name="com.filmbooking.dao" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ConMuaXaDan\Desktop\clone\FilmBooking-WebProgramming\src\main\webapp\views\pages\admin" />
+      <recent name="C:\Users\ConMuaXaDan\Desktop\clone\FilmBooking-WebProgramming\src\main\java\com\filmbooking\controller\admin\create" />
+      <recent name="C:\Users\ConMuaXaDan\Desktop\clone\FilmBooking-WebProgramming\src\main\java\com\filmbooking\controller\admin\delete" />
       <recent name="E:\Java Workspace\Experiment\FilmBooking-WebProgramming\src\main\webapp\resources\images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\QDang\Desktop\Project\FilmBooking-WebProgramming\sql" />
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\views\error" />
+      <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp" />
       <recent name="E:\Java Workspace\Experiment\FilmBooking-WebProgramming\src\main\webapp\resources\images" />
       <recent name="E:\Java Workspace\FilmBooking-WebProgramming\src\main\webapp\resources\upload" />
-      <recent name="C:\Users\QDang\Downloads\FilmBooking-WebProgramming\src\main\webapp\views\components" />
-      <recent name="C:\Users\QDang\Desktop\Project\FilmBooking-WebPRogramming\src\main\webapp\views\pages\client" />
-      <recent name="C:\Users\QDang\Desktop\Project\FilmBooking-WebPRogramming\src\main\webapp\views\pages\admin" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat 10.1.10">
     <configuration name="DateAndTimeUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.dateTimeUtils.DateAndTimeUtils" />
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.utils.dateTimeUtils.DateAndTimeUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.filmbooking.ultils.mailUtils.*" />
+          <option name="PATTERN" value="com.filmbooking.utils.mailUtils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -149,11 +160,11 @@
       </method>
     </configuration>
     <configuration name="FileUploadUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.fileUtils.FileUploadUtils" />
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.utils.fileUtils.FileUploadUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.filmbooking.ultils.mailUtils.*" />
+          <option name="PATTERN" value="com.filmbooking.utils.mailUtils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -162,11 +173,11 @@
       </method>
     </configuration>
     <configuration name="FileUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.fileUtils.FileUtils" />
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.utils.fileUtils.FileUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.filmbooking.ultils.mailUtils.*" />
+          <option name="PATTERN" value="com.filmbooking.utils.mailUtils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -175,11 +186,11 @@
       </method>
     </configuration>
     <configuration name="SendMailUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.mailUtils.SendMailUtils" />
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.utils.mailUtils.SendMailUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.filmbooking.ultils.mailUtils.*" />
+          <option name="PATTERN" value="com.filmbooking.utils.mailUtils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -188,11 +199,11 @@
       </method>
     </configuration>
     <configuration name="UUIDUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.filmbooking.ultils.uuidUtils.UUIDUtils" />
+      <option name="MAIN_CLASS_NAME" value="com.filmbooking.utils.uuidUtils.UUIDUtils" />
       <module name="FilmBooking-WebProgramming" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.filmbooking.ultils.mailUtils.*" />
+          <option name="PATTERN" value="com.filmbooking.utils.mailUtils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -365,6 +376,22 @@
       <workItem from="1696167729326" duration="3996000" />
       <workItem from="1696311641807" duration="1437000" />
       <workItem from="1696568780058" duration="12641000" />
+      <workItem from="1696729374034" duration="174000" />
+      <workItem from="1696730450474" duration="1865000" />
+      <workItem from="1696748834234" duration="4268000" />
+      <workItem from="1696771110765" duration="3487000" />
+      <workItem from="1696908090246" duration="59000" />
+      <workItem from="1696908156406" duration="4985000" />
+      <workItem from="1697253934702" duration="10705000" />
+      <workItem from="1697273227707" duration="650000" />
+      <workItem from="1697281054784" duration="2705000" />
+      <workItem from="1697285356026" duration="10254000" />
+      <workItem from="1697465338027" duration="10084000" />
+      <workItem from="1697684202966" duration="4803000" />
+      <workItem from="1697690254607" duration="842000" />
+      <workItem from="1698116105637" duration="1252000" />
+      <workItem from="1698119470318" duration="341000" />
+      <workItem from="1698126522422" duration="4106000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -510,7 +537,95 @@
       <option name="project" value="LOCAL" />
       <updated>1696694323460</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="- handles edit film successfully">
+      <option name="closed" value="true" />
+      <created>1696702655802</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1696702655802</updated>
+    </task>
+    <task id="LOCAL-00020" summary="- test redirect to previous page (safe)">
+      <option name="closed" value="true" />
+      <created>1696704551900</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1696704551900</updated>
+    </task>
+    <task id="LOCAL-00021" summary="- fix bugs (film genres not update correctly) of edit film">
+      <option name="closed" value="true" />
+      <created>1696732210016</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1696732210016</updated>
+    </task>
+    <task id="LOCAL-00022" summary="- small changes about UI">
+      <option name="closed" value="true" />
+      <created>1696751923150</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1696751923150</updated>
+    </task>
+    <task id="LOCAL-00023" summary="- add trailer for Film">
+      <option name="closed" value="true" />
+      <created>1697271180704</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1697271180704</updated>
+    </task>
+    <task id="LOCAL-00024" summary="- small changes about style">
+      <option name="closed" value="true" />
+      <created>1697285944542</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1697285944542</updated>
+    </task>
+    <task id="LOCAL-00025" summary="- display genres' name for film">
+      <option name="closed" value="true" />
+      <created>1697289777893</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1697289777893</updated>
+    </task>
+    <task id="LOCAL-00026" summary="- delete film img on server when delete film">
+      <option name="closed" value="true" />
+      <created>1697293155289</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293155289</updated>
+    </task>
+    <task id="LOCAL-00027" summary="- small changes">
+      <option name="closed" value="true" />
+      <created>1697293311218</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293311218</updated>
+    </task>
+    <task id="LOCAL-00028" summary="- small changes">
+      <option name="closed" value="true" />
+      <created>1697293489127</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1697293489127</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Nguyen Phuong Nha&#10;- add showtime&#10;Issues: not fill showtime of film">
+      <option name="closed" value="true" />
+      <created>1697688994906</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1697688994906</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -528,9 +643,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add navigation bar when not login" />
-    <MESSAGE value="add signup page" />
-    <MESSAGE value="- adding forgot and reset password pages&#10;- create already login navigation bar" />
     <MESSAGE value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from databse" />
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database" />
@@ -544,15 +656,27 @@
     <MESSAGE value="- fix bug" />
     <MESSAGE value="- reallocate some classes" />
     <MESSAGE value="- experiment send email" />
-    <option name="LAST_COMMIT_MESSAGE" value="- experiment send email" />
+    <MESSAGE value="- handles edit film successfully" />
+    <MESSAGE value="- test redirect to previous page (safe)" />
+    <MESSAGE value="- fix bugs (film genres not update correctly) of edit film" />
+    <MESSAGE value="- small changes about UI" />
+    <MESSAGE value="- add trailer for Film" />
+    <MESSAGE value="- small changes about style" />
+    <MESSAGE value="- display genres' name for film" />
+    <MESSAGE value="- delete film img on server when delete film" />
+    <MESSAGE value="- small changes" />
+    <MESSAGE value="- add showtime&#10;Issues: not fill showtime of film" />
+    <MESSAGE value="Nguyen Phuong Nha&#10;- add showtime&#10;Issues: not fill showtime of film" />
+    <MESSAGE value="- add room, delete room, edit room.&#10;- fix some bugs." />
+    <option name="LAST_COMMIT_MESSAGE" value="- add room, delete room, edit room.&#10;- fix some bugs." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/filmbooking/ultils/dateTimeUtils/DateAndTimeUtils.java</url>
+          <url>file://$PROJECT_DIR$/src/main/java/com/filmbooking/utils/dateTimeUtils/DateAndTimeUtils.java</url>
           <line>59</line>
-          <properties class="com.filmbooking.ultils.DateAndTimeUtils" method="main">
+          <properties class="com.filmbooking.utils.dateTimeUtils.DateAndTimeUtils" method="main">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -576,6 +700,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/filmbooking/DAOservices/FilmDAOServicesImpl.java</url>
           <line>38</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AddFilmController.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddRoomController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

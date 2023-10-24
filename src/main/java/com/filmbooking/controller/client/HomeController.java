@@ -1,10 +1,12 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.services.FilmGenreServicesImpl;
-import com.filmbooking.services.FilmServicesImpl;
+import com.filmbooking.services.IShowtimeViewServices;
+import com.filmbooking.services.impls.FilmGenreServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
-import com.filmbooking.ultils.ContextPathUtils;
-import com.filmbooking.ultils.RenderViewUtils;
+import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,8 +22,6 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        System.out.println("dfhjdhf" + new FilmGenreServicesImpl().getAll().size());
 
 
         HttpSession userLoginSession = req.getSession();
@@ -40,5 +40,10 @@ public class HomeController extends HttpServlet {
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
 
+    }
+
+    @Override
+    public void destroy() {
+        filmServices = null;
     }
 }

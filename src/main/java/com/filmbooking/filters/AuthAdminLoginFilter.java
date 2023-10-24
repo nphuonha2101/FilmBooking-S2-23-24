@@ -1,5 +1,6 @@
 package com.filmbooking.filters;
 
+import com.filmbooking.utils.RedirectPageUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
@@ -9,7 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin", "/add-film", "/edit-film", "/delete-film", "/film-management"})
+@WebFilter(urlPatterns = {"/admin", "/add-film", "/edit-film", "/delete-film", "/film-management",
+        "/room-management","/add-room", "/edit-room", "/delete-room"})
 public class AuthAdminLoginFilter extends HttpFilter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,7 +24,7 @@ public class AuthAdminLoginFilter extends HttpFilter {
 
         HttpSession userSession = req.getSession();
         if (userSession.getAttribute("username") == null) {
-            resp.sendRedirect("login");
+            RedirectPageUtils.redirectPage("login", req, resp);
             return;
         } else {
             String accountRole = (String) userSession.getAttribute("accountRole");
@@ -35,8 +37,4 @@ public class AuthAdminLoginFilter extends HttpFilter {
         chain.doFilter(req, resp);
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }
