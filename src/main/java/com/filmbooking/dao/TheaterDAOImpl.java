@@ -34,7 +34,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
                 String theaterID = resultSet.getString("theater_id");
                 String theaterName = resultSet.getString("theater_name");
                 String taxCode = resultSet.getString("tax_code");
-                String address = resultSet.getString("address");
+                String address = resultSet.getString("theater_address");
 
                 Theater theater = new Theater(theaterID, theaterName, taxCode, address);
 

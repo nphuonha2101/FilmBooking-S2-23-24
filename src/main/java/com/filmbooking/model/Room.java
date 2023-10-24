@@ -32,6 +32,32 @@ public class Room {
         this.theaterID = theaterID;
     }
 
+    public Room(String roomID, String roomName, int seatRows, int seatCols, String theaterID) {
+        this.roomID = roomID;
+        this.roomName = roomName;
+        this.seatRows = seatRows;
+        this.seatCols = seatCols;
+        this.theaterID = theaterID;
+
+        generateSeatsData();
+    }
+
+    private void generateSeatsData() {
+        this.seatMatrix = new String[seatRows][seatCols];
+        this.seatData = "";
+
+        for (int i = 0; i < seatRows; i++) {
+            for (int j = 0; j < seatCols; j++) {
+                this.seatData += "0";
+                this.seatMatrix[i][j] = "0";
+
+            }
+            this.seatData += " ";
+        }
+        this.seatData = this.seatData.trim();
+    }
+
+
     public String getRoomID() {
         return roomID;
     }
@@ -54,6 +80,7 @@ public class Room {
 
     public void setSeatRows(int seatRows) {
         this.seatRows = seatRows;
+        generateSeatsData();
     }
 
     public int getSeatCols() {
@@ -62,6 +89,7 @@ public class Room {
 
     public void setSeatCols(int seatCols) {
         this.seatCols = seatCols;
+        generateSeatsData();
     }
 
     public String[][] getSeatMatrix() {
