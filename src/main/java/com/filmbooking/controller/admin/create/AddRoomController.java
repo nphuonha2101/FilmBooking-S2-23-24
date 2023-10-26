@@ -42,13 +42,13 @@ public class AddRoomController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomServices = new RoomServicesImpl();
-        String roomID = req.getParameter("room-id");
+
         String roomName = req.getParameter("room-name");
         String theaterID = req.getParameter("theater-id");
         int roomRows = Integer.valueOf(req.getParameter("room-rows"));
         int roomCols = Integer.valueOf(req.getParameter("room-cols"));
 
-        Room newRoom = new Room(roomID,roomName,roomRows,roomCols,theaterID);
+        Room newRoom = new Room(roomName,roomRows,roomCols,theaterID);
         roomServices.save(newRoom);
 
         resp.sendRedirect("room-management");

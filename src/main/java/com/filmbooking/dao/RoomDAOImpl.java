@@ -2,6 +2,7 @@ package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.Room;
+import com.filmbooking.model.Theater;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -68,6 +69,15 @@ public class RoomDAOImpl implements IDAO<Room> {
 
     @Override
     public void save(Room room) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getRoomID());
+        for (Room r: this.getAll()) {
+            if (Integer.parseInt(r.getRoomID()) > largestID)
+                largestID = Integer.parseInt(r.getRoomID());
+        }
+        largestID++;
+        room.setRoomID(String.valueOf(largestID));
+
+
         Connection connection = databaseServices.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seat_data, theater_id)" +

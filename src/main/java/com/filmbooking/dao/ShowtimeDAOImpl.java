@@ -2,6 +2,7 @@ package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseServices;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.model.Theater;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -60,6 +61,14 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
 
     @Override
     public void save(Showtime showtime) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getShowtimeID());
+        for (Showtime s: this.getAll()) {
+            if (Integer.parseInt(s.getShowtimeID()) > largestID)
+                largestID = Integer.parseInt(s.getShowtimeID());
+        }
+        largestID++;
+        showtime.setShowtimeID(String.valueOf(largestID));
+
         Connection connection = databaseServices.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date)"

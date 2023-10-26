@@ -32,8 +32,7 @@ public class Room {
         this.theaterID = theaterID;
     }
 
-    public Room(String roomID, String roomName, int seatRows, int seatCols, String theaterID) {
-        this.roomID = roomID;
+    public Room( String roomName, int seatRows, int seatCols, String theaterID) {
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;

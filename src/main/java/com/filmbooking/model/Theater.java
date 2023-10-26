@@ -13,6 +13,12 @@ public class Theater {
         this.theaterAddress = theaterAddress;
     }
 
+    public Theater(String theaterName, String taxCode, String theaterAddress) {
+        this.theaterName = theaterName;
+        this.taxCode = taxCode;
+        this.theaterAddress = theaterAddress;
+    }
+
     public String getTheaterName() {
         return theaterName;
     }

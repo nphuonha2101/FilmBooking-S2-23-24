@@ -63,6 +63,14 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public void save(Theater theater) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getTheaterID());
+        for (Theater t : this.getAll()) {
+            if (Integer.parseInt(t.getTheaterID()) > largestID)
+                largestID = Integer.parseInt(t.getTheaterID());
+        }
+        largestID++;
+        theater.setTheaterID(String.valueOf(largestID));
+
         Connection connection = databaseServices.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?)";

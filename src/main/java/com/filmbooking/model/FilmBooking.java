@@ -20,6 +20,14 @@ public class FilmBooking {
         this.totalFee = totalFee;
     }
 
+    public FilmBooking(String showtimeID, String username, LocalDateTime bookingDate, String[] seat, double totalFee) {
+        this.showtimeID = showtimeID;
+        this.username = username;
+        this.bookingDate = bookingDate;
+        this.seat = seat;
+        this.totalFee = totalFee;
+    }
+
     public String getFilmBookingID() {
         return filmBookingID;
     }

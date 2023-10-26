@@ -24,9 +24,9 @@
             <div class="wrapper centered-vertical-content">
                 <div>
                     <form method="post" action="add-room">
-                        <label for="room-id">Room ID</label>
-                        <input type="text" placeholder="Mã phòng" name="room-id" id="room-id"
-                               required/>
+<%--                        <label for="room-id">Room ID</label>--%>
+<%--                        <input type="text" placeholder="Mã phòng" name="room-id" id="room-id"--%>
+<%--                               required/>--%>
                         <label for="room-name">Tên phòng</label>
                         <input type="text" placeholder="Tên phòng" name="room-name" id="room-name"
                                required/>

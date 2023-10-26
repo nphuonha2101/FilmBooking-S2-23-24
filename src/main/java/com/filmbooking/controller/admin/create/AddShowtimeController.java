@@ -53,13 +53,12 @@ public class AddShowtimeController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showtimeServices = new ShowtimeServicesImpl();
 
-        String showtimeID = req.getParameter("showtime-id");
         String filmID = req.getParameter("film-id");
         String roomID = req.getParameter("room-id");
         String showtimeDate = req.getParameter("showtime-datetime");
         LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
 
-        Showtime newShowtime = new Showtime(showtimeID, filmID, roomID, showtimeLDT);
+        Showtime newShowtime = new Showtime(filmID, roomID, showtimeLDT);
         showtimeServices.save(newShowtime);
 
         resp.sendRedirect("showtime-management");

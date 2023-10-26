@@ -46,7 +46,6 @@ public class AddFilmController extends HttpServlet {
 
         String relativeFilePath = ContextPathUtils.getUploadFileRelativePath(fileName);
 
-        String filmID = req.getParameter("film-id");
         String filmName = req.getParameter("film-name");
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
         String filmDirector = req.getParameter("director");
@@ -57,7 +56,7 @@ public class AddFilmController extends HttpServlet {
         String filmGenreIDs = req.getParameter("genre-ids");
         String[] filmGenreIDArr = filmGenreIDs.split(" ");
 
-        Film newFilm = new Film(filmID, filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
+        Film newFilm = new Film(filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
                 relativeFilePath);
 
         filmServices.save(newFilm, filmGenreIDArr);
