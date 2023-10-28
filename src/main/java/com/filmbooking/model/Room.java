@@ -1,6 +1,6 @@
 package com.filmbooking.model;
 
-import com.filmbooking.utils.ConvertStringtoArrayUtils;
+import com.filmbooking.utils.StringUtils;
 
 public class Room {
     private String roomID;
@@ -18,7 +18,7 @@ public class Room {
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.seatMatrix = seatMatrix;
-        this.seatData = ConvertStringtoArrayUtils.arrToString(seatMatrix);
+        this.seatData = StringUtils.arrToString(seatMatrix);
         this.theaterID = theaterID;
     }
 
@@ -28,7 +28,7 @@ public class Room {
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.seatData = seatData;
-        this.seatMatrix = ConvertStringtoArrayUtils.convertTo2DArr(seatData);
+        this.seatMatrix = StringUtils.convertTo2DArr(seatData);
         this.theaterID = theaterID;
     }
 

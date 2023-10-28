@@ -11,6 +11,7 @@ import com.filmbooking.services.impls.RoomViewServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -53,8 +54,8 @@ public class AddShowtimeController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showtimeServices = new ShowtimeServicesImpl();
 
-        String filmID = req.getParameter("film-id");
-        String roomID = req.getParameter("room-id");
+        String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
+        String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
         String showtimeDate = req.getParameter("showtime-datetime");
         LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
 

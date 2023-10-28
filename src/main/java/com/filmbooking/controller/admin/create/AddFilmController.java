@@ -1,9 +1,11 @@
 package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.model.Film;
-import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
-import com.filmbooking.utils.*;
+import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
@@ -46,23 +48,30 @@ public class AddFilmController extends HttpServlet {
 
         String relativeFilePath = ContextPathUtils.getUploadFileRelativePath(fileName);
 
-        String filmName = req.getParameter("film-name");
+        String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
-        String filmDirector = req.getParameter("director");
-        String filmActors = req.getParameter("actors");
+        String filmDirector = StringUtils.handlesInputString(req.getParameter("director"));
+        String filmActors = StringUtils.handlesInputString(req.getParameter("actors"));
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
-        String filmDescription = req.getParameter("film-description");
-        String filmTrailerLink = req.getParameter("film-trailer-link");
-        String filmGenreIDs = req.getParameter("genre-ids");
+        String filmDescription = StringUtils.handlesInputString(req.getParameter("film-description"));
+        String filmTrailerLink = StringUtils.handlesInputString(req.getParameter("film-trailer-link"));
+        String filmGenreIDs = StringUtils.handlesInputString(req.getParameter("genre-ids"));
         String[] filmGenreIDArr = filmGenreIDs.split(" ");
 
         Film newFilm = new Film(filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
                 relativeFilePath);
 
-        filmServices.save(newFilm, filmGenreIDArr);
-        FileUploadUtils.uploadFile(req, fileName, "upload-img");
+        if (FileUploadUtils.uploadFile(req, fileName, "upload-img")) {
+            filmServices.save(newFilm, filmGenreIDArr);
 
-        resp.sendRedirect("admin");
+            resp.sendRedirect("admin");
+        } else {
+            req.setAttribute("fileUploadError", "Lỗi tải file lên!");
+            RenderViewUtils.updateView(req, resp, ContextPathUtils.getAdminPagesPath("add-film.jsp"));
+            RenderViewUtils.renderViewToLayout(req, resp,
+                    ContextPathUtils.getAdminPagesPath("add-film.jsp"),
+                    ContextPathUtils.getLayoutPath("master.jsp"));
+        }
     }
 
     @Override

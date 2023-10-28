@@ -6,6 +6,7 @@ import com.filmbooking.services.impls.FilmGenreServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
@@ -63,15 +64,15 @@ public class EditFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String filmName = req.getParameter("film-name");
+        String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
-        String filmDirector = req.getParameter("director");
-        String filmActors = req.getParameter("actors");
+        String filmDirector = StringUtils.handlesInputString(req.getParameter("director"));
+        String filmActors = StringUtils.handlesInputString(req.getParameter("actors"));
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
-        String filmDescription = req.getParameter("film-description");
-        String filmTrailerLink = req.getParameter("film-trailer-link");
-        String filmImgName = req.getParameter("film-img-name");
-        String filmGenres = req.getParameter("genre-ids");
+        String filmDescription = StringUtils.handlesInputString(req.getParameter("film-description"));
+        String filmTrailerLink = StringUtils.handlesInputString(req.getParameter("film-trailer-link"));
+        String filmImgName = StringUtils.handlesInputString(req.getParameter("film-img-name"));
+        String filmGenres = StringUtils.handlesInputString(req.getParameter("genre-ids"));
 
         String[] filmGenreIDArr = filmGenres.split(" ");
 

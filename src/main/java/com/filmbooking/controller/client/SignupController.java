@@ -4,8 +4,8 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
-import com.filmbooking.utils.HashTextGeneratorUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -35,11 +35,11 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String userFullName = req.getParameter("user-full-name");
-        String userEmail = req.getParameter("email");
-        String userPassword = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirm-password");
+        String username = StringUtils.handlesInputString(req.getParameter("username"));
+        String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
+        String userEmail = StringUtils.handlesInputString(req.getParameter("email"));
+        String userPassword = StringUtils.handlesInputString(req.getParameter("password"));
+        String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
         userServices = new UserServicesImpl();
 
         if (userServices.getByUsername(username) != null) {
@@ -51,7 +51,7 @@ public class SignupController extends HttpServlet {
             req.setAttribute("emailError", "Email đã tồn tại!" +
                     " Vui lòng chọn một email khác.");
         } else if (userPassword.equals(confirmPassword)) {
-            userPassword = HashTextGeneratorUtils.generateSHA256String(userPassword);
+            userPassword = StringUtils.generateSHA256String(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
             userServices.save(newUser);
             req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +

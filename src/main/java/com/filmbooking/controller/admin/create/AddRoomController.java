@@ -7,6 +7,7 @@ import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,10 +44,10 @@ public class AddRoomController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomServices = new RoomServicesImpl();
 
-        String roomName = req.getParameter("room-name");
-        String theaterID = req.getParameter("theater-id");
-        int roomRows = Integer.valueOf(req.getParameter("room-rows"));
-        int roomCols = Integer.valueOf(req.getParameter("room-cols"));
+        String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
+        String theaterID = StringUtils.handlesInputString(req.getParameter("theater-id"));
+        int roomRows = Integer.parseInt(req.getParameter("room-rows"));
+        int roomCols = Integer.parseInt(req.getParameter("room-cols"));
 
         Room newRoom = new Room(roomName,roomRows,roomCols,theaterID);
         roomServices.save(newRoom);
