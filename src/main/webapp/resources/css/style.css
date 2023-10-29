@@ -29,6 +29,8 @@ html {
 * {
     font-family: 'Inter', sans-serif;
     font-size: 0.96rem;
+    /*font-family: 'Merriweather Sans', sans-serif;*/
+    font-weight: 400;
     /*font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI Variable", Roboto;*/
 
 }
@@ -398,6 +400,7 @@ button {
     margin-top: 1rem ! important;
     background-color: #ffe2cd !important;
     padding: 0.3rem;
+    border-radius: 5px;
 
 }
 

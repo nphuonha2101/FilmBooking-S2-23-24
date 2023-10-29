@@ -30,7 +30,7 @@
             </div>
 
             <div class="wrapper centered-vertical-content" id="film-description">
-                <div class="wrapper border-wrapper title-filled_wrapper centered-vertical-content">
+                <div class="wrapper title-filled_wrapper centered-vertical-content">
                     <h3>Mô tả</h3>
                 </div>
                 <div class="wrapper">
@@ -42,7 +42,7 @@
 
             <div class="wrapper centered-vertical-content">
                 <c:if test="${not empty film.filmTrailerLink}">
-                    <div class="wrapper border-wrapper title-filled_wrapper centered-vertical-content">
+                    <div class="wrapper title-filled_wrapper centered-vertical-content">
                         <h3>Trailer</h3>
                     </div>
                     <div class="centered-vertical-content wrapper">
@@ -56,7 +56,7 @@
             </div>
             <br>
             <div class="wrapper centered-vertical-content">
-                <div class="wrapper border-wrapper title-filled_wrapper centered-vertical-content">
+                <div class="wrapper title-filled_wrapper centered-vertical-content">
                     <h3>Đặt phim</h3>
                 </div>
                 <div class="wrapper two-col__wrapper">
