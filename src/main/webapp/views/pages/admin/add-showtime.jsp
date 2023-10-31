@@ -20,9 +20,9 @@
         <div class="centered-vertical-content wrapper">
             <div>
                 <form method="post" action="add-showtime">
-                    <label for="showtime-id">ID Suất chiếu</label>
-                    <input type="text" placeholder="ID Suất chiếu" name="showtime-id" id="showtime-id"
-                           required/>
+<%--                    <label for="showtime-id">ID Suất chiếu</label>--%>
+<%--                    <input type="text" placeholder="ID Suất chiếu" name="showtime-id" id="showtime-id"--%>
+<%--                           required/>--%>
                     <label for="film-id">Phim</label>
                     <select name="film-id" id="film-id">
                         <c:forEach var="film" items="${filmData}" varStatus="loop">
@@ -44,7 +44,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </section>
 

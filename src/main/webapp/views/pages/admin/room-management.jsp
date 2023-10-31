@@ -18,7 +18,7 @@
 
         <div class="centered-vertical-content wrapper">
             <div class="justify-right-row wrapper">
-                <a href="add-showtime" class="primary-filled-button rounded-button button submit-button icon-button">
+                <a href="add-room" class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-outlined">add</span>
                     <span class="hidden-span">Thêm phòng mới</span>
                 </a>

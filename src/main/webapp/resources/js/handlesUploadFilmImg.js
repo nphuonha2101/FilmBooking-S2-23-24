@@ -1,18 +1,22 @@
 import {$} from "./utils.js";
 
-const uploadElement = $("#upload-img");
-const filmImgElement = $("#film-img");
-const imgForm = $("#img-form");
-const hiddenImgFileName = $("#film-img-name");
-
-
 let handleImgInput = {
     start: () => {
-        uploadElement.addEventListener("change", handleImgInput.handleInput);
+        try {
+            const uploadElement = $("#upload-img");
+
+            uploadElement.addEventListener("change", handleImgInput.handleInput);
+        } catch (e) {
+            console.log(e);
+        }
     },
     handleInput: function () {
         try {
+            const filmImgElement = $("#film-img");
+            const imgForm = $("#img-form");
+            const hiddenImgFileName = $("#film-img-name");
             let imgFile = this.files[0];
+
             console.log(imgFile)
             let imgURL = URL.createObjectURL(imgFile);
             console.log(imgURL, imgFile.name)

@@ -68,6 +68,16 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public void save(Film film) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getFilmID());
+        for (Film f : this.getAll()) {
+            if (Integer.parseInt(f.getFilmID()) > largestID)
+                largestID = Integer.parseInt(f.getFilmID());
+
+        }
+        largestID++;
+        film.setFilmID(String.valueOf(largestID));
+
+
         Connection connection = databaseServices.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_id, film_name, film_price, film_director, film_cast ," +
                 "film_length,film_description, film_trailer_link, img_path) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";

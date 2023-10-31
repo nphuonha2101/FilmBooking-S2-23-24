@@ -1,7 +1,9 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.Theater;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -62,11 +64,20 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     @Override
     public void save(FilmBooking filmBooking) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getFilmBookingID());
+        for (FilmBooking fb: this.getAll()) {
+            if (Integer.parseInt(fb.getFilmBookingID()) > largestID)
+                largestID = Integer.parseInt(fb.getFilmBookingID());
+        }
+        largestID++;
+        filmBooking.setFilmBookingID(String.valueOf(largestID));
+
+
         Connection connection = databaseServices.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + "(username, showtime_id, booking_date, seat, total_price) VALUES(?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
-            preparedStatement.setString(1, filmBooking.getUsername());
+            preparedStatement.setString(1, filmBooking.getFilmBookingID());
             preparedStatement.setString(2, filmBooking.getShowtimeID());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(filmBooking.getBookingDate()));
 //            preparedStatement.setString(4,filmBooking.getSeat());

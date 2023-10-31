@@ -4,8 +4,8 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
-import com.filmbooking.utils.HashTextGeneratorUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,8 +32,8 @@ public class ResetPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String newPassword = req.getParameter("new-password");
-        String confirmNewPassword = req.getParameter("confirm-new-password");
+        String newPassword = StringUtils.handlesInputString(req.getParameter("new-password"));
+        String confirmNewPassword = StringUtils.handlesInputString(req.getParameter("confirm-new-password"));
 
         userServices = new UserServicesImpl();
 
@@ -42,7 +42,7 @@ public class ResetPasswordController extends HttpServlet {
         User foundUser = userServices.getByUsername(usernameForgot);
 
         if (newPassword.equals(confirmNewPassword)) {
-            newPassword = HashTextGeneratorUtils.generateSHA256String(newPassword);
+            newPassword = StringUtils.generateSHA256String(newPassword);
             foundUser.setUserPassword(newPassword);
 
             userServices.update(foundUser);

@@ -24,7 +24,16 @@ public class Film {
         this.imgPath = imgPath;
     }
 
-
+    public Film(String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath) {
+        this.filmName = filmName;
+        this.filmPrice = filmPrice;
+        this.director = director;
+        this.cast = cast;
+        this.filmLength = filmLength;
+        this.filmDescription = filmDescription;
+        this.filmTrailerLink = filmTrailerLink;
+        this.imgPath = imgPath;
+    }
 
     public String getFilmID() {
         return filmID;
@@ -89,9 +98,11 @@ public class Film {
     public void setImgPath(String imgPath) {
         this.imgPath = imgPath;
     }
+
     public String getFilmTrailerLink() {
         return filmTrailerLink;
     }
+
     public void setFilmTrailerLink(String filmTrailerLink) {
         this.filmTrailerLink = filmTrailerLink;
     }

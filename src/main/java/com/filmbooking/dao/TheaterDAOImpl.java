@@ -34,7 +34,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
                 String theaterID = resultSet.getString("theater_id");
                 String theaterName = resultSet.getString("theater_name");
                 String taxCode = resultSet.getString("tax_code");
-                String address = resultSet.getString("address");
+                String address = resultSet.getString("theater_address");
 
                 Theater theater = new Theater(theaterID, theaterName, taxCode, address);
 
@@ -63,6 +63,14 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public void save(Theater theater) {
+        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getTheaterID());
+        for (Theater t : this.getAll()) {
+            if (Integer.parseInt(t.getTheaterID()) > largestID)
+                largestID = Integer.parseInt(t.getTheaterID());
+        }
+        largestID++;
+        theater.setTheaterID(String.valueOf(largestID));
+
         Connection connection = databaseServices.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?)";

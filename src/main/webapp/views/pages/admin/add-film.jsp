@@ -23,9 +23,9 @@
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-id">Phim ID</label>
-                            <input type="text" placeholder="Phim ID" name="film-id" id="film-id"
-                                   required/>
+<%--                            <label for="film-id">Phim ID</label>--%>
+<%--                            <input type="text" placeholder="Phim ID" name="film-id" id="film-id"--%>
+<%--                                   required/>--%>
                             <label for="film-name">Tên phim</label>
                             <input type="text" placeholder="Tên phim" name="film-name" id="film-name"
                                    required/>
@@ -48,6 +48,7 @@
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button">Chọn
                             ảnh</label>
+                        <span class="error-span message-span">${fileUploadError}</span>
                     </div>
 
                     <div class="wrapper centered-vertical-content">

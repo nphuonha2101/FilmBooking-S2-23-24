@@ -15,6 +15,12 @@ public class Showtime {
         this.showtimeDate = showtimeDate;
     }
 
+    public Showtime(String filmID, String roomID, LocalDateTime showtimeDate) {
+        this.filmID = filmID;
+        this.roomID = roomID;
+        this.showtimeDate = showtimeDate;
+    }
+
     public String getShowtimeID() {
         return showtimeID;
     }
