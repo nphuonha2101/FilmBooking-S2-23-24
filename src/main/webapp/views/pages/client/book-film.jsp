@@ -108,9 +108,6 @@
                     </div>
                 </div>
             </div>
-
-            <%--            </div>--%>
-
             <div class="wrapper centered-vertical-content">
                 <form action="book-film" method="post">
                     <input type="hidden" name="film-price" id="film-price" value="${film.filmPrice}">

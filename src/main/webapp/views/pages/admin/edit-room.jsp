@@ -37,7 +37,7 @@
                                value="${editRoom.seatRows}"
                                required/>
                         <label for="seat-cols">Số cột</label>
-                        <input type="number" min="0" placeholder="Số hàng" name="seat-cols" id="seat-cols"
+                        <input type="number" min="0" placeholder="Số cột" name="seat-cols" id="seat-cols"
                                value="${editRoom.seatCols}"
                                required/>
                         <label for="theater-id">Chi nhánh</label>

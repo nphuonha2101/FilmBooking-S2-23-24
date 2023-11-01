@@ -96,13 +96,16 @@ public class UserDAOImpl implements IDAO<User> {
     @Override
     public void update(User user) {
         Connection connection = databaseServices.getConnection();
-        String sql = "UPDATE " + TABLE_NAME + " SET user_fullname = ?, user_email = ?, user_password = ? WHERE username= ?";
+        String sql = "UPDATE " + TABLE_NAME + " SET user_fullname = ?, user_email = ?, user_password = ?, " +
+                "account_role = ?  WHERE " +
+                "username= ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user.getUserFullName());
             preparedStatement.setString(2, user.getUserEmail());
             preparedStatement.setString(3, user.getUserPassword());
-            preparedStatement.setString(4, user.getUsername());
+            preparedStatement.setString(4, user.getAccountRole());
+            preparedStatement.setString(5, user.getUsername());
 
             preparedStatement.executeUpdate();
 

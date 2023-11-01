@@ -24,15 +24,16 @@
         <c:if test="${not empty sessionScope.username}">
             <li>
                 <div class="drop-down-menu">
-                    <a class="nav-links light-filled-button">
-                            ${sessionScope.userFullName}</a>
+                    <button class="nav-links light-filled-button">
+                            ${sessionScope.userFullName}</button>
                     <div class="drop-down-contents">
-                        <a class="drop-down-links">Lịch sử đăng ký</a>
+                        <a class="drop-down-links" href="">Lịch sử đăng ký</a>
                         <c:choose>
                             <c:when test="${sessionScope.accountRole eq 'admin'}">
                                 <a class="drop-down-links" href="admin">Trang Admin</a>
                             </c:when>
                         </c:choose>
+                        <a class="drop-down-links" href="">Tài khoản của bạn</a>
 
                     </div>
                 </div>

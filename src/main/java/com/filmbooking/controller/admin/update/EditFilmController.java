@@ -8,6 +8,7 @@ import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
+import com.filmbooking.utils.fileUtils.FileUtils;
 import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -91,6 +93,11 @@ public class EditFilmController extends HttpServlet {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
 
+            // delete old img file
+            File oldFile = new File(FileUtils.getRealWebappPath(req) + editFilm.getImgPath());
+            oldFile.delete();
+            System.out.println(oldFile.getAbsolutePath());
+            // set new img file and upload to server
             editFilm.setImgPath(filmImgPath);
             filmServices.update(editFilm, filmGenreIDArr);
             FileUploadUtils.uploadFile(req, uuidFileName, "upload-img");
