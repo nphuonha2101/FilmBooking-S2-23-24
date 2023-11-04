@@ -18,18 +18,15 @@ import java.io.IOException;
 @WebServlet("/room-management")
 public class RoomManagementController extends HttpServlet {
     private IRoomViewServices roomViewServices;
-    private IRoomServices roomServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomViewServices = new RoomViewServicesImpl();
-        roomServices = new RoomServicesImpl();
 
         req.setAttribute("pageTitle", "Film Booking - Quản lý phòng");
         req.setAttribute("sectionTitle", "Quản lý phòng");
         req.setAttribute("roomData", roomViewServices.getAll());
 
-        req.setAttribute("roomAvailableSeatsMap", roomServices.countAvailableSeats());
 
         RenderViewUtils.updateView(req, resp,
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"));
@@ -40,7 +37,6 @@ public class RoomManagementController extends HttpServlet {
 
     @Override
     public void destroy() {
-        roomServices = null;
         roomViewServices = null;
     }
 }

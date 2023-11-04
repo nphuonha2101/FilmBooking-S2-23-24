@@ -45,6 +45,7 @@ public class FilmDAOImpl implements IDAO<Film> {
 
                 filmList.add(0, film);
             }
+            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException e) {

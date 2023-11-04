@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomViewDAOImpl implements IDAO<RoomView> {
-    private DatabaseServices databaseServices;
-    private List<RoomView> roomViewList;
+    private final DatabaseServices databaseServices;
+    private final List<RoomView> roomViewList;
     private static final String TABLE_NAME = "v_room_details";
 
     public RoomViewDAOImpl() {
@@ -44,6 +44,9 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
                 RoomView newRooView = new RoomView(roomID,roomName,seatRows,seatCols,theaterName);
                 roomViewList.add(0, newRooView);
             }
+
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin.create;
 
+import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IRoomServices;
@@ -56,10 +57,11 @@ public class AddShowtimeController extends HttpServlet {
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
+        Room showtimeRoom = roomServices.getByRoomID(roomID);
         String showtimeDate = req.getParameter("showtime-datetime");
         LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
 
-        Showtime newShowtime = new Showtime(filmID, roomID, showtimeLDT);
+        Showtime newShowtime = new Showtime(filmID, showtimeRoom, showtimeLDT);
         showtimeServices.save(newShowtime);
 
         resp.sendRedirect("showtime-management");

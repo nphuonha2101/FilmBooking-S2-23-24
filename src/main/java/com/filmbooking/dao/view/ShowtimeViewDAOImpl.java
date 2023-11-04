@@ -42,10 +42,13 @@ public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
                 ShowtimeView newShowtimeView = new ShowtimeView(showtimeID, filmName, roomName, theaterName, showtimeDate);
                 showtimeViewList.add(0, newShowtimeView);
             }
+            resultSet.close();
+            preparedStatement.close();
+        return showtimeViewList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return showtimeViewList;
+
     }
 
     @Override

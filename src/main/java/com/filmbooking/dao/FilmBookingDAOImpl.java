@@ -41,7 +41,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
                 filmBookingList.add(0, newFilmBooking);
             }
-
+            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException e) {
