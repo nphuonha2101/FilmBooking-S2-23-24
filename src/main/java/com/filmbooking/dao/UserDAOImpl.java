@@ -17,15 +17,13 @@ public class UserDAOImpl implements IDAO<User> {
 
     public UserDAOImpl() {
         userList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
     }
 
     @Override
     public List<User> getAll() {
-        Connection connection = null;
-
-        if (databaseServices.getConnection() != null) connection = databaseServices.getConnection();
+        databaseServices.connect();
+        Connection connection = databaseServices.getConnection();
 
         String queryGet = "SELECT * FROM " + TABLE_NAME;
 
@@ -46,6 +44,7 @@ public class UserDAOImpl implements IDAO<User> {
             }
             resultSet.close();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -70,7 +69,7 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public void save(User user) {
-
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryInsert = "INSERT INTO " + TABLE_NAME + " (username, user_fullname, user_email, user_password, account_role) " + "VALUES(?, ?, ?, ?, ?)";
 
@@ -86,6 +85,8 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
+            ;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -95,6 +96,7 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public void update(User user) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String sql = "UPDATE " + TABLE_NAME + " SET user_fullname = ?, user_email = ?, user_password = ? WHERE username= ?";
         try {
@@ -107,6 +109,7 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +118,7 @@ public class UserDAOImpl implements IDAO<User> {
     @Override
     public void delete(User user) {
         if (userList.contains(user)) {
-
+            databaseServices.connect();
             Connection connection = databaseServices.getConnection();
             String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE username = ?";
             try {
@@ -125,6 +128,7 @@ public class UserDAOImpl implements IDAO<User> {
                 preparedStatement.executeUpdate();
 
                 preparedStatement.close();
+                databaseServices.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {

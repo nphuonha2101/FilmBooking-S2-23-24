@@ -9,34 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add room, delete room, edit room.&#10;- fix some bugs.">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="Fix bugs&#10;- fix bug room displays one data for many showtime">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sql/Project-Film-Postgres-17-10-2023.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/Project-Film-Postgres-17-10-2023.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/TestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddShowtimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddShowtimeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/read/RoomManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/read/RoomManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/read/ShowtimeManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/read/ShowtimeManagementController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmBookingDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmBookingDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmGenreDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmGenreDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/RoomDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/RoomDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/ShowtimeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/ShowtimeDAOImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/UserDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/UserDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/FilmGenreDetailViewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/FilmGenreDetailViewDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/RoomViewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/RoomViewDAOImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/ShowtimeViewDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/view/ShowtimeViewDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Showtime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Showtime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IRoomServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IRoomServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IShowtimeServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IShowtimeServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/FilmBookingServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/FilmBookingServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/ShowtimeServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/ShowtimeServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/room-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/room-management.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/showtime-management.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/showtime-management.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -410,7 +397,7 @@
       <workItem from="1698355264182" duration="1527000" />
       <workItem from="1699063982690" duration="11131000" />
       <workItem from="1699096665982" duration="798000" />
-      <workItem from="1699102578898" duration="2652000" />
+      <workItem from="1699102578898" duration="4555000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />
@@ -644,7 +631,15 @@
       <option name="project" value="LOCAL" />
       <updated>1697688994906</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Fix bugs&#10;- fix bug room displays one data for many showtime">
+      <option name="closed" value="true" />
+      <created>1699106605140</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1699106605140</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -662,7 +657,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- add back to top button and handles logic for it&#10;- add dropdown menu for navigation bar" />
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from databse" />
     <MESSAGE value="- handle logic for login and signup&#10;- implements DAO design pattern to access data from database" />
     <MESSAGE value="- adding DAO Pattern for Film Services&#10;- adding render film to card&#10;- handling reset password, forgot password and logout&#10;- fixing some bugs about session handling" />
@@ -687,7 +681,8 @@
     <MESSAGE value="- add showtime&#10;Issues: not fill showtime of film" />
     <MESSAGE value="Nguyen Phuong Nha&#10;- add showtime&#10;Issues: not fill showtime of film" />
     <MESSAGE value="- add room, delete room, edit room.&#10;- fix some bugs." />
-    <option name="LAST_COMMIT_MESSAGE" value="- add room, delete room, edit room.&#10;- fix some bugs." />
+    <MESSAGE value="Fix bugs&#10;- fix bug room displays one data for many showtime" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bugs&#10;- fix bug room displays one data for many showtime" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -637,6 +637,7 @@ select {
 }
 
 .item-cards > * {
+    cursor: default;
     text-overflow: ellipsis;
     margin: 0.35rem;
 }
