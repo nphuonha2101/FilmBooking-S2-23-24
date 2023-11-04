@@ -44,7 +44,7 @@ public class UserDAOImpl implements IDAO<User> {
 
                 userList.add(0, user);
             }
-
+            resultSet.close();
             preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);

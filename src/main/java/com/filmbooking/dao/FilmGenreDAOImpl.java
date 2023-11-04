@@ -39,6 +39,8 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
                 filmGenreList.add(0, filmGenre);
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -63,6 +65,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(2, filmGenre.getFilmID());
 
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -81,6 +84,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             preparedStatement.setString(4, filmGenre.getFilmID());
 
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

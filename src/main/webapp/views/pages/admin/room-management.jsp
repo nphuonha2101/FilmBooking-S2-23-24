@@ -31,20 +31,19 @@
                     <th>Số hàng</th>
                     <th>Số cột</th>
                     <th>Chi nhánh</th>
-                    <th>Số ghế trống</th>
+                    <th>Số ghế</th>
                     <th>Hành động</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:set var="roomAvailableSeatsMap" value="${roomAvailableSeatsMap}"/>
                 <c:forEach var="room" items="${roomData}" varStatus="loop">
                     <tr>
                         <td>${room.roomID}</td>
                         <td>${room.roomName}</td>
                         <td>${room.seatRows}</td>
                         <td>${room.seatCols}</td>
-                        <td>${room.theaterName}</td>
-                        <td>${roomAvailableSeatsMap[room.roomID]}</td>
+                        <td>${theater.theaterName}</td>
+                        <td>${room.seatRows * room.seatCols}</td>
 
                         <td>
                             <form class="hide hidden-form" method="get">

@@ -35,8 +35,9 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
                 String filmID = resultSet.getString("film_id");
                 String roomID = resultSet.getString("room_id");
                 LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
+                String seatsData = resultSet.getString("seats_data");
 
-                Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate);
+                Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate, seatsData);
 
                 showtimeList.add(0, showtime);
             }
@@ -71,8 +72,8 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
 
         Connection connection = databaseServices.getConnection();
 
-        String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date)"
-                + " VALUES(?, ?, ?, ?)";
+        String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date, seats_data)"
+                + " VALUES(?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(querySave);
 
@@ -80,6 +81,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             preparedStatement.setString(2, showtime.getFilmID());
             preparedStatement.setString(3, showtime.getRoomID());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(showtime.getShowtimeDate()));
+            preparedStatement.setString(5, showtime.getSeatsData());
 
             preparedStatement.executeUpdate();
 
@@ -93,14 +95,15 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
     public void update(Showtime showtime) {
         Connection connection = databaseServices.getConnection();
 
-        String queryUpdate = "UPDATE " + TABLE_NAME + " SET film_id = ?, room_id = ?, showtime_date = ?"
+        String queryUpdate = "UPDATE " + TABLE_NAME + " SET film_id = ?, room_id = ?, showtime_date = ?, seats_data = ?"
                 + " WHERE showtime_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
             preparedStatement.setString(1, showtime.getFilmID());
             preparedStatement.setString(2, showtime.getRoomID());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(showtime.getShowtimeDate()));
-            preparedStatement.setString(4, showtime.getShowtimeID());
+            preparedStatement.setString(4, showtime.getSeatsData());
+            preparedStatement.setString(5, showtime.getShowtimeID());
 
             preparedStatement.executeUpdate();
 

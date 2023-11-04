@@ -2,6 +2,7 @@ package com.filmbooking.services;
 
 import com.filmbooking.model.Showtime;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface IShowtimeServices {
@@ -15,4 +16,7 @@ public interface IShowtimeServices {
     void update(Showtime showtime);
 
     void delete(Showtime showtime);
+
+    void bookSeats(Showtime showtime, String ...seats);
+    HashMap<String, Integer> countAvailableSeats();
 }

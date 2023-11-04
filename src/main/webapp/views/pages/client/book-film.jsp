@@ -28,7 +28,7 @@
                         <%--Seats table--%>
                         <table class="seats-table">
                             <tbody>
-                            <c:set var="roomSeats" value="${bookedRoom.seatMatrix}"/>
+                            <c:set var="roomSeats" value="${bookedShowtime.seatsMatrix}"/>
                             <c:forEach var="roomSeatsRow" items="${roomSeats}" varStatus="row">
                                 <tr>
                                     <c:forEach var="roomSeat" items="${roomSeatsRow}" varStatus="seat">

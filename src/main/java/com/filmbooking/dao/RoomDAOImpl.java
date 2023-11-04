@@ -37,7 +37,7 @@ public class RoomDAOImpl implements IDAO<Room> {
                 String roomName = resultSet.getString("room_name");
                 int seatRows = resultSet.getInt("seat_rows");
                 int seatCols = resultSet.getInt("seat_cols");
-                String seatData = resultSet.getString("seat_data");
+                String seatData = resultSet.getString("seats_data");
                 String theaterID = resultSet.getString("theater_id");
 
                 Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theaterID);
@@ -45,7 +45,7 @@ public class RoomDAOImpl implements IDAO<Room> {
                 roomList.add(0, newRoom);
 
             }
-
+            resultSet.close();
             preparedStatement.close();
 
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class RoomDAOImpl implements IDAO<Room> {
 
         Connection connection = databaseServices.getConnection();
 
-        String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seat_data, theater_id)" +
+        String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seats_data, theater_id)" +
                 " VALUES(?, ?, ?, ?, ?, ?)";
 
         try {
@@ -108,7 +108,7 @@ public class RoomDAOImpl implements IDAO<Room> {
         Connection connection = databaseServices.getConnection();
 
         String queryUpdate = "UPDATE " + TABLE_NAME +
-                " SET room_name = ?, seat_rows = ?, seat_cols = ?, seat_data = ?, theater_id = ? WHERE room_id = ?";
+                " SET room_name = ?, seat_rows = ?, seat_cols = ?, seats_data = ?, theater_id = ? WHERE room_id = ?";
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);

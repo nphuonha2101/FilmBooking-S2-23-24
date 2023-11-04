@@ -2,6 +2,10 @@
 
 This project is a film booking system developed using Java, Servlet, and JSP.
 
+## Table of contents
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+
 ## Features
 
 - **Book Film**: Allows users to book their desired films.

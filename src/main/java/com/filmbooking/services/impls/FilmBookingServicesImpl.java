@@ -14,12 +14,11 @@ import java.util.List;
 
 public class FilmBookingServicesImpl implements IFilmBookingServices {
     private final IDAO<FilmBooking> filmBookingDAO;
-    private final IRoomServices roomServices;
+
     private final IShowtimeServices showtimeServices;
 
     public FilmBookingServicesImpl() {
         filmBookingDAO = new FilmBookingDAOImpl();
-        roomServices = new RoomServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
     }
 
@@ -36,7 +35,7 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     @Override
     public void save(FilmBooking filmBooking) {
         Showtime showtime = showtimeServices.getByID(filmBooking.getShowtimeID());
-        roomServices.bookSeats(showtime.getRoomID(), filmBooking.getSeats());
+        showtimeServices.bookSeats(showtime, filmBooking.getSeats());
         filmBookingDAO.save(filmBooking);
     }
 
