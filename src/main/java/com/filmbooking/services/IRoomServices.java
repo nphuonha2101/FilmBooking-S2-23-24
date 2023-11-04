@@ -13,4 +13,5 @@ public interface IRoomServices {
     void update(Room room);
     void delete(Room room);
     HashMap<String, Integer> countAvailableSeats();
+    void bookSeats(String roomID, String ...seats);
 }

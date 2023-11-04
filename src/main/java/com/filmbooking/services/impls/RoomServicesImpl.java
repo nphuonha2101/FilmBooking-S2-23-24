@@ -59,4 +59,11 @@ public class RoomServicesImpl implements IRoomServices {
         }
         return result;
     }
+
+    @Override
+    public void bookSeats(String roomID, String[] seats) {
+        Room room = getByRoomID(roomID);
+        room.bookSeats(seats);
+        update(room);
+    }
 }

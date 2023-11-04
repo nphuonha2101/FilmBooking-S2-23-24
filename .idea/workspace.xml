@@ -10,25 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1293fa77-af14-4362-9962-99e9237be2e4" name="Changes" comment="- add room, delete room, edit room.&#10;- fix some bugs.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/client/BookingFilmController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/film-info.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddFilmController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddRoomController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddShowtimeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/create/AddShowtimeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/admin/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/client/BookFilmController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/client/FilmInfoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/client/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/controller/client/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmBookingDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmBookingDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/FilmDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/RoomDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/RoomDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/ShowtimeDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/ShowtimeDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/dao/TheaterDAOImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/database/DatabaseServices.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Film.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/filters/AuthAdminLoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/filters/AuthAdminLoginFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/filters/AuthLoginFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/filters/AuthLoginFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/FilmBooking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/FilmBooking.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Showtime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Showtime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Theater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/model/Theater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-room.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-room.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-showtime.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-showtime.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IRoomServices.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/IRoomServices.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/FilmBookingServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/FilmBookingServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/services/impls/RoomServicesImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/utils/RedirectPageUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/utils/RedirectPageUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/filmbooking/utils/StringUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/filmbooking/utils/StringUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesChooseSeats.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/handlesChooseSeats.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/components/navigation-bar.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/components/navigation-bar.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/layout/master.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/views/pages/client/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/views/pages/client/login.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +116,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "develop",
     "last_opened_file_path": "C:/Users/ConMuaXaDan/Desktop/clone/FilmBooking-WebProgramming/src/main/webapp/views/pages/admin",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
@@ -218,7 +222,8 @@
       </method>
     </configuration>
     <configuration name="Tomcat 10.1.10" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 10.1.10" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
-      <option name="UPDATING_POLICY" value="restart-server" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATING_POLICY" value="update-resources" />
       <deployment>
         <artifact name="FilmBooking-WebProgramming:war exploded">
           <settings>
@@ -399,6 +404,7 @@
       <workItem from="1698119470318" duration="341000" />
       <workItem from="1698126522422" duration="4106000" />
       <workItem from="1698355264182" duration="1527000" />
+      <workItem from="1699063982690" duration="11131000" />
     </task>
     <task id="LOCAL-00001" summary="add navigation bar when not login">
       <option name="closed" value="true" />

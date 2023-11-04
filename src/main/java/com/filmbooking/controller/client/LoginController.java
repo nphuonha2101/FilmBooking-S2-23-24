@@ -1,5 +1,7 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.*;
@@ -47,19 +49,19 @@ public class LoginController extends HttpServlet {
         } else {
             loginUser = userServices.getByUsername(username);
             if (loginUser.getUserPassword().equals(password)) {
+                // set login user and film booking object to session
                 HttpSession userSession = req.getSession();
-                userSession.setAttribute("username", loginUser.getUsername());
-                userSession.setAttribute("userFullName", loginUser.getUserFullName());
-                userSession.setAttribute("userEmail", loginUser.getUserEmail());
-                userSession.setAttribute("accountRole", loginUser.getAccountRole());
+                userSession.setAttribute("loginUser", loginUser);
 
-                System.out.println("Login Controller Test: " + loginUser.getAccountRole());
+                FilmBooking filmBooking = new FilmBooking();
+                filmBooking.setUsername(loginUser.getUsername());
+                userSession.setAttribute("filmBooking", filmBooking);
+
 
                 /* return to previous page that was visited before login
                  * if it has no previous page, return to home page
                  */
                 RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
-
 
             } else {
                 req.setAttribute("passwordError", "Mật khẩu của bạn không đúng!");

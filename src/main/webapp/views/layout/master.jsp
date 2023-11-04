@@ -41,12 +41,9 @@
     <jsp:include page="${dynamicContents}"/>
     <jsp:include page="${modalName}"/>
 
-    <jsp:include page="/views/components/cookies-disabled.jsp"/>
+<%--    <jsp:include page="/views/components/cookies-disabled.jsp"/>--%>
 
 </main>
-
-<!-- Modal -->
-<%--<jsp:include page="/views/pages/client/home.jsp"/>--%>
 
 <footer class="footer">
     <jsp:include page="/views/components/footer.jsp"/>

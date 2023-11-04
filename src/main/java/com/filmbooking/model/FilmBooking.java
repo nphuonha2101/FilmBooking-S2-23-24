@@ -1,31 +1,42 @@
 package com.filmbooking.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class FilmBooking {
     String filmBookingID;
     String showtimeID;
     String username;
     LocalDateTime bookingDate;
-    String[] seat;
+    String[] seats;
+    String seatsData;
     double totalFee;
 
-    public FilmBooking(String filmBookingID, String username, String showtimeID, LocalDateTime bookingDate, String[] seat, double totalFee) {
+    public FilmBooking(String filmBookingID, String username, String showtimeID, LocalDateTime bookingDate,
+                       String seatsData, double totalFee) {
+
         this.filmBookingID = filmBookingID;
         this.showtimeID = showtimeID;
         this.username = username;
         this.bookingDate = bookingDate;
-        this.seat = seat;
+        this.seatsData = seatsData;
         this.totalFee = totalFee;
     }
 
-    public FilmBooking(String showtimeID, String username, LocalDateTime bookingDate, String[] seat, double totalFee) {
+    public FilmBooking(String showtimeID, String username, LocalDateTime bookingDate, String[] seats, double totalFee) {
         this.showtimeID = showtimeID;
         this.username = username;
         this.bookingDate = bookingDate;
-        this.seat = seat;
+        this.seats = seats;
+        this.seatsData = String.join(", ", seats);
         this.totalFee = totalFee;
+    }
+
+    public FilmBooking() {
+        this.filmBookingID = "";
+        this.showtimeID = "";
+        this.username = "";
+        this.bookingDate = null;
+        this.seats = new String[0];
     }
 
     public String getFilmBookingID() {
@@ -60,12 +71,22 @@ public class FilmBooking {
         this.bookingDate = bookingDate;
     }
 
-    public String[] getSeat() {
-        return seat;
+    public String[] getSeats() {
+        return seats;
     }
 
-    public void setSeat(String[] seat) {
-        this.seat = seat;
+    public void setSeats(String[] seats) {
+        this.seats = seats;
+        this.seatsData = String.join(", ", seats);
+    }
+
+    public String getSeatsData() {
+        return seatsData;
+    }
+
+    public void setSeatsData(String seatsData) {
+        this.seatsData = seatsData;
+        this.seats = seatsData.split(", ");
     }
 
     public double getTotalFee() {
@@ -74,6 +95,13 @@ public class FilmBooking {
 
     public void setTotalFee(double totalFee) {
         this.totalFee = totalFee;
+    }
+
+    public void resetFilmBooking() {
+        this.filmBookingID = "";
+        this.showtimeID = "";
+        this.bookingDate = null;
+        this.seats = new String[0];
     }
 
 

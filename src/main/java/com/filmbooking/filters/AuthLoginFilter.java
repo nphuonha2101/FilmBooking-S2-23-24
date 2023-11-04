@@ -22,7 +22,7 @@ public class AuthLoginFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession userSession = req.getSession();
         if (userSession.getAttribute("username") == null) {
-            RedirectPageUtils.redirectPage("login", req, res);
+            RedirectPageUtils.redirectPage("login", null, req, res);
             return;
         } else {
             RedirectPageUtils.redirectPreviousPageIfExist(req, res);

@@ -18,7 +18,7 @@ public class Room {
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.seatMatrix = seatMatrix;
-        this.seatData = StringUtils.arrToString(seatMatrix);
+        this.seatData = StringUtils.arr2DToString(seatMatrix);
         this.theaterID = theaterID;
     }
 
@@ -54,6 +54,19 @@ public class Room {
             this.seatData += " ";
         }
         this.seatData = this.seatData.trim();
+    }
+
+    /**
+     * Book seat
+     * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
+     */
+    public void bookSeats(String[] seats) {
+        for (String seat : seats) {
+            int row = Integer.parseInt(seat.split(" ")[0]);
+            int col = Integer.parseInt(seat.split(" ")[1]);
+            this.seatMatrix[row][col] = "1";
+        }
+        this.seatData = StringUtils.arr2DToString(this.seatMatrix);
     }
 
 

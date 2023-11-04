@@ -21,15 +21,15 @@
         <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
                target="_blank">GitHub</a></li>
 
-        <c:if test="${not empty sessionScope.username}">
+        <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
                 <div class="drop-down-menu">
                     <a class="nav-links light-filled-button">
-                            ${sessionScope.userFullName}</a>
+                            ${sessionScope.loginUser.userFullName}</a>
                     <div class="drop-down-contents">
                         <a class="drop-down-links">Lịch sử đăng ký</a>
                         <c:choose>
-                            <c:when test="${sessionScope.accountRole eq 'admin'}">
+                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
                                 <a class="drop-down-links" href="admin">Trang Admin</a>
                             </c:when>
                         </c:choose>
@@ -40,10 +40,10 @@
         </c:if>
 
         <c:choose>
-            <c:when test="${not empty sessionScope.username}">
+            <c:when test="${not empty sessionScope.loginUser.username}">
                 <li><a class="nav-links" href="logout">Đăng xuất</a></li>
             </c:when>
-            <c:when test="${empty sessionScope.username}">
+            <c:when test="${empty sessionScope.loginUser.username}">
                 <li><a class="nav-links" href="signup">Đăng ký</a></li>
                 <li><a class="nav-links light-filled-button button" href="login">Đăng nhập</a></li>
             </c:when>

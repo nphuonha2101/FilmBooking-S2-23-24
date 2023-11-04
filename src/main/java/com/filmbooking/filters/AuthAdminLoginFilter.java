@@ -1,5 +1,6 @@
 package com.filmbooking.filters;
 
+import com.filmbooking.model.User;
 import com.filmbooking.utils.RedirectPageUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -23,11 +24,12 @@ public class AuthAdminLoginFilter extends HttpFilter {
             ServletException {
 
         HttpSession userSession = req.getSession();
-        if (userSession.getAttribute("username") == null) {
-            RedirectPageUtils.redirectPage("login", req, resp);
+        User loginUser = (User) userSession.getAttribute("loginUser");
+        if (loginUser == null) {
+            RedirectPageUtils.redirectPage("login", null, req, resp);
             return;
         } else {
-            String accountRole = (String) userSession.getAttribute("accountRole");
+            String accountRole = loginUser.getAccountRole();
             if (!accountRole.equals("admin")) {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
