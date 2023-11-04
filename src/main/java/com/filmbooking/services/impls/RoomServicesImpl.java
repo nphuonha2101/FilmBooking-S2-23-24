@@ -48,15 +48,7 @@ public class RoomServicesImpl implements IRoomServices {
         roomDAO.delete(room);
     }
 
-    @Override
-    public HashMap<String, Integer> countAvailableSeats() {
-        HashMap<String, Integer> result = new HashMap<>();
 
-        for (Room room : getAll()
-        ) {
-            int availableSeats = room.countAvailableSeats();
-            result.put(room.getRoomID(), availableSeats);
-        }
-        return result;
-    }
+
+
 }

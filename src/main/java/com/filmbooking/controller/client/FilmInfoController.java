@@ -1,6 +1,7 @@
 package com.filmbooking.controller.client;
 
 import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.view.FilmGenreDetailView;
 import com.filmbooking.model.view.ShowtimeView;
@@ -24,12 +25,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "bookFilm", value = "/book-film")
-public class BookFilmController extends HttpServlet {
+@WebServlet(name = "filmInfo", value = "/film-info")
+public class FilmInfoController extends HttpServlet {
     private IFilmServices filmServices;
     private IFilmGenreDetailViewServices filmGenreDetailViewServices;
     private IShowtimeServices showtimeServices;
     private IShowtimeViewServices showtimeViewServices;
+    private String queryString;
 
     @Override
     public void init() throws ServletException {
@@ -38,6 +40,8 @@ public class BookFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        queryString = req.getQueryString();
+
         filmServices = new FilmServicesImpl();
         filmGenreDetailViewServices = new FilmGenreDetailViewServicesImpl();
         showtimeViewServices = new ShowtimeViewServicesImpl();
@@ -69,24 +73,31 @@ public class BookFilmController extends HttpServlet {
         req.setAttribute("showtimeViewDetails", showtimeViewsOfThisFilm);
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("book-film.jsp"),
+                ContextPathUtils.getClientPagesPath("film-info.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String seats = req.getParameter("seats");
-        String showtimeID = req.getParameter("showtime-id");
+        if (req.getSession().getAttribute("loginUser") == null) {
+            RedirectPageUtils.redirectPage("login", queryString, req, resp);
+            return;
+        }
+        String bookedShowtimeID = req.getParameter("showtime-id");
 
-        System.out.println("Seats: " + seats + "\n" + "Showtime ID: " + showtimeID);
+        FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
+        filmBooking.setShowtimeID(bookedShowtimeID);
+        req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-        RedirectPageUtils.redirectPage("book-film", req, resp);
+        resp.sendRedirect("book-film");
     }
 
     @Override
     public void destroy() {
         filmServices = null;
         filmGenreDetailViewServices = null;
+        showtimeServices = null;
+        showtimeViewServices = null;
 
     }
 }

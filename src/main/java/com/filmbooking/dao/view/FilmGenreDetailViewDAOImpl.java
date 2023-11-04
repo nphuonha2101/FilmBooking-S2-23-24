@@ -13,17 +13,17 @@ import java.util.List;
 
 public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
 
-    private List<FilmGenreDetailView> filmGenreDetailViewList;
-    private DatabaseServices databaseServices;
+    private final List<FilmGenreDetailView> filmGenreDetailViewList;
+    private final DatabaseServices databaseServices;
     private static final String TABLE_NAME = "v_film_genre_details";
 
     public FilmGenreDetailViewDAOImpl() {
         filmGenreDetailViewList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
     }
     @Override
     public List<FilmGenreDetailView> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
@@ -40,6 +40,9 @@ public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
 
                 filmGenreDetailViewList.add(0, newFilmGenreDetailView);
             }
+            resultSet.close();
+            preparedStatement.close();
+            databaseServices.close();
             return filmGenreDetailViewList;
 
         } catch (SQLException e) {

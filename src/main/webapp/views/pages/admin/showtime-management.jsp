@@ -29,6 +29,7 @@
                     <th>Showtime ID</th>
                     <th>Tên phim</th>
                     <th>Tên phòng</th>
+                    <th>Số ghế trống</th>
                     <th>Ngày chiếu</th>
                     <th>Hành động</th>
                 </tr>
@@ -39,6 +40,7 @@
                         <td>${showtimeView.showtimeID}</td>
                         <td>${showtimeView.filmName}</td>
                         <td>${showtimeView.roomName}</td>
+                        <td>${availableSeats[showtimeView.showtimeID]}</td>
                         <td>${showtimeView.showtimeDate}</td>
 
                         <td>

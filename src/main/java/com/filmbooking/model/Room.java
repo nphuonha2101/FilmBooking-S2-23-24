@@ -18,7 +18,7 @@ public class Room {
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.seatMatrix = seatMatrix;
-        this.seatData = StringUtils.arrToString(seatMatrix);
+        this.seatData = StringUtils.arr2DToString(seatMatrix);
         this.theaterID = theaterID;
     }
 
@@ -55,6 +55,8 @@ public class Room {
         }
         this.seatData = this.seatData.trim();
     }
+
+
 
 
     public String getRoomID() {
@@ -115,15 +117,5 @@ public class Room {
         this.seatData = seatData;
     }
 
-    public int countAvailableSeats() {
-        int count = 0;
-        String[][] seatMatrix = this.getSeatMatrix();
-        for (String[] row : seatMatrix) {
-            for (String s : row) {
-                if (s.equalsIgnoreCase("0"))
-                    count++;
-            }
-        }
-        return count;
-    }
+
 }

@@ -6,8 +6,19 @@ import java.sql.SQLException;
 
 public class DatabaseServices {
     private Connection connection = null;
+    private static DatabaseServices instance = null;
 
-    public boolean connectDatabase() {
+    private DatabaseServices() {
+    }
+
+    public static DatabaseServices getInstance() {
+        if (instance == null) {
+            instance = new DatabaseServices();
+        }
+        return instance;
+    }
+
+    public boolean connect() {
         try {
             Class.forName("org.postgresql.Driver");
             String DB_URL = "jdbc:postgresql://localhost:5432/FilmBooking";
@@ -32,7 +43,7 @@ public class DatabaseServices {
         return false;
     }
 
-    public void disconnectDatabase() {
+    public void close() {
         try {
             if (connection != null) {
                 connection.close();

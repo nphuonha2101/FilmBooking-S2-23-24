@@ -17,12 +17,13 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     public FilmDAOImpl() {
         filmList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
+
     }
 
     @Override
     public List<Film> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
@@ -45,8 +46,9 @@ public class FilmDAOImpl implements IDAO<Film> {
 
                 filmList.add(0, film);
             }
+            resultSet.close();
             preparedStatement.close();
-
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -77,7 +79,7 @@ public class FilmDAOImpl implements IDAO<Film> {
         largestID++;
         film.setFilmID(String.valueOf(largestID));
 
-
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_id, film_name, film_price, film_director, film_cast ," +
                 "film_length,film_description, film_trailer_link, img_path) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -95,6 +97,7 @@ public class FilmDAOImpl implements IDAO<Film> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -102,6 +105,7 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public void update(Film film) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String querySet = "UPDATE " + TABLE_NAME
                 + " SET film_name = ?, film_price = ?, film_director = ?, film_cast = ?, film_length = ?, " +
@@ -123,6 +127,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -130,6 +135,7 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public void delete(Film film) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryDel = "DELETE FROM " + TABLE_NAME + " WHERE film_id = ?";
 
@@ -140,6 +146,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

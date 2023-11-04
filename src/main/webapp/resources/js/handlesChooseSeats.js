@@ -4,23 +4,23 @@ let handlesChooseSeats = {
     start: function () {
         try {
             let seats = $$('.seats');
-            let seatHiddenInput = $('#seat');
+            let seatHiddenInput = $('#seats');
 
             for (let i = 0; i < seats.length; i++) {
                 seats[i].addEventListener('click', function () {
 
 
                     if (this.classList.contains('seats-unavailable'))
-                        alert('This seat is not available!');
+                        alert('Ghế này đã có người chọn rồi');
                     else if
                     (this.classList.contains('seats-active')) {
                         this.classList.remove('seats-active')
-                        seatHiddenInput.value = displaySelectedSeats();
+                        seatHiddenInput.value = displaySelectedSeat();
 
                     } else {
 
                         this.classList.add('seats-active')
-                        seatHiddenInput.value = displaySelectedSeats();
+                        seatHiddenInput.value = displaySelectedSeat();
                     }
                     displayTotalFee();
                 });
@@ -34,18 +34,11 @@ handlesChooseSeats.start();
 
 
 // get selectedSeats
-let displaySelectedSeats = function () {
-    let seats = $$('.seats-active');
-    let selectedSeatElement = $('#selected-seat');
-
-    selectedSeatElement.innerText = seats.length + " ghế";
-}
 
 let displayTotalFee = () => {
-    let filmPriceHiddenInput = $('#film-price');
+    let filmPrice = parseFloat($('#booked-film-price').innerText);
     let seats = $$('.seats-active');
     let numberOfSeat = seats.length;
-    let filmPrice = filmPriceHiddenInput.value;
     let totalFeeElement = $('#total-fee');
 
     totalFeeElement.innerText = filmPrice * numberOfSeat + " VNĐ";

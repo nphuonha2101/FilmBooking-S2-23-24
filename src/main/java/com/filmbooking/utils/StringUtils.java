@@ -22,7 +22,7 @@ public class StringUtils {
         return result;
     }
 
-    public static String arrToString(String[][] arr) {
+    public static String arr2DToString(String[][] arr) {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -75,6 +75,6 @@ public class StringUtils {
     public static void main(String[] args) {
         String data = "01010101 01010101 01010101";
         printArr(convertTo2DArr(data));
-        System.out.println(arrToString(convertTo2DArr(data)));
+        System.out.println(arr2DToString(convertTo2DArr(data)));
     }
 }

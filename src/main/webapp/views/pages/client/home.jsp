@@ -26,7 +26,7 @@
                         <p>Đạo diễn: ${film.director}</p>
                             <%--                    <p>Thể loại: ${film.genre}</p>--%>
                     </div>
-                    <form action="book-film" class="hidden-form" id="hidden-form" method="get">
+                    <form action="film-info" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="film-id" value="${film.filmID}">
                     </form>
                 </div>
