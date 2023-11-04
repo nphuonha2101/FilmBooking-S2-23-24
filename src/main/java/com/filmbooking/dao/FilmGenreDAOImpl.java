@@ -18,12 +18,13 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
     public FilmGenreDAOImpl() {
         filmGenreList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
+
     }
 
     @Override
     public List<FilmGenre> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
 
@@ -41,6 +42,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             }
             resultSet.close();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -54,7 +56,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
     @Override
     public void save(FilmGenre filmGenre) {
-
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + " (genre_id, film_id) VALUES (?, ?)";
 
@@ -66,6 +68,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -73,6 +76,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
     @Override
     public void update(FilmGenre filmGenre) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String querySet = "UPDATE " + TABLE_NAME + " SET genre_id = ?, film_id = ? WHERE genre_id = ? AND film_id = ?";
         try {
@@ -85,6 +89,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,6 +97,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
 
     @Override
     public void delete(FilmGenre filmGenre) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE film_id = ? AND genre_id = ?";
         try {
@@ -102,6 +108,7 @@ public class FilmGenreDAOImpl implements IDAO<FilmGenre> {
             deleteStatement.executeUpdate();
 
             deleteStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

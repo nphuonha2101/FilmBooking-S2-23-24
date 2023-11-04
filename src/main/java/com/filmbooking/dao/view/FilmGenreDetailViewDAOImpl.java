@@ -19,11 +19,11 @@ public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
 
     public FilmGenreDetailViewDAOImpl() {
         filmGenreDetailViewList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
     }
     @Override
     public List<FilmGenreDetailView> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
@@ -42,7 +42,7 @@ public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
             }
             resultSet.close();
             preparedStatement.close();
-
+            databaseServices.close();
             return filmGenreDetailViewList;
 
         } catch (SQLException e) {

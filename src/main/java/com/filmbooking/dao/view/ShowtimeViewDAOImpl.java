@@ -10,22 +10,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
-    private DatabaseServices databaseServices;
-    private List<ShowtimeView> showtimeViewList;
+    private final DatabaseServices databaseServices;
+    private final List<ShowtimeView> showtimeViewList;
     private static final String TABLE_NAME = "v_showtime_details";
 
     public ShowtimeViewDAOImpl() {
         showtimeViewList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
     }
 
     @Override
     public List<ShowtimeView> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryGetALl = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -44,6 +43,7 @@ public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
             }
             resultSet.close();
             preparedStatement.close();
+            databaseServices.close();
         return showtimeViewList;
         } catch (SQLException e) {
             throw new RuntimeException(e);

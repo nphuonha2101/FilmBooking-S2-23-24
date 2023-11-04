@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TheaterDAOImpl implements IDAO<Theater> {
-    private DatabaseServices databaseServices;
-    private List<Theater> theaterList;
+    private final DatabaseServices databaseServices;
+    private final List<Theater> theaterList;
     private static final String TABLE_NAME = "theater";
 
     public TheaterDAOImpl() {
         theaterList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
     }
 
     @Override
     public List<Theater> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
@@ -40,8 +40,9 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
                 theaterList.add(0, theater);
             }
-
+            resultSet.close();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -71,6 +72,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
         largestID++;
         theater.setTheaterID(String.valueOf(largestID));
 
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?)";
@@ -85,6 +87,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -93,6 +96,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public void update(Theater theater) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryUpdate = "UPDATE " + TABLE_NAME + " SET theater_name = ?, tax_number = ?, address = ? WHERE theater_id = ?";
@@ -107,6 +111,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -114,6 +119,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public void delete(Theater theater) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE theater_id = ?";
@@ -125,6 +131,7 @@ public class TheaterDAOImpl implements IDAO<Theater> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

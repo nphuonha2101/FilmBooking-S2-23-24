@@ -18,14 +18,13 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
 
     public RoomViewDAOImpl() {
         this.roomViewList = new ArrayList<>();
-        this.databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        this.databaseServices = DatabaseServices.getInstance();
+
     }
 
     @Override
     public List<RoomView> getAll() {
-
-
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
 
@@ -41,12 +40,13 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
                 int seatCols = resultSet.getInt("seat_cols");
                 String theaterName = resultSet.getString("theater_name");
 
-                RoomView newRooView = new RoomView(roomID,roomName,seatRows,seatCols,theaterName);
+                RoomView newRooView = new RoomView(roomID, roomName, seatRows, seatCols, theaterName);
                 roomViewList.add(0, newRooView);
             }
 
             resultSet.close();
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -56,8 +56,8 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
     @Override
     public RoomView getByID(String id) {
         getAll();
-        for (RoomView roomView:
-             roomViewList) {
+        for (RoomView roomView :
+                roomViewList) {
             if (roomView.getRoomID().equalsIgnoreCase(id)) return roomView;
         }
         return null;

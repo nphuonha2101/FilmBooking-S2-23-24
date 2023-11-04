@@ -16,12 +16,13 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     public FilmBookingDAOImpl() {
         filmBookingList = new ArrayList<>();
-        databaseServices = new DatabaseServices();
-        databaseServices.connectDatabase();
+        databaseServices = DatabaseServices.getInstance();
+
     }
 
     @Override
     public List<FilmBooking> getAll() {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -43,7 +44,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             }
             resultSet.close();
             preparedStatement.close();
-
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -63,14 +64,14 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
     @Override
     public void save(FilmBooking filmBooking) {
         int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getFilmBookingID());
-        for (FilmBooking fb: this.getAll()) {
+        for (FilmBooking fb : this.getAll()) {
             if (Integer.parseInt(fb.getFilmBookingID()) > largestID)
                 largestID = Integer.parseInt(fb.getFilmBookingID());
         }
         largestID++;
         filmBooking.setFilmBookingID(String.valueOf(largestID));
 
-
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_booking_id, username, showtime_id, booking_date, " +
                 "seats, " +
@@ -82,12 +83,13 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.setString(2, filmBooking.getUsername());
             preparedStatement.setString(3, filmBooking.getShowtimeID());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(filmBooking.getBookingDate()));
-            preparedStatement.setString(5,filmBooking.getSeatsData());
-            preparedStatement.setDouble(6,filmBooking.getTotalFee());
+            preparedStatement.setString(5, filmBooking.getSeatsData());
+            preparedStatement.setDouble(6, filmBooking.getTotalFee());
 
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,6 +97,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     @Override
     public void update(FilmBooking filmBooking) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
 
         //showtime_id, username, booking_date, seat, total_price
@@ -107,7 +110,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
             preparedStatement.setString(1, filmBooking.getShowtimeID());
             preparedStatement.setString(2, filmBooking.getUsername());
-            preparedStatement.setTimestamp(3,Timestamp.valueOf(filmBooking.getBookingDate()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(filmBooking.getBookingDate()));
             preparedStatement.setString(4, filmBooking.getSeatsData());
             preparedStatement.setDouble(5, filmBooking.getTotalFee());
 
@@ -116,6 +119,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -123,6 +127,7 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     @Override
     public void delete(FilmBooking filmBooking) {
+        databaseServices.connect();
         Connection connection = databaseServices.getConnection();
         String queryDel = "DELETE FROM " + TABLE_NAME + " WHERE film_booking_id = ?";
 
@@ -133,9 +138,10 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
+            databaseServices.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    }
+}
 
