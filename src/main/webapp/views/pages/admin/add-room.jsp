@@ -34,7 +34,7 @@
                         <input type="number" min="0" placeholder="Số hàng" name="room-rows" id="room-rows"
                                required/>
                         <label for="room-cols">Số cột</label>
-                        <input type="number" min="0" placeholder="Số hàng" name="room-cols" id="room-cols"
+                        <input type="number" min="0" placeholder="Số cột" name="room-cols" id="room-cols"
                                required/>
                         <label for="theater-id">Chi nhánh</label>
                         <select id="theater-id" name="theater-id">

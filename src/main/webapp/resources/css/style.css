@@ -640,6 +640,7 @@ select {
     cursor: default;
     text-overflow: ellipsis;
     margin: 0.35rem;
+    cursor: default;
 }
 
 .item-cards:hover {
