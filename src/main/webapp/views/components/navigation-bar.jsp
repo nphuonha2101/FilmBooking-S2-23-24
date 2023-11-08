@@ -35,7 +35,7 @@
                                 <a class="drop-down-links" href="admin">Trang Admin</a>
                             </c:when>
                         </c:choose>
-                        <a class="drop-down-links" href="">Tài khoản của bạn</a>
+                        <a class="drop-down-links" href="account-info">Tài khoản của bạn</a>
 
                     </div>
                 </div>

@@ -519,6 +519,11 @@ input[type="file"] {
     display: none;
 }
 
+input[type="checkbox"]{
+    width: 1rem !important;
+    height: 1rem !important;
+}
+
 input[type="submit"] {
     border: none;
 }
@@ -1143,6 +1148,19 @@ table {
     border: 1px solid #ddd;
     animation-name: scale-in-ver-top;
     animation-duration: 0.3s;
+}
+
+.hidden-table{
+    border: none !important;
+    margin: 3rem !important;
+}
+
+.hidden-table > tr > td {
+    border: none;
+    text-align: start !important;
+}
+.hidden-table > tr:hover{
+    background-color: transparent !important;
 }
 
 .seats-table {

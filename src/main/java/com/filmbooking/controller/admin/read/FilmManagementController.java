@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -23,6 +24,7 @@ public class FilmManagementController extends HttpServlet {
         req.setAttribute("sectionTitle", "Quản lý phim");
         req.setAttribute("filmsData", filmServices.getAll());
         req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
+
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("film-management.jsp"),

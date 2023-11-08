@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.model.User;
 import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
@@ -23,9 +24,6 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-        HttpSession userLoginSession = req.getSession();
-        String loginUsername = (String) userLoginSession.getAttribute("username");
         filmServices = new FilmServicesImpl();
 
 //            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("navigation-bar.jsp"));

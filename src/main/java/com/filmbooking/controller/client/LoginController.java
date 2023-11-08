@@ -7,10 +7,7 @@ import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -34,6 +31,7 @@ public class LoginController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String password = StringUtils.handlesInputString(req.getParameter("password"));
+        String rememberMe = req.getParameter("remember-me");
         password = StringUtils.generateSHA256String(password);
 
         System.out.println(password);
@@ -56,7 +54,6 @@ public class LoginController extends HttpServlet {
                 FilmBooking filmBooking = new FilmBooking();
                 filmBooking.setUsername(loginUser.getUsername());
                 userSession.setAttribute("filmBooking", filmBooking);
-
 
                 /* return to previous page that was visited before login
                  * if it has no previous page, return to home page
