@@ -3,11 +3,13 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.TheaterDAOImpl;
 import com.filmbooking.model.Theater;
+import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.ITheaterServices;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class TheaterServicesImpl implements ITheaterServices {
+public class TheaterServicesImpl implements ITheaterServices, IGetObjectAndObjectIDService<Theater> {
 
     private IDAO<Theater> theaterDAO;
 
@@ -26,6 +28,11 @@ public class TheaterServicesImpl implements ITheaterServices {
     }
 
     @Override
+    public HashMap<String, Theater> getTheaterAndTheaterID() {
+        return this.getObjectAndObjectID(this.getAll());
+    }
+
+    @Override
     public void save(Theater theater) {
         theaterDAO.save(theater);
     }
@@ -39,4 +46,10 @@ public class TheaterServicesImpl implements ITheaterServices {
     public void delete(Theater theater) {
         theaterDAO.delete(theater);
     }
+
+    @Override
+    public String getObjectID(Theater obj) {
+        return obj.getTheaterID();
+    }
+
 }

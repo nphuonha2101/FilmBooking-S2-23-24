@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Showtime;
 
 import java.sql.*;
@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeDAOImpl implements IDAO<Showtime> {
-    private DatabaseServices databaseServices;
+    private DatabaseConnection databaseConnection;
     private List<Showtime> showtimeList;
     private static final String TABLE_NAME = "showtime";
 
     public ShowtimeDAOImpl() {
         showtimeList = new ArrayList<>();
-        databaseServices = DatabaseServices.getInstance();
+        databaseConnection = DatabaseConnection.getInstance();
 
     }
 
     @Override
     public List<Showtime> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -42,7 +42,7 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -70,8 +70,8 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
         }
         largestID++;
         showtime.setShowtimeID(String.valueOf(largestID));
-databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date, seats_data)"
                 + " VALUES(?, ?, ?, ?, ?)";
@@ -87,7 +87,7 @@ databaseServices.connect();
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -95,8 +95,8 @@ databaseServices.connect();
 
     @Override
     public void update(Showtime showtime) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryUpdate = "UPDATE " + TABLE_NAME + " SET film_id = ?, room_id = ?, showtime_date = ?, seats_data = ?"
                 + " WHERE showtime_id = ?";
@@ -111,7 +111,7 @@ databaseServices.connect();
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -120,8 +120,8 @@ databaseServices.connect();
 
     @Override
     public void delete(Showtime showtime) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE showtime_id = ?";
         try {
@@ -131,7 +131,7 @@ databaseServices.connect();
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

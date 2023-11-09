@@ -1,7 +1,7 @@
 package com.filmbooking.dao.view;
 
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.view.RoomView;
 
 import java.sql.Connection;
@@ -12,20 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomViewDAOImpl implements IDAO<RoomView> {
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
     private final List<RoomView> roomViewList;
     private static final String TABLE_NAME = "v_room_details";
 
     public RoomViewDAOImpl() {
         this.roomViewList = new ArrayList<>();
-        this.databaseServices = DatabaseServices.getInstance();
+        this.databaseConnection = DatabaseConnection.getInstance();
 
     }
 
     @Override
     public List<RoomView> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
 
         try {
@@ -46,7 +46,7 @@ public class RoomViewDAOImpl implements IDAO<RoomView> {
 
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

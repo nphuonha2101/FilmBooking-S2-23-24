@@ -386,9 +386,9 @@ button {
     width: 100%;
 }
 
-.wrapper > * {
-    margin: 0.5rem;
-}
+/*.wrapper > * {*/
+/*    margin: 0.5rem;*/
+/*}*/
 
 .border-wrapper {
     border-top: 1px solid #222222 !important;
@@ -990,7 +990,7 @@ select {
 
 .code {
     font-family: 'JetBrains Mono', monospace !important;
-    font-size: 1rem;
+    /*font-size: 1rem;*/
 }
 
 /* Modal */
@@ -1260,4 +1260,40 @@ thead > tr > th {
     padding: 1.2rem;
     z-index: 99;
     backdrop-filter: blur(10px);
+}
+
+/* Accordion */
+.accordion {
+    background-color: #e6f5ff;
+    color: #212529;
+    cursor: pointer;
+    padding: 1rem;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: .3s;
+    border-radius: 0.5rem !important;
+    margin: 0.5rem 0;
+}
+
+
+.accordion.active, .accordion:hover {
+    background-color: #0556f3;
+    color: #fff;
+}
+
+.accordion-panel {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    background-color: #f6f9fc;
+    display: none;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    animation-name: tracking-in-contract-bck-bottom;
+    animation-duration: 0.4s;
+}
+
+.accordion-wrapper {
+    animation-name: slide-in-elliptic-top-fwd;
+    animation-duration: 0.4s;
 }

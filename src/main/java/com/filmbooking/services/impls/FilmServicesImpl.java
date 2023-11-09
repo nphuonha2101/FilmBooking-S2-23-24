@@ -7,12 +7,14 @@ import com.filmbooking.model.FilmGenre;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmGenreServices;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
-public class FilmServicesImpl implements IFilmServices {
+public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDService<Film> {
     private final IDAO<Film> filmDAO;
     private final IFilmGenreServices filmGenreServices;
     private final IShowtimeServices showtimeServices;
@@ -35,6 +37,11 @@ public class FilmServicesImpl implements IFilmServices {
     @Override
     public Film getByFilmID(String id) {
         return filmDAO.getByID(id);
+    }
+
+    @Override
+    public HashMap<String, Film> getFilmAndFilmID() {
+        return this.getObjectAndObjectID(this.getAll());
     }
 
     @Override
@@ -87,4 +94,10 @@ public class FilmServicesImpl implements IFilmServices {
         }
         filmDAO.delete(film);
     }
+
+    @Override
+    public String getObjectID(Film obj) {
+        return obj.getFilmID();
+    }
+
 }

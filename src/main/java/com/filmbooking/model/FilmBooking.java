@@ -1,15 +1,17 @@
 package com.filmbooking.model;
 
+import com.filmbooking.utils.StringUtils;
+
 import java.time.LocalDateTime;
 
 public class FilmBooking {
-    String filmBookingID;
-    String showtimeID;
-    String username;
-    LocalDateTime bookingDate;
-    String[] seats;
-    String seatsData;
-    double totalFee;
+    private String filmBookingID;
+    private String showtimeID;
+    private String username;
+    private LocalDateTime bookingDate;
+    private String[] seats;
+    private String seatsData;
+    private double totalFee;
 
     public FilmBooking(String filmBookingID, String username, String showtimeID, LocalDateTime bookingDate,
                        String seatsData, double totalFee) {
@@ -19,6 +21,7 @@ public class FilmBooking {
         this.username = username;
         this.bookingDate = bookingDate;
         this.seatsData = seatsData;
+        this.seats = seatsData.split(", ");
         this.totalFee = totalFee;
     }
 
@@ -104,5 +107,8 @@ public class FilmBooking {
         this.seats = new String[0];
     }
 
-
+    @Override
+    public String toString() {
+        return this.showtimeID + ", " + this.filmBookingID + ", " + this.username;
+    }
 }

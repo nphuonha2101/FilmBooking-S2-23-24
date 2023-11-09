@@ -10,6 +10,7 @@ public interface IShowtimeServices {
 
     Showtime getByID(String id);
     List<Showtime> getByFilmID(String filmID);
+    HashMap<String, Showtime> getShowtimeAndShowtimeID();
 
     void save(Showtime showtime);
 

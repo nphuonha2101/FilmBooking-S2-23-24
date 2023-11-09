@@ -6,16 +6,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseServices {
+public class DatabaseConnection {
     private Connection connection = null;
-    private static DatabaseServices instance = null;
+    private static DatabaseConnection instance = null;
 
-    private DatabaseServices() {
+    private DatabaseConnection() {
     }
 
-    public static DatabaseServices getInstance() {
+    public static DatabaseConnection getInstance() {
         if (instance == null) {
-            instance = new DatabaseServices();
+            instance = new DatabaseConnection();
         }
         return instance;
     }
@@ -24,6 +24,7 @@ public class DatabaseServices {
         try {
             Class.forName(DatabaseConfigs.DB_CLASS_NAME);
             connection = DriverManager.getConnection(DatabaseConfigs.getDatabaseURL(), DatabaseConfigs.DB_USERNAME, DatabaseConfigs.DB_PASSWORD);
+
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            String DB_URL = "jdbc:sqlserver://localhost;databaseName=FilmBooking;user=sqlserver;password=nphuonha2101" +

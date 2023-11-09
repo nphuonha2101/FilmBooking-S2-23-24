@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.User;
 
 import java.sql.Connection;
@@ -12,18 +12,18 @@ import java.util.List;
 
 public class UserDAOImpl implements IDAO<User> {
     private final List<User> userList;
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
     private static final String TABLE_NAME = "user_info";
 
     public UserDAOImpl() {
         userList = new ArrayList<>();
-        databaseServices = DatabaseServices.getInstance();
+        databaseConnection = DatabaseConnection.getInstance();
     }
 
     @Override
     public List<User> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryGet = "SELECT * FROM " + TABLE_NAME;
 
@@ -44,7 +44,7 @@ public class UserDAOImpl implements IDAO<User> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -69,8 +69,8 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public void save(User user) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String queryInsert = "INSERT INTO " + TABLE_NAME + " (username, user_fullname, user_email, user_password, account_role) " + "VALUES(?, ?, ?, ?, ?)";
 
         PreparedStatement preparedStatement = null;
@@ -85,7 +85,7 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
             ;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -96,8 +96,8 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public void update(User user) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String sql = "UPDATE " + TABLE_NAME + " SET user_fullname = ?, user_email = ?, user_password = ?, " +
                 "account_role = ?  WHERE " +
                 "username= ?";
@@ -112,7 +112,7 @@ public class UserDAOImpl implements IDAO<User> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -121,8 +121,8 @@ public class UserDAOImpl implements IDAO<User> {
     @Override
     public void delete(User user) {
         if (userList.contains(user)) {
-            databaseServices.connect();
-            Connection connection = databaseServices.getConnection();
+            databaseConnection.connect();
+            Connection connection = databaseConnection.getConnection();
             String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE username = ?";
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
@@ -131,7 +131,7 @@ public class UserDAOImpl implements IDAO<User> {
                 preparedStatement.executeUpdate();
 
                 preparedStatement.close();
-                databaseServices.close();
+                databaseConnection.close();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } finally {

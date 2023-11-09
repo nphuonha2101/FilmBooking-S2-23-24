@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Room;
 
 import java.sql.Connection;
@@ -12,18 +12,18 @@ import java.util.List;
 
 public class RoomDAOImpl implements IDAO<Room> {
     private static final String TABLE_NAME = "room";
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
     private final List<Room> roomList;
 
     public RoomDAOImpl() {
         this.roomList = new ArrayList<>();
-        this.databaseServices = DatabaseServices.getInstance();
+        this.databaseConnection = DatabaseConnection.getInstance();
     }
 
     @Override
     public List<Room> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -45,7 +45,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -75,8 +75,8 @@ public class RoomDAOImpl implements IDAO<Room> {
         largestID++;
         room.setRoomID(String.valueOf(largestID));
 
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seats_data, theater_id)" +
                 " VALUES(?, ?, ?, ?, ?, ?)";
@@ -94,7 +94,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
 
             throw new RuntimeException(e);
@@ -104,8 +104,8 @@ public class RoomDAOImpl implements IDAO<Room> {
 
     @Override
     public void update(Room room) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryUpdate = "UPDATE " + TABLE_NAME +
                 " SET room_name = ?, seat_rows = ?, seat_cols = ?, seats_data = ?, theater_id = ? WHERE room_id = ?";
@@ -125,7 +125,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
 
             throw new RuntimeException(e);
@@ -134,8 +134,8 @@ public class RoomDAOImpl implements IDAO<Room> {
 
     @Override
     public void delete(Room room) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE room_id = ?";
 
@@ -146,7 +146,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
 
             throw new RuntimeException(e);

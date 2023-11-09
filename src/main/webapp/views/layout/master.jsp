@@ -23,16 +23,16 @@
 </header>
 <main>
     <section class="hero section">
-<%--        <div class="wrapper" id="welcome">--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${not empty sessionScope.username}">--%>
-<%--                    <h1>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</h1>--%>
-<%--                </c:when>--%>
-<%--                <c:when test="${empty sessionScope.username}">--%>
-<%--                    <h1>Xin chào, khách</h1>--%>
-<%--                </c:when>--%>
-<%--            </c:choose>--%>
-<%--        </div>--%>
+        <%--        <div class="wrapper" id="welcome">--%>
+        <%--            <c:choose>--%>
+        <%--                <c:when test="${not empty sessionScope.username}">--%>
+        <%--                    <h1>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</h1>--%>
+        <%--                </c:when>--%>
+        <%--                <c:when test="${empty sessionScope.username}">--%>
+        <%--                    <h1>Xin chào, khách</h1>--%>
+        <%--                </c:when>--%>
+        <%--            </c:choose>--%>
+        <%--        </div>--%>
 
         <div class="wrapper" id="banner">
             <jsp:include page="${bannerPage}"/>
@@ -41,7 +41,7 @@
     <jsp:include page="${dynamicContents}"/>
     <jsp:include page="${modalName}"/>
 
-<%--    <jsp:include page="/views/components/cookies-disabled.jsp"/>--%>
+    <%--    <jsp:include page="/views/components/cookies-disabled.jsp"/>--%>
 
 </main>
 
