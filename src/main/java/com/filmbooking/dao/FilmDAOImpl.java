@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Film;
 
 import java.sql.Connection;
@@ -13,18 +13,18 @@ import java.util.List;
 public class FilmDAOImpl implements IDAO<Film> {
     private static final String TABLE_NAME = "film";
     private final List<Film> filmList;
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
 
     public FilmDAOImpl() {
         filmList = new ArrayList<>();
-        databaseServices = DatabaseServices.getInstance();
+        databaseConnection = DatabaseConnection.getInstance();
 
     }
 
     @Override
     public List<Film> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -48,7 +48,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -79,8 +79,8 @@ public class FilmDAOImpl implements IDAO<Film> {
         largestID++;
         film.setFilmID(String.valueOf(largestID));
 
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_id, film_name, film_price, film_director, film_cast ," +
                 "film_length,film_description, film_trailer_link, img_path) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -97,7 +97,7 @@ public class FilmDAOImpl implements IDAO<Film> {
 
             preparedStatement.executeUpdate();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -105,8 +105,8 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public void update(Film film) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String querySet = "UPDATE " + TABLE_NAME
                 + " SET film_name = ?, film_price = ?, film_director = ?, film_cast = ?, film_length = ?, " +
                 "film_description = ?, film_trailer_link = ?, img_path = ? WHERE film_id = ?";
@@ -127,7 +127,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -135,8 +135,8 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public void delete(Film film) {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String queryDel = "DELETE FROM " + TABLE_NAME + " WHERE film_id = ?";
 
         try {
@@ -146,7 +146,7 @@ public class FilmDAOImpl implements IDAO<Film> {
             preparedStatement.executeUpdate();
 
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

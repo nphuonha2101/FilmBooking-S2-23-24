@@ -10,6 +10,7 @@ import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.IShowtimeViewServices;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FilmBookingServicesImpl implements IFilmBookingServices {
@@ -33,6 +34,11 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     }
 
     @Override
+    public List<FilmBooking> getAllByUsername(String username) {
+        return this.getAll().stream().filter(filmBooking -> filmBooking.getUsername().equalsIgnoreCase(username)).toList();
+    }
+
+    @Override
     public void save(FilmBooking filmBooking) {
         Showtime showtime = showtimeServices.getByID(filmBooking.getShowtimeID());
         showtimeServices.bookSeats(showtime, filmBooking.getSeats());
@@ -47,5 +53,10 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     @Override
     public void delete(FilmBooking filmBooking) {
         filmBookingDAO.delete(filmBooking);
+    }
+
+    public static void main(String[] args) {
+        FilmBookingServicesImpl filmBookingServices = new FilmBookingServicesImpl();
+        System.out.println(filmBookingServices.getAll());
     }
 }

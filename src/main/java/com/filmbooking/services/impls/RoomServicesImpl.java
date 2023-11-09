@@ -4,13 +4,14 @@ import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.RoomDAOImpl;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IShowtimeServices;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class RoomServicesImpl implements IRoomServices {
+public class RoomServicesImpl implements IRoomServices, IGetObjectAndObjectIDService<Room> {
     private IDAO<Room> roomDAO;
     private IShowtimeServices showtimeServices;
 
@@ -49,6 +50,8 @@ public class RoomServicesImpl implements IRoomServices {
     }
 
 
-
-
+    @Override
+    public String getObjectID(Room obj) {
+        return obj.getRoomID();
+    }
 }

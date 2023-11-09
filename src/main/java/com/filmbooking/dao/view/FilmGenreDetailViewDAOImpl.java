@@ -1,7 +1,7 @@
 package com.filmbooking.dao.view;
 
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.view.FilmGenreDetailView;
 
 import java.sql.Connection;
@@ -14,17 +14,17 @@ import java.util.List;
 public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
 
     private final List<FilmGenreDetailView> filmGenreDetailViewList;
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
     private static final String TABLE_NAME = "v_film_genre_details";
 
     public FilmGenreDetailViewDAOImpl() {
         filmGenreDetailViewList = new ArrayList<>();
-        databaseServices = DatabaseServices.getInstance();
+        databaseConnection = DatabaseConnection.getInstance();
     }
     @Override
     public List<FilmGenreDetailView> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
         String queryGetAll = "SELECT * FROM " + TABLE_NAME;
         try {
@@ -42,7 +42,7 @@ public class FilmGenreDetailViewDAOImpl implements IDAO<FilmGenreDetailView> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
             return filmGenreDetailViewList;
 
         } catch (SQLException e) {

@@ -4,12 +4,14 @@ import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.view.ShowtimeViewDAOImpl;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.view.ShowtimeView;
+import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeViewServices;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class ShowtimeViewServicesImpl implements IShowtimeViewServices {
+public class ShowtimeViewServicesImpl implements IShowtimeViewServices, IGetObjectAndObjectIDService<ShowtimeView> {
     private IDAO<ShowtimeView> showtimeViewIDAO;
 
     public ShowtimeViewServicesImpl(){
@@ -35,5 +37,15 @@ public class ShowtimeViewServicesImpl implements IShowtimeViewServices {
             result.add(showtimeView);
         }
         return result;
+    }
+
+    @Override
+    public HashMap<String, ShowtimeView> getShowtimeViewAndShowtimeID() {
+        return this.getObjectAndObjectID(this.getAll());
+    }
+
+    @Override
+    public String getObjectID(ShowtimeView obj) {
+        return obj.getShowtimeID();
     }
 }

@@ -1,7 +1,7 @@
 package com.filmbooking.dao.view;
 
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.database.DatabaseServices;
+import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.view.ShowtimeView;
 
 import java.sql.Connection;
@@ -13,19 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
-    private final DatabaseServices databaseServices;
+    private final DatabaseConnection databaseConnection;
     private final List<ShowtimeView> showtimeViewList;
     private static final String TABLE_NAME = "v_showtime_details";
 
     public ShowtimeViewDAOImpl() {
         showtimeViewList = new ArrayList<>();
-        databaseServices = DatabaseServices.getInstance();
+        databaseConnection = DatabaseConnection.getInstance();
     }
 
     @Override
     public List<ShowtimeView> getAll() {
-        databaseServices.connect();
-        Connection connection = databaseServices.getConnection();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
         String queryGetALl = "SELECT * FROM " + TABLE_NAME;
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryGetALl);
@@ -43,7 +43,7 @@ public class ShowtimeViewDAOImpl implements IDAO<ShowtimeView> {
             }
             resultSet.close();
             preparedStatement.close();
-            databaseServices.close();
+            databaseConnection.close();
         return showtimeViewList;
         } catch (SQLException e) {
             throw new RuntimeException(e);

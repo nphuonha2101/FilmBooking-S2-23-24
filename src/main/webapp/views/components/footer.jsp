@@ -49,5 +49,6 @@ expand_less</span>
 <script type="module" src="<c:url value='/resources/js/handlesUploadFilmImg.js'/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>
+<script type="module" src="<c:url value="/resources/js/handlesAccordions.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesAnimation.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/checkCookiesEnabled.js"/>"></script>

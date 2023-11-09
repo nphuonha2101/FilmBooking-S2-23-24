@@ -4,16 +4,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseServices {
+public class DatabaseConnection {
     private Connection connection = null;
-    private static DatabaseServices instance = null;
+    private static DatabaseConnection instance = null;
 
-    private DatabaseServices() {
+    private DatabaseConnection() {
     }
 
-    public static DatabaseServices getInstance() {
+    public static DatabaseConnection getInstance() {
         if (instance == null) {
-            instance = new DatabaseServices();
+            instance = new DatabaseConnection();
         }
         return instance;
     }
@@ -23,7 +23,7 @@ public class DatabaseServices {
             Class.forName("org.postgresql.Driver");
             String DB_URL = "jdbc:postgresql://localhost:5432/FilmBooking";
             String USER_NAME = "postgres";
-            String PASSWORD = "nphuonha";
+            String PASSWORD = "nphuonha210103";
             connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

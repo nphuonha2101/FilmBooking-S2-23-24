@@ -29,7 +29,7 @@
                             ${sessionScope.loginUser.userFullName}</a>
 
                     <div class="drop-down-contents">
-                        <a class="drop-down-links" href="">Lịch sử đăng ký</a>
+                        <a class="drop-down-links" href="booking-history">Lịch sử đăng ký</a>
                         <c:choose>
                             <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
                                 <a class="drop-down-links" href="admin">Trang Admin</a>
