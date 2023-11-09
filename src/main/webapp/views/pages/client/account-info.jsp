@@ -38,8 +38,10 @@
             </tr>
             </tbody>
         </table>
-        <a class="links" href="change-password">  <input type="button" value="Đổi mật khẩu"></a>
-        <a href="">  <input type="button" value="Thay đổi thông tin"></a>
+        <div class="wrapper justify-right-row">
+            <a class="links" href="change-password">Đổi mật khẩu</a>
+            <a class="primary-filled-button button rounded-button" href="change-info?username=${loginUser.username}">Đổi thông tin</a>
+        </div>
 
     </div>
 </section>

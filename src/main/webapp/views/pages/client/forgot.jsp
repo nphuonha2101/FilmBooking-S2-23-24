@@ -11,6 +11,7 @@
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
         <h2 class="title">Quên mật khẩu</h2>
+        <span class="successful-span">${successfulMessage}</span>
         <%--        <p style="text-align: center">Forgot your password? No problem, keeping your smile, and we'll get your account back ^^</p>--%>
         <form action="forgot-password" method="post">
             <label for="username">
