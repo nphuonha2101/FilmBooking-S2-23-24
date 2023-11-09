@@ -7,7 +7,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet(name="logout", value = "/logout")
+@WebServlet(name = "logout", value = "/logout")
 public class LogoutController extends HttpServlet {
     @Override
     public void init() throws ServletException {
@@ -20,6 +20,6 @@ public class LogoutController extends HttpServlet {
         if (session != null) {
             session.invalidate();
             resp.sendRedirect("login");
-        }
+        } else resp.sendRedirect("home");
     }
 }

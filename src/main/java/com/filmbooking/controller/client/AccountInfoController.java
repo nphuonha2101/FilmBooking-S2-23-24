@@ -18,6 +18,7 @@ public class AccountInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         req.setAttribute("pageTitle", "Thông tin tài khoản");
+        System.out.println(req.getSession().getAttribute("loginUser"));
         RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("account-info.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
     }

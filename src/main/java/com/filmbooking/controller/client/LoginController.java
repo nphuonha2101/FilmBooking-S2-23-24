@@ -46,9 +46,10 @@ public class LoginController extends HttpServlet {
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         } else {
             loginUser = userServices.getByUsername(username);
+
             if (loginUser.getUserPassword().equals(password)) {
                 // set login user and film booking object to session
-                HttpSession userSession = req.getSession();
+                HttpSession userSession = req.getSession(true);
                 userSession.setAttribute("loginUser", loginUser);
 
                 FilmBooking filmBooking = new FilmBooking();

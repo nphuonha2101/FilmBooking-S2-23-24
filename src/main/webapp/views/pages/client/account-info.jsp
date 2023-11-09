@@ -39,7 +39,7 @@
             </tbody>
         </table>
         <div class="wrapper justify-right-row">
-            <a class="links" href="change-password">Đổi mật khẩu</a>
+            <a class="links" style="margin: 0 1rem;" href="change-password">Đổi mật khẩu</a>
             <a class="primary-filled-button button rounded-button" href="change-info?username=${loginUser.username}">Đổi thông tin</a>
         </div>
 
