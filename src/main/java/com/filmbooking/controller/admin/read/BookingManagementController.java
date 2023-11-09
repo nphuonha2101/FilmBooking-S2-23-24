@@ -7,11 +7,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
 @WebServlet(name="BookingManagementController", value="/booking-management")
-public class BookingManagementController extends HttpServlet {
+public class  BookingManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "Film Booking - Quản lý đặt vé");
@@ -21,5 +22,6 @@ public class BookingManagementController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("booking-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
     }
 }

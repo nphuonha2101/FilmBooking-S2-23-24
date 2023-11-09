@@ -63,6 +63,32 @@ public class StringUtils {
         return null;
     }
 
+    public static String createRandomStringUtil(int length) {
+        StringBuilder result = new StringBuilder();
+        double choice;
+        for (int i = 0; i < length; i++) {
+            choice = (int) (3 * Math.random());
+
+            if (choice >= 0 && choice < 1)
+                result.append(createRandomLowerCaseChar());
+            if (choice >= 1 && choice < 2)
+                result.append(createRandomUpperCaseChar());
+            if (choice >= 2 && choice <= 3)
+                result.append((int) (9 * Math.random()));
+        }
+        return result.toString();
+    }
+
+    private static char createRandomLowerCaseChar() {
+        return (char) (97  + (26 * Math.random()));
+    }
+
+    private static char createRandomUpperCaseChar() {
+        return (char) (65 + (26 * Math.random()));
+    }
+
+
+
     public static String handlesInputString(String str) {
         str = str.trim();
         str = str.replaceAll("<script>", "&lt;script&gt;");
@@ -76,5 +102,7 @@ public class StringUtils {
         String data = "01010101 01010101 01010101";
         printArr(convertTo2DArr(data));
         System.out.println(arr2DToString(convertTo2DArr(data)));
+        System.out.println(createRandomStringUtil(9));
+
     }
 }

@@ -1,5 +1,7 @@
 package com.filmbooking.database;
 
+import com.filmbooking.configs.DatabaseConfigs;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -20,11 +22,9 @@ public class DatabaseConnection {
 
     public boolean connect() {
         try {
-            Class.forName("org.postgresql.Driver");
-            String DB_URL = "jdbc:postgresql://localhost:5432/FilmBooking";
-            String USER_NAME = "postgres";
-            String PASSWORD = "nphuonha210103";
-            connection = DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
+            Class.forName(DatabaseConfigs.DB_CLASS_NAME);
+            connection = DriverManager.getConnection(DatabaseConfigs.getDatabaseURL(), DatabaseConfigs.DB_USERNAME, DatabaseConfigs.DB_PASSWORD);
+
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            String DB_URL = "jdbc:sqlserver://localhost;databaseName=FilmBooking;user=sqlserver;password=nphuonha2101" +

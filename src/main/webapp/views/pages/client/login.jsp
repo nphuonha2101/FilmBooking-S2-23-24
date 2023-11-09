@@ -18,7 +18,6 @@
             </label>
             <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
             <span class="error-span message-span" id="password-error">${passwordError}</span>
-
             <input type="submit" class="primary-filled-button button" value="Đăng nhập">
         </form>
         <p>Nếu bạn chưa có tài khoản <span><a class="links" href="signup">Đăng ký ngay!</a> </span></p>
