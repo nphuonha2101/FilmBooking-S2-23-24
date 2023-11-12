@@ -55,7 +55,7 @@ public class ResetPasswordController extends HttpServlet {
             req.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không khớp!");
         }
 
-        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("reset-password.jsp"));
+//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("reset-password.jsp"));
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("reset-password.jsp"),

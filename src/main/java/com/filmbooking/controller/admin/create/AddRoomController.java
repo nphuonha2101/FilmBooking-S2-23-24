@@ -35,8 +35,8 @@ public class AddRoomController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("add-room.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getLayoutPath("master.jsp"));
 
     }
 

@@ -32,8 +32,8 @@ public class ShowtimeManagementController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("showtime-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override

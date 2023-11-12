@@ -30,8 +30,7 @@ public class HomeController extends HttpServlet {
         req.setAttribute("title", "Phim mới ra rạp");
         req.setAttribute("filmsData", filmServices.getAll());
 
-
-        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
         req.setAttribute("pageTitle", "Film Booking - Trang chủ");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("home.jsp"),

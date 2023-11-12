@@ -42,10 +42,6 @@ public class EditRoomController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("edit-room.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
-
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
-
     }
 
     @Override

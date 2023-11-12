@@ -30,8 +30,8 @@ public class FilmManagementController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("film-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override
