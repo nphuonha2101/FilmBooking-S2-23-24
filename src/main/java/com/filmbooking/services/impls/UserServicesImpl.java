@@ -72,7 +72,7 @@ public class UserServicesImpl implements IUserServices {
         if (isUsername)
             loginUser = getByUsername(usernameOrEmail);
             // if input is not email or username
-        else {
+        if (!(isEmail || isUsername)) {
             serviceResult = new ServiceResult(StatusEnum.NOT_VALID_INPUT);
             return serviceResult;
         }

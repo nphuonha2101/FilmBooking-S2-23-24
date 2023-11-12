@@ -14,6 +14,6 @@ public class Regex {
 
     public static void main(String[] args) {
         System.out.println(validate(UserRegex.USER_EMAIL, "nphuonha" ));
-        System.out.println(validate(UserRegex.USERNAME, "nphuonha@ndjfh" ));
+        System.out.println(validate(UserRegex.USER_EMAIL, "21130122@st.hcmuaf.edu.vn" ));
     }
 }
