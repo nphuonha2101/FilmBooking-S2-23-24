@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter()
+@WebFilter("/account-info")
 public class AuthLoginFilter extends HttpFilter {
     @Override
     public void init() throws ServletException {
@@ -21,13 +21,12 @@ public class AuthLoginFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpSession userSession = req.getSession();
-        if (userSession.getAttribute("username") == null) {
+        if (userSession.getAttribute("loginUser") == null) {
             RedirectPageUtils.redirectPage("login", null, req, res);
-            return;
         } else {
             RedirectPageUtils.redirectPreviousPageIfExist(req, res);
-            chain.doFilter(req, res);
         }
+            chain.doFilter(req, res);
 
     }
 
