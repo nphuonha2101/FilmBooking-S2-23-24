@@ -28,8 +28,8 @@ public class RoomManagementController extends HttpServlet {
         req.setAttribute("roomData", roomViewServices.getAll());
 
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getAdminPagesPath("room-management.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getAdminPagesPath("room-management.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

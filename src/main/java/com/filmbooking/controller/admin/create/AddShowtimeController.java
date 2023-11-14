@@ -47,8 +47,8 @@ public class AddShowtimeController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("add-showtime.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override

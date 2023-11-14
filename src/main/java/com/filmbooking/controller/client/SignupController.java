@@ -43,12 +43,11 @@ public class SignupController extends HttpServlet {
         userServices = new UserServicesImpl();
 
         if (userServices.getByUsername(username) != null) {
-            req.setAttribute("usernameError", "Tên người dùng đã tồn tại!" +
+            req.setAttribute("errorMessage", "Tên người dùng đã tồn tại!" +
                     " Vui lòng chọn một tên người dùng khác.");
-
         }
         if (userServices.getByEmail(userEmail) != null) {
-            req.setAttribute("emailError", "Email đã tồn tại!" +
+            req.setAttribute("errorMessage", "Email đã tồn tại!" +
                     " Vui lòng chọn một email khác.");
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = StringUtils.generateSHA256String(userPassword);
@@ -58,15 +57,12 @@ public class SignupController extends HttpServlet {
                     "task_alt </span>" +
                     " Chúc mừng! Tài khoản của bạn đã được khởi tạo.");
         } else {
-            req.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không đúng!");
+            req.setAttribute("errorMessage", "Mật khẩu xác nhận không đúng!");
         }
-        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("signup.jsp"));
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
-
-
     }
 
     @Override

@@ -50,8 +50,8 @@ public class EditShowtimeController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("edit-showtime.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override

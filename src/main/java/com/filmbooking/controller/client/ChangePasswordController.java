@@ -68,7 +68,7 @@ public class ChangePasswordController extends HttpServlet {
     }
 
     private void render(HttpServletRequest req, HttpServletResponse resp){
-        RenderViewUtils.updateView(req, resp,  ContextPathUtils.getClientPagesPath("change-password.jsp"));
+//        RenderViewUtils.updateView(req, resp,  ContextPathUtils.getClientPagesPath("change-password.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,  ContextPathUtils.getClientPagesPath("change-password.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
     }
 }

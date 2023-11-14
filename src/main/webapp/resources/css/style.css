@@ -519,7 +519,7 @@ input[type="file"] {
     display: none;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
     width: 1rem !important;
     height: 1rem !important;
 }
@@ -958,28 +958,23 @@ select {
 
 /*  Span */
 .message-span {
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    border-radius: 0.1rem;
-    text-align: justify-all;
+    justify-content: center;
 }
 
 .error-span {
     color: #ff3333;
-    width: fit-content;
-    width: -moz-fit-content;
-    font-size: 0.9rem;
-    font-family: 'JetBrains Mono', monospace !important;
     background-color: #ffeded;
 }
 
 .successful-span {
-    display: flex;
-    width: fit-content;
-    width: -moz-fit-content;
-    align-items: center;
     color: limegreen;
-    font-size: 1rem;
     background-color: #e9ffe9;
 }
 
@@ -1150,7 +1145,7 @@ table {
     animation-duration: 0.3s;
 }
 
-.hidden-table{
+.hidden-table {
     border: none !important;
     margin: 3rem !important;
 }
@@ -1159,7 +1154,8 @@ table {
     border: none;
     text-align: start !important;
 }
-.hidden-table > tr:hover{
+
+.hidden-table > tr:hover {
     background-color: transparent !important;
 }
 

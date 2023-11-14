@@ -17,8 +17,8 @@ public class  BookingManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "Film Booking - Quản lý đặt vé");
         req.setAttribute("sectionTitle", "Quản lý đặt vé");
-        RenderViewUtils.updateView(req, resp,
-                ContextPathUtils.getAdminPagesPath("booking-management.jsp"));
+//        RenderViewUtils.updateView(req, resp,
+//                ContextPathUtils.getAdminPagesPath("booking-management.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("booking-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

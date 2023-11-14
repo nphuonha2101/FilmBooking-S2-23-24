@@ -53,7 +53,8 @@ public class ForgotPasswordController extends HttpServlet {
                 foundUser.setUserPassword(StringUtils.generateSHA256String(randomPassWD));
                 userServices.update(foundUser);
 
-                SendEmail.getInstance().sendEmailToUser(foundUser.getUserEmail(), "Mật khẩu mới của bạn", "Hãy nhập mật khẩu: " + "<b>" + randomPassWD + "</b>");
+                String emailResetPass = SendEmail.getInstance().createResetPasswordEmail(randomPassWD);
+                SendEmail.getInstance().sendEmailToUser(foundUser.getUserEmail(), "Mật khẩu mới của bạn", emailResetPass);
 
 
                 req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
@@ -65,7 +66,7 @@ public class ForgotPasswordController extends HttpServlet {
             } else {
                 req.setAttribute("emailError", "Email này không khớp với tên người dùng trong hệ thống");
             }
-            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
+//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp,
                     ContextPathUtils.getClientPagesPath("forgot.jsp"),
                     ContextPathUtils.getLayoutPath("master.jsp"));

@@ -48,7 +48,6 @@
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button">Chọn
                             ảnh</label>
-                        <span class="error-span message-span">${fileUploadError}</span>
                     </div>
 
                     <div class="wrapper centered-vertical-content">

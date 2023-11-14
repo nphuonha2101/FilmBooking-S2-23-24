@@ -1,6 +1,5 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.filters.AuthLoginFilter;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
