@@ -29,6 +29,9 @@
             <span class="error-span message-span" id="email-error">${emailError}</span>
 
             <input type="submit" class="primary-filled-button button" value="Gửi">
+            <div class="centered-vertical-content">
+                <p>Nhấn vào đây để trở về<span> <a class="links" href="login">Đăng nhập!</a> </span></p>
+            </div>
         </form>
     </div>
 </section>

@@ -12,6 +12,7 @@ import com.filmbooking.services.IShowtimeViewServices;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FilmBookingServicesImpl implements IFilmBookingServices {
     private final IDAO<FilmBooking> filmBookingDAO;
@@ -35,7 +36,7 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
 
     @Override
     public List<FilmBooking> getAllByUsername(String username) {
-        return this.getAll().stream().filter(filmBooking -> filmBooking.getUsername().equalsIgnoreCase(username)).toList();
+        return this.getAll().stream().filter(filmBooking -> filmBooking.getUsername().equalsIgnoreCase(username)).collect(Collectors.toList());
     }
 
     @Override
