@@ -99,10 +99,11 @@ public class StringUtils {
 
 
     public static void main(String[] args) {
-        String data = "01010101 01010101 01010101";
-        printArr(convertTo2DArr(data));
-        System.out.println(arr2DToString(convertTo2DArr(data)));
-        System.out.println(createRandomStringUtil(9));
+//        String data = "01010101 01010101 01010101";
+//        printArr(convertTo2DArr(data));
+//        System.out.println(arr2DToString(convertTo2DArr(data)));
+//        System.out.println(createRandomStringUtil(9));
 
+        System.out.println(StringUtils.generateSHA256String("wdt5l36oT").equals("d2d11bd00f91094c7208105d368346b298def1aca0614b7b1429bc29c4990692"));
     }
 }

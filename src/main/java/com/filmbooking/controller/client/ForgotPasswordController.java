@@ -3,6 +3,8 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.services.serviceResult.ServiceResult;
+import com.filmbooking.statusEnums.StatusEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -41,36 +43,20 @@ public class ForgotPasswordController extends HttpServlet {
 
         userServices = new UserServicesImpl();
 
-        if (userServices.getByUsername(username) == null) {
-            req.setAttribute("usernameError", "Tên người dùng không tồn tại!");
-        } else {
-            User foundUser = userServices.getByUsername(username);
-            if (foundUser.getUserEmail().equals(email)) {
-//                HttpSession session = req.getSession();
-//                session.setAttribute("forgot-username", foundUser.getUsername());
-                String randomPassWD = StringUtils.createRandomStringUtil(9);
-                // set new password to user
-                foundUser.setUserPassword(StringUtils.generateSHA256String(randomPassWD));
-                userServices.update(foundUser);
+        ServiceResult forgotPassResult = userServices.userForgotPassword(username, email);
 
-                String emailResetPass = SendEmail.getInstance().createResetPasswordEmail(randomPassWD);
-                SendEmail.getInstance().sendEmailToUser(foundUser.getUserEmail(), "Mật khẩu mới của bạn", emailResetPass);
+        if (forgotPassResult.getStatus() == StatusEnum.USER_NOT_FOUND)
+            req.setAttribute("errorMessage", forgotPassResult.getStatus().getMessage());
 
+        if (forgotPassResult.getStatus() == StatusEnum.EMAIL_NOT_MATCH)
+            req.setAttribute("errorMessage", forgotPassResult.getStatus().getMessage());
+        if (forgotPassResult.getStatus() == StatusEnum.SUCCESSFULL)
+            req.setAttribute("successfulMessage", "Email chứa mật khẩu mới đã được gửi đến bạn.");
 
-                req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
-                        "task_alt </span>" +
-                        " Mật khẩu mới đã được gửi đến Email của bạn.");
-
-
-//                resp.sendRedirect("reset-password");
-            } else {
-                req.setAttribute("emailError", "Email này không khớp với tên người dùng trong hệ thống");
-            }
-//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    ContextPathUtils.getClientPagesPath("forgot.jsp"),
-                    ContextPathUtils.getLayoutPath("master.jsp"));
-        }
+//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp,
+                ContextPathUtils.getClientPagesPath("forgot.jsp"),
+                ContextPathUtils.getLayoutPath("master.jsp"));
 
     }
 

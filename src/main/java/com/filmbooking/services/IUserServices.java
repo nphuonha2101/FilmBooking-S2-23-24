@@ -13,5 +13,6 @@ public interface IUserServices {
     void update(User user);
     void delete(User user);
     ServiceResult userAuthentication(String usernameOrEmail, String password);
+    ServiceResult userForgotPassword(String username, String email);
 
 }
