@@ -7,7 +7,7 @@ public class DatabaseConfigs {
     public static final String DB_NAME = "FilmBooking";
 
     public static final String DB_USERNAME = "postgres";
-    public static final String DB_PASSWORD = "nphuonha";
+    public static final String DB_PASSWORD = "quocdang";
 
     public static String getDatabaseURL() {
         return "jdbc:postgresql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME;

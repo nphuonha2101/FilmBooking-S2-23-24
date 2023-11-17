@@ -7,7 +7,19 @@
 --%>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+
+<fmt:bundle basename="properties.message">
 
 <nav class="top-nav" id="navigation-bar">
     <div class="centered-horizontal-content wrapper" id="left-nav-elements">
@@ -17,9 +29,9 @@
 
     <ul id="right-nav-link">
 
-        <li><a class="nav-links" href="home">Trang chủ</a></li>
+        <li><a class="nav-links" href="home"><fmt:message key="home"/></a></li>
         <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
-               target="_blank">GitHub</a></li>
+               target="_blank"><fmt:message key="github"/></a></li>
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
@@ -44,12 +56,48 @@
 
         <c:choose>
             <c:when test="${not empty sessionScope.loginUser.username}">
-                <li><a class="nav-links" href="logout">Đăng xuất</a></li>
+                <li><a class="nav-links" href="logout"><fmt:message key="logout"/></a></li>
             </c:when>
             <c:when test="${empty sessionScope.loginUser.username}">
-                <li><a class="nav-links" href="signup">Đăng ký</a></li>
-                <li><a class="nav-links light-filled-button button" href="login">Đăng nhập</a></li>
+                <li><a class="nav-links" href="signup"><fmt:message key="register"/></a></li>
+                <li><a class="nav-links light-filled-button button" href="login"><fmt:message key="login"/></a></li>
             </c:when>
         </c:choose>
+
+        <li>
+            <div class="drop-down-menu">
+
+                <c:choose>
+                    <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">
+                        <p class="centered-horizontal-content mg-0">
+                            <img class="img-language"
+                                 src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                 alt="default Vietnamese">
+                            <span> VI</span>
+                        </p>
+                    </c:when>
+
+                    <c:otherwise>
+                        <p class="centered-horizontal-content mg-0">
+                            <img class="img-language" src="<c:url value='/resources/images/icons8-usa-flag-48.png'/>" alt="English"/>
+                            <span> EN</span>
+                        </p>
+                    </c:otherwise>
+                </c:choose>
+
+
+                <div class="drop-down-contents">
+                    <a class="drop-down-links" href="lang?name=default"> <img class="img-language"
+                                                                              src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                                                              alt="default Vietnamese"> <span> Tiếng Việt</span></a>
+                    <a class="drop-down-links" href="lang?name=en_US"> <img class="img-language"
+                                                                            src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
+                                                                            alt="default Vietnamese">
+                        <span> English</span></a>
+
+                </div>
+            </div>
+        </li>
     </ul>
 </nav>
+</fmt:bundle>

@@ -675,12 +675,15 @@ select {
 }
 
 .drop-down-links {
+    display: flex;
+    flex-direction: row;
     position: relative;
     padding: 0.5rem;
     text-decoration: none;
     border-radius: 5px;
     margin: 0.5rem;
     color: #222222;
+    align-items: center;
 }
 
 .drop-down-links:hover {
@@ -1292,4 +1295,12 @@ thead > tr > th {
 .accordion-wrapper {
     animation-name: slide-in-elliptic-top-fwd;
     animation-duration: 0.4s;
+}
+
+.img-language {
+    width: 32px;
+}
+
+.mg-0 {
+    margin: 0 !important;
 }
