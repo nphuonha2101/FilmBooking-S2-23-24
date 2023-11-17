@@ -7,6 +7,7 @@ import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusEnum;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.mailUtils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegex;
 
@@ -71,7 +72,7 @@ public class UserServicesImpl implements IUserServices {
         // login by username
         if (isUsername)
             loginUser = getByUsername(usernameOrEmail);
-            // if input is not email or username
+        // if input is not email or username
         if (!(isEmail || isUsername)) {
             serviceResult = new ServiceResult(StatusEnum.NOT_VALID_INPUT);
             return serviceResult;
@@ -93,5 +94,35 @@ public class UserServicesImpl implements IUserServices {
         return serviceResult;
     }
 
+    @Override
+    public ServiceResult userForgotPassword(String username, String email) {
+        ServiceResult result = null;
 
+        User forgotPassUser = getByUsername(username);
+
+        // if user not exist
+        if (forgotPassUser == null) {
+            result = new ServiceResult(StatusEnum.USER_NOT_FOUND);
+            return result;
+        } else {
+            // if user exist and email not match
+            if (!forgotPassUser.getUserEmail().equalsIgnoreCase(email)) {
+                result = new ServiceResult(StatusEnum.EMAIL_NOT_MATCH);
+                return result;
+            } else {
+                String newPassword = StringUtils.createRandomStringUtil(9);
+                forgotPassUser.setUserPassword(StringUtils.generateSHA256String(newPassword));
+                update(forgotPassUser);
+
+                SendEmail sendEmail = SendEmail.getInstance();
+                sendEmail.sendEmailToUser(forgotPassUser.getUserEmail(),
+                        "Mật khẩu mới của bạn",
+                        sendEmail.createResetPasswordEmail(newPassword));
+
+                result = new ServiceResult(StatusEnum.SUCCESSFULL);
+                return result;
+
+            }
+        }
+    }
 }

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 
 <section class="section centered-vertical-content">
     <c:set var="filmBookingsData" value="${filmBookings}"/>
@@ -34,29 +35,29 @@
                         <c:set var="theater" value="${theatersData[showtime.showtimeID]}"/>
 
                         <div class="wrapper accordion-wrapper">
-                            <button class="accordion wrapper">${filmBookingData.username}
-                                - ${filmBookingData.bookingDate}</button>
+                            <button class="accordion wrapper"><span class="font-bold">Tên người dùng:</span> ${filmBookingData.username}
+                                - <span class="font-bold">Ngày đặt phim:</span> ${filmBookingData.bookingDate}</button>
                             <div class="accordion-panel">
                                 <div class="two-col__wrapper wrapper">
                                     <div class="wrapper">
-                                        <p class="bold">Ngày đặt vé: <span>${filmBookingData.bookingDate}</span></p>
-                                        <p class="bold">Các ghế đã đặt: <span>${filmBookingData.seatsData}</span></p>
-                                        <p class="bold">Tổng tiền: <span>${filmBookingData.totalFee}</span> <span>VNĐ</span></p>
+                                        <p class="font-bold">Ngày đặt vé: <span>${filmBookingData.bookingDate}</span></p>
+                                        <p class="font-bold">Các ghế đã đặt: <span>${filmBookingData.seatsData}</span></p>
+                                        <p class="font-bold">Tổng tiền: <span>${filmBookingData.totalFee}</span> <span>VNĐ</span></p>
                                     </div>
 
                                     <div class="wrapper">
-                                        <p class="bold">Tên phim:
+                                        <p class="font-bold">Tên phim:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].filmName}</span>
                                         </p>
-                                        <p class="bold">Tên phòng:
+                                        <p class="font-bold">Tên phòng:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].roomName}</span></p>
-                                        <p class="bold">Giờ chiếu phim:
+                                        <p class="font-bold">Giờ chiếu phim:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].showtimeDate}</span>
                                         </p>
-                                        <p class="bold">Tên rạp:
+                                        <p class="font-bold">Tên rạp:
                                             <span>${theatersData[theater.theaterID].theaterName}</span>
                                         </p>
-                                        <p class="bold">Địa chỉ rạp:
+                                        <p class="font-bold">Địa chỉ rạp:
                                             <span>${theatersData[theater.theaterID].theaterAddress}</span>
 
                                         </p>

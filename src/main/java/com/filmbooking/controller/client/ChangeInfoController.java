@@ -45,7 +45,7 @@ public class ChangeInfoController extends HttpServlet {
             resp.sendRedirect("account-info");
         }else{
             req.setAttribute("passwordError", "Mật khẩu của bạn không đúng!");
-            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"));
+//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
         }
     }

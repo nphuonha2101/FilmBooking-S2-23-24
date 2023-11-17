@@ -16,11 +16,11 @@ public class RenderViewUtils {
         }
     }
 
-//    public static void updateView(HttpServletRequest request, HttpServletResponse response, String viewPath) {
-//        try {
-//            request.getRequestDispatcher(viewPath).include(request, response);
-//        } catch (ServletException | IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public static void updateView(HttpServletRequest request, HttpServletResponse response, String viewPath) {
+        try {
+            request.getRequestDispatcher(viewPath).include(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

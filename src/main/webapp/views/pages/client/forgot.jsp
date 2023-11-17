@@ -11,22 +11,31 @@
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
         <h2 class="title">Quên mật khẩu</h2>
-        <span class="successful-span">${successfulMessage}</span>
-        <%--        <p style="text-align: center">Forgot your password? No problem, keeping your smile, and we'll get your account back ^^</p>--%>
+
+        <c:if test="${not empty successfulMessage}">
+            <span class="successful-span message-span" id="successful-message">
+                    <span class="material-symbols-outlined">
+                        task_alt </span> ${successfulMessage}</span>
+        </c:if>
+
+        <c:if test="${not empty errorMessage}">
+            <span class="error-span message-span" id="error-message"><span class="material-symbols-outlined">
+    warning
+    </span> ${errorMessage}</span>
+        </c:if>
+
         <form action="forgot-password" method="post">
             <label for="username">
                 <span class="material-symbols-outlined">person</span>
                 Tên người dùng
             </label>
             <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
-            <span class="error-span message-span" id="username-error">${usernameError}</span>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
                 Email
             </label>
             <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
-            <span class="error-span message-span" id="email-error">${emailError}</span>
 
             <input type="submit" class="primary-filled-button button" value="Gửi">
             <div class="centered-vertical-content">

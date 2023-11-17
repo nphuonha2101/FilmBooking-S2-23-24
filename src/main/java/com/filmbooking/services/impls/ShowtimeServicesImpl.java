@@ -2,11 +2,11 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.ShowtimeDAOImpl;
-import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeServices;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,7 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
 
     public ShowtimeServicesImpl() {
         this.showtimeDAO = new ShowtimeDAOImpl();
+        hideOldShowtime();
     }
 
     @Override
@@ -80,5 +81,9 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
     @Override
     public String getObjectID(Showtime obj) {
         return obj.getShowtimeID();
+    }
+
+    private void hideOldShowtime() {
+        this.getAll().removeIf(showtime -> showtime.getShowtimeDate().isBefore(LocalDateTime.now()));
     }
 }
