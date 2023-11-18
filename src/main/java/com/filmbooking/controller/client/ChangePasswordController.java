@@ -61,6 +61,7 @@ public class ChangePasswordController extends HttpServlet {
             // current password not match
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
+            req.setAttribute("pageTitle", "changePasswordTitle");
             render(req, resp);
         }
 
