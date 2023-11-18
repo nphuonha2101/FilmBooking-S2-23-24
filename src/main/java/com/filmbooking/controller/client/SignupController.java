@@ -3,6 +3,7 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -42,24 +43,24 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
         userServices = new UserServicesImpl();
 
+        // username existed!
         if (userServices.getByUsername(username) != null) {
-            req.setAttribute("errorMessage", "Tên người dùng đã tồn tại!" +
-                    " Vui lòng chọn một tên người dùng khác.");
-        }
-        if (userServices.getByEmail(userEmail) != null) {
-            req.setAttribute("errorMessage", "Email đã tồn tại!" +
-                    " Vui lòng chọn một email khác.");
+            req.setAttribute("statusCodeErr", StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
+            // username not existed but email existed!
+        } else if (userServices.getByEmail(userEmail) != null) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
+            // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = StringUtils.generateSHA256String(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
             userServices.save(newUser);
-            req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
-                    "task_alt </span>" +
-                    " Chúc mừng! Tài khoản của bạn đã được khởi tạo.");
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
+            // confirm password not match!
         } else {
-            req.setAttribute("errorMessage", "Mật khẩu xác nhận không đúng!");
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
         }
 
+        req.setAttribute("pageTitle", "registerTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

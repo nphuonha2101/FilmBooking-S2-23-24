@@ -1,21 +1,21 @@
 package com.filmbooking.services.serviceResult;
 
-import com.filmbooking.statusEnums.StatusEnum;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 
 public class ServiceResult {
-    private StatusEnum status;
+    private StatusCodeEnum status;
     private Object data;
 
-    public ServiceResult(StatusEnum status, Object data) {
+    public ServiceResult(StatusCodeEnum status, Object data) {
         this.status = status;
         this.data = data;
     }
 
-    public ServiceResult(StatusEnum status) {
+    public ServiceResult(StatusCodeEnum status) {
         this.status = status;
     }
 
-    public StatusEnum getStatus() {
+    public StatusCodeEnum getStatus() {
         return status;
     }
 

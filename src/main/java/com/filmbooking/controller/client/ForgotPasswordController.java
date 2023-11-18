@@ -3,7 +3,7 @@ package com.filmbooking.controller.client;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.statusEnums.StatusEnum;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -41,14 +41,13 @@ public class ForgotPasswordController extends HttpServlet {
 
         ServiceResult forgotPassResult = userServices.userForgotPassword(username, email);
 
-        if (forgotPassResult.getStatus() == StatusEnum.USER_NOT_FOUND)
-            req.setAttribute("errorMessage", forgotPassResult.getStatus().getMessage());
+        if (forgotPassResult.getStatus().equals(StatusCodeEnum.SUCCESSFUL))
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());
+        else
+            req.setAttribute("statusCodeErr", forgotPassResult.getStatus().getStatusCode());
 
-        if (forgotPassResult.getStatus() == StatusEnum.EMAIL_NOT_MATCH)
-            req.setAttribute("errorMessage", forgotPassResult.getStatus().getMessage());
-        if (forgotPassResult.getStatus() == StatusEnum.SUCCESSFUL)
-            req.setAttribute("successfulMessage", "Email chứa mật khẩu mới đã được gửi đến bạn.");
 
+        req.setAttribute("pageTitle", "forgotPassTitle");
 //        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("forgot.jsp"),

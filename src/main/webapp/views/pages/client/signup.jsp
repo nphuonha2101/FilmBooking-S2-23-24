@@ -7,19 +7,34 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
         <h2 class="title">Đăng ký tài khoản</h2>
 
-        <c:if test="${not empty successfulMessage}">
-            <span class="successful-span message-span">${successfulMessage}</span>
+        <c:if test="${not empty statusCodeSuccess}">
+            <span class="successful-span message-span">
+                <span class="material-symbols-outlined">task_alt</span>
+                <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
+            </span>
         </c:if>
 
-        <c:if test="${not empty errorMessage}">
-            <span class="error-span message-span" id="error-message"><span class="material-symbols-outlined">
-    warning
-    </span> ${errorMessage}</span>
+        <c:if test="${not empty statusCodeErr}">
+            <span class="error-span message-span" id="error-message">
+                <span class="material-symbols-outlined">warning</span>
+                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
+            </span>
         </c:if>
 
         <form action="signup" method="post">

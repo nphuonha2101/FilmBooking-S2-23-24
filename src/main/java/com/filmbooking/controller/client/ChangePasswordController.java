@@ -3,6 +3,7 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+
 @WebServlet(value = "/change-password")
 
 public class ChangePasswordController extends HttpServlet {
@@ -46,29 +48,31 @@ public class ChangePasswordController extends HttpServlet {
                 foundUser.setUserPassword(newPassword);
 
                 userServices.update(foundUser);
-                req.setAttribute("successfulMessage", "<span class=\"material-symbols-outlined\">\n" +
-                        "task_alt\n" +
-                        "</span> Mật khẩu của bạn đã được thay đổi");
-                render(req,resp);
+                req.setAttribute("statusCodeSuccess", StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL.getStatusCode());
+                req.setAttribute("pageTitle", "changePasswordTitle");
+                render(req, resp);
+                // confirm password not match
             } else {
-                req.setAttribute("confirmPasswordError", "Mật khẩu xác nhận không khớp!");
-                render(req,resp);
+                req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
+                req.setAttribute("pageTitle", "changePasswordTitle");
+                render(req, resp);
             }
 
-            }else{
-            req.setAttribute("currentPasswordError", "Mật khẩu hiện tại không đúng!");
-            render(req,resp);
-            }
-
+            // current password not match
+        } else {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
+            render(req, resp);
         }
+
+    }
 
     @Override
     public void destroy() {
         userServices = null;
     }
 
-    private void render(HttpServletRequest req, HttpServletResponse resp){
+    private void render(HttpServletRequest req, HttpServletResponse resp) {
 //        RenderViewUtils.updateView(req, resp,  ContextPathUtils.getClientPagesPath("change-password.jsp"));
-        RenderViewUtils.renderViewToLayout(req, resp,  ContextPathUtils.getClientPagesPath("change-password.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-password.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
     }
 }
