@@ -21,7 +21,7 @@ public class ChangeInfoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Thay đổi thông tin tài khoản");
+        req.setAttribute("pageTitle", "changeInfoTitle");
         System.out.println(req.getSession().getAttribute("loginUser"));
         RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

@@ -1,20 +1,16 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
-import com.filmbooking.utils.StringUtils;
-import com.filmbooking.utils.mailUtils.SendEmail;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -29,7 +25,7 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Film Booking - Quên mật khẩu");
+        req.setAttribute("pageTitle", "forgotPassTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("forgot.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
@@ -50,7 +46,7 @@ public class ForgotPasswordController extends HttpServlet {
 
         if (forgotPassResult.getStatus() == StatusEnum.EMAIL_NOT_MATCH)
             req.setAttribute("errorMessage", forgotPassResult.getStatus().getMessage());
-        if (forgotPassResult.getStatus() == StatusEnum.SUCCESSFULL)
+        if (forgotPassResult.getStatus() == StatusEnum.SUCCESSFUL)
             req.setAttribute("successfulMessage", "Email chứa mật khẩu mới đã được gửi đến bạn.");
 
 //        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));

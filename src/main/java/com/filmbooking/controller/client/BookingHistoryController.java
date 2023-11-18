@@ -31,7 +31,7 @@ public class BookingHistoryController extends HttpServlet {
         theaterServices = new TheaterServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
 
-        req.setAttribute("sectionTitle", "FilmBooking - Lịch sử đặt phim");
+        req.setAttribute("sectionTitle", "bookingHistoryTitle");
         req.setAttribute("sectionTitle", "Lịch sử đặt phim");
 
 

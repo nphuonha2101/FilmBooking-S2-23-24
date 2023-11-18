@@ -67,6 +67,7 @@ public class FilmInfoController extends HttpServlet {
         }
 
         req.setAttribute("sectionTitle", "Thông tin đặt phim");
+        req.setAttribute("pageTitle", "filmInfoTitle");
 
         req.setAttribute("filmData", bookedFilm);
         req.setAttribute("filmGenreNames", filmGenreNames.toString());

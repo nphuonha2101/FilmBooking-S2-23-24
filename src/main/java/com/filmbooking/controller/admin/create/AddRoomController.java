@@ -26,8 +26,7 @@ public class AddRoomController extends HttpServlet {
        roomServices = new RoomServicesImpl();
        theaterServices = new TheaterServicesImpl();
 
-        req.setAttribute("sectionTitle", "Thêm phòng");
-        req.setAttribute("pageTitle", "Trang Admin - Thêm phòng");
+        req.setAttribute("pageTitle", "addRoomTitle");
 
         req.setAttribute("theaters", theaterServices.getAll());
 

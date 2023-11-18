@@ -21,7 +21,7 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Film Booking - Đổi mật khẩu");
+        req.setAttribute("pageTitle", "changePasswordTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("change-password.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

@@ -40,8 +40,8 @@ public class LoginController extends HttpServlet {
 
         ServiceResult serviceResult = userServices.userAuthentication(username, password);
         if (serviceResult.getStatus() != StatusEnum.FOUND_USER) {
-            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-            req.setAttribute("errorMessage", serviceResult.getStatus().getMessage());
+            req.setAttribute("pageTitle", "loginTitle");
+            req.setAttribute("statusCode", serviceResult.getStatus().getStatusCode());
 
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         } else {

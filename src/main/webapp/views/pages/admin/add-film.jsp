@@ -7,6 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
+
 
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
@@ -14,7 +26,7 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h1>${sectionTitle}</h1>
+        <h1><fmt:message bundle="${adminMsg}" key="addFilm"/></h1>
 
 
         <div class="centered-vertical-content wrapper">
@@ -23,17 +35,19 @@
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">
                         <div>
-<%--                            <label for="film-id">Phim ID</label>--%>
-<%--                            <input type="text" placeholder="Phim ID" name="film-id" id="film-id"--%>
-<%--                                   required/>--%>
-                            <label for="film-name">Tên phim</label>
-                            <input type="text" placeholder="Tên phim" name="film-name" id="film-name"
+                            <%--                            <label for="film-id">Phim ID</label>--%>
+                            <%--                            <input type="text" placeholder="Phim ID" name="film-id" id="film-id"--%>
+                            <%--                                   required/>--%>
+                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/></label>
+                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>" name="film-name"
+                                   id="film-name"
                                    required/>
-                            <label for="film-price">Giá vé</label>
-                            <input type="number" min="0" placeholder="Giá vé" name="film-price" id="film-price"
+                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/></label>
+                            <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="ticketPrices"/>"
+                                   name="film-price" id="film-price"
                                    required/>
-                            <label for="director">Đạo diễn</label>
-                            <input type="text" placeholder="Đạo diễn" name="director" id="director"
+                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/></label>
+                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="director"/>" name="director" id="director"
                                    required/>
                         </div>
 
@@ -42,41 +56,46 @@
 
                     <!-- hidden form in right -->
                     <div class="wrapper centered-vertical-content">
-                        <input type="file" id="upload-img" name="upload-img" value="Chọn ảnh"/>
+                        <input type="file" id="upload-img" name="upload-img"/>
                         <div class="film-img-in-card" id="film-img"></div>
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
                         <label style="margin: 2rem;" for="upload-img"
-                               class="primary-filled-button button rounded-button">Chọn
-                            ảnh</label>
+                               class="primary-filled-button button rounded-button">
+                            <fmt:message bundle="${adminMsg}" key="choosePhoto"/>
+                        </label>
                     </div>
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="actors">Diễn viên</label>
-                            <input type="text" placeholder="Diễn viên" name="actors" id="actors"
+                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/></label>
+                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>" name="actors" id="actors"
                                    required/>
                         </div>
                     </div>
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="genre-ids">Link YouTube trailer: </label>
-                            <input type="text" placeholder="Link YouTube trailer" name="film-trailer-link"
+                            <label for="film-trailer-link"><fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/></label>
+                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/>"
+                                   name="film-trailer-link"
                                    id="film-trailer-link"/>
                         </div>
                     </div>
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-length">Độ dài phim</label>
-                            <input type="number" min="0" placeholder="Độ dài phim" name="film-length" id="film-length"
+                            <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/></label>
+                            <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="filmLength"/>"
+                                   name="film-length"
+                                   id="film-length"
                                    required/>
                         </div>
                     </div>
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="genre-ids">Mã thể loại</label>
-                            <input type="text" placeholder="Mã thể loại" name="genre-ids" id="genre-ids"
+                            <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/></label>
+                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="genreCodes"/>" name="genre-ids"
+                                   id="genre-ids"
                                    required/>
                         </div>
                     </div>
@@ -84,15 +103,13 @@
 
                 <div class="wrapper centered-vertical-content">
                     <label for="film-description_textarea">
-                        Mô tả phim
+                        <fmt:message bundle="${adminMsg}" key="filmDescription"/>
                     </label>
                     <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
-                              placeholder="Nhập mô tả phim"></textarea>
-                    <input type="submit" class="primary-filled-button button" value="Thêm phim">
+                              placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>"></textarea>
+                    <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${adminMsg}" key="addFilm"/>">
                 </div>
             </form>
         </div>
-
-
     </div>
 </section>

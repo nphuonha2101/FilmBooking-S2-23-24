@@ -9,6 +9,17 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+
+<fmt:setBundle basename="properties.pageTitle" var="pageTitleMsg"/>
+
 <!DOCTYPE html>
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
@@ -19,39 +30,28 @@
     </c:otherwise>
 </c:choose>
 
-<c:choose>
-    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
-        <fmt:setLocale value="default"/>
-    </c:when>
-    <c:otherwise>
-        <fmt:setLocale value="${sessionScope.lang}"/>
-    </c:otherwise>
-</c:choose>
+<head>
+    <title><fmt:message key="${pageTitle}" bundle="${pageTitleMsg}"/></title>
+    <jsp:include page="/views/components/head-links.jsp"/>
+</head>
+<body>
+<header>
+    <jsp:include page="/views/components/navigation-bar.jsp"/>
+</header>
+<main>
+    <section class="hero section">
+        <div class="wrapper" id="banner">
+            <jsp:include page="${bannerPage}"/>
+        </div>
+    </section>
+    <jsp:include page="${dynamicContents}"/>
+    <jsp:include page="${modalName}"/>
 
-<fmt:bundle basename="properties.message">
-    <head>
-        <title><fmt:message key="${pageTitle}"/></title>
-        <jsp:include page="/views/components/head-links.jsp"/>
-    </head>
-    <body>
-    <header>
-        <jsp:include page="/views/components/navigation-bar.jsp"/>
-    </header>
-    <main>
-        <section class="hero section">
-            <div class="wrapper" id="banner">
-                <jsp:include page="${bannerPage}"/>
-            </div>
-        </section>
-        <jsp:include page="${dynamicContents}"/>
-        <jsp:include page="${modalName}"/>
+</main>
 
-    </main>
-
-    <footer class="footer">
-        <jsp:include page="/views/components/footer.jsp"/>
-    </footer>
-    </body>
-    <script type="text/javascript">${additionScript}</script>
-    </html>
-</fmt:bundle>
+<footer class="footer">
+    <jsp:include page="/views/components/footer.jsp"/>
+</footer>
+</body>
+<script type="text/javascript">${additionScript}</script>
+</html>

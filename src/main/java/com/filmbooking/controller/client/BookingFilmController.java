@@ -50,7 +50,7 @@ public class BookingFilmController extends HttpServlet {
         req.setAttribute("bookedRoom", bookedRoom);
         req.setAttribute("bookedTheater", bookedTheater);
 
-        req.setAttribute("pageTitle", "Film Booking - Đặt vé");
+        req.setAttribute("pageTitle", "bookingFilmTitle");
         req.setAttribute("sectionTitle", "Đặt vé");
 
         RenderViewUtils.renderViewToLayout(req, resp,

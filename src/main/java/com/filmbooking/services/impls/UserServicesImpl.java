@@ -119,7 +119,7 @@ public class UserServicesImpl implements IUserServices {
                         "Mật khẩu mới của bạn",
                         sendEmail.createResetPasswordEmail(newPassword));
 
-                result = new ServiceResult(StatusEnum.SUCCESSFULL);
+                result = new ServiceResult(StatusEnum.SUCCESSFUL);
                 return result;
 
             }

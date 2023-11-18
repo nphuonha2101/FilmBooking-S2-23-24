@@ -7,6 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
@@ -14,24 +25,25 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h1>${sectionTitle}</h1>
+        <h1><fmt:message bundle="${adminMsg}" key="showtimeManagement"/></h1>
 
         <div class="centered-vertical-content wrapper">
             <div class="justify-right-row wrapper">
-                <a href="add-showtime" class="primary-filled-button rounded-button button submit-button icon-button">
+                <a href="add-showtime"
+                   class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-outlined">add</span>
-                    <span class="hidden-span">Thêm suất chiếu mới</span>
+                    <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
                 </a>
             </div>
             <table>
                 <thead>
                 <tr>
-                    <th>Showtime ID</th>
-                    <th>Tên phim</th>
-                    <th>Tên phòng</th>
-                    <th>Số ghế trống</th>
-                    <th>Ngày chiếu</th>
-                    <th>Hành động</th>
+                    <th><fmt:message bundle="${adminMsg}" key="showtimeID"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="filmName"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="roomName"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="availableSeats"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="showtimeDate"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="actions"/></th>
                 </tr>
                 </thead>
                 <tbody>
