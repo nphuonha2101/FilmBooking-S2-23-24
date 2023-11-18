@@ -1,11 +1,10 @@
 package com.filmbooking.controller.client;
 
-import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.statusEnums.StatusEnum;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,7 +23,7 @@ public class LoginController extends HttpServlet {
         if (req.getSession().getAttribute("username") != null)
             resp.sendRedirect("home");
         else {
-            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
+            req.setAttribute("pageTitle", "loginTitle");
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         }
     }
@@ -39,9 +38,9 @@ public class LoginController extends HttpServlet {
         userServices = new UserServicesImpl();
 
         ServiceResult serviceResult = userServices.userAuthentication(username, password);
-        if (serviceResult.getStatus() != StatusEnum.FOUND_USER) {
-            req.setAttribute("pageTitle", "Film Booking - Đăng nhập");
-            req.setAttribute("errorMessage", serviceResult.getStatus().getMessage());
+        if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
+            req.setAttribute("pageTitle", "loginTitle");
+            req.setAttribute("statusCodeErr", serviceResult.getStatus().getStatusCode());
 
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         } else {

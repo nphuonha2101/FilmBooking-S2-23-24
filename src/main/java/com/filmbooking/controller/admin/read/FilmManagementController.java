@@ -21,10 +21,9 @@ public class FilmManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices= new FilmServicesImpl();
-        req.setAttribute("sectionTitle", "Quản lý phim");
         req.setAttribute("filmsData", filmServices.getAll());
-        req.setAttribute("pageTitle", "Trang Admin - Quản lý phim");
 
+        req.setAttribute("pageTitle", "filmManagementTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("film-management.jsp"),

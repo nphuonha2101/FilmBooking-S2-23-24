@@ -38,9 +38,7 @@ public class EditShowtimeController extends HttpServlet {
         String showtimeID = req.getParameter("showtime-id_hidden");
         editShowtime = showtimeServices.getByID(showtimeID);
 
-
-        req.setAttribute("sectionTitle", "Sửa suất chiếu");
-        req.setAttribute("pageTitle", "Trang Admin - Sửa suất chiếu");
+        req.setAttribute("pageTitle", "editShowtimeTitle");
 
         req.setAttribute("editShowtime", editShowtime);
         req.setAttribute("filmData", filmServices.getAll());

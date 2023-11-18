@@ -23,10 +23,9 @@ public class ShowtimeManagementController extends HttpServlet {
         showtimeViewServices = new ShowtimeViewServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
 
-        req.setAttribute("sectionTitle", "Quản lý suất chiếu");
         req.setAttribute("showtimeViewDetails", showtimeViewServices.getAll());
         req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
-        req.setAttribute("pageTitle", "Trang Admin - Quản lý suất chiếu");
+        req.setAttribute("pageTitle", "showtimeManagementTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("showtime-management.jsp"),

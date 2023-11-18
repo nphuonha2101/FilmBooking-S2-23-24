@@ -7,6 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
@@ -14,7 +25,7 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h1>${sectionTitle}</h1>
+        <h1><fmt:message bundle="${adminMsg}" key="editRoom"/></h1>
 
 
         <div class="centered-vertical-content wrapper">
@@ -23,24 +34,29 @@
                 <div>
                     <c:set var="editRoom" value="${editRoom}"/>
                     <form method="post" action="edit-room">
-                        <label for="room-id">Room ID</label>
-                        <input class="readonly-input" type="text" placeholder="Mã phòng" name="room-id" id="room-id"
+                        <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomID"/></label>
+                        <input class="readonly-input" type="text"
+                               placeholder="<fmt:message bundle="${adminMsg}" key="roomID"/>" name="room-id"
+                               id="room-id"
                                value="${editRoom.roomID}"
                                readonly/>
-                        <label for="room-name">Tên phòng</label>
-                        <input type="text" placeholder="Tên phòng" name="room-name" id="room-name"
+                        <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/></label>
+                        <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
+                               name="room-name" id="room-name"
                                value="${editRoom.roomName}"
                                required/>
 
-                        <label for="seat-rows">Số hàng</label>
-                        <input type="number" min="0" placeholder="Số hàng" name="seat-rows" id="seat-rows"
+                        <label for="seat-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/></label>
+                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
+                               name="seat-rows" id="seat-rows"
                                value="${editRoom.seatRows}"
                                required/>
-                        <label for="seat-cols">Số cột</label>
-                        <input type="number" min="0" placeholder="Số cột" name="seat-cols" id="seat-cols"
+                        <label for="seat-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/></label>
+                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
+                               name="seat-cols" id="seat-cols"
                                value="${editRoom.seatCols}"
                                required/>
-                        <label for="theater-id">Chi nhánh</label>
+                        <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/></label>
                         <select id="theater-id" name="theater-id">
                             <c:forEach var="theater" items="${theaters}">
                                 <c:choose>
@@ -55,7 +71,8 @@
                                 </c:choose>
                             </c:forEach>
                             <div class="centered-horizontal-content">
-                                <input class="primary-filled-button button" type="submit" value="Sửa phòng">
+                                <input class="primary-filled-button button" type="submit"
+                                       value="<fmt:message bundle="${adminMsg}" key="editRoom"/>">
                             </div>
                         </select>
                     </form>

@@ -23,8 +23,7 @@ public class RoomManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomViewServices = new RoomViewServicesImpl();
 
-        req.setAttribute("pageTitle", "Film Booking - Quản lý phòng");
-        req.setAttribute("sectionTitle", "Quản lý phòng");
+        req.setAttribute("pageTitle", "roomManagementTitle");
         req.setAttribute("roomData", roomViewServices.getAll());
 
 

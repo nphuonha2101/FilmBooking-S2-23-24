@@ -37,8 +37,7 @@ public class AddShowtimeController extends HttpServlet {
         roomServices = new RoomServicesImpl();
         roomViewServices = new RoomViewServicesImpl();
 
-        req.setAttribute("sectionTitle", "Thêm suất chiếu");
-        req.setAttribute("pageTitle", "Trang Admin - Thêm suất chiếu");
+        req.setAttribute("pageTitle", "addShowtimeTitle");
 
         req.setAttribute("filmData", filmServices.getAll());
         req.setAttribute("roomData", roomViewServices.getAll());

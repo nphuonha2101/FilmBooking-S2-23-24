@@ -49,7 +49,7 @@ public class InvoiceInfoController extends HttpServlet {
         req.setAttribute("bookedRoom", bookedRoom);
         req.setAttribute("bookedTheater", bookedTheater);
 
-        req.setAttribute("pageTitle", "FilmBooking - Hóa đơn");
+        req.setAttribute("pageTitle", "invoiceInfoTitle");
         req.getRequestDispatcher(ContextPathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
 
     }

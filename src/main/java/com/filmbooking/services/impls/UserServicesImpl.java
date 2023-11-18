@@ -5,7 +5,7 @@ import com.filmbooking.dao.UserDAOImpl;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.statusEnums.StatusEnum;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.mailUtils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
@@ -74,23 +74,23 @@ public class UserServicesImpl implements IUserServices {
             loginUser = getByUsername(usernameOrEmail);
         // if input is not email or username
         if (!(isEmail || isUsername)) {
-            serviceResult = new ServiceResult(StatusEnum.NOT_VALID_INPUT);
+            serviceResult = new ServiceResult(StatusCodeEnum.NOT_VALID_INPUT);
             return serviceResult;
         }
 
         // validate user
         if (loginUser == null) {
-            serviceResult = new ServiceResult(StatusEnum.USER_NOT_FOUND);
+            serviceResult = new ServiceResult(StatusCodeEnum.USER_NOT_FOUND);
             return serviceResult;
         } else {
             // verify password
             if (!loginUser.getUserPassword().equals(password)) {
-                serviceResult = new ServiceResult(StatusEnum.PASSWORD_NOT_MATCH);
+                serviceResult = new ServiceResult(StatusCodeEnum.PASSWORD_NOT_MATCH);
                 return serviceResult;
             }
         }
 
-        serviceResult = new ServiceResult(StatusEnum.FOUND_USER, loginUser);
+        serviceResult = new ServiceResult(StatusCodeEnum.FOUND_USER, loginUser);
         return serviceResult;
     }
 
@@ -102,12 +102,12 @@ public class UserServicesImpl implements IUserServices {
 
         // if user not exist
         if (forgotPassUser == null) {
-            result = new ServiceResult(StatusEnum.USER_NOT_FOUND);
+            result = new ServiceResult(StatusCodeEnum.USER_NOT_FOUND);
             return result;
         } else {
             // if user exist and email not match
             if (!forgotPassUser.getUserEmail().equalsIgnoreCase(email)) {
-                result = new ServiceResult(StatusEnum.EMAIL_NOT_MATCH);
+                result = new ServiceResult(StatusCodeEnum.EMAIL_NOT_MATCH);
                 return result;
             } else {
                 String newPassword = StringUtils.createRandomStringUtil(9);
@@ -119,7 +119,7 @@ public class UserServicesImpl implements IUserServices {
                         "Mật khẩu mới của bạn",
                         sendEmail.createResetPasswordEmail(newPassword));
 
-                result = new ServiceResult(StatusEnum.SUCCESSFULL);
+                result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
                 return result;
 
             }

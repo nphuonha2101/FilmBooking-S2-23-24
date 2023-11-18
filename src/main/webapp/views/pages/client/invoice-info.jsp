@@ -7,10 +7,29 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
-<html lang="vi">
+<!DOCTYPE html>
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <html lang="vi_VN">
+    </c:when>
+    <c:otherwise>
+        <html lang="${sessionScope.lang}">
+    </c:otherwise>
+</c:choose>
 <head>
-    <title>${pageTitle}</title>
+    <title><fmt:message key="invoiceInfoTitle" bundle="${pageTitle}"/> </title>
 
     <jsp:include page="/views/components/head-links.jsp"/>
 
@@ -27,30 +46,26 @@
             <div class="centered-vertical-content">
                 <p>================================================</p>
 
-                <p class="code">Mẫu số: FBInvoice-0123</p>
-                <h1 class="code bold">${theater.theaterName}</h1>
-                <p class="code">Địa chỉ: ${theater.theaterAddress}</p>
+                <p class="code"><fmt:message key="documentTypeNo" bundle="${msg}"/> : FBInvoice-0123</p>
+                <h2 class="code bold">${theater.theaterName}</h2>
+                <p class="code"><fmt:message key="address" bundle="${msg}"/>: ${theater.theaterAddress}</p>
 
 
                 <p>-----------------------------------------------</p>
 
                 <h2 class="code">${film.filmName}</h2> <span><h3>#${loop.count}</h3></span>
-                <p class="code">Giá vé: ${film.filmPrice} VNĐ</p>
-                <p class="code">Ghế: ${seat}</p>
-                <p class="code">Tên phòng: ${room.roomName}</p>
-                <p class="code">Ngày chiếu: ${showtime.showtimeDate}</p>
+                <p class="code"><fmt:message key="ticketPrices" bundle="${msg}"/>: ${film.filmPrice} VNĐ</p>
+                <p class="code"><fmt:message key="seat" bundle="${msg}"/>: ${seat}</p>
+                <p class="code"><fmt:message key="room" bundle="${msg}"/>: ${room.roomName}</p>
+                <p class="code"><fmt:message key="showtimeDate" bundle="${msg}"/>: ${showtime.showtimeDate}</p>
 
 
                 <p>-----------------------------------------------</p>
 
-                <p class="code">Ngày đặt vé: ${filmBooking.bookingDate}</p>
+                <p class="code"><fmt:message key="bookingDate" bundle="${msg}"/>: ${filmBooking.bookingDate}</p>
 
                 <p class="code" style="text-align: center">
-                    Hoá đơn này có giá trị sử dụng thay cho vé xem phim và chỉ có hiệu lực trong ngày.
-                    <br>
-                    Mọi khiếu nại xin vui lòng liên hệ chúng tôi qua email: <a href="mailto:filmbookingdn@gmail.com">filmbookingdn@gmail.com</a>
-                    <br>
-                    Xin cảm ơn quý khách!
+                    <fmt:message key="invoiceInfoThanks" bundle="${msg}"/>
                 </p>
 
                 <p>================================================</p>

@@ -26,8 +26,7 @@ public class AddFilmController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
 
-        req.setAttribute("sectionTitle", "Thêm phim");
-        req.setAttribute("pageTitle", "Trang Admin - Thêm phim");
+        req.setAttribute("pageTitle", "addFilmTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("add-film.jsp"),

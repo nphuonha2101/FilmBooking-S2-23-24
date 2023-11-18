@@ -32,8 +32,7 @@ public class EditRoomController extends HttpServlet {
         String roomID = req.getParameter("room-id_hidden");
         editRoom = roomServices.getByRoomID(roomID);
 
-        req.setAttribute("sectionTitle", "Sửa phòng");
-        req.setAttribute("pageTitle", "Trang Admin - Sửa phòng");
+        req.setAttribute("pageTitle", "editRoomTitle");
 
         req.setAttribute("editRoom", editRoom);
 

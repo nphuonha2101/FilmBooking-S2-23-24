@@ -7,11 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-<div class="admin-panel">
-    <h4>Công cụ quản lý</h4>
-    <a class="links button rounded-button" href="film-management">Quản lý phim</a>
-    <a class="links button rounded-button" href="showtime-management">Quản lý suất chiếu</a>
-    <a class="links button rounded-button" href="room-management">Quản lý phòng</a>
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
+    <div class="admin-panel">
+        <h4><fmt:message key="managementTools" bundle="${adminMsg}"/></h4>
+        <a class="links button rounded-button" href="film-management"><fmt:message key="filmManagement" bundle="${adminMsg}"/> </a>
+        <a class="links button rounded-button" href="showtime-management"><fmt:message key="showtimeManagement" bundle="${adminMsg}"/></a>
+        <a class="links button rounded-button" href="room-management"><fmt:message key="roomManagement" bundle="${adminMsg}"/></a>
+    </div>
 
-</div>

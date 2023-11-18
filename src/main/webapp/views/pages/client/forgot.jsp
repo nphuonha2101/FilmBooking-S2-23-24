@@ -7,39 +7,56 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title">Quên mật khẩu</h2>
+        <h2 class="title"><fmt:message key="forgotPassSectionTitle" bundle="${pageTitle}"/></h2>
 
-        <c:if test="${not empty successfulMessage}">
+        <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span" id="successful-message">
                     <span class="material-symbols-outlined">
-                        task_alt </span> ${successfulMessage}</span>
+                        task_alt </span>
+                <fmt:message key="${statusCodeSuccess}" bundle="${msg}"/>
+            </span>
         </c:if>
 
-        <c:if test="${not empty errorMessage}">
-            <span class="error-span message-span" id="error-message"><span class="material-symbols-outlined">
-    warning
-    </span> ${errorMessage}</span>
+        <c:if test="${not empty statusCodeErr}">
+            <span class="error-span message-span" id="error-message">
+                <span class="material-symbols-outlined">
+                warning</span>
+                <fmt:message key="${statusCodeErr}" bundle="${msg}"/>
+            </span>
         </c:if>
 
         <form action="forgot-password" method="post">
             <label for="username">
                 <span class="material-symbols-outlined">person</span>
-                Tên người dùng
+                <fmt:message key="username" bundle="${msg}"/>
             </label>
-            <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
+            <input type="text" name="username" id="username" placeholder=" <fmt:message key="username" bundle="${msg}"/>"
+                   autocomplete="true" required>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
-                Email
+                <fmt:message key="email" bundle="${msg}"/>
             </label>
-            <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
+            <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>" autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value="Gửi">
+            <input type="submit" class="primary-filled-button button" value=" <fmt:message key="send" bundle="${msg}"/>">
             <div class="centered-vertical-content">
-                <p>Nhấn vào đây để trở về<span> <a class="links" href="login">Đăng nhập!</a> </span></p>
+                <p><fmt:message key="return" bundle="${msg}"/> <span> <a class="links" href="login"><fmt:message key="login" bundle="${msg}"/>!</a></span></p>
             </div>
         </form>
     </div>

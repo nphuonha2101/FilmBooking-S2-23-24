@@ -1,4 +1,3 @@
-<%--<%@ taglib prefix="c" uri="jakarta.tags.core" %>--%>
 <%--
   Created by IntelliJ IDEA.
   User: QDang
@@ -7,15 +6,33 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+
+<fmt:setBundle basename="properties.pageTitle" var="pageTitleMsg"/>
+
 <!DOCTYPE html>
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <html lang="vi_VN">
+    </c:when>
+    <c:otherwise>
+        <html lang="${sessionScope.lang}">
+    </c:otherwise>
+</c:choose>
 
-<html lang="vi">
 <head>
-    <title>${pageTitle}</title>
-
+    <title><fmt:message key="${pageTitle}" bundle="${pageTitleMsg}"/></title>
     <jsp:include page="/views/components/head-links.jsp"/>
-
 </head>
 <body>
 <header>
@@ -23,25 +40,12 @@
 </header>
 <main>
     <section class="hero section">
-        <%--        <div class="wrapper" id="welcome">--%>
-        <%--            <c:choose>--%>
-        <%--                <c:when test="${not empty sessionScope.username}">--%>
-        <%--                    <h1>Xin chào, ${sessionScope.userFullName} (${sessionScope.accountRole})</h1>--%>
-        <%--                </c:when>--%>
-        <%--                <c:when test="${empty sessionScope.username}">--%>
-        <%--                    <h1>Xin chào, khách</h1>--%>
-        <%--                </c:when>--%>
-        <%--            </c:choose>--%>
-        <%--        </div>--%>
-
         <div class="wrapper" id="banner">
             <jsp:include page="${bannerPage}"/>
         </div>
     </section>
     <jsp:include page="${dynamicContents}"/>
     <jsp:include page="${modalName}"/>
-
-    <%--    <jsp:include page="/views/components/cookies-disabled.jsp"/>--%>
 
 </main>
 

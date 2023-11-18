@@ -53,8 +53,7 @@ public class EditFilmController extends HttpServlet {
         }
         req.setAttribute("filmGenreIDs", filmGenreIDs.toString());
 
-        req.setAttribute("pageTitle", "Film Booking - Chỉnh sửa phim");
-        req.setAttribute("sectionTitle", "Chỉnh sửa phim");
+        req.setAttribute("pageTitle", "editFilmTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("edit-film.jsp"),
