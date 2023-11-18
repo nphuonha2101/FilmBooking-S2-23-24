@@ -18,24 +18,40 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
+<fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title">Đổi mật khẩu</h2>
-        <span class="successful-span">${successfulMessage}</span>
+        <h2 class="title"><fmt:message key="changePasswordSectionTitle" bundle="${pageTitle}"/> </h2>
+
+        <c:if test="${not empty statusCodeSuccess}">
+            <span class="successful-span message-span">
+                <span class="material-symbols-outlined">task_alt</span>
+                <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
+            </span>
+        </c:if>
+
+        <c:if test="${not empty statusCodeErr}">
+            <span class="error-span message-span" id="error-message">
+                <span class="material-symbols-outlined">warning</span>
+                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
+            </span>
+        </c:if>
+
+
         <form action="change-password" method="post">
-            <label for="new-password">
+            <label for="current-password">
                 <span class="material-symbols-outlined">password</span>
                 <fmt:message bundle="${msg}" key="password"/>
             </label>
             <input type="password" name="current-password" id="current-password" placeholder=" <fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
-            <span class="error-span message-span" id="current-password-error">${currentPasswordError}</span>
+
             <label for="new-password">
                 <span class="material-symbols-outlined">password</span>
                 <fmt:message bundle="${msg}" key="newPassword"/>
             </label>
             <input type="password" name="new-password" id="new-password" placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
-            <span class="error-span message-span" id="password-error">${passwordError}</span>
 
             <label for="confirm-new-password">
                 <span class="material-symbols-outlined">password</span>
@@ -43,8 +59,6 @@
             </label>
             <input type="password" name="confirm-new-password" id="confirm-new-password"
                    placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
-            <span class="error-span message-span"
-                  id="confirm-password-error">${confirmPasswordError}</span>
 
             <input type="submit" class="primary-filled-button button" value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>

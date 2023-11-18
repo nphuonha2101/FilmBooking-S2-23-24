@@ -18,11 +18,12 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title">Đăng ký tài khoản</h2>
+        <h2 class="title"><fmt:message key="signupSectionTitle" bundle="${pageTitle}"/> </h2>
 
         <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span">

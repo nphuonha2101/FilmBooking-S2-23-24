@@ -3,10 +3,7 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.User;
 import com.filmbooking.services.*;
-import com.filmbooking.services.impls.FilmBookingServicesImpl;
-import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
-import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.services.impls.*;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -23,6 +20,7 @@ public class BookingHistoryController extends HttpServlet {
     private IShowtimeViewServices showtimeViewServices;
     private ITheaterServices theaterServices;
     private IShowtimeServices showtimeServices;
+    private IFilmServices filmServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,6 +28,7 @@ public class BookingHistoryController extends HttpServlet {
         showtimeViewServices = new ShowtimeViewServicesImpl();
         theaterServices = new TheaterServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
+        filmServices = new FilmServicesImpl();
 
         req.setAttribute("pageTitle", "bookingHistoryTitle");
         req.setAttribute("sectionTitle", "Lịch sử đặt phim");
@@ -45,6 +44,7 @@ public class BookingHistoryController extends HttpServlet {
         req.setAttribute("showtimeViewsMap", showtimeViewServices.getShowtimeViewAndShowtimeID());
         req.setAttribute("theatersMap", theaterServices.getTheaterAndTheaterID());
         req.setAttribute("showtimesMap", showtimeServices.getShowtimeAndShowtimeID());
+        req.setAttribute("filmsMap", filmServices.getFilmAndFilmID());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
@@ -58,5 +58,6 @@ public class BookingHistoryController extends HttpServlet {
         showtimeViewServices = null;
         theaterServices = null;
         showtimeServices = null;
+        filmServices = null;
     }
 }

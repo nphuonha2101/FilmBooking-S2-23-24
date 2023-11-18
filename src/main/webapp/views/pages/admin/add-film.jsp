@@ -35,9 +35,6 @@
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <%--                            <label for="film-id">Phim ID</label>--%>
-                            <%--                            <input type="text" placeholder="Phim ID" name="film-id" id="film-id"--%>
-                            <%--                                   required/>--%>
                             <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/></label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>" name="film-name"
                                    id="film-name"

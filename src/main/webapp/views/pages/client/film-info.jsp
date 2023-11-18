@@ -18,12 +18,13 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
 <section class="section centered-vertical-content">
     <div class="container centered-vertical-content wrapper">
         <c:set var="film" value="${filmData}"/>
 
-        <h1>${sectionTitle}</h1>
+       <h2 class="title"><fmt:message key="filmInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <div id="film-details" class="centered-vertical-content">
             <div class="two-col__wrapper">

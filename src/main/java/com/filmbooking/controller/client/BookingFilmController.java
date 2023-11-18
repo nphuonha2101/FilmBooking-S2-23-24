@@ -3,9 +3,9 @@ package com.filmbooking.controller.client;
 import com.filmbooking.model.*;
 import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
-import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -63,17 +63,27 @@ public class BookingFilmController extends HttpServlet {
         filmBookingServices = new FilmBookingServicesImpl();
         String seats = req.getParameter("seats");
 
-        filmBooking.setSeatsData(seats);
-        filmBooking.setBookingDate(LocalDateTime.now());
-        int numberOfSeats = filmBooking.getSeats().length;
-        double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
-        filmBooking.setTotalFee(totalFee);
+        if (!seats.isEmpty()) {
 
-        filmBookingServices.save(filmBooking);
-        //reset film booking
-        filmBooking.resetFilmBooking();
+            filmBooking.setSeatsData(seats);
+            filmBooking.setBookingDate(LocalDateTime.now());
+            int numberOfSeats = filmBooking.getSeats().length;
+            double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
+            filmBooking.setTotalFee(totalFee);
 
-        resp.sendRedirect("home");
+            filmBookingServices.save(filmBooking);
+            //reset film booking
+            filmBooking.resetFilmBooking();
+
+            resp.sendRedirect("home");
+        } else {
+            req.setAttribute("pageTitle", "bookingFilmTitle");
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
+
+           resp.sendRedirect("book-film");
+
+
+        }
 
     }
 

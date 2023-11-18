@@ -18,10 +18,11 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title">Thông tin tài khoản</h2>
+        <h2 class="title"><fmt:message key="accountInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <c:set var="loginUser" value="${sessionScope.loginUser}"/>
         <table class="hidden-table">
@@ -50,8 +51,10 @@
             </tbody>
         </table>
         <div class="wrapper justify-right-row">
-            <a class="links" style="margin: 0 1rem;" href="change-password"><fmt:message bundle="${msg}" key="changePasswd"/></a>
-            <a class="primary-filled-button button rounded-button" href="change-info?username=${loginUser.username}"><fmt:message bundle="${msg}" key="changeInfo"/></a>
+            <a class="links" style="margin: 0 1rem;" href="change-password"><fmt:message bundle="${msg}"
+                                                                                         key="changePasswd"/></a>
+            <a class="primary-filled-button button rounded-button"
+               href="change-info?username=${loginUser.username}"><fmt:message bundle="${msg}" key="changeInfo"/></a>
         </div>
     </div>
 </section>

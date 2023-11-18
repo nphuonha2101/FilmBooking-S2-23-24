@@ -73,7 +73,7 @@
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button"><fmt:message
-                                key="choosePhoto"/></label>
+                                key="choosePhoto" bundle="${adminMsg}"/></label>
                     </div>
 
                     <div class="left-col">

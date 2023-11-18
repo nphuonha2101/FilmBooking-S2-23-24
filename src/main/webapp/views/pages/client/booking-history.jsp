@@ -18,15 +18,17 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
 <section class="section centered-vertical-content">
     <c:set var="filmBookingsData" value="${filmBookings}"/>
     <c:set var="showtimeViewsData" value="${showtimeViewsMap}"/>
     <c:set var="theatersData" value="${theatersMap}"/>
     <c:set var="showtimesData" value="${showtimesMap}"/>
+    <c:set var="filmsData" value="${filmsMap}"/>
 
     <div class="container wrapper centered-vertical-content">
-        <h1>${sectionTitle}</h1>
+        <h2 class="title"><fmt:message key="bookingHistorySectionTitle" bundle="${pageTitle}"/> </h2>
 
         <div class="wrapper centered-vertical-content">
             <c:choose>
@@ -35,18 +37,24 @@
                         <h3><fmt:message bundle="${msg}" key="null"/></h3>
                     </div>
                 </c:when>
-
-
                 <c:otherwise>
                     <c:forEach var="filmBookingData" items="${filmBookingsData}">
                         <%--get showtime id for each filmbooking--%>
                         <c:set var="showtime" value="${showtimesData[filmBookingData.showtimeID]}"/>
                         <%--get theater for each showtime--%>
                         <c:set var="theater" value="${theatersData[showtime.showtimeID]}"/>
+                        <%--get film for each showtime--%>
+                        <c:set var="film" value="${filmsData[showtime.filmID]}"/>
 
                         <div class="wrapper accordion-wrapper">
-                            <button class="accordion wrapper"><span class="font-bold"><fmt:message bundle="${msg}" key="username"/>:</span> ${filmBookingData.username}
-                                - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:</span> ${filmBookingData.bookingDate}</button>
+                            <button class="accordion wrapper">
+                                <span class="font-bold">
+                                    <fmt:message bundle="${msg}" key="username"/>:
+                                </span> ${filmBookingData.username}
+                                - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:
+                            </span> ${filmBookingData.bookingDate}
+                                - <span class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:</span> ${film.filmName}
+                            </button>
                             <div class="accordion-panel">
                                 <div class="two-col__wrapper wrapper">
                                     <div class="wrapper">

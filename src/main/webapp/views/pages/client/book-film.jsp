@@ -18,6 +18,8 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
+<fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 
 <section class="section centered-vertical-content">
@@ -27,8 +29,14 @@
         <c:set var="bookedRoom" value="${bookedRoom}"/>
         <c:set var="bookedTheater" value="${bookedTheater}"/>
 
-        <h1>${sectionTitle}</h1>
+        <h2 class="title"><fmt:message key="bookingFilmSectionTitle" bundle="${pageTitle}"/> </h2>
 
+        <c:if test="${not empty statusCodeErr}">
+            <span class="error-span message-span" id="error-message">
+                <span class="material-symbols-outlined">warning</span>
+                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
+            </span>
+        </c:if>
 
         <div class="wrapper two-col__wrapper align-top">
             <div class="wrapper centered-vertical-content">

@@ -27,7 +27,7 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "registerTitle");
+        req.setAttribute("pageTitle", "signupTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
@@ -60,7 +60,7 @@ public class SignupController extends HttpServlet {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
         }
 
-        req.setAttribute("pageTitle", "registerTitle");
+        req.setAttribute("pageTitle", "signupTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

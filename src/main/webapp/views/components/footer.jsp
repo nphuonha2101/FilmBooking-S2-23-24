@@ -8,23 +8,39 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 
 <div class="two-col__wrapper">
     <div class="left-col__wrapper">
         <div class="footer-text">
             <h2>FilmBooking</h2>
-            <p>&copy; 2023 - Đoàn Quốc Đăng và Nguyễn Phương Nhã. Mọi quyền được bảo lưu.</p>
+            <p><fmt:message key="footerCopyright" bundle="${msg}"/> </p>
         </div>
     </div>
 
     <div class="right-col__wrapper">
-        <h2>Liên kết nhanh</h2>
+        <h2><fmt:message key="footerQuickLinks" bundle="${msg}"/></h2>
         <ul id="link-list">
-            <li><a href="https://github.com/conmuaxadan" target="_blank">-> Trang GitHub của Đoàn Quốc Đăng</a></li>
-            <li><a href="https://github.com/nphuonha2101" target="_blank">-> Trang GitHub của Nguyễn Phương Nhã</a></li>
-            <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">-> Trang GitHub của
-                Project</a></li>
+            <li><a href="home">-> <fmt:message key="home" bundle="${msg}"/></a></li>
+            <li><a href="booking-history">-> <fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
+            <li><a href="account-info">-> <fmt:message key="yourAccount" bundle="${msg}"/></a></li>
+
+            <li><a href="https://github.com/conmuaxadan" target="_blank">-> <fmt:message key="footerDQDGitHub" bundle="${msg}"/></a></li>
+            <li><a href="https://github.com/nphuonha2101" target="_blank">-> <fmt:message key="footerNPNGitHub" bundle="${msg}"/></a></li>
+            <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">->
+                    <fmt:message key="footerProjectGitHub" bundle="${msg}"/>
+                </a>
+            </li>
         </ul>
     </div>
 </div>
@@ -36,16 +52,8 @@ expand_less</span>
 </div>
 
 <!-- JavaScript -->
-<%--<script type="text/javascript">--%>
-<%--    <%@include file="resources/js/utils.js"%>--%>
-<%--    <%@include file="resources/js/handlesChooseSeats.js"%>--%>
-<%--    <%@include file="resources/js/handlesTab.js"%>--%>
-<%--    <%@include file="resources/js/handlesUploadFilmImg.js"%>--%>
-<%--</script>--%>
 <script type="module" src="<c:url value="/resources/js/handlesScrolls.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/utils.js"/>"></script>
-
-<%--<script type="text/javascript" src="<c:url value='/resources/js/handlesValidateForm.js'/>"></script>--%>
 <script type="module" src="<c:url value="/resources/js/handlesUploadFilmImg.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>

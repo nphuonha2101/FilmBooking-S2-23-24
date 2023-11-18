@@ -17,11 +17,11 @@
         <fmt:setLocale value="${sessionScope.lang}"/>
     </c:otherwise>
 </c:choose>
-<fmt:bundle basename="properties.messageAdmin">
+<fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
     <div class="admin-panel">
-        <h4><fmt:message key="managementTools"/></h4>
-        <a class="links button rounded-button" href="film-management"><fmt:message key="filmManagement"/> </a>
-        <a class="links button rounded-button" href="showtime-management"><fmt:message key="showtimeManagement"/></a>
-        <a class="links button rounded-button" href="room-management"><fmt:message key="roomManagement"/></a>
+        <h4><fmt:message key="managementTools" bundle="${adminMsg}"/></h4>
+        <a class="links button rounded-button" href="film-management"><fmt:message key="filmManagement" bundle="${adminMsg}"/> </a>
+        <a class="links button rounded-button" href="showtime-management"><fmt:message key="showtimeManagement" bundle="${adminMsg}"/></a>
+        <a class="links button rounded-button" href="room-management"><fmt:message key="roomManagement" bundle="${adminMsg}"/></a>
     </div>
-</fmt:bundle>
+

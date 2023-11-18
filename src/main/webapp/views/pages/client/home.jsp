@@ -18,10 +18,13 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
 <section class="section">
     <div class="wrapper">
-        <h1 class="title">${title} </h1>
+
+        <h2 class="title"><fmt:message key="newFilmArriveSectionTitle" bundle="${pageTitle}"/> </h2>
+
         <div class="grid-items wrapper">
 
             <!-- create film cards -->
@@ -42,7 +45,6 @@
                     </form>
                 </div>
             </c:forEach>
-
         </div>
     </div>
 </section>
