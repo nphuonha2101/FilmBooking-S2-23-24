@@ -21,83 +21,83 @@
 
 <fmt:bundle basename="properties.message">
 
-<nav class="top-nav" id="navigation-bar">
-    <div class="centered-horizontal-content wrapper" id="left-nav-elements">
-        <a class="site-logo" href="home">FilmBooking</a>
-    </div>
+    <nav class="top-nav" id="navigation-bar">
+        <div class="centered-horizontal-content wrapper" id="left-nav-elements">
+            <a class="site-logo" href="home">FilmBooking</a>
+        </div>
 
 
-    <ul id="right-nav-link">
+        <ul id="right-nav-link">
 
-        <li><a class="nav-links" href="home"><fmt:message key="home"/></a></li>
-        <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
-               target="_blank"><fmt:message key="github"/></a></li>
+            <li><a class="nav-links" href="home"><fmt:message key="home"/></a></li>
+            <li><a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
+                   target="_blank"><fmt:message key="github"/></a></li>
 
-        <c:if test="${not empty sessionScope.loginUser.username}">
+            <c:if test="${not empty sessionScope.loginUser.username}">
+                <li>
+                    <div class="drop-down-menu">
+
+                        <a class="nav-links light-filled-button">
+                                ${sessionScope.loginUser.userFullName}</a>
+
+                        <div class="drop-down-contents">
+                            <a class="drop-down-links" href="booking-history"><fmt:message key="bookingHistory"/></a>
+                            <c:choose>
+                                <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                                    <a class="drop-down-links" href="admin">Trang Admin</a>
+                                </c:when>
+                            </c:choose>
+                            <a class="drop-down-links" href="account-info"><fmt:message key="yourInfo"/></a>
+
+                        </div>
+                    </div>
+                </li>
+            </c:if>
+
+            <c:choose>
+                <c:when test="${not empty sessionScope.loginUser.username}">
+                    <li><a class="nav-links" href="logout"><fmt:message key="logout"/></a></li>
+                </c:when>
+                <c:when test="${empty sessionScope.loginUser.username}">
+                    <li><a class="nav-links" href="signup"><fmt:message key="register"/></a></li>
+                    <li><a class="nav-links light-filled-button button" href="login"><fmt:message key="login"/></a></li>
+                </c:when>
+            </c:choose>
+
             <li>
                 <div class="drop-down-menu">
 
-                    <a class="nav-links light-filled-button">
-                            ${sessionScope.loginUser.userFullName}</a>
+                    <c:choose>
+                        <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">
+                            <p class="centered-horizontal-content mg-0">
+                                <img class="img-language"
+                                     src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                     alt="default Vietnamese">
+                                <span> VI</span>
+                            </p>
+                        </c:when>
+
+                        <c:otherwise>
+                            <p class="centered-horizontal-content mg-0">
+                                <img class="img-language" src="<c:url value='/resources/images/icons8-usa-flag-48.png'/>" alt="English"/>
+                                <span> EN</span>
+                            </p>
+                        </c:otherwise>
+                    </c:choose>
+
 
                     <div class="drop-down-contents">
-                        <a class="drop-down-links" href="booking-history">Lịch sử đăng ký</a>
-                        <c:choose>
-                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                <a class="drop-down-links" href="admin">Trang Admin</a>
-                            </c:when>
-                        </c:choose>
-                        <a class="drop-down-links" href="account-info">Tài khoản của bạn</a>
+                        <a class="drop-down-links" href="lang?name=default"> <img class="img-language"
+                                                                                  src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                                                                  alt="default Vietnamese"> <span> Tiếng Việt</span></a>
+                        <a class="drop-down-links" href="lang?name=en_US"> <img class="img-language"
+                                                                                src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
+                                                                                alt="default Vietnamese">
+                            <span> English</span></a>
 
                     </div>
                 </div>
             </li>
-        </c:if>
-
-        <c:choose>
-            <c:when test="${not empty sessionScope.loginUser.username}">
-                <li><a class="nav-links" href="logout"><fmt:message key="logout"/></a></li>
-            </c:when>
-            <c:when test="${empty sessionScope.loginUser.username}">
-                <li><a class="nav-links" href="signup"><fmt:message key="register"/></a></li>
-                <li><a class="nav-links light-filled-button button" href="login"><fmt:message key="login"/></a></li>
-            </c:when>
-        </c:choose>
-
-        <li>
-            <div class="drop-down-menu">
-
-                <c:choose>
-                    <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">
-                        <p class="centered-horizontal-content mg-0">
-                            <img class="img-language"
-                                 src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                                 alt="default Vietnamese">
-                            <span> VI</span>
-                        </p>
-                    </c:when>
-
-                    <c:otherwise>
-                        <p class="centered-horizontal-content mg-0">
-                            <img class="img-language" src="<c:url value='/resources/images/icons8-usa-flag-48.png'/>" alt="English"/>
-                            <span> EN</span>
-                        </p>
-                    </c:otherwise>
-                </c:choose>
-
-
-                <div class="drop-down-contents">
-                    <a class="drop-down-links" href="lang?name=default"> <img class="img-language"
-                                                                              src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                                                                              alt="default Vietnamese"> <span> Tiếng Việt</span></a>
-                    <a class="drop-down-links" href="lang?name=en_US"> <img class="img-language"
-                                                                            src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
-                                                                            alt="default Vietnamese">
-                        <span> English</span></a>
-
-                </div>
-            </div>
-        </li>
-    </ul>
-</nav>
+        </ul>
+    </nav>
 </fmt:bundle>

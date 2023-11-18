@@ -17,6 +17,7 @@
         <fmt:setLocale value="${sessionScope.lang}"/>
     </c:otherwise>
 </c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <section class="content section centered-vertical-content">
@@ -40,39 +41,39 @@
         <form action="signup" method="post">
             <label for="username">
                 <span class="material-symbols-outlined">person</span>
-                Tên người dùng
+                <fmt:message bundle="${msg}" key="username"/>
             </label>
-            <input type="text" name="username" id="username" placeholder="Tên người dùng" autocomplete="true" required>
+            <input type="text" name="username" id="username" placeholder="<fmt:message bundle="${msg}" key="username"/>" autocomplete="true" required>
 
             <label for="user-full-name">
                 <span class="material-symbols-outlined">badge</span>
-                Họ và tên
+                <fmt:message bundle="${msg}" key="fullname"/>
             </label>
-            <input type="text" name="user-full-name" id="user-full-name" placeholder="Họ và tên" autocomplete="true"
+            <input type="text" name="user-full-name" id="user-full-name" placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
                    required>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
-                Email
+                <fmt:message bundle="${msg}" key="email"/>
             </label>
             <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
 
             <label for="password">
                 <span class="material-symbols-outlined">password</span>
-                Mật khẩu
+                <fmt:message bundle="${msg}" key="password"/>
             </label>
-            <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
+            <input type="password" name="password" id="password" placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
 
             <label for="confirm-password">
                 <span class="material-symbols-outlined">password</span>
-                Xác nhận mật khẩu
+                <fmt:message bundle="${msg}" key="confirmPassword"/>
             </label>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="Xác nhận mật khẩu"
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"
                    autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value="Đăng ký">
+            <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="register"/>">
         </form>
-        <p>Nếu bạn đã có tài khoản. <span><a class="links" href="login">Đăng nhập ngay!</a> </span></p>
+        <p><fmt:message bundle="${msg}" key="ifHaveAccount"/> <span><a class="links" href="login"><fmt:message bundle="${msg}" key="login"/></a> </span></p>
 
     </div>
 </section>

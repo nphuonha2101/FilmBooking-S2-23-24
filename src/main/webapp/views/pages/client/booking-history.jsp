@@ -7,7 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 
 <section class="section centered-vertical-content">
     <c:set var="filmBookingsData" value="${filmBookings}"/>
@@ -22,7 +32,7 @@
             <c:choose>
                 <c:when test="${empty filmBookingsData || empty showtimeViewsData }">
                     <div class="wrapper centered-vertical-content">
-                        <h3>Không có dữ liệu!</h3>
+                        <h3><fmt:message bundle="${msg}" key="null"/></h3>
                     </div>
                 </c:when>
 
@@ -35,29 +45,29 @@
                         <c:set var="theater" value="${theatersData[showtime.showtimeID]}"/>
 
                         <div class="wrapper accordion-wrapper">
-                            <button class="accordion wrapper"><span class="font-bold">Tên người dùng:</span> ${filmBookingData.username}
-                                - <span class="font-bold">Ngày đặt phim:</span> ${filmBookingData.bookingDate}</button>
+                            <button class="accordion wrapper"><span class="font-bold"><fmt:message bundle="${msg}" key="username"/>:</span> ${filmBookingData.username}
+                                - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:</span> ${filmBookingData.bookingDate}</button>
                             <div class="accordion-panel">
                                 <div class="two-col__wrapper wrapper">
                                     <div class="wrapper">
-                                        <p class="font-bold">Ngày đặt vé: <span>${filmBookingData.bookingDate}</span></p>
-                                        <p class="font-bold">Các ghế đã đặt: <span>${filmBookingData.seatsData}</span></p>
-                                        <p class="font-bold">Tổng tiền: <span>${filmBookingData.totalFee}</span> <span>VNĐ</span></p>
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="date"/>: <span>${filmBookingData.bookingDate}</span></p>
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="seat"/>: <span>${filmBookingData.seatsData}</span></p>
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="totalPrice"/>: <span>${filmBookingData.totalFee}</span> <span>VNĐ</span></p>
                                     </div>
 
                                     <div class="wrapper">
-                                        <p class="font-bold">Tên phim:
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].filmName}</span>
                                         </p>
-                                        <p class="font-bold">Tên phòng:
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="room"/>:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].roomName}</span></p>
-                                        <p class="font-bold">Giờ chiếu phim:
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="showtime"/>:
                                             <span>${showtimeViewsData[filmBookingData.showtimeID].showtimeDate}</span>
                                         </p>
-                                        <p class="font-bold">Tên rạp:
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="theater"/>:
                                             <span>${theatersData[theater.theaterID].theaterName}</span>
                                         </p>
-                                        <p class="font-bold">Địa chỉ rạp:
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="address"/>:
                                             <span>${theatersData[theater.theaterID].theaterAddress}</span>
 
                                         </p>
@@ -67,7 +77,7 @@
                                     <div class="wrapper justify-right-row">
                                         <div class="justify-right-row wrapper">
                                             <a class="primary-filled-button button rounded-button" target="_blank" href="invoice-info?booking-id=${filmBookingData.filmBookingID}">
-                                                In hoá đơn
+                                                <fmt:message bundle="${msg}" key="print"/>
                                             </a>
                                         </div>
                                     </div>
@@ -79,5 +89,4 @@
             </c:choose>
         </div>
     </div>
-
 </section>

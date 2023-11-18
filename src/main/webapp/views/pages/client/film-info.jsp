@@ -7,6 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 
 <section class="section centered-vertical-content">
     <div class="container centered-vertical-content wrapper">
@@ -21,17 +32,17 @@
                 <div class="wrapper">
                     <h3> ${film.filmName}</h3>
                     <br>
-                    <p class="font-bold">Giá vé: <span>${film.filmPrice} VNĐ/người</span></p>
-                    <p class="font-bold">Đạo diễn: <span>${film.director} </span></p>
-                    <p class="font-bold">Diễn viên: <span>${film.cast}</span></p>
-                    <p class="font-bold">Độ dài phim: <span>${film.filmLength} phút</span></p>
-                    <p class="font-bold">Thể loại: <span>${filmGenreNames}</span></p>
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>: <span>${film.filmPrice} VNĐ/người</span></p>
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="director"/>: <span>${film.director} </span></p>
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="cast"/>: <span>${film.cast}</span></p>
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="filmLength"/>: <span>${film.filmLength} phút</span></p>
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="genre"/>: <span>${filmGenreNames}</span></p>
                 </div>
             </div>
 
             <div class="wrapper centered-vertical-content" id="film-description">
                 <div class="wrapper title-filled_wrapper centered-vertical-content">
-                    <h3>Mô tả</h3>
+                    <h3><fmt:message bundle="${msg}" key="description"/></h3>
                 </div>
                 <div class="wrapper">
                     <p>${film.filmDescription}</p>
@@ -57,7 +68,7 @@
             <br>
             <div class="wrapper centered-vertical-content">
                 <div class="wrapper title-filled_wrapper centered-vertical-content">
-                    <h3>Chọn suất chiếu</h3>
+                    <h3><fmt:message bundle="${msg}" key="chooseShowtime"/></h3>
                 </div>
 
                 <div class="wrapper two-col__wrapper">
@@ -72,7 +83,7 @@
                     </div>
 
                     <div class="wrapper centered-vertical-content">
-                        <p>Suất chiếu: <span id="selected-showtime"></span></p>
+                        <p><fmt:message bundle="${msg}" key="showtime"/>: <span id="selected-showtime"></span></p>
                     </div>
                 </div>
             </div>
@@ -82,11 +93,9 @@
             <div class="wrapper centered-vertical-content">
                 <form action="film-info" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
-                    <input class="primary-filled-button button" type="submit" value="Tiếp tục">
+                    <input class="primary-filled-button button" type="submit" value="<fmt:message bundle="${msg}" key="continue"/>">
                 </form>
             </div>
         </div>
     </div>
-
 </section>
-

@@ -17,6 +17,7 @@
         <fmt:setLocale value="${sessionScope.lang}"/>
     </c:otherwise>
 </c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <c:set var="loginUser" value="${sessionScope.loginUser}"/>
@@ -33,33 +34,33 @@
         <form action="change-info" method="post">
             <label for="username">
                 <span class="material-symbols-outlined">person</span>
-                Tên người dùng
+                <fmt:message bundle="${msg}" key="username"/>
             </label>
             <input type="text" name="username" id="username" class="readonly-input" value="${loginUser.username}"
                    placeholder="Tên người dùng" autocomplete="true" readonly>
 
             <label for="user-full-name">
                 <span class="material-symbols-outlined">badge</span>
-                Họ và tên
+                <fmt:message bundle="${msg}" key="fullname"/>
             </label>
             <input type="text" name="user-full-name" id="user-full-name" value="${loginUser.userFullName}"
                    placeholder="Họ và tên" autocomplete="true" required>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
-                Email
+                <fmt:message bundle="${msg}" key="email"/>
             </label>
             <input type="email" name="email" id="email" value="${loginUser.userEmail}" placeholder="Email"
                    autocomplete="true" required>
 
             <label for="password">
                 <span class="material-symbols-outlined">password</span>
-                Mật khẩu
+                <fmt:message bundle="${msg}" key="password"/>
             </label>
             <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value="Thay đổi">
+            <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="change"/> ">
         </form>
-        <p>Trở về trang <span><a class="links" href="account-info">Thông tin!</a> </span></p>
+        <p><fmt:message bundle="${msg}" key="return"/> <span><a class="links" href="account-info"><fmt:message bundle="${msg}" key="info"/> </a> </span></p>
     </div>
 </section>

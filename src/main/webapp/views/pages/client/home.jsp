@@ -7,6 +7,17 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
 
 <section class="section">
     <div class="wrapper">
@@ -22,8 +33,8 @@
                     <div class="wrapper">
                         <h4>${film.filmName}</h4>
                             <%--                    <p>Phòng: ${film.roomID}</p>--%>
-                        <p>Giá vé: ${film.filmPrice} VNĐ/người</p>
-                        <p>Đạo diễn: ${film.director}</p>
+                        <p><fmt:message bundle="${msg}" key="ticketPrices"/>: ${film.filmPrice} VNĐ/người</p>
+                        <p><fmt:message bundle="${msg}" key="director"/>: ${film.director}</p>
                             <%--                    <p>Thể loại: ${film.genre}</p>--%>
                     </div>
                     <form action="film-info" class="hidden-form" id="hidden-form" method="get">
@@ -35,4 +46,3 @@
         </div>
     </div>
 </section>
-

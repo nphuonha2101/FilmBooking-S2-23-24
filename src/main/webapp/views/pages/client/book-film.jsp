@@ -7,6 +7,18 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+
+<c:choose>
+    <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
+        <fmt:setLocale value="default"/>
+    </c:when>
+    <c:otherwise>
+        <fmt:setLocale value="${sessionScope.lang}"/>
+    </c:otherwise>
+</c:choose>
+<fmt:setBundle basename="properties.message" var="msg"/>
+
 
 <section class="section centered-vertical-content">
     <div class="container centered-vertical-content wrapper">
@@ -20,7 +32,7 @@
 
         <div class="wrapper two-col__wrapper align-top">
             <div class="wrapper centered-vertical-content">
-                <h3>Chọn ghế ngồi</h3>
+                <h3><fmt:message bundle="${msg}" key="chooseYourSeat"/></h3>
 
                 <div class="wrapper">
                     <div class="wrapper centered-vertical-content">
@@ -54,28 +66,28 @@
             </div>
 
             <div class="wrapper centered-vertical-content">
-                <h3>Thông tin đặt vé</h3>
+                <h3><fmt:message bundle="${msg}" key="chooseYourSeat"/></h3>
 
                 <div class="wrapper">
-                    <p class="font-bold">Tên phim:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
                         <span id="booked-film-name">${bookedFilm.filmName}</span>
                     </p>
-                    <p class="font-bold">Giá vé (1 người):
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>:
                         <span id="booked-film-price">${bookedFilm.filmPrice}</span> <span> VNĐ</span>
                     </p>
-                    <p class="font-bold">Thời gian:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="time"/>:
                         <span id="booked-showtime-date">${bookedShowtime.showtimeDate}</span>
                     </p>
-                    <p class="font-bold">Phòng:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="room"/>:
                         <span id="booked-room-name">${bookedRoom.roomName}</span>
                     </p>
-                    <p class="font-bold">Rạp:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="theater"/>:
                         <span id="booked-theater-name">${bookedTheater.theaterName}</span>
                     </p>
-                    <p class="font-bold">Địa chỉ:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="address"/>:
                         <span id="booked-theater-address">${bookedTheater.theaterAddress}</span>
                     </p>
-                    <p class="font-bold">Tổng tiền:
+                    <p class="font-bold"><fmt:message bundle="${msg}" key="totalPrice"/>:
                         <span id="total-fee">0 VNĐ</span>
                     </p>
                 </div>
@@ -86,9 +98,8 @@
         <div class="wrapper centered-vertical-content">
             <form action="book-film" method="post">
                 <input type="hidden" name="seats" id="seats">
-                <input type="submit" class="primary-filled-button button" value="Đặt vé">
+                <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="booking"/>">
             </form>
         </div>
     </div>
-
 </section>
