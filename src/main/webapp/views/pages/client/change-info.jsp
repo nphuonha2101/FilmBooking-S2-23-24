@@ -39,27 +39,27 @@
                 <fmt:message bundle="${msg}" key="username"/>
             </label>
             <input type="text" name="username" id="username" class="readonly-input" value="${loginUser.username}"
-                   placeholder="Tên người dùng" autocomplete="true" readonly>
+                   placeholder=" <fmt:message bundle="${msg}" key="username"/>" autocomplete="true" readonly>
 
             <label for="user-full-name">
                 <span class="material-symbols-outlined">badge</span>
                 <fmt:message bundle="${msg}" key="fullname"/>
             </label>
             <input type="text" name="user-full-name" id="user-full-name" value="${loginUser.userFullName}"
-                   placeholder="Họ và tên" autocomplete="true" required>
+                   placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true" required>
 
             <label for="email">
                 <span class="material-symbols-outlined">mail</span>
                 <fmt:message bundle="${msg}" key="email"/>
             </label>
-            <input type="email" name="email" id="email" value="${loginUser.userEmail}" placeholder="Email"
+            <input type="email" name="email" id="email" value="${loginUser.userEmail}" placeholder="    <fmt:message bundle="${msg}" key="email"/>"
                    autocomplete="true" required>
 
             <label for="password">
                 <span class="material-symbols-outlined">password</span>
-                <fmt:message bundle="${msg}" key="password"/>
+                <fmt:message bundle="${msg}" key="typeYourPassword"/>
             </label>
-            <input type="password" name="password" id="password" placeholder="Mật khẩu" autocomplete="true" required>
+            <input type="password" name="password" id="password" placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true" required>
 
             <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="change"/> ">
         </form>

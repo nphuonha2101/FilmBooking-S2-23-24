@@ -23,10 +23,10 @@
 <!DOCTYPE html>
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
-        <html lang="vi_VN">
+        <html lang="vi">
     </c:when>
     <c:otherwise>
-        <html lang="${sessionScope.lang}">
+        <html lang="en">
     </c:otherwise>
 </c:choose>
 
