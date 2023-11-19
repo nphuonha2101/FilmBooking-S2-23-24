@@ -20,7 +20,6 @@ let handlesAccordions = {
                     else
                         panel.style.display = "block";
                 });
-
             }
         } catch (e) {
             console.log(e);

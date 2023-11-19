@@ -1231,6 +1231,10 @@ thead > tr > th {
     transition: 0.2s ease-out;
 }
 
+.icon-button {
+    margin: 1rem 0;
+}
+
 .icon-button:hover > .hidden-span {
     display: inline;
 }

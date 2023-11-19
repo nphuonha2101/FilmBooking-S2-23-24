@@ -40,11 +40,17 @@ public class ChangeInfoController extends HttpServlet {
         User loginUser = (User) session.getAttribute("loginUser");
 
         if (loginUser != null && password.equals(loginUser.getUserPassword())) {
-            loginUser.setUserFullName(userFullName);
-            loginUser.setUserEmail(email);
-            userServices.update(loginUser);
-
-            resp.sendRedirect("account-info");
+            // when user change email then verify email
+            if (!email.equalsIgnoreCase(loginUser.getUserEmail()) && userServices.getByEmail(email) != null) {
+                req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
+                req.setAttribute("pageTitle", "changeInfoTitle");
+                RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
+            } else {
+                loginUser.setUserFullName(userFullName);
+                loginUser.setUserEmail(email);
+                userServices.update(loginUser);
+                resp.sendRedirect("account-info");
+            }
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
             req.setAttribute("pageTitle", "changeInfoTitle");
