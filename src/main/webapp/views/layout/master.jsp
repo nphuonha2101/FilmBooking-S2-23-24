@@ -45,7 +45,7 @@
         </div>
     </section>
     <jsp:include page="${dynamicContents}"/>
-    <jsp:include page="${modalName}"/>
+    <jsp:include page="/views/pages/client/search-modal.jsp"/>
 
 </main>
 

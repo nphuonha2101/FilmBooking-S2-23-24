@@ -8,6 +8,7 @@ import java.util.List;
 public interface IFilmServices {
     List<Film> getAll();
     Film getByFilmID(String id);
+    List<Film> getByFilmName(String name);
     HashMap<String, Film> getFilmAndFilmID();
     void save(Film film);
     void save(Film film, String ...genreIDs);

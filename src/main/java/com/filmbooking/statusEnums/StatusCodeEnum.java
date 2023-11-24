@@ -9,11 +9,13 @@ public enum StatusCodeEnum {
     PASSWORD_CONFIRM_NOT_MATCH(105, "Mật khẩu xác nhận không khớp"),
     USERNAME_EXISTED(106, "Tên người dùng đã tồn tại"),
     EMAIL_EXISTED(107, "Email đã tồn tại"),
+    FILM_NOT_FOUND(108, "Không tìm thấy phim"),
     SUCCESSFUL(200, "Thành công"),
     FOUND_USER(201, "Tìm thấy người dùng"),
     SENT_RESET_PASSWD_EMAIL(202, "Đã gửi email đặt lại mật khẩu"),
     PASSWORD_CHANGE_SUCCESSFUL(203, "Đổi mật khẩu thành công"),
     CREATE_NEW_USER_SUCCESSFUL(204, "Tạo người dùng mới thành công"),
+
     NOT_VALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế");
 

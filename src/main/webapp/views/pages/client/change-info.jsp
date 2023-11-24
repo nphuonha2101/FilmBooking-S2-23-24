@@ -24,7 +24,7 @@
 <c:set var="loginUser" value="${sessionScope.loginUser}"/>
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title"><fmt:message key="changeInfoTitle" bundle="${pageTitle}"/> </h2>
+        <h2 class="title"><fmt:message key="changeInfoSectionTitle" bundle="${pageTitle}"/> </h2>
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message"><span class="material-symbols-outlined">
