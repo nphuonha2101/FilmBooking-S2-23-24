@@ -1317,6 +1317,11 @@ width: calc(60vw) !important;
 
 #search-input-form {
     width: calc(50vw) !important;
+    border: 2px solid #ccedff !important;
+}
+
+#search-input-form:focus {
+    border: 2px solid #0556f3  !important;
 }
 
 #search-button {

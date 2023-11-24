@@ -15,13 +15,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FilmBookingServicesImpl implements IFilmBookingServices {
-    private final IDAO<FilmBooking> filmBookingDAO;
+    private IDAO<FilmBooking> filmBookingDAO;
 
-    private final IShowtimeServices showtimeServices;
+    private IShowtimeServices showtimeServices;
 
     public FilmBookingServicesImpl() {
-        filmBookingDAO = new FilmBookingDAOImpl();
-        showtimeServices = new ShowtimeServicesImpl();
+        this.filmBookingDAO = new FilmBookingDAOImpl();
+        this.showtimeServices = new ShowtimeServicesImpl();
+    }
+
+    public FilmBookingServicesImpl(IShowtimeServices showtimeServices) {
+        this.filmBookingDAO = new FilmBookingDAOImpl();
+        this.showtimeServices = showtimeServices;
     }
 
     @Override

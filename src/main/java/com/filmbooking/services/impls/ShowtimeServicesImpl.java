@@ -2,7 +2,9 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.ShowtimeDAOImpl;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeServices;
 
@@ -13,9 +15,11 @@ import java.util.List;
 
 public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObjectIDService<Showtime> {
     private IDAO<Showtime> showtimeDAO;
+    private IFilmBookingServices filmBookingServices;
 
     public ShowtimeServicesImpl() {
         this.showtimeDAO = new ShowtimeDAOImpl();
+        filmBookingServices = new FilmBookingServicesImpl(this);
         hideOldShowtime();
     }
 
@@ -32,8 +36,8 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
     @Override
     public List<Showtime> getByFilmID(String filmID) {
         List<Showtime> result = new ArrayList<>();
-        for (Showtime showtime: this.getAll()
-             ) {
+        for (Showtime showtime : this.getAll()
+        ) {
             if (showtime.getFilmID().equalsIgnoreCase(filmID))
                 result.add(showtime);
         }
@@ -57,6 +61,13 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
 
     @Override
     public void delete(Showtime showtime) {
+        List<FilmBooking> filmBookingList = filmBookingServices.getAll();
+
+        filmBookingList.stream().forEach(filmBooking -> {
+            if (filmBooking.getShowtimeID().equalsIgnoreCase(showtime.getShowtimeID()))
+                filmBookingServices.delete(filmBooking);
+        });
+
         showtimeDAO.delete(showtime);
     }
 

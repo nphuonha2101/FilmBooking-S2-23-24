@@ -31,8 +31,6 @@ public class BookingHistoryController extends HttpServlet {
         filmServices = new FilmServicesImpl();
 
         req.setAttribute("pageTitle", "bookingHistoryTitle");
-        req.setAttribute("sectionTitle", "Lịch sử đặt phim");
-
 
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser != null)
