@@ -34,12 +34,6 @@
                 <fmt:message key="home" bundle="${msg}"/>
             </a>
         </li>
-        <li>
-            <a class="nav-links" href="https://github.com/nphuonha2101/FilmBooking-WebProgramming"
-               target="_blank">
-                <fmt:message key="github" bundle="${msg}"/>
-            </a>
-        </li>
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
@@ -98,7 +92,7 @@
                             <img class="img-language"
                                  src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
                                  alt="default Vietnamese">
-                            <span> VI</span>
+                            <span> &ensp; VI</span>
                         </p>
                     </c:when>
 
@@ -106,7 +100,7 @@
                         <p class="centered-horizontal-content mg-0">
                             <img class="img-language" src="<c:url value='/resources/images/icons8-usa-flag-48.png'/>"
                                  alt="English"/>
-                            <span> EN</span>
+                            <span> &ensp; EN</span>
                         </p>
                     </c:otherwise>
                 </c:choose>
@@ -115,16 +109,24 @@
                 <div class="drop-down-contents">
                     <a class="drop-down-links" href="lang?name=default"> <img class="img-language"
                                                                               src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                                                                              alt="default Vietnamese"> <span> Tiếng Việt</span>
+                                                                              alt="default Vietnamese"> <span> &ensp; Tiếng Việt</span>
                     </a>
                     <a class="drop-down-links" href="lang?name=en_US"> <img class="img-language"
                                                                             src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
                                                                             alt="default Vietnamese">
-                        <span> English</span>
+                        <span> &ensp; English</span>
                     </a>
 
                 </div>
             </div>
+        </li>
+
+        <li>
+            <button class="nav-links" id="search-button">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+            </button>
         </li>
     </ul>
 </nav>

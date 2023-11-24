@@ -11,6 +11,7 @@ import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -37,6 +38,18 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
     @Override
     public Film getByFilmID(String id) {
         return filmDAO.getByID(id);
+    }
+
+    @Override
+    public List<Film> getByFilmName(String name) {
+        name = name.toLowerCase();
+        List<Film> result = new ArrayList<>();
+
+        for (Film film: this.getAll()) {
+            if (film.getFilmName().toLowerCase().contains(name))
+                result.add(film);
+        }
+        return result;
     }
 
     @Override
