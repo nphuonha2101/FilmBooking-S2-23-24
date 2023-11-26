@@ -26,7 +26,7 @@ let handlesChooseSeats = {
                 });
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
@@ -77,7 +77,7 @@ let handlesSelectShowtime = {
                 showtimeIDHiddenInput = selectElement.options[selectElement.selectedIndex].value;
             })
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }

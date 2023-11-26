@@ -1,4 +1,4 @@
-import {$, $$} from "./utils.js"
+import {$} from "./utils.js"
 
 let handlesShowSearchModal = {
     start: () => {
@@ -13,7 +13,7 @@ let handlesShowSearchModal = {
                     modalElement.style.display = "none";
             });
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
@@ -31,7 +31,7 @@ let handlesCloseModal = {
             })
 
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
@@ -49,7 +49,7 @@ let handlesSubmitSearchForm = {
                 }
             });
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
 
     }

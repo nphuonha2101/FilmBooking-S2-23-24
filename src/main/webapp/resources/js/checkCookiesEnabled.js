@@ -9,7 +9,7 @@ let checkCookiesEnabled = {
                 cookiesDisabledPopup.classList.add("float");
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
@@ -23,7 +23,7 @@ let handlesCookiesDisabledPopup = {
             handlesCloseButton(cookiesDisabledPopup);
 
         } catch (e) {
-            console.log(e)
+            console.error(e)
         }
     }
 }

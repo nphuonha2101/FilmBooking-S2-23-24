@@ -13,7 +13,7 @@ let handlesItemCardsClick = {
                 })
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
 
 
@@ -43,7 +43,7 @@ let handlesEditDeleteButtons = (actionDeleteURI, actionEditURI) => {
             })
         }
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 

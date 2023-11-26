@@ -11,7 +11,7 @@ let handlesCloseButton = (containerElement) => {
             containerElement.style.display = "none";
         })
     } catch (e) {
-        console.log(e);
+        console.error(e);
     }
 }
 

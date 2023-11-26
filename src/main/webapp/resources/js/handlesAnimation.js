@@ -20,7 +20,7 @@ let handlesItemCardsFadeIn = {
                     itemCard.classList.remove("fade-in");
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }

@@ -185,6 +185,8 @@ button {
     background-color: #2b324d;
     padding: 3rem;
     margin-top: 5rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
 }
 
 .footer > *, .footer > ul > li > a {
@@ -558,32 +560,32 @@ select {
 /*    background: #2b324d;*/
 /*}*/
 
-#link-list {
+.link-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-#link-list > li {
+.link-list > li {
     margin: 0.5rem 0;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
 }
 
-#link-list > li:hover {
+.link-list > li:hover {
     transform: translateX(5px) !important;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
 }
 
-#link-list > li > a {
+.link-list > li > a {
     text-decoration: none;
     color: #ccedff;
 
     font-weight: 400;
 }
 
-#link-list > li > a:hover {
+.link-list > li > a:hover {
     color: #fff;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;

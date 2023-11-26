@@ -10,7 +10,7 @@ let handlesNavigationBar = {
             else
                 navElement.classList.remove("float");
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
@@ -37,7 +37,7 @@ let handlesBackToTop = {
                 window.scrollTo(0, 0);
             }
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 

@@ -20,26 +20,31 @@
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
 
-<div class="two-col__wrapper">
-    <div class="left-col__wrapper">
+<div class="footer">
+    <div>
         <div class="footer-text">
             <h2>FilmBooking</h2>
             <p><fmt:message key="footerCopyright" bundle="${msg}"/> </p>
         </div>
     </div>
 
-    <div class="right-col__wrapper">
+    <div>
         <h2><fmt:message key="footerQuickLinks" bundle="${msg}"/></h2>
-        <ul id="link-list">
+        <ul class="link-list">
             <li><a href="home">-> <fmt:message key="home" bundle="${msg}"/></a></li>
             <li><a href="booking-history">-> <fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
             <li><a href="account-info">-> <fmt:message key="yourAccount" bundle="${msg}"/></a></li>
+        </ul>
+    </div>
+    <div>
+        <h2><fmt:message key="aboutUsFooter" bundle="${msg}"/></h2>
+        <ul class="link-list">
 
             <li><a href="https://github.com/conmuaxadan" target="_blank">-> <fmt:message key="footerDQDGitHub" bundle="${msg}"/></a></li>
             <li><a href="https://github.com/nphuonha2101" target="_blank">-> <fmt:message key="footerNPNGitHub" bundle="${msg}"/></a></li>
             <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">->
-                    <fmt:message key="footerProjectGitHub" bundle="${msg}"/>
-                </a>
+                <fmt:message key="footerProjectGitHub" bundle="${msg}"/>
+            </a>
             </li>
         </ul>
     </div>

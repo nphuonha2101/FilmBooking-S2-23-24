@@ -7,7 +7,7 @@ let handleImgInput = {
 
             uploadElement.addEventListener("change", handleImgInput.handleInput);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     },
     handleInput: function () {
@@ -26,7 +26,7 @@ let handleImgInput = {
             hiddenImgFileName.value = imgFile.name;
 
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 }
