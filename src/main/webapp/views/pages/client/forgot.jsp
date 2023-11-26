@@ -26,7 +26,7 @@
 
         <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span" id="successful-message">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-rounded">
                         task_alt </span>
                 <fmt:message key="${statusCodeSuccess}" bundle="${msg}"/>
             </span>
@@ -34,7 +34,7 @@
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-rounded">
                 warning</span>
                 <fmt:message key="${statusCodeErr}" bundle="${msg}"/>
             </span>
@@ -42,14 +42,14 @@
 
         <form action="forgot-password" method="post">
             <label for="username">
-                <span class="material-symbols-outlined">person</span>
+                <span class="material-symbols-rounded">person</span>
                 <fmt:message key="username" bundle="${msg}"/>
             </label>
             <input type="text" name="username" id="username" placeholder=" <fmt:message key="username" bundle="${msg}"/>"
                    autocomplete="true" required>
 
             <label for="email">
-                <span class="material-symbols-outlined">mail</span>
+                <span class="material-symbols-rounded">mail</span>
                 <fmt:message key="email" bundle="${msg}"/>
             </label>
             <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>" autocomplete="true" required>

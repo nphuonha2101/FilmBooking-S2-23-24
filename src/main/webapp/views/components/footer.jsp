@@ -52,7 +52,7 @@
 
 <!-- Back to Top -->
 <div id="back-to-top" class="back-to-top light-filled-button button">
-   <span class="material-symbols-outlined">
+   <span class="material-symbols-rounded">
 expand_less</span>
 </div>
 

@@ -27,46 +27,46 @@
 
         <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span">
-                <span class="material-symbols-outlined">task_alt</span>
+                <span class="material-symbols-rounded">task_alt</span>
                 <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-outlined">warning</span>
+                <span class="material-symbols-rounded">warning</span>
                 <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>
 
         <form action="signup" method="post">
             <label for="username">
-                <span class="material-symbols-outlined">person</span>
+                <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>
             </label>
             <input type="text" name="username" id="username" placeholder="<fmt:message bundle="${msg}" key="username"/>" autocomplete="true" required>
 
             <label for="user-full-name">
-                <span class="material-symbols-outlined">badge</span>
+                <span class="material-symbols-rounded">badge</span>
                 <fmt:message bundle="${msg}" key="fullname"/>
             </label>
             <input type="text" name="user-full-name" id="user-full-name" placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
                    required>
 
             <label for="email">
-                <span class="material-symbols-outlined">mail</span>
+                <span class="material-symbols-rounded">mail</span>
                 <fmt:message bundle="${msg}" key="email"/>
             </label>
             <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
 
             <label for="password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="password"/>
             </label>
             <input type="password" name="password" id="password" placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
 
             <label for="confirm-password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="confirmPassword"/>
             </label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"

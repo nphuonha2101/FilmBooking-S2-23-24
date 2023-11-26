@@ -18,7 +18,7 @@
     <div class="wrapper centered-vertical-content container modal-content wrapper" id="modal-content">
         <div class="justify-right-row wrapper">
             <button id="close-modal-button">
-            <span class="material-symbols-outlined warning-color">
+            <span class="material-symbols-rounded warning-color">
                 cancel
             </span>
             </button>

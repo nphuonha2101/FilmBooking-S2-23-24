@@ -10,7 +10,7 @@
 
 <div class="container" id="cookies-disabled-popup">
     <button class="wrapper justify-right-row close-button">
-        <span class="material-symbols-outlined warning-color">close</span>
+        <span class="material-symbols-rounded warning-color">close</span>
     </button>
     <h3>Trình duyệt của bạn chưa bật Cookies</h3>
     <p>Chúng tôi sử dụng Cookies nhằm mục đích bảo mật và để định danh phiên làm việc của bạn.

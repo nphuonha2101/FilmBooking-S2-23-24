@@ -27,14 +27,14 @@
 
         <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span">
-                <span class="material-symbols-outlined">task_alt</span>
+                <span class="material-symbols-rounded">task_alt</span>
                 <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-outlined">warning</span>
+                <span class="material-symbols-rounded">warning</span>
                 <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>
@@ -42,19 +42,19 @@
 
         <form action="change-password" method="post">
             <label for="current-password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="password"/>
             </label>
             <input type="password" name="current-password" id="current-password" placeholder=" <fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
 
             <label for="new-password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="newPassword"/>
             </label>
             <input type="password" name="new-password" id="new-password" placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
 
             <label for="confirm-new-password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="confirmPassword"/>
             </label>
             <input type="password" name="confirm-new-password" id="confirm-new-password"

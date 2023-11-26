@@ -21,14 +21,14 @@
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-outlined">warning</span>
+                <span class="material-symbols-rounded">warning</span>
                 <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>
 
         <form action="login" method="post">
             <label for="username">
-                <span class="material-symbols-outlined">person</span>
+                <span class="material-symbols-rounded">person</span>
                 <fmt:message key="usernameOrEmail" bundle="${msg}"/>
             </label>
             <input type="text" name="username" id="username"
@@ -36,7 +36,7 @@
                    autocomplete="true" required>
 
             <label for="password">
-                <span class="material-symbols-outlined">password</span>
+                <span class="material-symbols-rounded">password</span>
                 <fmt:message key="password" bundle="${msg}"/>
             </label>
             <input type="password" name="password" id="password"

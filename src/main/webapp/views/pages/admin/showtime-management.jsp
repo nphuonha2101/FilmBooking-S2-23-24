@@ -31,7 +31,7 @@
             <div class="justify-right-row wrapper">
                 <a href="add-showtime"
                    class="primary-filled-button rounded-button button submit-button icon-button">
-                    <span class="material-symbols-outlined">add</span>
+                    <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
                 </a>
             </div>
@@ -61,10 +61,10 @@
                                        value="${showtimeView.showtimeID}"/>
                             </form>
                             <button class="submit-button delete-button">
-                                <span class="material-symbols-outlined warning-color">delete</span>
+                                <span class="material-symbols-rounded warning-color">delete</span>
                             </button>
                             <button class="submit-button edit-button">
-                                <span class="material-symbols-outlined primary-color">edit</span>
+                                <span class="material-symbols-rounded primary-color">edit</span>
                             </button>
                         </td>
                     </tr>

@@ -33,7 +33,7 @@
 
         <c:if test="${not empty statusCodeErr}">
             <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-outlined">warning</span>
+                <span class="material-symbols-rounded">warning</span>
                 <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
             </span>
         </c:if>

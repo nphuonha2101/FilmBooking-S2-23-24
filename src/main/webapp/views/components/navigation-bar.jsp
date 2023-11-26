@@ -35,32 +35,6 @@
             </a>
         </li>
 
-        <c:if test="${not empty sessionScope.loginUser.username}">
-            <li>
-                <div class="drop-down-menu">
-
-                    <a class="nav-links light-filled-button">
-                            ${sessionScope.loginUser.userFullName}</a>
-
-                    <div class="drop-down-contents">
-                        <a class="drop-down-links" href="booking-history">
-                            <fmt:message key="bookingHistory" bundle="${msg}"/>
-                        </a>
-                        <c:choose>
-                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                <a class="drop-down-links" href="admin">
-                                    <fmt:message key="adminPage" bundle="${msg}"/>
-                                </a>
-                            </c:when>
-                        </c:choose>
-                        <a class="drop-down-links" href="account-info">
-                            <fmt:message key="yourAccount" bundle="${msg}"/>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </c:if>
-
         <c:choose>
             <c:when test="${not empty sessionScope.loginUser.username}">
                 <li>
@@ -122,11 +96,43 @@
         </li>
 
         <li>
-            <button class="nav-links" id="search-button">
-                <span class="material-symbols-outlined">
+            <button class="nav-links small-icon-button" id="search-button">
+                <span class="material-symbols-rounded">
                     search
                 </span>
             </button>
         </li>
+
+        <c:if test="${not empty sessionScope.loginUser.username}">
+            <li>
+                <div class="drop-down-menu">
+
+                    <button class="nav-links small-icon-button">
+                        <span class="material-symbols-rounded">
+                            person
+                        </span>
+                    </button>
+
+                    <div class="drop-down-contents">
+                        <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
+
+                        <a class="drop-down-links" href="booking-history">
+                            <fmt:message key="bookingHistory" bundle="${msg}"/>
+                        </a>
+                        <c:choose>
+                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                                <a class="drop-down-links" href="admin">
+                                    <fmt:message key="adminPage" bundle="${msg}"/>
+                                </a>
+                            </c:when>
+                        </c:choose>
+                        <a class="drop-down-links" href="account-info">
+                            <fmt:message key="yourAccount" bundle="${msg}"/>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </c:if>
+
     </ul>
 </nav>
