@@ -30,28 +30,100 @@
     <ul id="right-nav-link">
 
         <li>
-            <a class="nav-links" href="home">
-                <fmt:message key="home" bundle="${msg}"/>
+            <a class="nav-links small-icon-button" href="home">
+                <div class="tooltip ">
+                    <span class="material-symbols-rounded">
+                        home
+                    </span>
+                    <span class="tooltip-text">
+                    <fmt:message key="home" bundle="${msg}"/>
+                </span>
+                </div>
             </a>
         </li>
+
+        <li>
+            <a class="nav-links small-icon-button" id="search-button">
+                <div class="tooltip">
+                     <span class="material-symbols-rounded">
+                        search
+                        </span>
+                    <span class="tooltip-text">
+                        <fmt:message key="search" bundle="${msg}"/>
+                </span>
+                </div>
+            </a>
+        </li>
+
+        <c:if test="${not empty sessionScope.loginUser.username}">
+            <li>
+                <div class="drop-down-menu">
+
+                    <a class="nav-links small-icon-button" href="">
+                        <span class="material-symbols-rounded">
+                            person
+                        </span>
+                    </a>
+
+                    <div class="drop-down-contents">
+                        <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
+
+                        <a class="drop-down-links" href="booking-history">
+                            <fmt:message key="bookingHistory" bundle="${msg}"/>
+                        </a>
+                        <c:choose>
+                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                                <a class="drop-down-links" href="admin">
+                                    <fmt:message key="adminPage" bundle="${msg}"/>
+                                </a>
+                            </c:when>
+                        </c:choose>
+                        <a class="drop-down-links" href="account-info">
+                            <fmt:message key="yourAccount" bundle="${msg}"/>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        </c:if>
 
         <c:choose>
             <c:when test="${not empty sessionScope.loginUser.username}">
                 <li>
-                    <a class="nav-links" href="logout">
-                        <fmt:message key="logout" bundle="${msg}"/>
+                    <a class="nav-links small-icon-button" href="logout">
+                        <div class="tooltip">
+                            <span class="material-symbols-rounded">
+                                logout
+                            </span>
+                            <span class="tooltip-text">
+                            <fmt:message key="logout" bundle="${msg}"/>
+                        </span>
+                        </div>
                     </a>
                 </li>
             </c:when>
             <c:when test="${empty sessionScope.loginUser.username}">
                 <li>
-                    <a class="nav-links" href="signup">
-                        <fmt:message key="register" bundle="${msg}"/>
+                    <a class="nav-links small-icon-button" href="signup">
+                        <div class="tooltip">
+                            <span class="material-symbols-rounded">
+                                person_add
+                            </span>
+                            <span class="tooltip-text">
+                            <fmt:message key="register" bundle="${msg}"/>
+                        </span>
+                        </div>
                     </a>
                 </li>
                 <li>
-                    <a class="nav-links light-filled-button button" href="login">
-                        <fmt:message key="login" bundle="${msg}"/>
+                    <a class="nav-links small-icon-button" href="login">
+                        <div class="tooltip">
+                        <span class="material-symbols-rounded">
+                            login
+                        </span>
+                            <span class="tooltip-text">
+                            <fmt:message key="login" bundle="${msg}"/>
+                        </span>
+                        </div>
                     </a>
                 </li>
             </c:when>
@@ -94,45 +166,5 @@
                 </div>
             </div>
         </li>
-
-        <li>
-            <button class="nav-links small-icon-button" id="search-button">
-                <span class="material-symbols-rounded">
-                    search
-                </span>
-            </button>
-        </li>
-
-        <c:if test="${not empty sessionScope.loginUser.username}">
-            <li>
-                <div class="drop-down-menu">
-
-                    <button class="nav-links small-icon-button">
-                        <span class="material-symbols-rounded">
-                            person
-                        </span>
-                    </button>
-
-                    <div class="drop-down-contents">
-                        <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
-
-                        <a class="drop-down-links" href="booking-history">
-                            <fmt:message key="bookingHistory" bundle="${msg}"/>
-                        </a>
-                        <c:choose>
-                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                <a class="drop-down-links" href="admin">
-                                    <fmt:message key="adminPage" bundle="${msg}"/>
-                                </a>
-                            </c:when>
-                        </c:choose>
-                        <a class="drop-down-links" href="account-info">
-                            <fmt:message key="yourAccount" bundle="${msg}"/>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </c:if>
-
     </ul>
 </nav>
