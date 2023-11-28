@@ -109,6 +109,8 @@ button {
 }
 
 .float {
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.85) !important;
     box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.3);
     -moz-animation: fade;
     -moz-animation-duration: 0.4s;
@@ -1348,8 +1350,8 @@ width: calc(60vw) !important;
 .tooltip .tooltip-text {
     visibility: hidden;
     width: 120px;
-    background-color: #555;
-    color: #fff;
+    background-color: #212529;
+    color: #f6f9fc;
     text-align: center;
     padding: 5px 0;
     border-radius: 6px;

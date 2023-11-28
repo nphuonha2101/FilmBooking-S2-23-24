@@ -80,7 +80,9 @@ public class BookingFilmController extends HttpServlet {
             req.setAttribute("pageTitle", "bookingFilmTitle");
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
 
-           resp.sendRedirect("book-film");
+           RenderViewUtils.renderViewToLayout(req, resp,
+                    ContextPathUtils.getClientPagesPath("book-film.jsp"),
+                    ContextPathUtils.getLayoutPath("master.jsp"));
 
 
         }

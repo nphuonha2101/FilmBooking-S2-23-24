@@ -59,7 +59,7 @@
             <li>
                 <div class="drop-down-menu">
 
-                    <a class="nav-links small-icon-button" href="">
+                    <a class="nav-links small-icon-button" href="account-info">
                         <span class="material-symbols-rounded">
                             person
                         </span>
