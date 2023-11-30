@@ -11,7 +11,7 @@ public class Room {
     @Column(name = "room_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String roomID;
+    private long roomID;
     @Column(name = "room_name")
     private String roomName;
     @Column(name = "seat_rows")
@@ -24,7 +24,7 @@ public class Room {
     private String seatData;
     @ManyToOne
     private Theater theater;
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
 
     public Room() {}
@@ -32,7 +32,7 @@ public class Room {
     /**
      * Using this constructor to display room information
      */
-    public Room(String roomID, String roomName, int seatRows, int seatCols, String[][] seatMatrix, Theater theater,
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String[][] seatMatrix, Theater theater,
                 List<Showtime> showtimeList) {
         this.roomID = roomID;
         this.roomName = roomName;
@@ -47,7 +47,7 @@ public class Room {
     /**
      * Get from database constructor
      */
-    public Room(String roomID, String roomName, int seatRows, int seatCols, String seatData, Theater theater,
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, Theater theater,
                 List<Showtime> showtimeList) {
         this.roomID = roomID;
         this.roomName = roomName;
@@ -88,11 +88,11 @@ public class Room {
 
 
 
-    public String getRoomID() {
+    public long getRoomID() {
         return roomID;
     }
 
-    public void setRoomID(String roomID) {
+    public void setRoomID(long roomID) {
         this.roomID = roomID;
     }
 
@@ -158,7 +158,7 @@ public class Room {
     public boolean equals(Object obj) {
         if (obj instanceof Room) {
             Room room = (Room) obj;
-            return this.roomID.equals(room.getRoomID())
+            return this.roomID == room.getRoomID()
                     && this.roomName.equals(room.getRoomName())
                     && this.seatRows == room.getSeatRows()
                     && this.seatCols == room.getSeatCols()

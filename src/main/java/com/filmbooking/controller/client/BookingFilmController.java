@@ -28,7 +28,7 @@ public class BookingFilmController extends HttpServlet {
 
         // get showtime id from session
         filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
-        String showtimeID = filmBooking.getShowtime().getShowtimeID();
+        String showtimeID = String.valueOf(filmBooking.getShowtime().getShowtimeID());
 
 
         Showtime bookedShowtime = showtimeServices.getByID(showtimeID);
@@ -73,7 +73,6 @@ public class BookingFilmController extends HttpServlet {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
 
             resp.sendRedirect("book-film");
-
 
         }
 

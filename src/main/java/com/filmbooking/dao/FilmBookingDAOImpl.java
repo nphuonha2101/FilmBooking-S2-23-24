@@ -57,11 +57,12 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     @Override
     public FilmBooking getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<FilmBooking> criteriaQuery = criteriaBuilder.createQuery(FilmBooking.class);
         Root<FilmBooking> rootEntry = criteriaQuery.from(FilmBooking.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<FilmBooking> typedQuery = this.session.createQuery(criteriaQuery);
 
@@ -92,9 +93,9 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
 
     @Override
     public Session getSession() {
-        if (session != null)
+        if (session != null) {
             return this.session;
-        else {
+        } else {
             throw new RuntimeException("Not active Hibernate Session");
         }
     }

@@ -59,11 +59,12 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
 
     @Override
     public Showtime getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<Showtime> criteriaQuery = criteriaBuilder.createQuery(Showtime.class);
         Root<Showtime> rootEntry = criteriaQuery.from(Showtime.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<Showtime> typedQuery = this.session.createQuery(criteriaQuery);
 

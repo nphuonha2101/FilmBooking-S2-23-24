@@ -14,6 +14,7 @@ public class Test {
         filmBookingDAO.openSession();
 
         List<Film> filmList = filmBookingDAO.getAll();
+        System.out.println(filmList);
 
         filmBookingDAO.closeSession();
 

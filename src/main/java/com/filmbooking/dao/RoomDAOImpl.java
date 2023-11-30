@@ -59,11 +59,12 @@ public class RoomDAOImpl implements IDAO<Room> {
     }
     @Override
     public Room getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
         Root<Room> rootEntry = criteriaQuery.from(Room.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<Room> typedQuery = this.session.createQuery(criteriaQuery);
 

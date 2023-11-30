@@ -6,6 +6,8 @@ import com.filmbooking.services.serviceResult.ServiceResult;
 import java.util.List;
 
 public interface IUserServices {
+    void openSession();
+    void closeSession();
     List<User> getAll();
     User getByUsername(String id);
     User getByEmail(String email);

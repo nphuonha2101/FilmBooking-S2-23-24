@@ -9,8 +9,8 @@ import java.util.List;
 public class Film {
     @Column(name = "film_id")
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String filmID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long filmID;
     @Column(name = "film_name")
     private String filmName;
     @Column(name = "film_price")
@@ -27,14 +27,14 @@ public class Film {
     private String filmTrailerLink;
     @Column(name = "img_path")
     private String imgPath;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "film_genre",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private List<Genre> genreList;
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
 
     public Film() {
@@ -59,7 +59,7 @@ public class Film {
     /**
      * For get from database constructor
      */
-    public Film(String filmID, String filmName, double filmPrice, String director, String cast, int filmLength,
+    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength,
                 String filmDescription, String filmTrailerLink, String imgPath, List<Genre> genreList, List<Showtime> showtimeList) {
         this.filmID = filmID;
         this.filmName = filmName;
@@ -74,29 +74,12 @@ public class Film {
         this.showtimeList = showtimeList;
     }
 
-    /**
-     * For get film from {@link com.filmbooking.dao.FilmGenreDAOImpl#getAllOByT(Genre)} and {@link com.filmbooking.dao.FilmGenreDAOImpl#getOByID(String, String)}
-     */
-    public Film(String filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath) {
-        this.filmID = filmID;
-        this.filmName = filmName;
-        this.filmPrice = filmPrice;
-        this.director = director;
-        this.cast = cast;
-        this.filmLength = filmLength;
-        this.filmDescription = filmDescription;
-        this.filmTrailerLink = filmTrailerLink;
-        this.imgPath = imgPath;
-        this.genreList = null;
-        this.showtimeList = null;
-    }
 
-
-    public String getFilmID() {
+    public long getFilmID() {
         return filmID;
     }
 
-    public void setFilmID(String filmID) {
+    public void setFilmID(long filmID) {
         this.filmID = filmID;
     }
 
@@ -184,7 +167,7 @@ public class Film {
     public boolean equals(Object obj) {
         if (obj instanceof Film) {
             Film film = (Film) obj;
-            return this.filmID.equals(film.getFilmID())
+            return this.filmID == film.getFilmID()
                     && this.filmName.equals(film.getFilmName())
                     && this.filmPrice == film.getFilmPrice()
                     && this.director.equals(film.getDirector())

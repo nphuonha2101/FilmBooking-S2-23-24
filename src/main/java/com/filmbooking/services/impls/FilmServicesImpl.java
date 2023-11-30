@@ -13,11 +13,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDService<Film> {
+public class FilmServicesImpl implements IFilmServices {
     private final IDAO<Film> filmDAO;
 
     public FilmServicesImpl() {
         filmDAO = FilmDAOImpl.getInstance();
+    }
+
+    @Override
+    public void openSession() {
+        filmDAO.openSession();
+    }
+
+    @Override
+    public void closeSession() {
+        filmDAO.closeSession();
     }
 
     /**
@@ -27,28 +37,18 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
      */
     @Override
     public List<Film> getAll() {
-        List<Film> result;
-        filmDAO.openSession();
-        result = filmDAO.getAll();
-        filmDAO.closeSession();
-        return result;
+        return filmDAO.getAll();
     }
 
     @Override
     public Film getByFilmID(String id) {
-
-        Film result;
-        filmDAO.openSession();
-        result = filmDAO.getByID(id);
-        System.out.println(result);
-
-        filmDAO.closeSession();
-
-        return result;
+        return filmDAO.getByID(id);
     }
 
     @Override
     public List<Film> getByFilmName(String name) {
+        this.openSession();
+
         name = name.toLowerCase();
         List<Film> result = new ArrayList<>();
 
@@ -56,57 +56,64 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
             if (film.getFilmName().toLowerCase().contains(name))
                 result.add(film);
         }
+
+        this.closeSession();
         return result;
     }
 
     @Override
-    public HashMap<String, Film> getFilmAndFilmID() {
-        return this.getObjectAndObjectID(this.getAll());
+    public HashMap<Long, Film> getFilmAndFilmID() {
+        this.openSession();
+
+        HashMap<Long, Film> result = new HashMap<>();
+        for (Film film : this.getAll()) {
+            result.put(film.getFilmID(), film);
+        }
+
+        this.closeSession();
+        return result;
     }
 
     @Override
     public void save(Film film) {
-        filmDAO.openSession();
         filmDAO.save(film);
-        filmDAO.closeSession();
     }
 
     @Override
     public void save(Film film, String... genreIDs) {
-        filmDAO.openSession();
+        List<Genre> genreList = new ArrayList<>();
+        for (String genreID : genreIDs) {
+            genreList.add(new GenreServicesImpl().getByID(genreID));
+        }
+        film.setGenreList(genreList);
         filmDAO.save(film);
-        filmDAO.closeSession();
     }
 
     @Override
     public void update(Film film) {
-        filmDAO.openSession();
         filmDAO.update(film);
-        filmDAO.closeSession();
     }
 
     @Override
     public void update(Film film, String... genreIDs) {
-        filmDAO.openSession();
+        List<Genre> genreList = new ArrayList<>();
+        for (String genreID : genreIDs) {
+            genreList.add(new GenreServicesImpl().getByID(genreID));
+        }
+        film.setGenreList(genreList);
+
         filmDAO.update(film);
-        filmDAO.closeSession();
     }
 
     @Override
     public void delete(Film film) {
-        filmDAO.openSession();
         filmDAO.delete(film);
-        filmDAO.closeSession();
-
-    }
-
-    @Override
-    public String getObjectID(Film obj) {
-        return obj.getFilmID();
     }
 
     public static void main(String[] args) {
         FilmServicesImpl filmServices = new FilmServicesImpl();
+        filmServices.openSession();
         System.out.println(filmServices.getAll());
+        filmServices.closeSession();
     }
 }

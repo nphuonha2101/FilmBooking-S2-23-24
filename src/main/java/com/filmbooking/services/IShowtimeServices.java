@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IShowtimeServices {
+    void openSession();
+    void closeSession();
     List<Showtime> getAll();
 
     Showtime getByID(String id);
@@ -19,5 +21,5 @@ public interface IShowtimeServices {
     void delete(Showtime showtime);
 
     void bookSeats(Showtime showtime, String ...seats);
-    HashMap<String, Integer> countAvailableSeats();
+    HashMap<Long, Integer> countAvailableSeats();
 }

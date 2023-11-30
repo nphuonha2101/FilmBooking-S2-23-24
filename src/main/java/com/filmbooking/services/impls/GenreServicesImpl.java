@@ -15,6 +15,16 @@ public class GenreServicesImpl implements IGenreServices {
     }
 
     @Override
+    public void openSession() {
+        genreDAO.openSession();
+    }
+
+    @Override
+    public void closeSession() {
+        genreDAO.closeSession();
+    }
+
+    @Override
     public List<Genre> getAll() {
         return genreDAO.getAll();
     }

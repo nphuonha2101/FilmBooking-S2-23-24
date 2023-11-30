@@ -18,7 +18,7 @@ public class User {
     private String userPassword;
     @Column(name = "account_role")
     private String accountRole;
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     List<FilmBooking> filmBookingList;
 
     public User() {}

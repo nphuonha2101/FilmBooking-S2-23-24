@@ -10,7 +10,7 @@ public class FilmBooking {
     @Column(name = "film_booking_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String filmBookingID;
+    private long filmBookingID;
     @ManyToOne
     private Showtime showtime;
     @ManyToOne
@@ -25,7 +25,7 @@ public class FilmBooking {
     @Column(name = "total_fee")
     private double totalFee;
 
-    public FilmBooking(String filmBookingID, User user, Showtime showtime, LocalDateTime bookingDate,
+    public FilmBooking(long filmBookingID, User user, Showtime showtime, LocalDateTime bookingDate,
                        String seatsData, double totalFee) {
 
         this.filmBookingID = filmBookingID;
@@ -47,18 +47,18 @@ public class FilmBooking {
     }
 
     public FilmBooking() {
-        this.filmBookingID = "";
+        this.filmBookingID = 0;
         this.showtime = null;
         this.user = null;
         this.bookingDate = null;
         this.seats = new String[0];
     }
 
-    public String getFilmBookingID() {
+    public long getFilmBookingID() {
         return filmBookingID;
     }
 
-    public void setFilmBookingID(String filmBookingID) {
+    public void setFilmBookingID(long filmBookingID) {
         this.filmBookingID = filmBookingID;
     }
 
@@ -113,7 +113,7 @@ public class FilmBooking {
     }
 
     public void resetFilmBooking() {
-        this.filmBookingID = "";
+        this.filmBookingID = 0;
         this.showtime = null;
         this.bookingDate = null;
         this.seats = new String[0];
@@ -127,7 +127,7 @@ public class FilmBooking {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof FilmBooking filmBooking) {
-            return this.filmBookingID.equals(filmBooking.getFilmBookingID())
+            return this.filmBookingID == filmBooking.getFilmBookingID()
                     && this.showtime.equals(filmBooking.getShowtime())
                     && this.user.equals(filmBooking.getUser())
                     && this.bookingDate.equals(filmBooking.getBookingDate())

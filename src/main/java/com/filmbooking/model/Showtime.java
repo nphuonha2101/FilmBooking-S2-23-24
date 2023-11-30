@@ -4,6 +4,7 @@ import com.filmbooking.utils.StringUtils;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ public class Showtime {
     @Column(name = "showtime_id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String showtimeID;
+    private long showtimeID;
     @ManyToOne
     private Film film;
 
@@ -25,12 +26,12 @@ public class Showtime {
     private String seatsData;
     @Transient
     private String[][] seatsMatrix;
-    @OneToMany(mappedBy = "showtime")
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<FilmBooking> filmBookingList;
 
     public Showtime() {}
 
-    public Showtime(String showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
+    public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
         this.showtimeID = showtimeID;
         this.film = film;
         this.room = room;
@@ -46,13 +47,14 @@ public class Showtime {
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
         this.seatsMatrix = room.getSeatMatrix();
+        this.filmBookingList = new ArrayList<>();
     }
 
-    public String getShowtimeID() {
+    public long getShowtimeID() {
         return showtimeID;
     }
 
-    public void setShowtimeID(String showtimeID) {
+    public void setShowtimeID(long showtimeID) {
         this.showtimeID = showtimeID;
     }
 
@@ -135,7 +137,7 @@ public class Showtime {
     public boolean equals(Object obj) {
         if (obj instanceof Showtime) {
             Showtime showtime = (Showtime) obj;
-            return this.showtimeID.equals(showtime.getShowtimeID())
+            return this.showtimeID == showtime.getShowtimeID()
             && this.film.equals(showtime.getFilm())
             && this.room.equals(showtime.getRoom())
             && this.showtimeDate.equals(showtime.getShowtimeDate())

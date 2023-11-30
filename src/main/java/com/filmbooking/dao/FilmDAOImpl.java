@@ -64,11 +64,12 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public Film getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<Film> criteriaQuery = criteriaBuilder.createQuery(Film.class);
         Root<Film> rootEntry = criteriaQuery.from(Film.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<Film> typedQuery = this.session.createQuery(criteriaQuery);
 

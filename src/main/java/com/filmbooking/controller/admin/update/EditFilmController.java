@@ -2,7 +2,6 @@ package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.services.impls.FilmGenreServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -25,13 +24,12 @@ import java.util.List;
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
-    private FilmGenreServicesImpl filmGenreServices;
+
     private Film editFilm;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
-        filmGenreServices = new FilmGenreServicesImpl();
 
         String filmId = req.getParameter("film-id_hidden");
 
@@ -106,7 +104,6 @@ public class EditFilmController extends HttpServlet {
     @Override
     public void destroy() {
         filmServices = null;
-        filmGenreServices = null;
     }
 }
 

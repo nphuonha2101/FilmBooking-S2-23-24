@@ -65,7 +65,7 @@ public class AddFilmController extends HttpServlet {
 
             resp.sendRedirect("admin");
         } else {
-            req.setAttribute("fileUploadError", "Lỗi tải file lên!");
+//            req.setAttribute("fileUploadError", "Lỗi tải file lên!");
 //            RenderViewUtils.updateView(req, resp, ContextPathUtils.getAdminPagesPath("add-film.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp,
                     ContextPathUtils.getAdminPagesPath("add-film.jsp"),

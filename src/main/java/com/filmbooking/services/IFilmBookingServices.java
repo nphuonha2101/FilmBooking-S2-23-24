@@ -7,6 +7,8 @@ import com.filmbooking.model.User;
 import java.util.List;
 
 public interface IFilmBookingServices {
+    void openSession();
+    void closeSession();
     List<FilmBooking> getAll();
     FilmBooking getByFilmBookingID(String id);
     List<FilmBooking> getAllByUser(User user);

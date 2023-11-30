@@ -61,11 +61,12 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public Theater getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<Theater> criteriaQuery = criteriaBuilder.createQuery(Theater.class);
         Root<Theater> rootEntry = criteriaQuery.from(Theater.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<Theater> typedQuery = this.session.createQuery(criteriaQuery);
 

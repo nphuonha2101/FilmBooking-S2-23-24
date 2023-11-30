@@ -60,11 +60,12 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public User getByID(String id) {
+        long lID = Long.parseLong(id);
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> rootEntry = criteriaQuery.from(User.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
         TypedQuery<User> typedQuery = this.session.createQuery(criteriaQuery);
 

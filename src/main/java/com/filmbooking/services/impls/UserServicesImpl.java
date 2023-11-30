@@ -17,11 +17,20 @@ import java.util.List;
 
 public class UserServicesImpl implements IUserServices {
     private final IDAO<User> userDAO;
-    private final IFilmBookingServices filmBookingServices;
+
 
     public UserServicesImpl() {
         userDAO = UserDAOImpl.getInstance();
-        filmBookingServices = new FilmBookingServicesImpl();
+    }
+
+    @Override
+    public void openSession() {
+        userDAO.openSession();
+    }
+
+    @Override
+    public void closeSession() {
+        userDAO.closeSession();
     }
 
     @Override
@@ -57,12 +66,6 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public void delete(User user) {
-        List<FilmBooking> filmBookingList = user.getFilmBookingList();
-
-        filmBookingList.stream().forEach(filmBooking -> {
-            filmBookingServices.delete(filmBooking);
-        });
-
         userDAO.delete(user);
     }
 

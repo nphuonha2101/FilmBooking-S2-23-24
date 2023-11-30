@@ -61,6 +61,7 @@ public class AddShowtimeController extends HttpServlet {
         Film film = filmServices.getByFilmID(filmID);
 
         Showtime newShowtime = new Showtime(film, showtimeRoom, showtimeLDT);
+
         showtimeServices.save(newShowtime);
 
         resp.sendRedirect("showtime-management");

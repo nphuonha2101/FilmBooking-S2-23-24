@@ -3,18 +3,27 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.TheaterDAOImpl;
 import com.filmbooking.model.Theater;
-import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.ITheaterServices;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class TheaterServicesImpl implements ITheaterServices, IGetObjectAndObjectIDService<Theater> {
+public class TheaterServicesImpl implements ITheaterServices {
 
-    private IDAO<Theater> theaterDAO;
+    private final IDAO<Theater> theaterDAO;
 
     public TheaterServicesImpl() {
         theaterDAO = new TheaterDAOImpl();
+    }
+
+    @Override
+    public void openSession() {
+        theaterDAO.openSession();
+    }
+
+    @Override
+    public void closeSession() {
+        theaterDAO.closeSession();
     }
 
     @Override
@@ -29,7 +38,8 @@ public class TheaterServicesImpl implements ITheaterServices, IGetObjectAndObjec
 
     @Override
     public HashMap<String, Theater> getTheaterAndTheaterID() {
-        return this.getObjectAndObjectID(this.getAll());
+//        return this.getObjectAndObjectID(this.getAll());
+        return null;
     }
 
     @Override
@@ -47,9 +57,5 @@ public class TheaterServicesImpl implements ITheaterServices, IGetObjectAndObjec
         theaterDAO.delete(theater);
     }
 
-    @Override
-    public String getObjectID(Theater obj) {
-        return obj.getTheaterID();
-    }
 
 }
