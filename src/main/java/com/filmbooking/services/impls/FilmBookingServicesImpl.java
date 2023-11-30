@@ -2,15 +2,12 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.FilmBookingDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.model.User;
 import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IShowtimeServices;
-import com.filmbooking.services.IShowtimeViewServices;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +17,8 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     private IShowtimeServices showtimeServices;
 
     public FilmBookingServicesImpl() {
-        this.filmBookingDAO = new FilmBookingDAOImpl();
+        this.filmBookingDAO = FilmBookingDAOImpl.getInstance();
         this.showtimeServices = new ShowtimeServicesImpl();
-    }
-
-    public FilmBookingServicesImpl(IShowtimeServices showtimeServices) {
-        this.filmBookingDAO = new FilmBookingDAOImpl();
-        this.showtimeServices = showtimeServices;
     }
 
     @Override
@@ -40,13 +32,13 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     }
 
     @Override
-    public List<FilmBooking> getAllByUsername(String username) {
-        return this.getAll().stream().filter(filmBooking -> filmBooking.getUsername().equalsIgnoreCase(username)).collect(Collectors.toList());
+    public List<FilmBooking> getAllByUser(User user) {
+        return this.getAll().stream().filter(filmBooking -> filmBooking.getUser().equals(user)).collect(Collectors.toList());
     }
 
     @Override
     public void save(FilmBooking filmBooking) {
-        Showtime showtime = showtimeServices.getByID(filmBooking.getShowtimeID());
+        Showtime showtime = showtimeServices.getByID(filmBooking.getShowtime().getShowtimeID());
         showtimeServices.bookSeats(showtime, filmBooking.getSeats());
         filmBookingDAO.save(filmBooking);
     }

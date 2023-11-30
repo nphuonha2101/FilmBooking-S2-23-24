@@ -13,12 +13,12 @@ import com.filmbooking.services.IShowtimeServices;
 import java.util.List;
 
 public class RoomServicesImpl implements IRoomServices, IGetObjectAndObjectIDService<Room> {
-    private IDAO<Room> roomDAO;
-    private IShowtimeServices showtimeServices;
-    private IFilmBookingServices filmBookingServices;
+    private final IDAO<Room> roomDAO;
+    private final IShowtimeServices showtimeServices;
+    private final IFilmBookingServices filmBookingServices;
 
     public RoomServicesImpl() {
-        roomDAO = new RoomDAOImpl();
+        roomDAO = RoomDAOImpl.getInstance();
         showtimeServices = new ShowtimeServicesImpl();
         filmBookingServices = new FilmBookingServicesImpl();
     }
@@ -45,18 +45,12 @@ public class RoomServicesImpl implements IRoomServices, IGetObjectAndObjectIDSer
 
     @Override
     public void delete(Room room) {
-        List<Showtime> showtimeList = showtimeServices.getAll();
-        List<FilmBooking> filmBookingList = filmBookingServices.getAll();
-
-        filmBookingList.stream().forEach(filmBooking -> {
-            Showtime showtimeInFilmBooking = showtimeServices.getByID(filmBooking.getShowtimeID());
-            if (showtimeInFilmBooking.getRoomID().equalsIgnoreCase(room.getRoomID()))
-                filmBookingServices.delete(filmBooking);
-        });
+        List<Showtime> showtimeList = room.getShowtimeList();
 
         showtimeList.stream().forEach(showtime -> {
-            if (showtime.getRoomID().equalsIgnoreCase(room.getRoomID())) showtimeServices.delete(showtime);
+           showtimeServices.delete(showtime);
         });
+
         roomDAO.delete(room);
     }
 

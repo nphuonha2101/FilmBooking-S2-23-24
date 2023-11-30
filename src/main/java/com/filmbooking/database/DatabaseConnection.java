@@ -1,6 +1,6 @@
 package com.filmbooking.database;
 
-import com.filmbooking.configs.DatabaseConfigs;
+import com.filmbooking.utils.PropertiesUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,8 +9,10 @@ import java.sql.SQLException;
 public class DatabaseConnection {
     private Connection connection = null;
     private static DatabaseConnection instance = null;
+    private final PropertiesUtils propertiesUtils;
 
     private DatabaseConnection() {
+        propertiesUtils = PropertiesUtils.getInstance();
     }
 
     public static DatabaseConnection getInstance() {
@@ -22,8 +24,9 @@ public class DatabaseConnection {
 
     public boolean connect() {
         try {
-            Class.forName(DatabaseConfigs.DB_CLASS_NAME);
-            connection = DriverManager.getConnection(DatabaseConfigs.getDatabaseURL(), DatabaseConfigs.DB_USERNAME, DatabaseConfigs.DB_PASSWORD);
+            Class.forName(propertiesUtils.getProperty("db.driverName"));
+            connection = DriverManager.getConnection(propertiesUtils.getProperty("db.url"),
+                   propertiesUtils.getProperty("db.username"), propertiesUtils.getProperty("db.userPassword"));
 
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

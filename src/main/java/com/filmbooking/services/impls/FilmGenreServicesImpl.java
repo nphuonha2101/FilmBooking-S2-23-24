@@ -1,68 +1,53 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.FilmGenreDAOImpl;
-import com.filmbooking.dao.IDAO;
-import com.filmbooking.model.FilmGenre;
+import com.filmbooking.dao.IManyToManyDAO;
+import com.filmbooking.model.Film;
+import com.filmbooking.model.Genre;
 import com.filmbooking.services.IFilmGenreServices;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilmGenreServicesImpl implements IFilmGenreServices {
-    private IDAO<FilmGenre> filmGenreDAO;
+    private IManyToManyDAO<Film, Genre> filmGenreDAO;
 
-     public FilmGenreServicesImpl() {
-         filmGenreDAO = new FilmGenreDAOImpl();
-//         getAll();
-     }
+    public FilmGenreServicesImpl() {
+        filmGenreDAO = FilmGenreDAOImpl.getInstance();
+    }
+
+
     @Override
-    public List<FilmGenre> getAll() {
-        return filmGenreDAO.getAll();
+    public List<Genre> getAllGenreByFilm(Film film) {
+        return filmGenreDAO.getAllTByO(film);
     }
 
     @Override
-    public FilmGenre getByID(String id) {
-        return filmGenreDAO.getByID(id);
+    public List<Film> getAllFilmByGenre(Genre genre) {
+        return filmGenreDAO.getAllOByT(genre);
     }
 
     @Override
-    public List<FilmGenre> getAllByFilmID(String filmID) {
-        List<FilmGenre> result = new ArrayList<>();
-
-        for (FilmGenre filmGenre: this.getAll()
-             ) {
-            if (filmGenre.getFilmID().equalsIgnoreCase(filmID))
-                result.add(filmGenre);
-        }
-
-        return result;
+    public Genre getGenreByID(String filmID, String genreID) {
+        return filmGenreDAO.getTByID(filmID, genreID);
     }
 
     @Override
-    public void save(FilmGenre filmGenre) {
-        filmGenreDAO.save(filmGenre);
+    public Film getFilmByID(String filmID, String genreID) {
+        return filmGenreDAO.getOByID(filmID, genreID);
     }
 
     @Override
-    public void update(FilmGenre filmGenre) {
-        filmGenreDAO.update(filmGenre);
+    public void save(Film film, Genre genre) {
+        filmGenreDAO.save(film, genre);
     }
 
     @Override
-    public void delete(FilmGenre filmGenre) {
-        filmGenreDAO.delete(filmGenre);
+    public void delete(Film film, Genre genre) {
+        filmGenreDAO.delete(film, genre);
     }
 
     @Override
-    public void deleteAll(String filmID) {
-        List<FilmGenre> filmGenreList = this.getAll();
-
-        for (FilmGenre filmGenre: filmGenreList
-             ) {
-            if (filmGenre.getFilmID().equalsIgnoreCase(filmID)) {
-                delete(filmGenre);
-            }
-        }
+    public void deleteAllGenresOfFilm(Film film) {
+        film.getGenreList().forEach(genre -> this.delete(film, genre));
     }
-
 }

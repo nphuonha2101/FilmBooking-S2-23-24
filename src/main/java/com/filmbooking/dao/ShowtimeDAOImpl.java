@@ -1,6 +1,9 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
+import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 
 import java.sql.*;
@@ -9,18 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeDAOImpl implements IDAO<Showtime> {
+    private static ShowtimeDAOImpl instance = null;
     private DatabaseConnection databaseConnection;
-    private List<Showtime> showtimeList;
     private static final String TABLE_NAME = "showtime";
 
-    public ShowtimeDAOImpl() {
-        showtimeList = new ArrayList<>();
+    private ShowtimeDAOImpl() {
         databaseConnection = DatabaseConnection.getInstance();
+    }
 
+    public static ShowtimeDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new ShowtimeDAOImpl();
+        }
+        return instance;
     }
 
     @Override
     public List<Showtime> getAll() {
+        List<Showtime> showtimeList = new ArrayList<>();
+
         databaseConnection.connect();
         Connection connection = databaseConnection.getConnection();
 
@@ -36,7 +46,12 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
                 LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
                 String seatsData = resultSet.getString("seats_data");
 
-                Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate, seatsData);
+                Room room = RoomDAOImpl.getInstance().getByID(roomID);
+                Film film = FilmDAOImpl.getInstance().getByID(filmID);
+
+                List<FilmBooking> filmBookingList = FilmBookingDAOImpl.getInstance().getAll().stream().filter(filmBooking -> filmBooking.getShowtime().getShowtimeID().equals(showtimeID)).toList();
+
+                Showtime showtime = new Showtime(showtimeID, film, room, showtimeDate, seatsData, filmBookingList);
 
                 showtimeList.add(0, showtime);
             }
@@ -51,14 +66,45 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
 
     @Override
     public Showtime getByID(String id) {
-        getAll();
+      databaseConnection.connect();
+      Connection connection = databaseConnection.getConnection();
 
-        for (Showtime showtimeInList : showtimeList
-        ) {
-            if (showtimeInList.getShowtimeID().equalsIgnoreCase(id))
-                return showtimeInList;
-        }
-        return null;
+      String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE showtime_id = ?";
+
+      try {
+          PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String showtimeID = resultSet.getString("showtime_id");
+                String filmID = resultSet.getString("film_id");
+                String roomID = resultSet.getString("room_id");
+                LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
+                String seatsData = resultSet.getString("seats_data");
+
+                Room room = RoomDAOImpl.getInstance().getByID(roomID);
+                Film film = FilmDAOImpl.getInstance().getByID(filmID);
+
+                List<FilmBooking> filmBookingList = FilmBookingDAOImpl.getInstance().getAll().stream().filter(filmBooking -> filmBooking.getShowtime().getShowtimeID().equals(showtimeID)).toList();
+
+                Showtime showtime = new Showtime(showtimeID, film, room, showtimeDate, seatsData, filmBookingList);
+
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+                return showtime;
+            } else {
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+
+                return null;
+            }
+
+      } catch (SQLException e) {
+          throw new RuntimeException(e);
+      }
     }
 
     @Override
@@ -79,8 +125,8 @@ databaseConnection.connect();
             PreparedStatement preparedStatement = connection.prepareStatement(querySave);
 
             preparedStatement.setString(1, showtime.getShowtimeID());
-            preparedStatement.setString(2, showtime.getFilmID());
-            preparedStatement.setString(3, showtime.getRoomID());
+            preparedStatement.setString(2, showtime.getFilm().getFilmID());
+            preparedStatement.setString(3, showtime.getRoom().getRoomID());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(showtime.getShowtimeDate()));
             preparedStatement.setString(5, showtime.getSeatsData());
 
@@ -102,8 +148,8 @@ databaseConnection.connect();
                 + " WHERE showtime_id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
-            preparedStatement.setString(1, showtime.getFilmID());
-            preparedStatement.setString(2, showtime.getRoomID());
+            preparedStatement.setString(1, showtime.getFilm().getFilmID());
+            preparedStatement.setString(2, showtime.getRoom().getRoomID());
             preparedStatement.setTimestamp(3, Timestamp.valueOf(showtime.getShowtimeDate()));
             preparedStatement.setString(4, showtime.getSeatsData());
             preparedStatement.setString(5, showtime.getShowtimeID());

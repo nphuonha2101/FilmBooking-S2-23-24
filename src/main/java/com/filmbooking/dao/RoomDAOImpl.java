@@ -2,6 +2,8 @@ package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Room;
+import com.filmbooking.model.Showtime;
+import com.filmbooking.model.Theater;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,17 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAOImpl implements IDAO<Room> {
+    private static RoomDAOImpl instance = null;
     private static final String TABLE_NAME = "room";
     private final DatabaseConnection databaseConnection;
-    private final List<Room> roomList;
 
-    public RoomDAOImpl() {
-        this.roomList = new ArrayList<>();
+    private RoomDAOImpl() {
         this.databaseConnection = DatabaseConnection.getInstance();
+    }
+
+    public static RoomDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new RoomDAOImpl();
+        }
+        return instance;
     }
 
     @Override
     public List<Room> getAll() {
+        List<Room> roomList = new ArrayList<>();
+
         databaseConnection.connect();
         Connection connection = databaseConnection.getConnection();
 
@@ -38,7 +48,11 @@ public class RoomDAOImpl implements IDAO<Room> {
                 String seatData = resultSet.getString("seats_data");
                 String theaterID = resultSet.getString("theater_id");
 
-                Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theaterID);
+                Theater theater = TheaterDAOImpl.getInstance().getByID(theaterID);
+
+                List<Showtime> showtimeList = ShowtimeDAOImpl.getInstance().getAll().stream().filter(showtime -> showtime.getRoom().getRoomID().equals(roomID)).toList();
+
+                Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theater, showtimeList);
 
                 roomList.add(0, newRoom);
 
@@ -55,14 +69,45 @@ public class RoomDAOImpl implements IDAO<Room> {
 
     @Override
     public Room getByID(String id) {
-        getAll();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
-        for (Room room : roomList
-        ) {
-            if (room.getRoomID().equalsIgnoreCase(id))
-                return room;
+        String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE room_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+
+                String roomID = resultSet.getString("room_id");
+                String roomName = resultSet.getString("room_name");
+                int seatRows = resultSet.getInt("seat_rows");
+                int seatCols = resultSet.getInt("seat_cols");
+                String seatData = resultSet.getString("seats_data");
+                String theaterID = resultSet.getString("theater_id");
+
+                Theater theater = TheaterDAOImpl.getInstance().getByID(theaterID);
+                List<Showtime> showtimeList = ShowtimeDAOImpl.getInstance().getAll().stream().filter(showtime -> showtime.getRoom().getRoomID().equals(roomID)).toList();
+
+                resultSet.close();
+                preparedStatement.close();
+
+                Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theater, showtimeList);
+
+                return newRoom;
+            } else {
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
@@ -89,7 +134,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             preparedStatement.setInt(3, room.getSeatRows());
             preparedStatement.setInt(4, room.getSeatCols());
             preparedStatement.setString(5, room.getSeatData());
-            preparedStatement.setString(6, room.getTheaterID());
+            preparedStatement.setString(6, room.getTheater().getTheaterID());
 
             preparedStatement.executeUpdate();
 
@@ -118,7 +163,7 @@ public class RoomDAOImpl implements IDAO<Room> {
             preparedStatement.setInt(2, room.getSeatRows());
             preparedStatement.setInt(3, room.getSeatCols());
             preparedStatement.setString(4, room.getSeatData());
-            preparedStatement.setString(5, room.getTheaterID());
+            preparedStatement.setString(5, room.getTheater().getTheaterID());
 
             preparedStatement.setString(6, room.getRoomID());
 

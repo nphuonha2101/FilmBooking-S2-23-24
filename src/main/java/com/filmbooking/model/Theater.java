@@ -1,19 +1,36 @@
 package com.filmbooking.model;
 
-public class Theater {
-    private String theaterID;
-    private String theaterName;
-    private String taxCode;
-    private String theaterAddress;
+import jakarta.persistence.*;
 
-    public Theater(String theaterID, String theaterName, String taxCode, String theaterAddress) {
+import java.util.List;
+
+@Entity
+@Table(name = "theater")
+public class Theater {
+    @Column(name = "theater_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String theaterID;
+    @Column(name = "theater_name")
+    private String theaterName;
+    @Column(name = "tax_code")
+    private String taxCode;
+    @Column(name = "theater_address")
+    private String theaterAddress;
+    @OneToMany(mappedBy = "theater")
+    List<Room> roomList;
+
+    public Theater() {}
+
+    public Theater(String theaterID, String theaterName, String taxCode, String theaterAddress, List<Room> roomList) {
         this.theaterID = theaterID;
         this.theaterName = theaterName;
         this.taxCode = taxCode;
         this.theaterAddress = theaterAddress;
+        this.roomList = roomList;
     }
 
-    public Theater(String theaterName, String taxCode, String theaterAddress) {
+    public Theater(String theaterName, String taxCode, String theaterAddress, List<Room> roomList) {
         this.theaterName = theaterName;
         this.taxCode = taxCode;
         this.theaterAddress = theaterAddress;
@@ -49,5 +66,26 @@ public class Theater {
 
     public void setTheaterID(String theaterID) {
         this.theaterID = theaterID;
+    }
+
+    public List<Room> getRoomList() {
+        return roomList;
+    }
+
+    public void setRoomList(List<Room> roomList) {
+        this.roomList = roomList;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Theater) {
+            Theater theater = (Theater) obj;
+            return this.theaterID.equals(theater.getTheaterID())
+                    && this.theaterName.equals(theater.getTheaterName())
+                    && this.taxCode.equals(theater.getTaxCode())
+                    && this.theaterAddress.equals(theater.getTheaterAddress())
+                    && this.roomList.equals(theater.getRoomList());
+        }
+        return false;
     }
 }

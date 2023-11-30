@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
 
             session.setAttribute("loginUser", loginUser);
             FilmBooking filmBooking = new FilmBooking();
-            filmBooking.setUsername(loginUser.getUsername());
+            filmBooking.setUser(loginUser);
             session.setAttribute("filmBooking", filmBooking);
 
             /* return to previous page that was visited before login

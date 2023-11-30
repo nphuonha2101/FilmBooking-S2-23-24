@@ -2,6 +2,8 @@ package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.Genre;
+import com.filmbooking.model.Showtime;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,18 +13,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmDAOImpl implements IDAO<Film> {
+    private static FilmDAOImpl instance = null;
     private static final String TABLE_NAME = "film";
-    private final List<Film> filmList;
     private final DatabaseConnection databaseConnection;
 
-    public FilmDAOImpl() {
-        filmList = new ArrayList<>();
+    private FilmDAOImpl() {
         databaseConnection = DatabaseConnection.getInstance();
-
     }
+
+    public static FilmDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new FilmDAOImpl();
+        }
+        return instance;
+    }
+
 
     @Override
     public List<Film> getAll() {
+        List<Film> filmList = new ArrayList<>();
+
         databaseConnection.connect();
         Connection connection = databaseConnection.getConnection();
 
@@ -41,14 +51,30 @@ public class FilmDAOImpl implements IDAO<Film> {
                 String filmDescription = resultSet.getString("film_description");
                 String filmTrailerLink = resultSet.getString("film_trailer_link");
                 String imgPath = resultSet.getString("img_path");
+
                 Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmCast, filmLength, filmDescription
-                        , filmTrailerLink, imgPath);
+                        , filmTrailerLink, imgPath, null, null);
 
                 filmList.add(0, film);
+
+
             }
             resultSet.close();
             preparedStatement.close();
             databaseConnection.close();
+
+            for (Film film :
+                    filmList) {
+
+                // find genre list of this film
+                List<Genre> filmGenreList = FilmGenreDAOImpl.getInstance().getAllTByO(this.getByID(film.getFilmID()));
+
+                // find showtime list of this film
+                List<Showtime> filmShowtimeList = ShowtimeDAOImpl.getInstance().getAll().stream().filter(showtime -> showtime.getFilm().getFilmID().equals(film.getFilmID())).toList();
+
+                film.setGenreList(filmGenreList);
+                film.setShowtimeList(filmShowtimeList); 
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,14 +84,52 @@ public class FilmDAOImpl implements IDAO<Film> {
 
     @Override
     public Film getByID(String id) {
-        getAll();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
-        for (Film filmInList : filmList
-        ) {
-            if (filmInList.getFilmID().equalsIgnoreCase(id))
-                return filmInList;
+        String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE film_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+
+                String filmID = resultSet.getString("film_id");
+                String filmName = resultSet.getString("film_name");
+                double filmPrice = Double.parseDouble(resultSet.getString("film_price"));
+                String filmDirector = resultSet.getString("film_director");
+                String filmCast = resultSet.getString("film_cast");
+                int filmLength = resultSet.getInt("film_length");
+                String filmDescription = resultSet.getString("film_description");
+                String filmTrailerLink = resultSet.getString("film_trailer_link");
+                String imgPath = resultSet.getString("img_path");
+
+                resultSet.close();
+                preparedStatement.close();
+
+                // find genre list of this film
+                List<Genre> filmGenreList = FilmGenreDAOImpl.getInstance().getAllTByO(this.getByID(filmID));
+
+                // find showtime list of this film
+                List<Showtime> filmShowtimeList = ShowtimeDAOImpl.getInstance().getAll().stream().filter(showtime -> showtime.getFilm().getFilmID().equals(filmID)).toList();
+
+                Film film = new Film(filmID, filmName, filmPrice, filmDirector, filmCast, filmLength, filmDescription
+                        , filmTrailerLink, imgPath, filmGenreList, filmShowtimeList);
+
+                return film;
+            } else {
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+
     }
 
     @Override

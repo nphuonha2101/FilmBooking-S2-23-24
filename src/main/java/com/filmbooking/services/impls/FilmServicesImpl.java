@@ -3,25 +3,25 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.FilmDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenre;
+import com.filmbooking.model.Genre;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IFilmGenreServices;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.services.IGetObjectAndObjectIDService;
-import com.filmbooking.services.IShowtimeServices;
-import com.filmbooking.services.impls.FilmGenreServicesImpl;
+import com.filmbooking.services.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDService<Film> {
     private final IDAO<Film> filmDAO;
     private final IFilmGenreServices filmGenreServices;
+    private final IGenreServices genreServices;
     private final IShowtimeServices showtimeServices;
 
+
     public FilmServicesImpl() {
-        filmDAO = new FilmDAOImpl();
+        filmDAO = FilmDAOImpl.getInstance();
+        genreServices = new GenreServicesImpl();
         filmGenreServices = new FilmGenreServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
     }
@@ -63,13 +63,13 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
     }
 
     @Override
-    public void save(Film film, String... genres) {
+    public void save(Film film, String... genreIDs) {
         save(film);
-        for (String genre : genres
-        ) {
-            FilmGenre filmGenre = new FilmGenre(film.getFilmID(), genre);
-            filmGenreServices.save(filmGenre);
-        }
+
+        Arrays.stream(genreIDs).forEach(genreID -> {
+            Genre genre = genreServices.getByID(genreID);
+            filmGenreServices.save(film, genre);
+        });
     }
 
     @Override
@@ -81,30 +81,22 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
     public void update(Film film, String... genreIDs) {
         update(film);
 
-        filmGenreServices.deleteAll(film.getFilmID());
+        filmGenreServices.deleteAllGenresOfFilm(film);
 
-        for (String genreID : genreIDs
-        ) {
-            FilmGenre filmGenre = new FilmGenre(film.getFilmID(), genreID);
-            filmGenreServices.save(filmGenre);
-        }
+        Arrays.stream(genreIDs).forEach(genreID -> {
+            Genre genre = genreServices.getByID(genreID);
+            filmGenreServices.save(film, genre);
+        });
     }
 
     @Override
     public void delete(Film film) {
-        List<FilmGenre> filmGenreList = filmGenreServices.getAll();
-        List<Showtime> showtimeList = showtimeServices.getAll();
+        List<Genre> genreList = film.getGenreList();
+        List<Showtime> showtimeList = film.getShowtimeList();
 
-        for (Showtime showtimeInList : showtimeList) {
-            if (showtimeInList.getFilmID().equalsIgnoreCase(film.getFilmID()))
-                showtimeServices.delete(showtimeInList);
-        }
+        genreList.stream().forEach(genre -> filmGenreServices.delete(film, genre));
+        showtimeList.stream().forEach(showtime -> showtimeServices.delete(showtime));
 
-        for (FilmGenre filmGenreInList : filmGenreList) {
-            if (filmGenreInList.getFilmID().equalsIgnoreCase(film.getFilmID())) {
-                filmGenreServices.delete(filmGenreInList);
-            }
-        }
         filmDAO.delete(film);
     }
 

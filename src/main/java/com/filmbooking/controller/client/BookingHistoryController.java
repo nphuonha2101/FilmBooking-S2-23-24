@@ -17,7 +17,6 @@ import java.io.IOException;
 @WebServlet("/booking-history")
 public class BookingHistoryController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-    private IShowtimeViewServices showtimeViewServices;
     private ITheaterServices theaterServices;
     private IShowtimeServices showtimeServices;
     private IFilmServices filmServices;
@@ -25,7 +24,6 @@ public class BookingHistoryController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmBookingServices = new FilmBookingServicesImpl();
-        showtimeViewServices = new ShowtimeViewServicesImpl();
         theaterServices = new TheaterServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
         filmServices = new FilmServicesImpl();
@@ -37,12 +35,11 @@ public class BookingHistoryController extends HttpServlet {
             if (loginUser.getAccountRole().equalsIgnoreCase("admin"))
                 req.setAttribute("filmBookings", filmBookingServices.getAll());
             else
-                req.setAttribute("filmBookings", filmBookingServices.getAllByUsername(loginUser.getUsername()));
+                req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
-        req.setAttribute("showtimeViewsMap", showtimeViewServices.getShowtimeViewAndShowtimeID());
         req.setAttribute("theatersMap", theaterServices.getTheaterAndTheaterID());
-        req.setAttribute("showtimesMap", showtimeServices.getShowtimeAndShowtimeID());
         req.setAttribute("filmsMap", filmServices.getFilmAndFilmID());
+        req.setAttribute("showtimeList", showtimeServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
@@ -53,7 +50,6 @@ public class BookingHistoryController extends HttpServlet {
     @Override
     public void destroy() {
         filmBookingServices = null;
-        showtimeViewServices = null;
         theaterServices = null;
         showtimeServices = null;
         filmServices = null;

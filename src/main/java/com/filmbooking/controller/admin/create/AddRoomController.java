@@ -1,6 +1,7 @@
 package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.model.Room;
+import com.filmbooking.model.Theater;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
@@ -23,8 +24,8 @@ public class AddRoomController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       roomServices = new RoomServicesImpl();
-       theaterServices = new TheaterServicesImpl();
+        roomServices = new RoomServicesImpl();
+        theaterServices = new TheaterServicesImpl();
 
         req.setAttribute("pageTitle", "addRoomTitle");
 
@@ -48,7 +49,10 @@ public class AddRoomController extends HttpServlet {
         int roomRows = Integer.parseInt(req.getParameter("room-rows"));
         int roomCols = Integer.parseInt(req.getParameter("room-cols"));
 
-        Room newRoom = new Room(roomName,roomRows,roomCols,theaterID);
+        Theater theater = theaterServices.getByID(theaterID);
+
+        Room newRoom = new Room(roomName, roomRows, roomCols, theater);
+
         roomServices.save(newRoom);
 
         resp.sendRedirect("room-management");

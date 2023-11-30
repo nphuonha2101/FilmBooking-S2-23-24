@@ -1,6 +1,6 @@
 package com.filmbooking.utils.mailUtils;
 
-import com.filmbooking.configs.MailConfigs;
+import com.filmbooking.utils.PropertiesUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -9,8 +9,11 @@ import java.util.Properties;
 
 public class SendEmail {
     private static SendEmail instance;
+    private final PropertiesUtils propertiesUtils;
+
 
     private SendEmail() {
+        propertiesUtils = PropertiesUtils.getInstance();
     }
 
     public static SendEmail getInstance() {
@@ -24,15 +27,15 @@ public class SendEmail {
     private Session getSession() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.host", MailConfigs.EMAIL_HOST_NAME);
-        properties.put("mail.smtp.socketFactory.port", MailConfigs.SSL_PORT);
+        properties.put("mail.smtp.host", propertiesUtils.getProperty("email.hostName"));
+        properties.put("mail.smtp.socketFactory.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
         properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.port", MailConfigs.SSL_PORT);
+        properties.put("mail.smtp.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
 
         return Session.getDefaultInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(MailConfigs.APP_EMAIL, MailConfigs.APP_EMAIL_PASSWD);
+                return new PasswordAuthentication(propertiesUtils.getProperty("email.appName"), propertiesUtils.getProperty("email.appPassword"));
             }
         });
     }

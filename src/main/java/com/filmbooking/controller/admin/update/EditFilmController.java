@@ -1,7 +1,7 @@
 package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenre;
+import com.filmbooking.model.Genre;
 import com.filmbooking.services.impls.FilmGenreServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
@@ -41,17 +41,14 @@ public class EditFilmController extends HttpServlet {
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
-        List<FilmGenre> filmGenreList = filmGenreServices.getAll();
-        int countGenre = 0;
-        for (FilmGenre filmGenre : filmGenreList) {
-            if (filmGenre.getFilmID().equalsIgnoreCase(filmId)) {
-                countGenre++;
-                if (countGenre > 1)
-                    filmGenreIDs.append(" ").append(filmGenre.getGenreID());
-                else filmGenreIDs.append(filmGenre.getGenreID());
-            }
-        }
-        req.setAttribute("filmGenreIDs", filmGenreIDs.toString());
+        List<Genre> filmGenreList = editFilm.getGenreList();
+
+        filmGenreList.stream().forEach(genre -> {
+            filmGenreIDs.append(genre.getGenreID());
+            filmGenreIDs.append(" ");
+        });
+
+        req.setAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
 
         req.setAttribute("pageTitle", "editFilmTitle");
 

@@ -1,6 +1,8 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
+import com.filmbooking.model.Room;
+import com.filmbooking.model.Showtime;
 import com.filmbooking.model.Theater;
 
 import java.sql.Connection;
@@ -11,17 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TheaterDAOImpl implements IDAO<Theater> {
+    private static TheaterDAOImpl instance = null;
     private final DatabaseConnection databaseConnection;
-    private final List<Theater> theaterList;
     private static final String TABLE_NAME = "theater";
 
     public TheaterDAOImpl() {
-        theaterList = new ArrayList<>();
         databaseConnection = DatabaseConnection.getInstance();
+    }
+
+    public static TheaterDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new TheaterDAOImpl();
+        }
+        return instance;
     }
 
     @Override
     public List<Theater> getAll() {
+        List<Theater> theaterList = new ArrayList<>();
+
         databaseConnection.connect();
         Connection connection = databaseConnection.getConnection();
 
@@ -36,7 +46,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
                 String taxCode = resultSet.getString("tax_code");
                 String address = resultSet.getString("theater_address");
 
-                Theater theater = new Theater(theaterID, theaterName, taxCode, address);
+                List<Room> roomList = RoomDAOImpl.getInstance().getAll().stream().filter(room -> room.getTheater().getTheaterID().equals(theaterID)).toList();
+                Theater theater = new Theater(theaterID, theaterName, taxCode, address, roomList);
 
                 theaterList.add(0, theater);
             }
@@ -52,14 +63,40 @@ public class TheaterDAOImpl implements IDAO<Theater> {
 
     @Override
     public Theater getByID(String id) {
-        getAll();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
-        for (Theater theater : theaterList) {
-            if (theater.getTheaterID().equalsIgnoreCase(id)) {
+        String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE theater_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
+            preparedStatement.setString(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String theaterID = resultSet.getString("theater_id");
+                String theaterName = resultSet.getString("theater_name");
+                String taxCode = resultSet.getString("tax_code");
+                String address = resultSet.getString("theater_address");
+
+                List<Room> roomList = RoomDAOImpl.getInstance().getAll().stream().filter(room -> room.getTheater().getTheaterID().equals(theaterID)).toList();
+                Theater theater = new Theater(theaterID, theaterName, taxCode, address, roomList);
+
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+
                 return theater;
+            } else {
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+
+                return null;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override

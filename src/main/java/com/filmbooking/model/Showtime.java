@@ -1,29 +1,48 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.StringUtils;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+@Entity
+@Table(name = "showtime")
 public class Showtime {
+    @Column(name = "showtime_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String showtimeID;
-    private String filmID;
-    private String roomID;
-    private LocalDateTime showtimeDate;
-    private String seatsData;
-    private String[][] seatsMatrix;
+    @ManyToOne
+    private Film film;
 
-    public Showtime(String showtimeID, String filmID, String roomID, LocalDateTime showtimeDate, String seatsData) {
+    @ManyToOne
+    private Room room;
+    @Column(name = "showtime_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime showtimeDate;
+    @Column(name = "seats_data")
+    private String seatsData;
+    @Transient
+    private String[][] seatsMatrix;
+    @OneToMany(mappedBy = "showtime")
+    private List<FilmBooking> filmBookingList;
+
+    public Showtime() {}
+
+    public Showtime(String showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
         this.showtimeID = showtimeID;
-        this.filmID = filmID;
-        this.roomID = roomID;
+        this.film = film;
+        this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = seatsData;
         this.seatsMatrix = StringUtils.convertTo2DArr(seatsData);
+        this.filmBookingList = filmBookingList;
     }
 
-    public Showtime(String filmID, Room room, LocalDateTime showtimeDate) {
-        this.filmID = filmID;
-        this.roomID = room.getRoomID();
+    public Showtime(Film film, Room room, LocalDateTime showtimeDate) {
+        this.film = film;
+        this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
         this.seatsMatrix = room.getSeatMatrix();
@@ -37,20 +56,20 @@ public class Showtime {
         this.showtimeID = showtimeID;
     }
 
-    public String getFilmID() {
-        return filmID;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setFilmID(String filmID) {
-        this.filmID = filmID;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 
-    public String getRoomID() {
-        return roomID;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomID(String roomID) {
-        this.roomID = roomID;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public LocalDateTime getShowtimeDate() {
@@ -79,6 +98,14 @@ public class Showtime {
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
     }
 
+    public List<FilmBooking> getFilmBookingList() {
+        return filmBookingList;
+    }
+
+    public void setFilmBookingList(List<FilmBooking> filmBookingList) {
+        this.filmBookingList = filmBookingList;
+    }
+
     /**
      * Book seat
      * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
@@ -102,5 +129,18 @@ public class Showtime {
             }
         }
         return count;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Showtime) {
+            Showtime showtime = (Showtime) obj;
+            return this.showtimeID.equals(showtime.getShowtimeID())
+            && this.film.equals(showtime.getFilm())
+            && this.room.equals(showtime.getRoom())
+            && this.showtimeDate.equals(showtime.getShowtimeDate())
+            && this.seatsData.equals(showtime.getSeatsData());
+        }
+        return false;
     }
 }

@@ -2,7 +2,9 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.UserDAOImpl;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
+import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
@@ -15,10 +17,11 @@ import java.util.List;
 
 public class UserServicesImpl implements IUserServices {
     private final IDAO<User> userDAO;
+    private final IFilmBookingServices filmBookingServices;
 
     public UserServicesImpl() {
-        userDAO = new UserDAOImpl();
-//        getAll();
+        userDAO = UserDAOImpl.getInstance();
+        filmBookingServices = new FilmBookingServicesImpl();
     }
 
     @Override
@@ -48,11 +51,18 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public void update(User user) {
+
         userDAO.update(user);
     }
 
     @Override
     public void delete(User user) {
+        List<FilmBooking> filmBookingList = user.getFilmBookingList();
+
+        filmBookingList.stream().forEach(filmBooking -> {
+            filmBookingServices.delete(filmBooking);
+        });
+
         userDAO.delete(user);
     }
 

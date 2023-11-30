@@ -14,12 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObjectIDService<Showtime> {
-    private IDAO<Showtime> showtimeDAO;
-    private IFilmBookingServices filmBookingServices;
+    private final IDAO<Showtime> showtimeDAO;
+    private final IFilmBookingServices filmBookingServices;
 
     public ShowtimeServicesImpl() {
-        this.showtimeDAO = new ShowtimeDAOImpl();
-        filmBookingServices = new FilmBookingServicesImpl(this);
+        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+        filmBookingServices = new FilmBookingServicesImpl();
         hideOldShowtime();
     }
 
@@ -38,7 +38,7 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
         List<Showtime> result = new ArrayList<>();
         for (Showtime showtime : this.getAll()
         ) {
-            if (showtime.getFilmID().equalsIgnoreCase(filmID))
+            if (showtime.getFilm().getFilmID().equalsIgnoreCase(filmID))
                 result.add(showtime);
         }
         return result;
@@ -61,11 +61,10 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
 
     @Override
     public void delete(Showtime showtime) {
-        List<FilmBooking> filmBookingList = filmBookingServices.getAll();
+        List<FilmBooking> filmBookingList = showtime.getFilmBookingList();
 
         filmBookingList.stream().forEach(filmBooking -> {
-            if (filmBooking.getShowtimeID().equalsIgnoreCase(showtime.getShowtimeID()))
-                filmBookingServices.delete(filmBooking);
+            filmBookingServices.delete(filmBooking);
         });
 
         showtimeDAO.delete(showtime);

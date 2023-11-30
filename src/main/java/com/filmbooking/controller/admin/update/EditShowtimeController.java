@@ -1,13 +1,13 @@
 package com.filmbooking.controller.admin.update;
 
+import com.filmbooking.model.Film;
+import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.IRoomViewServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
-import com.filmbooking.services.impls.RoomViewServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -26,14 +26,14 @@ import java.time.format.DateTimeFormatter;
 public class EditShowtimeController extends HttpServlet {
     private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
-    private IRoomViewServices roomViewServices;
+    private IRoomServices roomServices;
     private Showtime editShowtime;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
-        roomViewServices = new RoomViewServicesImpl();
+        roomServices = new RoomServicesImpl();
 
         String showtimeID = req.getParameter("showtime-id_hidden");
         editShowtime = showtimeServices.getByID(showtimeID);
@@ -42,7 +42,7 @@ public class EditShowtimeController extends HttpServlet {
 
         req.setAttribute("editShowtime", editShowtime);
         req.setAttribute("filmData", filmServices.getAll());
-        req.setAttribute("roomData", roomViewServices.getAll());
+        req.setAttribute("roomData", roomServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("edit-showtime.jsp"),
@@ -58,8 +58,12 @@ public class EditShowtimeController extends HttpServlet {
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
         LocalDateTime showtimeDate = LocalDateTime.parse(req.getParameter("showtime-datetime"), DateTimeFormatter.ISO_DATE_TIME);
 
-        editShowtime.setFilmID(filmID);
-        editShowtime.setRoomID(roomID);
+        Film film = filmServices.getByFilmID(filmID);
+        Room room = roomServices.getByRoomID(roomID);
+
+
+        editShowtime.setFilm(film);
+        editShowtime.setRoom(room);
         editShowtime.setShowtimeDate(showtimeDate);
 
         showtimeServices.update(editShowtime);
@@ -72,6 +76,5 @@ public class EditShowtimeController extends HttpServlet {
         filmServices = null;
         showtimeServices = null;
         editShowtime = null;
-        roomViewServices = null;
     }
 }

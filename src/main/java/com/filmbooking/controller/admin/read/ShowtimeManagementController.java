@@ -1,9 +1,7 @@
 package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.services.IShowtimeServices;
-import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -16,14 +14,12 @@ import java.io.IOException;
 
 @WebServlet("/showtime-management")
 public class ShowtimeManagementController extends HttpServlet {
-    private IShowtimeViewServices showtimeViewServices;
     private IShowtimeServices showtimeServices;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeViewServices = new ShowtimeViewServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
 
-        req.setAttribute("showtimeViewDetails", showtimeViewServices.getAll());
+        req.setAttribute("showtimeViewDetails", showtimeServices.getAll());
         req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
         req.setAttribute("pageTitle", "showtimeManagementTitle");
 
@@ -37,7 +33,6 @@ public class ShowtimeManagementController extends HttpServlet {
 
     @Override
     public void destroy() {
-        showtimeViewServices = null;
         showtimeServices = null;
     }
 }

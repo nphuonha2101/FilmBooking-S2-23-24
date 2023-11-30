@@ -1,17 +1,16 @@
 package com.filmbooking.services;
 
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenre;
+import com.filmbooking.model.Genre;
 
 import java.util.List;
 
 public interface IFilmGenreServices {
-    List<FilmGenre> getAll();
-    FilmGenre getByID(String id);
-    List<FilmGenre> getAllByFilmID(String filmID);
-    void save(FilmGenre filmGenre);
-    void update(FilmGenre filmGenre);
-    void delete(FilmGenre filmGenre);
-    void deleteAll(String filmID);
-
+    List<Genre> getAllGenreByFilm(Film film);
+    List<Film> getAllFilmByGenre(Genre genre);
+    Genre getGenreByID(String filmID, String genreID);
+    Film getFilmByID(String filmID, String genreID);
+    void save(Film film, Genre genre);
+    void delete(Film film, Genre genre);
+    void deleteAllGenresOfFilm(Film film);
 }

@@ -1,33 +1,45 @@
 package com.filmbooking.model;
 
-import com.filmbooking.utils.StringUtils;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "film_booking")
 public class FilmBooking {
+    @Column(name = "film_booking_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String filmBookingID;
-    private String showtimeID;
-    private String username;
+    @ManyToOne
+    private Showtime showtime;
+    @ManyToOne
+    private User user;
+    @Column(name = "booking_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime bookingDate;
+    @Transient
     private String[] seats;
+    @Column(name = "seats")
     private String seatsData;
+    @Column(name = "total_fee")
     private double totalFee;
 
-    public FilmBooking(String filmBookingID, String username, String showtimeID, LocalDateTime bookingDate,
+    public FilmBooking(String filmBookingID, User user, Showtime showtime, LocalDateTime bookingDate,
                        String seatsData, double totalFee) {
 
         this.filmBookingID = filmBookingID;
-        this.showtimeID = showtimeID;
-        this.username = username;
+        this.showtime = showtime;
+        this.user = user;
         this.bookingDate = bookingDate;
         this.seatsData = seatsData;
         this.seats = seatsData.split(", ");
         this.totalFee = totalFee;
     }
 
-    public FilmBooking(String showtimeID, String username, LocalDateTime bookingDate, String[] seats, double totalFee) {
-        this.showtimeID = showtimeID;
-        this.username = username;
+    public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] seats, double totalFee) {
+        this.showtime = showtime;
+        this.user = user;
         this.bookingDate = bookingDate;
         this.seats = seats;
         this.seatsData = String.join(", ", seats);
@@ -36,8 +48,8 @@ public class FilmBooking {
 
     public FilmBooking() {
         this.filmBookingID = "";
-        this.showtimeID = "";
-        this.username = "";
+        this.showtime = null;
+        this.user = null;
         this.bookingDate = null;
         this.seats = new String[0];
     }
@@ -50,20 +62,20 @@ public class FilmBooking {
         this.filmBookingID = filmBookingID;
     }
 
-    public String getShowtimeID() {
-        return showtimeID;
+    public Showtime getShowtime() {
+        return showtime;
     }
 
-    public void setShowtimeID(String showtimeID) {
-        this.showtimeID = showtimeID;
+    public void setShowtime(Showtime showtime) {
+        this.showtime = showtime;
     }
 
-    public String getUsername() {
-        return username;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDateTime getBookingDate() {
@@ -102,13 +114,26 @@ public class FilmBooking {
 
     public void resetFilmBooking() {
         this.filmBookingID = "";
-        this.showtimeID = "";
+        this.showtime = null;
         this.bookingDate = null;
         this.seats = new String[0];
     }
 
     @Override
     public String toString() {
-        return this.showtimeID + ", " + this.filmBookingID + ", " + this.username;
+        return this.showtime + ", " + this.filmBookingID + ", " + this.user;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof FilmBooking) {
+            FilmBooking filmBooking = (FilmBooking) obj;
+            return this.filmBookingID.equals(filmBooking.getFilmBookingID())
+                    && this.showtime.equals(filmBooking.getShowtime())
+                    && this.user.equals(filmBooking.getUser())
+                    && this.bookingDate.equals(filmBooking.getBookingDate())
+                    && this.totalFee == filmBooking.getTotalFee();
+        }
+        return false;
     }
 }

@@ -1,6 +1,7 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 
 import java.sql.Connection;
@@ -11,17 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements IDAO<User> {
-    private final List<User> userList;
+    private static UserDAOImpl instance = null;
     private final DatabaseConnection databaseConnection;
     private static final String TABLE_NAME = "user_info";
 
-    public UserDAOImpl() {
-        userList = new ArrayList<>();
+    private UserDAOImpl() {
         databaseConnection = DatabaseConnection.getInstance();
+    }
+
+    public static UserDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new UserDAOImpl();
+        }
+        return instance;
     }
 
     @Override
     public List<User> getAll() {
+        List<User> userList = new ArrayList<>();
+
         databaseConnection.connect();
         Connection connection = databaseConnection.getConnection();
 
@@ -36,35 +45,59 @@ public class UserDAOImpl implements IDAO<User> {
                 String userFullName = resultSet.getString("user_fullname");
                 String userEmail = resultSet.getString("user_email");
                 String userPassword = resultSet.getString("user_password");
-                String userRole = resultSet.getString("account_role");
+                String accountRole = resultSet.getString("account_role");
 
-                User user = new User(username, userFullName, userEmail, userPassword, userRole);
+                List<FilmBooking> filmBookingList = FilmBookingDAOImpl.getInstance().getAll().stream().filter(filmBooking -> filmBooking.getUser().getUsername().equals(username)).toList();
+
+                User user = new User(username, userFullName, userEmail, userPassword, accountRole, filmBookingList);
 
                 userList.add(0, user);
             }
             resultSet.close();
             preparedStatement.close();
             databaseConnection.close();
+
+            return userList;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-//            databaseServices.disconnectDatabase();
         }
-
-        return userList;
     }
 
     @Override
     public User getByID(String username) {
-        getAll();
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
 
-        for (User userInList : userList) {
-            if (userInList.getUsername().equalsIgnoreCase(username)) {
-                return userInList;
+        String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE username = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                String userFullName = resultSet.getString("user_fullname");
+                String userEmail = resultSet.getString("user_email");
+                String userPassword = resultSet.getString("user_password");
+                String accountRole = resultSet.getString("account_role");
+
+//                List<FilmBooking> filmBookingList = FilmBookingDAOImpl.getInstance().getAll().stream().filter(filmBooking -> filmBooking.getUser().getUsername().equals(username)).toList();
+
+                User user = new User(username, userFullName, userEmail, userPassword, accountRole);
+
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+                return user;
+            } else {
+                resultSet.close();
+                preparedStatement.close();
+                databaseConnection.close();
+                return null;
             }
-        }
-        return null;
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -89,8 +122,6 @@ public class UserDAOImpl implements IDAO<User> {
             ;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-//            databaseServices.disconnectDatabase();
         }
     }
 
@@ -120,25 +151,20 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public void delete(User user) {
-        if (userList.contains(user)) {
-            databaseConnection.connect();
-            Connection connection = databaseConnection.getConnection();
-            String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE username = ?";
-            try {
-                PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
-                preparedStatement.setString(1, user.getUsername());
+        databaseConnection.connect();
+        Connection connection = databaseConnection.getConnection();
+        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE username = ?";
 
-                preparedStatement.executeUpdate();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
+            preparedStatement.setString(1, user.getUsername());
 
-                preparedStatement.close();
-                databaseConnection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } finally {
-//                databaseServices.disconnectDatabase();
-            }
+            preparedStatement.executeUpdate();
 
+            preparedStatement.close();
+            databaseConnection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
     }
 }

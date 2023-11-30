@@ -18,37 +18,29 @@ import java.time.LocalDateTime;
 @WebServlet(name = "bookFilm", value = "/book-film")
 public class BookingFilmController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-    private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
-    private IRoomServices roomServices;
-    private ITheaterServices theaterServices;
     private FilmBooking filmBooking;
     private Film bookedFilm;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
-        roomServices = new RoomServicesImpl();
-        theaterServices = new TheaterServicesImpl();
 
         // get showtime id from session
         filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
-        String showtimeID = filmBooking.getShowtimeID();
+        String showtimeID = filmBooking.getShowtime().getShowtimeID();
 
 
         Showtime bookedShowtime = showtimeServices.getByID(showtimeID);
-        String filmID = bookedShowtime.getFilmID();
-        bookedFilm = filmServices.getByFilmID(filmID);
-        Room bookedRoom = roomServices.getByRoomID(bookedShowtime.getRoomID());
-        Theater bookedTheater = theaterServices.getByID(bookedRoom.getTheaterID());
 
-        System.out.println("filmID: " + filmID + "\n" + "showtimeID: " + showtimeID);
+        bookedFilm = bookedShowtime.getFilm();
+
+        Room bookedRoom = bookedShowtime.getRoom();
+
 
         req.setAttribute("bookedFilm", bookedFilm);
         req.setAttribute("bookedShowtime", bookedShowtime);
         req.setAttribute("bookedRoom", bookedRoom);
-        req.setAttribute("bookedTheater", bookedTheater);
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
         req.setAttribute("sectionTitle", "Đặt vé");
@@ -80,7 +72,7 @@ public class BookingFilmController extends HttpServlet {
             req.setAttribute("pageTitle", "bookingFilmTitle");
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
 
-           resp.sendRedirect("book-film");
+            resp.sendRedirect("book-film");
 
 
         }
@@ -90,10 +82,7 @@ public class BookingFilmController extends HttpServlet {
     @Override
     public void destroy() {
         filmBookingServices = null;
-        filmServices = null;
-        theaterServices = null;
         showtimeServices = null;
-        roomServices = null;
         filmBooking = null;
         bookedFilm = null;
     }
