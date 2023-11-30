@@ -62,4 +62,9 @@ public class Genre {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return this.genreID + ", " + this.genreName;
+    }
 }

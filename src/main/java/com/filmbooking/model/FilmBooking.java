@@ -126,8 +126,7 @@ public class FilmBooking {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof FilmBooking) {
-            FilmBooking filmBooking = (FilmBooking) obj;
+        if (obj instanceof FilmBooking filmBooking) {
             return this.filmBookingID.equals(filmBooking.getFilmBookingID())
                     && this.showtime.equals(filmBooking.getShowtime())
                     && this.user.equals(filmBooking.getUser())

@@ -1,9 +1,17 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.Theater;
+import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +22,11 @@ import java.util.List;
 
 public class TheaterDAOImpl implements IDAO<Theater> {
     private static TheaterDAOImpl instance = null;
-    private final DatabaseConnection databaseConnection;
-    private static final String TABLE_NAME = "theater";
+    private final HibernateUtils hibernateUtils;
+    private Session session;
 
     public TheaterDAOImpl() {
-        databaseConnection = DatabaseConnection.getInstance();
+        hibernateUtils = HibernateUtils.getInstance();
     }
 
     public static TheaterDAOImpl getInstance() {
@@ -29,148 +37,69 @@ public class TheaterDAOImpl implements IDAO<Theater> {
     }
 
     @Override
-    public List<Theater> getAll() {
-        List<Theater> theaterList = new ArrayList<>();
-
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                String theaterID = resultSet.getString("theater_id");
-                String theaterName = resultSet.getString("theater_name");
-                String taxCode = resultSet.getString("tax_code");
-                String address = resultSet.getString("theater_address");
-
-                List<Room> roomList = RoomDAOImpl.getInstance().getAll().stream().filter(room -> room.getTheater().getTheaterID().equals(theaterID)).toList();
-                Theater theater = new Theater(theaterID, theaterName, taxCode, address, roomList);
-
-                theaterList.add(0, theater);
-            }
-            resultSet.close();
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return theaterList;
+    public void openSession() {
+        this.session = hibernateUtils.openSession();
     }
 
     @Override
+    public List<Theater> getAll() {
+        List<Theater> result;
+
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        // declare an object that want to query
+        CriteriaQuery<Theater> criteriaQuery = criteriaBuilder.createQuery(Theater.class);
+        Root<Theater> rootEntry = criteriaQuery.from(Theater.class);
+        CriteriaQuery<Theater> all = criteriaQuery.select(rootEntry);
+
+        TypedQuery<Theater> allQuery = this.session.createQuery(all);
+
+        result = allQuery.getResultList();
+
+        return result;
+    }
+
+
+    @Override
     public Theater getByID(String id) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
 
-        String queryGetByID = "SELECT * FROM " + TABLE_NAME + " WHERE theater_id = ?";
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        CriteriaQuery<Theater> criteriaQuery = criteriaBuilder.createQuery(Theater.class);
+        Root<Theater> rootEntry = criteriaQuery.from(Theater.class);
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetByID);
-            preparedStatement.setString(1, id);
+        TypedQuery<Theater> typedQuery = this.session.createQuery(criteriaQuery);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                String theaterID = resultSet.getString("theater_id");
-                String theaterName = resultSet.getString("theater_name");
-                String taxCode = resultSet.getString("tax_code");
-                String address = resultSet.getString("theater_address");
 
-                List<Room> roomList = RoomDAOImpl.getInstance().getAll().stream().filter(room -> room.getTheater().getTheaterID().equals(theaterID)).toList();
-                Theater theater = new Theater(theaterID, theaterName, taxCode, address, roomList);
-
-                resultSet.close();
-                preparedStatement.close();
-                databaseConnection.close();
-
-                return theater;
-            } else {
-                resultSet.close();
-                preparedStatement.close();
-                databaseConnection.close();
-
-                return null;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return typedQuery.getSingleResult();
     }
 
     @Override
     public void save(Theater theater) {
-        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getTheaterID());
-        for (Theater t : this.getAll()) {
-            if (Integer.parseInt(t.getTheaterID()) > largestID)
-                largestID = Integer.parseInt(t.getTheaterID());
-        }
-        largestID++;
-        theater.setTheaterID(String.valueOf(largestID));
-
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String querySave = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
-
-            preparedStatement.setString(1, theater.getTheaterID());
-            preparedStatement.setString(2, theater.getTheaterName());
-            preparedStatement.setString(3, theater.getTaxCode());
-            preparedStatement.setString(4, theater.getTheaterAddress());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        Transaction transaction = session.beginTransaction();
+        session.persist(theater);
+        transaction.commit();
     }
 
     @Override
     public void update(Theater theater) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryUpdate = "UPDATE " + TABLE_NAME + " SET theater_name = ?, tax_number = ?, address = ? WHERE theater_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
-
-            preparedStatement.setString(1, theater.getTheaterName());
-            preparedStatement.setString(2, theater.getTaxCode());
-            preparedStatement.setString(3, theater.getTheaterAddress());
-            preparedStatement.setString(4, theater.getTheaterID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.merge(theater);
+        transaction.commit();
     }
 
     @Override
     public void delete(Theater theater) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
+        Transaction transaction = session.beginTransaction();
+        session.remove(theater);
+        transaction.commit();
+    }
 
-        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE theater_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
-
-            preparedStatement.setString(1, theater.getTheaterID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    @Override
+    public Session getSession() {
+        if (session != null)
+            return this.session;
+        else {
+            throw new RuntimeException("Not active Hibernate Session");
         }
     }
 }

@@ -1,7 +1,15 @@
 package com.filmbooking.dao;
 
 import com.filmbooking.database.DatabaseConnection;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +20,12 @@ import java.util.List;
 
 public class GenreDAOImpl implements IDAO<Genre> {
     private static GenreDAOImpl instance;
-    private final DatabaseConnection databaseConnection;
-    private static final String TABLE_NAME = "genre";
+    private final HibernateUtils hibernateUtils;
+    private Session session;
+
 
     private GenreDAOImpl() {
-        databaseConnection = DatabaseConnection.getInstance();
+        hibernateUtils = HibernateUtils.getInstance();
     }
 
     public static GenreDAOImpl getInstance() {
@@ -27,130 +36,67 @@ public class GenreDAOImpl implements IDAO<Genre> {
     }
 
     @Override
+    public void openSession() {
+        this.session = hibernateUtils.openSession();
+    }
+
+    @Override
     public List<Genre> getAll() {
-        List<Genre> genreList = new ArrayList<>();
+        List<Genre> result;
 
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        // declare an object that want to query
+        CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
+        Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
+        CriteriaQuery<Genre> all = criteriaQuery.select(rootEntry);
 
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
+        TypedQuery<Genre> allQuery = this.session.createQuery(all);
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        result = allQuery.getResultList();
 
-            while (resultSet.next()) {
-                String genreID = resultSet.getString("genre_id");
-                String genreName = resultSet.getString("genre_name");
-
-                Genre genre = new Genre(genreID, genreName);
-
-                genreList.add(0, genre);
-            }
-
-            resultSet.close();
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return genreList;
+        return result;
     }
 
     @Override
     public Genre getByID(String id) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
 
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME + " WHERE genre_id = ?";
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
+        Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
+        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            preparedStatement.setString(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        TypedQuery<Genre> typedQuery = this.session.createQuery(criteriaQuery);
 
-            if (resultSet.next()) {
-                String genreID = resultSet.getString("genre_id");
-                String genreName = resultSet.getString("genre_name");
 
-                Genre genre = new Genre(genreID, genreName);
-
-                resultSet.close();
-                preparedStatement.close();
-                databaseConnection.close();
-                return genre;
-            } else {
-                resultSet.close();
-                preparedStatement.close();
-                databaseConnection.close();
-                return null;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return typedQuery.getSingleResult();
     }
-
     @Override
     public void save(Genre genre) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String querySave = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?)";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
-            preparedStatement.setString(1, genre.getGenreID());
-            preparedStatement.setString(2, genre.getGenreName());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.persist(genre);
+        transaction.commit();
     }
 
     @Override
     public void update(Genre genre) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String querySave = "UPDATE " + TABLE_NAME + " SET genre_name = ? WHERE genre_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
-            preparedStatement.setString(1, genre.getGenreName());
-            preparedStatement.setString(2, genre.getGenreID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.merge(genre);
+        transaction.commit();
     }
 
     @Override
     public void delete(Genre genre) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
+        Transaction transaction = session.beginTransaction();
+        session.remove(genre);
+        transaction.commit();
+    }
 
-        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE genre_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
-            preparedStatement.setString(1, genre.getGenreID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    @Override
+    public Session getSession() {
+        if (session != null)
+            return this.session;
+        else {
+            throw new RuntimeException("Not active Hibernate Session");
         }
-
     }
 }

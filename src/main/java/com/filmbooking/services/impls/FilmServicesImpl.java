@@ -3,6 +3,7 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.FilmDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Genre;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.*;
@@ -14,30 +15,36 @@ import java.util.List;
 
 public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDService<Film> {
     private final IDAO<Film> filmDAO;
-    private final IFilmGenreServices filmGenreServices;
-    private final IGenreServices genreServices;
-    private final IShowtimeServices showtimeServices;
-
 
     public FilmServicesImpl() {
         filmDAO = FilmDAOImpl.getInstance();
-        genreServices = new GenreServicesImpl();
-        filmGenreServices = new FilmGenreServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
     }
 
     /**
      * Get all film genres
+     *
      * @return a list of film genres
      */
     @Override
     public List<Film> getAll() {
-        return filmDAO.getAll();
+        List<Film> result;
+        filmDAO.openSession();
+        result = filmDAO.getAll();
+        filmDAO.closeSession();
+        return result;
     }
 
     @Override
     public Film getByFilmID(String id) {
-        return filmDAO.getByID(id);
+
+        Film result;
+        filmDAO.openSession();
+        result = filmDAO.getByID(id);
+        System.out.println(result);
+
+        filmDAO.closeSession();
+
+        return result;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
         name = name.toLowerCase();
         List<Film> result = new ArrayList<>();
 
-        for (Film film: this.getAll()) {
+        for (Film film : this.getAll()) {
             if (film.getFilmName().toLowerCase().contains(name))
                 result.add(film);
         }
@@ -59,45 +66,38 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
 
     @Override
     public void save(Film film) {
+        filmDAO.openSession();
         filmDAO.save(film);
+        filmDAO.closeSession();
     }
 
     @Override
     public void save(Film film, String... genreIDs) {
-        save(film);
-
-        Arrays.stream(genreIDs).forEach(genreID -> {
-            Genre genre = genreServices.getByID(genreID);
-            filmGenreServices.save(film, genre);
-        });
+        filmDAO.openSession();
+        filmDAO.save(film);
+        filmDAO.closeSession();
     }
 
     @Override
     public void update(Film film) {
+        filmDAO.openSession();
         filmDAO.update(film);
+        filmDAO.closeSession();
     }
 
     @Override
     public void update(Film film, String... genreIDs) {
-        update(film);
-
-        filmGenreServices.deleteAllGenresOfFilm(film);
-
-        Arrays.stream(genreIDs).forEach(genreID -> {
-            Genre genre = genreServices.getByID(genreID);
-            filmGenreServices.save(film, genre);
-        });
+        filmDAO.openSession();
+        filmDAO.update(film);
+        filmDAO.closeSession();
     }
 
     @Override
     public void delete(Film film) {
-        List<Genre> genreList = film.getGenreList();
-        List<Showtime> showtimeList = film.getShowtimeList();
-
-        genreList.stream().forEach(genre -> filmGenreServices.delete(film, genre));
-        showtimeList.stream().forEach(showtime -> showtimeServices.delete(showtime));
-
+        filmDAO.openSession();
         filmDAO.delete(film);
+        filmDAO.closeSession();
+
     }
 
     @Override
@@ -105,4 +105,8 @@ public class FilmServicesImpl implements IFilmServices, IGetObjectAndObjectIDSer
         return obj.getFilmID();
     }
 
+    public static void main(String[] args) {
+        FilmServicesImpl filmServices = new FilmServicesImpl();
+        System.out.println(filmServices.getAll());
+    }
 }

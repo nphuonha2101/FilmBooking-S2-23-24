@@ -9,7 +9,7 @@ import java.util.List;
 public class Film {
     @Column(name = "film_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String filmID;
     @Column(name = "film_name")
     private String filmName;
@@ -17,6 +17,7 @@ public class Film {
     private double filmPrice;
     @Column(name = "film_director")
     private String director;
+    @Column(name = "film_cast")
     private String cast;
     @Column(name = "film_length")
     private int filmLength;
@@ -196,10 +197,20 @@ public class Film {
         return false;
     }
 
-    public static void main(String[] args) {
-        Film film = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
-        Film film1 = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
+    @Override
+    public String toString() {
+        String result = filmName + " List genre: ";
 
-        System.out.println(film.equals(film1));
+        for (Genre genre: this.genreList) {
+            result += genre.toString() + "\n";
+        }
+        return result;
+    }
+
+    public static void main(String[] args) {
+//        Film film = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
+//        Film film1 = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
+//
+//        System.out.println(film.equals(film1));
     }
 }
