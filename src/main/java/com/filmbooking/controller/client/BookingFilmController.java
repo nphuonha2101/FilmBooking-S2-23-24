@@ -24,19 +24,13 @@ public class BookingFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeServices = new ShowtimeServicesImpl();
 
-        // get showtime id from session
+        // get film booking from session
         filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
-        String showtimeID = String.valueOf(filmBooking.getShowtime().getShowtimeID());
 
-
-        Showtime bookedShowtime = showtimeServices.getByID(showtimeID);
-
+        Showtime bookedShowtime = filmBooking.getShowtime();
         bookedFilm = bookedShowtime.getFilm();
-
         Room bookedRoom = bookedShowtime.getRoom();
-
 
         req.setAttribute("bookedFilm", bookedFilm);
         req.setAttribute("bookedShowtime", bookedShowtime);
@@ -48,11 +42,14 @@ public class BookingFilmController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("book-film.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmBookingServices = new FilmBookingServicesImpl();
+        filmBookingServices.openSession();
+
         String seats = req.getParameter("seats");
 
         if (!seats.isEmpty()) {
@@ -75,6 +72,8 @@ public class BookingFilmController extends HttpServlet {
             resp.sendRedirect("book-film");
 
         }
+
+        filmBookingServices.closeSession();
 
     }
 

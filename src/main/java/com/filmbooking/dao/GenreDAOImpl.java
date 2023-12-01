@@ -4,6 +4,7 @@ import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -59,17 +60,24 @@ public class GenreDAOImpl implements IDAO<Genre> {
 
     @Override
     public Genre getByID(String id) {
+        Genre result = null;
 
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
-        Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
+            Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
-        TypedQuery<Genre> typedQuery = this.session.createQuery(criteriaQuery);
+            TypedQuery<Genre> typedQuery = this.session.createQuery(criteriaQuery);
 
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
+        }
 
-        return typedQuery.getSingleResult();
+        return result;
     }
+
     @Override
     public void save(Genre genre) {
         Transaction transaction = session.beginTransaction();

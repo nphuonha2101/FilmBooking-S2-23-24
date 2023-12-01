@@ -5,6 +5,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -60,17 +61,22 @@ public class UserDAOImpl implements IDAO<User> {
 
     @Override
     public User getByID(String id) {
-        long lID = Long.parseLong(id);
+        User result = null;
 
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> rootEntry = criteriaQuery.from(User.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
+            Root<User> rootEntry = criteriaQuery.from(User.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
-        TypedQuery<User> typedQuery = this.session.createQuery(criteriaQuery);
+            TypedQuery<User> typedQuery = this.session.createQuery(criteriaQuery);
 
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
+        }
 
-        return typedQuery.getSingleResult();
+        return result;
     }
 
     @Override

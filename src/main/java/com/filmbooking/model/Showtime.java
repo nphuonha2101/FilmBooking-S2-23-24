@@ -8,16 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "showtime")
+@Table(name = "showtimes")
 public class Showtime {
     @Column(name = "showtime_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long showtimeID;
     @ManyToOne
     private Film film;
 
     @ManyToOne
+    @JoinColumn(name = "room_id")
     private Room room;
     @Column(name = "showtime_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +38,6 @@ public class Showtime {
         this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = seatsData;
-        this.seatsMatrix = StringUtils.convertTo2DArr(seatsData);
         this.filmBookingList = filmBookingList;
     }
 
@@ -122,8 +122,9 @@ public class Showtime {
     }
 
     public int countAvailableSeats() {
+        System.out.println(seatsData);
         int count = 0;
-        String[][] seatMatrix = this.getSeatsMatrix();
+        String[][] seatMatrix = StringUtils.convertTo2DArr(this.seatsData);
         for (String[] row : seatMatrix) {
             for (String s : row) {
                 if (s.equalsIgnoreCase("0"))

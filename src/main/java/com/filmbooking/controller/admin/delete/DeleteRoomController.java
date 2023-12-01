@@ -22,6 +22,8 @@ public class DeleteRoomController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomServices = new RoomServicesImpl();
 
+        roomServices.openSession();
+
         String roomID = req.getParameter("room-id_hidden");
         System.out.println("DeleteFilmController Test: " + roomID);
 
@@ -30,6 +32,8 @@ public class DeleteRoomController extends HttpServlet {
         roomServices.delete(deletedRoom);
 
         resp.sendRedirect("room-management");
+
+        roomServices.closeSession();
     }
 
     @Override

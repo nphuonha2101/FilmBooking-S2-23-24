@@ -23,6 +23,8 @@ public class DeleteFilmController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
 
+        filmServices.openSession();
+
         String filmID = req.getParameter("film-id_hidden");
         System.out.println("DeleteFilmController Test: " + filmID);
 
@@ -39,6 +41,8 @@ public class DeleteFilmController extends HttpServlet {
 
 //
         resp.sendRedirect("admin");
+
+        filmServices.closeSession();
 
 
     }

@@ -32,6 +32,8 @@ public class ChangeInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         userServices = new UserServicesImpl();
+        userServices.openSession();
+
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String email = StringUtils.handlesInputString(req.getParameter("email"));
         String password = StringUtils.generateSHA256String(StringUtils.handlesInputString(req.getParameter("password")));
@@ -57,5 +59,7 @@ public class ChangeInfoController extends HttpServlet {
 //            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
         }
+
+        userServices.closeSession();
     }
 }

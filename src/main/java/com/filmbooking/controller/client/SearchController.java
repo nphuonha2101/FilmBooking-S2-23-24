@@ -22,6 +22,7 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
+        filmServices.openSession();
 
         String searchQuery = req.getParameter("search");
 
@@ -40,6 +41,7 @@ public class SearchController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("search-results.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        filmServices.closeSession();
     }
 
     @Override

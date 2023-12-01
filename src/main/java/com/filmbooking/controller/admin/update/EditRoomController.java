@@ -29,6 +29,9 @@ public class EditRoomController extends HttpServlet {
         roomServices = new RoomServicesImpl();
         theaterServices = new TheaterServicesImpl();
 
+        roomServices.openSession();
+        theaterServices.openSession();
+
         String roomID = req.getParameter("room-id_hidden");
         editRoom = roomServices.getByRoomID(roomID);
 
@@ -41,10 +44,15 @@ public class EditRoomController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("edit-room.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        roomServices.closeSession();
+        theaterServices.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        roomServices.openSession();
+
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         int seatRows = Integer.parseInt(req.getParameter("seat-rows"));
         int seatCols = Integer.parseInt(req.getParameter("seat-cols"));
@@ -56,6 +64,8 @@ public class EditRoomController extends HttpServlet {
         roomServices.update(editRoom);
 
         resp.sendRedirect("room-management");
+
+        roomServices.closeSession();
     }
 
     @Override

@@ -18,8 +18,8 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         filmServices = new FilmServicesImpl();
+        filmServices.openSession();
 
 //            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("navigation-bar.jsp"));
         req.setAttribute("title", "Phim mới ra rạp");
@@ -31,6 +31,7 @@ public class HomeController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("home.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        filmServices.closeSession();
 
     }
 

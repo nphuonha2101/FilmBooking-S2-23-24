@@ -36,12 +36,14 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userServices = new UserServicesImpl();
+        userServices.openSession();
+
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String userEmail = StringUtils.handlesInputString(req.getParameter("email"));
         String userPassword = StringUtils.handlesInputString(req.getParameter("password"));
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
-        userServices = new UserServicesImpl();
 
         // username existed!
         if (userServices.getByUsername(username) != null) {
@@ -64,6 +66,8 @@ public class SignupController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        userServices.closeSession();
     }
 
     @Override

@@ -31,8 +31,9 @@ public class EditFilmController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
 
-        String filmId = req.getParameter("film-id_hidden");
+        filmServices.openSession();
 
+        String filmId = req.getParameter("film-id_hidden");
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
@@ -56,10 +57,14 @@ public class EditFilmController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        filmServices.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        filmServices.openSession();
+
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
         String filmDirector = StringUtils.handlesInputString(req.getParameter("director"));
@@ -98,6 +103,8 @@ public class EditFilmController extends HttpServlet {
         }
 
         resp.sendRedirect("film-management");
+
+        filmServices.closeSession();
 
     }
 

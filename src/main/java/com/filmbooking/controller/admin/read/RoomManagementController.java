@@ -20,6 +20,8 @@ public class RoomManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomServices = new RoomServicesImpl();
 
+        roomServices.openSession();
+
         req.setAttribute("pageTitle", "roomManagementTitle");
         req.setAttribute("roomData", roomServices.getAll());
 
@@ -27,6 +29,8 @@ public class RoomManagementController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        roomServices.closeSession();
     }
 
     @Override

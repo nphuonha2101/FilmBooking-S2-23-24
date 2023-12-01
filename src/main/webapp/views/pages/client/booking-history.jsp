@@ -22,17 +22,13 @@
 
 <section class="section centered-vertical-content">
     <c:set var="filmBookingsData" value="${filmBookings}"/>
-    <c:set var="showtimeViewsData" value="${showtimeViewsMap}"/>
-    <c:set var="theatersData" value="${theatersMap}"/>
-    <c:set var="showtimesData" value="${showtimesMap}"/>
-    <c:set var="filmsData" value="${filmsMap}"/>
 
     <div class="container wrapper centered-vertical-content">
         <h2 class="title"><fmt:message key="bookingHistorySectionTitle" bundle="${pageTitle}"/> </h2>
 
         <div class="wrapper centered-vertical-content">
             <c:choose>
-                <c:when test="${empty filmBookingsData || empty showtimeViewsData }">
+                <c:when test="${empty filmBookingsData}">
                     <div class="wrapper centered-vertical-content">
                         <h3><fmt:message bundle="${msg}" key="null"/></h3>
                     </div>
@@ -40,11 +36,11 @@
                 <c:otherwise>
                     <c:forEach var="filmBookingData" items="${filmBookingsData}">
                         <%--get showtime id for each filmbooking--%>
-                        <c:set var="showtime" value="${showtimesData[filmBookingData.showtimeID]}"/>
+                        <c:set var="showtime" value="${filmBookingData.showtime}"/>
                         <%--get theater for each showtime--%>
-                        <c:set var="theater" value="${theatersData[showtime.showtimeID]}"/>
+                        <c:set var="theater" value="${showtime.room.theater}"/>
                         <%--get film for each showtime--%>
-                        <c:set var="film" value="${filmsData[showtime.filmID]}"/>
+                        <c:set var="film" value="${showtime.film}"/>
 
                         <div class="wrapper accordion-wrapper">
                             <button class="accordion wrapper">
@@ -65,18 +61,18 @@
 
                                     <div class="wrapper">
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
-                                            <span>${showtimeViewsData[filmBookingData.showtimeID].filmName}</span>
+                                            <span>${film.filmName}</span>
                                         </p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="room"/>:
-                                            <span>${showtimeViewsData[filmBookingData.showtimeID].roomName}</span></p>
+                                            <span>${room.roomName}</span></p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="showtime"/>:
-                                            <span>${showtimeViewsData[filmBookingData.showtimeID].showtimeDate}</span>
+                                            <span>${showtime.showtimDate}</span>
                                         </p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="theater"/>:
-                                            <span>${theatersData[theater.theaterID].theaterName}</span>
+                                            <span>${theater.theaterName}</span>
                                         </p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="address"/>:
-                                            <span>${theatersData[theater.theaterID].theaterAddress}</span>
+                                            <span>${theater.theaterAddress}</span>
 
                                         </p>
                                     </div>

@@ -24,8 +24,8 @@ public class AddRoomController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices = new RoomServicesImpl();
         theaterServices = new TheaterServicesImpl();
+        theaterServices.openSession();
 
         req.setAttribute("pageTitle", "addRoomTitle");
 
@@ -38,11 +38,14 @@ public class AddRoomController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
 
+        theaterServices.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         roomServices = new RoomServicesImpl();
+        roomServices.openSession();
+        theaterServices.openSession();
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         String theaterID = StringUtils.handlesInputString(req.getParameter("theater-id"));
@@ -56,5 +59,8 @@ public class AddRoomController extends HttpServlet {
         roomServices.save(newRoom);
 
         resp.sendRedirect("room-management");
+
+        theaterServices.closeSession();
+        roomServices.closeSession();
     }
 }

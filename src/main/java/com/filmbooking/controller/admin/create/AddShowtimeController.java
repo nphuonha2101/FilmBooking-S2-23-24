@@ -32,8 +32,10 @@ public class AddShowtimeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
         roomServices = new RoomServicesImpl();
+
+        filmServices.openSession();
+        roomServices.openSession();
 
         req.setAttribute("pageTitle", "addShowtimeTitle");
 
@@ -46,11 +48,18 @@ public class AddShowtimeController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        filmServices.closeSession();
+        roomServices.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showtimeServices = new ShowtimeServicesImpl();
+
+        showtimeServices.openSession();
+        filmServices.openSession();
+        roomServices.openSession();
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
@@ -65,6 +74,10 @@ public class AddShowtimeController extends HttpServlet {
         showtimeServices.save(newShowtime);
 
         resp.sendRedirect("showtime-management");
+
+        showtimeServices.closeSession();
+        filmServices.closeSession();
+        roomServices.closeSession();
 
     }
 

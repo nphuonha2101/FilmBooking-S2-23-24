@@ -17,16 +17,12 @@ import java.io.IOException;
 @WebServlet("/booking-history")
 public class BookingHistoryController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-    private ITheaterServices theaterServices;
-    private IShowtimeServices showtimeServices;
-    private IFilmServices filmServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmBookingServices = new FilmBookingServicesImpl();
-        theaterServices = new TheaterServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
-        filmServices = new FilmServicesImpl();
+
+        filmBookingServices.openSession();
 
         req.setAttribute("pageTitle", "bookingHistoryTitle");
 
@@ -37,21 +33,16 @@ public class BookingHistoryController extends HttpServlet {
             else
                 req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
-        req.setAttribute("theatersMap", theaterServices.getTheaterAndTheaterID());
-        req.setAttribute("filmsMap", filmServices.getFilmAndFilmID());
-        req.setAttribute("showtimeList", showtimeServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        filmBookingServices.closeSession();
     }
 
     @Override
     public void destroy() {
         filmBookingServices = null;
-        theaterServices = null;
-        showtimeServices = null;
-        filmServices = null;
     }
 }

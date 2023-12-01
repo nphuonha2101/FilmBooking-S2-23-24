@@ -5,15 +5,16 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "film_booking")
+@Table(name = "film_bookings")
 public class FilmBooking {
     @Column(name = "film_booking_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long filmBookingID;
     @ManyToOne
     private Showtime showtime;
     @ManyToOne
+    @JoinColumn(name="username")
     private User user;
     @Column(name = "booking_date")
     @Temporal(TemporalType.TIMESTAMP)

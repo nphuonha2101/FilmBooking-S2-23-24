@@ -35,6 +35,10 @@ public class EditShowtimeController extends HttpServlet {
         showtimeServices = new ShowtimeServicesImpl();
         roomServices = new RoomServicesImpl();
 
+        filmServices.openSession();
+        showtimeServices.openSession();
+        roomServices.openSession();
+
         String showtimeID = req.getParameter("showtime-id_hidden");
         editShowtime = showtimeServices.getByID(showtimeID);
 
@@ -50,10 +54,18 @@ public class EditShowtimeController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        filmServices.closeSession();
+        showtimeServices.closeSession();
+        roomServices.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        filmServices.openSession();
+        roomServices.openSession();
+        showtimeServices.openSession();
+
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
         LocalDateTime showtimeDate = LocalDateTime.parse(req.getParameter("showtime-datetime"), DateTimeFormatter.ISO_DATE_TIME);
@@ -69,6 +81,10 @@ public class EditShowtimeController extends HttpServlet {
         showtimeServices.update(editShowtime);
 
         resp.sendRedirect("showtime-management");
+
+        filmServices.closeSession();
+        roomServices.closeSession();
+        showtimeServices.closeSession();
     }
 
     @Override

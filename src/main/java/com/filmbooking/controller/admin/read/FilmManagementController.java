@@ -21,6 +21,9 @@ public class FilmManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices= new FilmServicesImpl();
+
+        filmServices.openSession();
+
         req.setAttribute("filmsData", filmServices.getAll());
 
         req.setAttribute("pageTitle", "filmManagementTitle");
@@ -28,6 +31,8 @@ public class FilmManagementController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("film-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        filmServices.closeSession();
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));

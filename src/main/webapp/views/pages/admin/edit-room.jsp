@@ -60,7 +60,7 @@
                         <select id="theater-id" name="theater-id">
                             <c:forEach var="theater" items="${theaters}">
                                 <c:choose>
-                                    <c:when test="${editRoom.theaterID eq theater.theaterID}">
+                                    <c:when test="${editRoom.theater.theaterID eq theater.theaterID}">
                                         <option selected value="${theater.theaterID}">${theater.theaterName}
                                             - ${theater.theaterAddress}</option>
                                     </c:when>

@@ -30,12 +30,14 @@ public class LoginController extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userServices = new UserServicesImpl();
+        userServices.openSession();
+
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String password = StringUtils.handlesInputString(req.getParameter("password"));
 
         User loginUser = null;
 
-        userServices = new UserServicesImpl();
 
         ServiceResult serviceResult = userServices.userAuthentication(username, password);
         if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
@@ -56,6 +58,8 @@ public class LoginController extends HttpServlet {
              * if it has no previous page, return to home page
              */
             RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
+
+            userServices.closeSession();
         }
     }
 

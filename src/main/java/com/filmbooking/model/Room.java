@@ -6,11 +6,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "room")
+@Table(name = "rooms")
 public class Room {
     @Column(name = "room_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long roomID;
     @Column(name = "room_name")
     private String roomName;
@@ -23,6 +23,7 @@ public class Room {
     @Column(name = "seats_data")
     private String seatData;
     @ManyToOne
+    @JoinColumn(name = "theater_id")
     private Theater theater;
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;

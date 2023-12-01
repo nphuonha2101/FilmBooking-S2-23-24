@@ -39,6 +39,7 @@ public class AddFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         filmServices = new FilmServicesImpl();
+        filmServices.openSession();
 
         String fileName = req.getParameter("film-img-name");
 
@@ -71,6 +72,8 @@ public class AddFilmController extends HttpServlet {
                     ContextPathUtils.getAdminPagesPath("add-film.jsp"),
                     ContextPathUtils.getLayoutPath("master.jsp"));
         }
+
+        filmServices.closeSession();
     }
 
     @Override

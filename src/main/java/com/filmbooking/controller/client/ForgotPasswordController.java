@@ -34,10 +34,12 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userServices = new UserServicesImpl();
+        userServices.openSession();
+
         String username = req.getParameter("username");
         String email = req.getParameter("email");
 
-        userServices = new UserServicesImpl();
 
         ServiceResult forgotPassResult = userServices.userForgotPassword(username, email);
 
@@ -53,6 +55,7 @@ public class ForgotPasswordController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("forgot.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        userServices.closeSession();
     }
 
     @Override

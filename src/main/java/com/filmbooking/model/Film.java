@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "film")
+@Table(name = "films")
 public class Film {
     @Column(name = "film_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long filmID;
     @Column(name = "film_name")
     private String filmName;
@@ -29,7 +29,7 @@ public class Film {
     private String imgPath;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "film_genre",
+            name = "film_genres",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )

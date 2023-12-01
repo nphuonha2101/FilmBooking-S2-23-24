@@ -19,7 +19,11 @@ public class ShowtimeManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         showtimeServices = new ShowtimeServicesImpl();
 
-        req.setAttribute("showtimeViewDetails", showtimeServices.getAll());
+        showtimeServices.openSession();
+
+        System.out.println(showtimeServices.countAvailableSeats());
+
+        req.setAttribute("showtimeList", showtimeServices.getAll());
         req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
         req.setAttribute("pageTitle", "showtimeManagementTitle");
 
@@ -29,6 +33,8 @@ public class ShowtimeManagementController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        showtimeServices.closeSession();
     }
 
     @Override

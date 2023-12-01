@@ -6,6 +6,7 @@ import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -60,16 +61,22 @@ public class ShowtimeDAOImpl implements IDAO<Showtime> {
     @Override
     public Showtime getByID(String id) {
         long lID = Long.parseLong(id);
+        Showtime result = null;
 
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<Showtime> criteriaQuery = criteriaBuilder.createQuery(Showtime.class);
-        Root<Showtime> rootEntry = criteriaQuery.from(Showtime.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<Showtime> criteriaQuery = criteriaBuilder.createQuery(Showtime.class);
+            Root<Showtime> rootEntry = criteriaQuery.from(Showtime.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
-        TypedQuery<Showtime> typedQuery = this.session.createQuery(criteriaQuery);
+            TypedQuery<Showtime> typedQuery = this.session.createQuery(criteriaQuery);
 
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
+        }
 
-        return typedQuery.getSingleResult();
+        return result;
     }
 
     @Override

@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "theater")
+@Table(name = "theaters")
 public class Theater {
     @Column(name = "theater_id")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long theaterID;
     @Column(name = "theater_name")
     private String theaterName;

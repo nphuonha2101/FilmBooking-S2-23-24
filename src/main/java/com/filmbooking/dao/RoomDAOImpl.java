@@ -6,6 +6,7 @@ import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.Theater;
 import com.filmbooking.utils.HibernateUtils;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -60,16 +61,22 @@ public class RoomDAOImpl implements IDAO<Room> {
     @Override
     public Room getByID(String id) {
         long lID = Long.parseLong(id);
+        Room result = null;
 
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
-        Root<Room> rootEntry = criteriaQuery.from(Room.class);
-        criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
+            Root<Room> rootEntry = criteriaQuery.from(Room.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
-        TypedQuery<Room> typedQuery = this.session.createQuery(criteriaQuery);
+            TypedQuery<Room> typedQuery = this.session.createQuery(criteriaQuery);
 
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
+        }
 
-        return typedQuery.getSingleResult();
+        return result;
     }
     @Override
     public void save(Room room) {

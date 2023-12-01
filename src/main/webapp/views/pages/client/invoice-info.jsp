@@ -36,10 +36,10 @@
 </head>
 <body>
 <c:set var="filmBooking" value="${bookedFilmBooking}"/>
-<c:set var="film" value="${bookedFilm}"/>
-<c:set var="showtime" value="${bookedShowtime}"/>
-<c:set var="room" value="${bookedRoom}"/>
-<c:set var="theater" value="${bookedTheater}"/>
+<c:set var="showtime" value="${filmBooking.showtime}"/>
+<c:set var="film" value="${showtime.film}"/>
+<c:set var="room" value="${showtime.room}"/>
+<c:set var="theater" value="${room.theater}"/>
 <main>
     <section>
         <c:forEach var="seat" items="${filmBooking.seats}" varStatus="loop">

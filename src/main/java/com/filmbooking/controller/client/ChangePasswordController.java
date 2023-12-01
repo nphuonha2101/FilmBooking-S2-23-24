@@ -31,11 +31,13 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        userServices = new UserServicesImpl();
+        userServices.openSession();
+
         String currentPassword = req.getParameter("current-password");
         String newPassword = StringUtils.handlesInputString(req.getParameter("new-password"));
         String confirmNewPassword = StringUtils.handlesInputString(req.getParameter("confirm-new-password"));
 
-        userServices = new UserServicesImpl();
 
         HttpSession userLoginSession = req.getSession();
         User loginUsername = (User) userLoginSession.getAttribute("loginUser");
@@ -64,7 +66,7 @@ public class ChangePasswordController extends HttpServlet {
             req.setAttribute("pageTitle", "changePasswordTitle");
             render(req, resp);
         }
-
+        userServices.closeSession();
     }
 
     @Override

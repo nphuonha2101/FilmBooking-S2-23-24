@@ -42,7 +42,7 @@
                     <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomName"/></label>
                     <select name="room-id" id="room-id">
                         <c:forEach var="room" items="${roomData}" varStatus="loop">
-                            <option value="${room.roomID}">${room.roomName} - ${room.theaterName}</option>
+                            <option value="${room.roomID}">${room.roomName} - ${room.theater.theaterName}</option>
                         </c:forEach>
                     </select>
 
