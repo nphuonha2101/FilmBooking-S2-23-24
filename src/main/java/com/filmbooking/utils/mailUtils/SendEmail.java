@@ -111,6 +111,10 @@ public class SendEmail {
     }
 
     public static void main(String[] args) {
-
+        SendEmail sendEmail = SendEmail.getInstance();
+//        sendEmail.createResetPasswordEmail("123456");
+        Properties properties = PropertiesUtils.getInstance().getProperties();
+        System.out.println(properties.getProperty("email.appPassword"));
+        sendEmail.sendEmailToUser("21130122@st.hcmuaf.edu.vn", "Test", "Test");
     }
 }

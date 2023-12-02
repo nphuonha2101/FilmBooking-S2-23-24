@@ -19,6 +19,7 @@
 </c:choose>
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
+<fmt:setBundle basename="properties.statusCode" var="statusCode"/>
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
@@ -28,7 +29,7 @@
             <span class="successful-span message-span" id="successful-message">
                     <span class="material-symbols-rounded">
                         task_alt </span>
-                <fmt:message key="${statusCodeSuccess}" bundle="${msg}"/>
+                <fmt:message key="${statusCodeSuccess}" bundle="${statusCode}"/>
             </span>
         </c:if>
 
@@ -36,7 +37,7 @@
             <span class="error-span message-span" id="error-message">
                 <span class="material-symbols-rounded">
                 warning</span>
-                <fmt:message key="${statusCodeErr}" bundle="${msg}"/>
+                <fmt:message key="${statusCodeErr}" bundle="${statusCode}"/>
             </span>
         </c:if>
 
