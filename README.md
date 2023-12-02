@@ -24,16 +24,18 @@ good foundation for anyone looking to understand how to use Java, Servlet, and J
     - Tomcat 10
 
 - ##### Clone this project:
+    - If you have no git already installed on your device, just download **zip** file and extract it.
+    - If you have installed git, then follow these commands below:
   ```bash 
-    $git clone https://github.com/nphuonha2101/FilmBooking-WebProgramming.git
+    git clone https://github.com/nphuonha2101/FilmBooking-WebProgramming.git
   ```
   ```bash 
-    $cd FilmBooking-WebProgramming
+    cd FilmBooking-WebProgramming
   ```
     - In this project, we use IntelliJ IDEA to develop. You can use any IDE that you want. With IntelliJ IDEA, we can prompt `idea64 .` to open this project.
 
 - ##### Run this project:
-    - Create database: you can create database with sql file in the folder **sql**. The DBMS that we used is Postgres SQL.
+    - Create database: you can create a database with sql file in the folder **sql**. The DBMS that we used is Postgres SQL.
     - Change the database information in the file ```src/main/resources/properties/application.properties```.
     - Configure Tomcat 10 in IntelliJ IDEA: You can follow [here](#configure-tomcat-10-in-intellij-idea) to configure Tomcat 10 in IntelliJ IDEA. 
     - Run the project: You can run the project by clicking on the **Run** button in IntelliJ IDEA or you can press `Shift + F10`.
@@ -47,7 +49,7 @@ good foundation for anyone looking to understand how to use Java, Servlet, and J
 ## Technologies Used
 
 - **Java**: The main programming language used for developing the application.
-- **Servlet**: Used for extending the capabilities of servers that host applications accessed by means of a request-response model.
+- **Servlet**: Used for extending the capabilities of servers that host applications accessed using a request-response model.
 - **JSP (JavaServer Pages)**: Used for creating dynamic web content.
 
 ## Configure Tomcat 10 in IntelliJ IDEA
