@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.User;
 import com.filmbooking.services.*;
@@ -17,18 +18,12 @@ import java.io.IOException;
 @WebServlet("/booking-history")
 public class BookingHistoryController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-    private IShowtimeViewServices showtimeViewServices;
-    private ITheaterServices theaterServices;
-    private IShowtimeServices showtimeServices;
-    private IFilmServices filmServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new FilmBookingServicesImpl();
-        showtimeViewServices = new ShowtimeViewServicesImpl();
-        theaterServices = new TheaterServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
-        filmServices = new FilmServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "bookingHistoryTitle");
 
@@ -37,25 +32,19 @@ public class BookingHistoryController extends HttpServlet {
             if (loginUser.getAccountRole().equalsIgnoreCase("admin"))
                 req.setAttribute("filmBookings", filmBookingServices.getAll());
             else
-                req.setAttribute("filmBookings", filmBookingServices.getAllByUsername(loginUser.getUsername()));
+                req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
-        req.setAttribute("showtimeViewsMap", showtimeViewServices.getShowtimeViewAndShowtimeID());
-        req.setAttribute("theatersMap", theaterServices.getTheaterAndTheaterID());
-        req.setAttribute("showtimesMap", showtimeServices.getShowtimeAndShowtimeID());
-        req.setAttribute("filmsMap", filmServices.getFilmAndFilmID());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmBookingServices = null;
-        showtimeViewServices = null;
-        theaterServices = null;
-        showtimeServices = null;
-        filmServices = null;
+        hibernateSessionProvider = null;
     }
 }

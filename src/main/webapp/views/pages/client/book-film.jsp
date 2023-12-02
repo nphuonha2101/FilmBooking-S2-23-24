@@ -24,10 +24,10 @@
 
 <section class="section centered-vertical-content">
     <div class="container centered-vertical-content wrapper">
-        <c:set var="bookedFilm" value="${bookedFilm}"/>
         <c:set var="bookedShowtime" value="${bookedShowtime}"/>
-        <c:set var="bookedRoom" value="${bookedRoom}"/>
-        <c:set var="bookedTheater" value="${bookedTheater}"/>
+        <c:set var="bookedFilm" value="${bookedShowtime.film}"/>
+        <c:set var="bookedRoom" value="${bookedShowtime.room}"/>
+        <c:set var="bookedTheater" value="${bookedRoom.theater}"/>
 
         <h2 class="title"><fmt:message key="bookingFilmSectionTitle" bundle="${pageTitle}"/> </h2>
 
@@ -48,7 +48,7 @@
                         <%--Seats table--%>
                         <table class="seats-table">
                             <tbody>
-                            <c:set var="roomSeats" value="${bookedShowtime.seatsMatrix}"/>
+                            <c:set var="roomSeats" value="${showtimeIDAndSeatMatrix[bookedShowtime.showtimeID]}"/>
                             <c:forEach var="roomSeatsRow" items="${roomSeats}" varStatus="row">
                                 <tr>
                                     <c:forEach var="roomSeat" items="${roomSeatsRow}" varStatus="seat">

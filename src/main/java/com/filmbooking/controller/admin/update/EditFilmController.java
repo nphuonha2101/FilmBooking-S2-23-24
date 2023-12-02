@@ -1,8 +1,8 @@
 package com.filmbooking.controller.admin.update;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmGenre;
-import com.filmbooking.services.impls.FilmGenreServicesImpl;
+import com.filmbooking.model.Genre;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -25,33 +25,29 @@ import java.util.List;
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
-    private FilmGenreServicesImpl filmGenreServices;
     private Film editFilm;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
-        filmGenreServices = new FilmGenreServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String filmId = req.getParameter("film-id_hidden");
-
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
-        List<FilmGenre> filmGenreList = filmGenreServices.getAll();
-        int countGenre = 0;
-        for (FilmGenre filmGenre : filmGenreList) {
-            if (filmGenre.getFilmID().equalsIgnoreCase(filmId)) {
-                countGenre++;
-                if (countGenre > 1)
-                    filmGenreIDs.append(" ").append(filmGenre.getGenreID());
-                else filmGenreIDs.append(filmGenre.getGenreID());
-            }
-        }
-        req.setAttribute("filmGenreIDs", filmGenreIDs.toString());
+        List<Genre> filmGenreList = editFilm.getGenreList();
+
+        filmGenreList.stream().forEach(genre -> {
+            filmGenreIDs.append(genre.getGenreID());
+            filmGenreIDs.append(" ");
+        });
+
+        req.setAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
 
         req.setAttribute("pageTitle", "editFilmTitle");
 
@@ -61,10 +57,15 @@ public class EditFilmController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
         String filmDirector = StringUtils.handlesInputString(req.getParameter("director"));
@@ -104,12 +105,15 @@ public class EditFilmController extends HttpServlet {
 
         resp.sendRedirect("film-management");
 
+        hibernateSessionProvider.closeSession();
+
     }
 
     @Override
     public void destroy() {
         filmServices = null;
-        filmGenreServices = null;
+        editFilm = null;
+        hibernateSessionProvider = null;
     }
 }
 

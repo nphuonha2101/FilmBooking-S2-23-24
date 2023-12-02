@@ -4,8 +4,8 @@ package com.filmbooking.controller.admin.delete;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
-import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,15 +18,16 @@ import java.io.IOException;
 @WebServlet(name = "deleteFilm", value = "/delete-film")
 public class DeleteFilmController extends HttpServlet {
     private IFilmServices filmServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String filmID = req.getParameter("film-id_hidden");
-        System.out.println("DeleteFilmController Test: " + filmID);
 
-        System.out.println(filmServices.getByFilmID(filmID));
+//        System.out.println(filmServices.getByFilmID(filmID));
 
         Film deletedFilm = filmServices.getByFilmID(filmID);
         filmServices.delete(deletedFilm);
@@ -37,14 +38,15 @@ public class DeleteFilmController extends HttpServlet {
         File file = new File(filmImgFilePath);
         file.delete();
 
-//
         resp.sendRedirect("admin");
 
-
+        hibernateSessionProvider.closeSession();
+        System.out.println(hibernateSessionProvider.getSession());
     }
 
     @Override
     public void destroy() {
         filmServices = null;
+        hibernateSessionProvider = null;
     }
 }

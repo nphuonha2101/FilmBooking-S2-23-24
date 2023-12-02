@@ -2,25 +2,29 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.ShowtimeDAOImpl;
-import com.filmbooking.model.FilmBooking;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.services.IGetObjectAndObjectIDService;
 import com.filmbooking.services.IShowtimeServices;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObjectIDService<Showtime> {
-    private IDAO<Showtime> showtimeDAO;
-    private IFilmBookingServices filmBookingServices;
+public class ShowtimeServicesImpl implements IShowtimeServices {
+    private final IDAO<Showtime> showtimeDAO;
 
     public ShowtimeServicesImpl() {
-        this.showtimeDAO = new ShowtimeDAOImpl();
-        filmBookingServices = new FilmBookingServicesImpl(this);
-        hideOldShowtime();
+        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+    }
+
+    public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
+        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        showtimeDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -31,22 +35,6 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
     @Override
     public Showtime getByID(String id) {
         return showtimeDAO.getByID(id);
-    }
-
-    @Override
-    public List<Showtime> getByFilmID(String filmID) {
-        List<Showtime> result = new ArrayList<>();
-        for (Showtime showtime : this.getAll()
-        ) {
-            if (showtime.getFilmID().equalsIgnoreCase(filmID))
-                result.add(showtime);
-        }
-        return result;
-    }
-
-    @Override
-    public HashMap<String, Showtime> getShowtimeAndShowtimeID() {
-        return this.getObjectAndObjectID(this.getAll());
     }
 
     @Override
@@ -61,13 +49,6 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
 
     @Override
     public void delete(Showtime showtime) {
-        List<FilmBooking> filmBookingList = filmBookingServices.getAll();
-
-        filmBookingList.stream().forEach(filmBooking -> {
-            if (filmBooking.getShowtimeID().equalsIgnoreCase(showtime.getShowtimeID()))
-                filmBookingServices.delete(filmBooking);
-        });
-
         showtimeDAO.delete(showtime);
     }
 
@@ -78,8 +59,8 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
     }
 
     @Override
-    public HashMap<String, Integer> countAvailableSeats() {
-        HashMap<String, Integer> result = new HashMap<>();
+    public HashMap<Long, Integer> countAvailableSeats() {
+        HashMap<Long, Integer> result = new HashMap<>();
 
         for (Showtime showtime : getAll()
         ) {
@@ -90,11 +71,15 @@ public class ShowtimeServicesImpl implements IShowtimeServices, IGetObjectAndObj
     }
 
     @Override
-    public String getObjectID(Showtime obj) {
-        return obj.getShowtimeID();
+    public HashMap<Long, String[][]> getShowtimeIDAndSeatMatrix() {
+        HashMap<Long, String[][]> result = new HashMap<>();
+
+        for (Showtime showtime : getAll()
+        ) {
+            String[][] seatsMatrix = showtime.getSeatsMatrix();
+            result.put(showtime.getShowtimeID(), seatsMatrix);
+        }
+        return result;
     }
 
-    private void hideOldShowtime() {
-        this.getAll().removeIf(showtime -> showtime.getShowtimeDate().isBefore(LocalDateTime.now()));
-    }
 }

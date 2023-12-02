@@ -7,6 +7,7 @@ import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.utils.mailUtils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegex;
@@ -17,8 +18,17 @@ public class UserServicesImpl implements IUserServices {
     private final IDAO<User> userDAO;
 
     public UserServicesImpl() {
-        userDAO = new UserDAOImpl();
-//        getAll();
+        userDAO = UserDAOImpl.getInstance();
+    }
+
+    public UserServicesImpl(HibernateSessionProvider sessionProvider) {
+        userDAO = UserDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        userDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -48,6 +58,7 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public void update(User user) {
+
         userDAO.update(user);
     }
 

@@ -1,7 +1,7 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
-import com.filmbooking.model.view.ShowtimeView;
 import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
 import com.filmbooking.utils.ContextPathUtils;
@@ -17,30 +17,23 @@ import java.util.Arrays;
 @WebServlet("/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-    private IFilmServices filmServices;
-    private IShowtimeServices showtimeServices;
-    private ITheaterServices theaterServices;
-    private IRoomServices roomServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new FilmBookingServicesImpl();
-        filmServices = new FilmServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
-        roomServices = new RoomServicesImpl();
-        theaterServices = new TheaterServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
 
         String bookingID = req.getParameter("booking-id");
 
         System.out.println("Booking ID: " + bookingID);
 
         FilmBooking filmBooking = filmBookingServices.getByFilmBookingID(bookingID);
-        System.out.println(filmBooking);
-        System.out.println(Arrays.toString(filmBooking.getSeats()));
-        Showtime bookedShowtime = showtimeServices.getByID(filmBooking.getShowtimeID());
-        Room bookedRoom = roomServices.getByRoomID(bookedShowtime.getRoomID());
-        Film bookedFilm = filmServices.getByFilmID(bookedShowtime.getFilmID());
-        Theater bookedTheater = theaterServices.getByID(bookedRoom.getTheaterID());
+
+        Showtime bookedShowtime = filmBooking.getShowtime();
+        Room bookedRoom = bookedShowtime.getRoom();
+        Film bookedFilm = bookedShowtime.getFilm();
+        Theater bookedTheater = bookedRoom.getTheater();
 
 
         req.setAttribute("bookedFilmBooking", filmBooking);
@@ -52,14 +45,12 @@ public class InvoiceInfoController extends HttpServlet {
         req.setAttribute("pageTitle", "invoiceInfoTitle");
         req.getRequestDispatcher(ContextPathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
 
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
-        filmServices = null;
         filmBookingServices = null;
-        showtimeServices = null;
-        theaterServices = null;
-        roomServices = null;
+        hibernateSessionProvider = null;
     }
 }

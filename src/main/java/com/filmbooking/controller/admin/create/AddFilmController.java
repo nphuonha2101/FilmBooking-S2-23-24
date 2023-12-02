@@ -1,12 +1,16 @@
 package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.model.Film;
+import com.filmbooking.model.Genre;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -16,16 +20,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "addFilm", value = "/add-film")
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
     private IFilmServices filmServices;
+    private IGenreServices genreServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
-
         req.setAttribute("pageTitle", "addFilmTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
@@ -38,7 +44,10 @@ public class AddFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
         String fileName = req.getParameter("film-img-name");
 
@@ -65,16 +74,17 @@ public class AddFilmController extends HttpServlet {
 
             resp.sendRedirect("admin");
         } else {
-            req.setAttribute("fileUploadError", "Lỗi tải file lên!");
-//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getAdminPagesPath("add-film.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp,
                     ContextPathUtils.getAdminPagesPath("add-film.jsp"),
                     ContextPathUtils.getLayoutPath("master.jsp"));
         }
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmServices = null;
+        hibernateSessionProvider = null;
     }
 }

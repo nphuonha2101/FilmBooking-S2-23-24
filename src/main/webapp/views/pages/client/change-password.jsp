@@ -62,6 +62,6 @@
 
             <input type="submit" class="primary-filled-button button" value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>
-        <span>${additionElement}</span>
+        <p><fmt:message bundle="${msg}" key="return"/> <span><a class="links" href="account-info"><fmt:message bundle="${msg}" key="info"/> </a> </span></p>
     </div>
 </section>

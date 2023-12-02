@@ -1,139 +1,94 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeDAOImpl implements IDAO<Showtime> {
-    private DatabaseConnection databaseConnection;
-    private List<Showtime> showtimeList;
-    private static final String TABLE_NAME = "showtime";
+    private static ShowtimeDAOImpl instance = null;
+    private Session session;
 
-    public ShowtimeDAOImpl() {
-        showtimeList = new ArrayList<>();
-        databaseConnection = DatabaseConnection.getInstance();
+    private ShowtimeDAOImpl() {
+    }
 
+    public static ShowtimeDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new ShowtimeDAOImpl();
+        }
+        return instance;
+    }
+
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
     public List<Showtime> getAll() {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
+        List<Showtime> result;
 
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        // declare an object that want to query
+        CriteriaQuery<Showtime> criteriaQuery = criteriaBuilder.createQuery(Showtime.class);
+        Root<Showtime> rootEntry = criteriaQuery.from(Showtime.class);
+        CriteriaQuery<Showtime> all = criteriaQuery.select(rootEntry);
 
-            while (resultSet.next()) {
-                String showtimeID = resultSet.getString("showtime_id");
-                String filmID = resultSet.getString("film_id");
-                String roomID = resultSet.getString("room_id");
-                LocalDateTime showtimeDate = resultSet.getTimestamp("showtime_date").toLocalDateTime();
-                String seatsData = resultSet.getString("seats_data");
+        TypedQuery<Showtime> allQuery = this.session.createQuery(all);
 
-                Showtime showtime = new Showtime(showtimeID, filmID, roomID, showtimeDate, seatsData);
+        result = allQuery.getResultList();
 
-                showtimeList.add(0, showtime);
-            }
-            resultSet.close();
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return showtimeList;
+        return result;
     }
+
 
     @Override
     public Showtime getByID(String id) {
-        getAll();
+        long lID = Long.parseLong(id);
+        Showtime result = null;
 
-        for (Showtime showtimeInList : showtimeList
-        ) {
-            if (showtimeInList.getShowtimeID().equalsIgnoreCase(id))
-                return showtimeInList;
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<Showtime> criteriaQuery = criteriaBuilder.createQuery(Showtime.class);
+            Root<Showtime> rootEntry = criteriaQuery.from(Showtime.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
+
+            TypedQuery<Showtime> typedQuery = this.session.createQuery(criteriaQuery);
+
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
         }
-        return null;
+
+        return result;
     }
 
     @Override
     public void save(Showtime showtime) {
-        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getShowtimeID());
-        for (Showtime s: this.getAll()) {
-            if (Integer.parseInt(s.getShowtimeID()) > largestID)
-                largestID = Integer.parseInt(s.getShowtimeID());
-        }
-        largestID++;
-        showtime.setShowtimeID(String.valueOf(largestID));
-databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String querySave = "INSERT INTO " + TABLE_NAME + "(showtime_id, film_id, room_id, showtime_date, seats_data)"
-                + " VALUES(?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
-
-            preparedStatement.setString(1, showtime.getShowtimeID());
-            preparedStatement.setString(2, showtime.getFilmID());
-            preparedStatement.setString(3, showtime.getRoomID());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(showtime.getShowtimeDate()));
-            preparedStatement.setString(5, showtime.getSeatsData());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.persist(showtime);
+        transaction.commit();
     }
 
     @Override
     public void update(Showtime showtime) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryUpdate = "UPDATE " + TABLE_NAME + " SET film_id = ?, room_id = ?, showtime_date = ?, seats_data = ?"
-                + " WHERE showtime_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
-            preparedStatement.setString(1, showtime.getFilmID());
-            preparedStatement.setString(2, showtime.getRoomID());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(showtime.getShowtimeDate()));
-            preparedStatement.setString(4, showtime.getSeatsData());
-            preparedStatement.setString(5, showtime.getShowtimeID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        Transaction transaction = session.beginTransaction();
+        session.merge(showtime);
+        transaction.commit();
     }
 
     @Override
     public void delete(Showtime showtime) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE showtime_id = ?";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
-            preparedStatement.setString(1, showtime.getShowtimeID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.remove(showtime);
+        transaction.commit();
     }
 }

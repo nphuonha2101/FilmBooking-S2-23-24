@@ -1,155 +1,90 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.Room;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDAOImpl implements IDAO<Room> {
-    private static final String TABLE_NAME = "room";
-    private final DatabaseConnection databaseConnection;
-    private final List<Room> roomList;
+    private static RoomDAOImpl instance = null;
+    private Session session;
 
-    public RoomDAOImpl() {
-        this.roomList = new ArrayList<>();
-        this.databaseConnection = DatabaseConnection.getInstance();
+    private RoomDAOImpl() {
+    }
+
+    public static RoomDAOImpl getInstance() {
+        if (instance == null) {
+            instance = new RoomDAOImpl();
+        }
+        return instance;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
     public List<Room> getAll() {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
+        List<Room> result;
 
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        // declare an object that want to query
+        CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
+        Root<Room> rootEntry = criteriaQuery.from(Room.class);
+        CriteriaQuery<Room> all = criteriaQuery.select(rootEntry);
 
-            while (resultSet.next()) {
-                String roomID = resultSet.getString("room_id");
-                String roomName = resultSet.getString("room_name");
-                int seatRows = resultSet.getInt("seat_rows");
-                int seatCols = resultSet.getInt("seat_cols");
-                String seatData = resultSet.getString("seats_data");
-                String theaterID = resultSet.getString("theater_id");
+        TypedQuery<Room> allQuery = this.session.createQuery(all);
 
-                Room newRoom = new Room(roomID, roomName, seatRows, seatCols, seatData, theaterID);
+        result = allQuery.getResultList();
 
-                roomList.add(0, newRoom);
-
-            }
-            resultSet.close();
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return roomList;
+        return result;
     }
-
     @Override
     public Room getByID(String id) {
-        getAll();
-
-        for (Room room : roomList
-        ) {
-            if (room.getRoomID().equalsIgnoreCase(id))
-                return room;
-        }
-        return null;
-    }
-
-    @Override
-    public void save(Room room) {
-        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getRoomID());
-        for (Room r : this.getAll()) {
-            if (Integer.parseInt(r.getRoomID()) > largestID)
-                largestID = Integer.parseInt(r.getRoomID());
-        }
-        largestID++;
-        room.setRoomID(String.valueOf(largestID));
-
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String querySave = "INSERT INTO " + TABLE_NAME + "(room_id, room_name, seat_rows, seat_cols, seats_data, theater_id)" +
-                " VALUES(?, ?, ?, ?, ?, ?)";
+        long lID = Long.parseLong(id);
+        Room result = null;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySave);
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
+            Root<Room> rootEntry = criteriaQuery.from(Room.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
 
-            preparedStatement.setString(1, room.getRoomID());
-            preparedStatement.setString(2, room.getRoomName());
-            preparedStatement.setInt(3, room.getSeatRows());
-            preparedStatement.setInt(4, room.getSeatCols());
-            preparedStatement.setString(5, room.getSeatData());
-            preparedStatement.setString(6, room.getTheaterID());
+            TypedQuery<Room> typedQuery = this.session.createQuery(criteriaQuery);
 
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-
-            throw new RuntimeException(e);
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
         }
 
+        return result;
+    }
+    @Override
+    public void save(Room room) {
+        Transaction transaction = session.beginTransaction();
+        session.persist(room);
+        transaction.commit();
     }
 
     @Override
     public void update(Room room) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryUpdate = "UPDATE " + TABLE_NAME +
-                " SET room_name = ?, seat_rows = ?, seat_cols = ?, seats_data = ?, theater_id = ? WHERE room_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryUpdate);
-
-
-            preparedStatement.setString(1, room.getRoomName());
-            preparedStatement.setInt(2, room.getSeatRows());
-            preparedStatement.setInt(3, room.getSeatCols());
-            preparedStatement.setString(4, room.getSeatData());
-            preparedStatement.setString(5, room.getTheaterID());
-
-            preparedStatement.setString(6, room.getRoomID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.merge(room);
+        transaction.commit();
     }
 
     @Override
     public void delete(Room room) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        String queryDelete = "DELETE FROM " + TABLE_NAME + " WHERE room_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryDelete);
-
-            preparedStatement.setString(1, room.getRoomID());
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.remove(room);
+        transaction.commit();
     }
 }

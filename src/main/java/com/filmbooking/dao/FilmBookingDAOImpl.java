@@ -1,147 +1,94 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
-    private static final String TABLE_NAME = "film_booking";
-    private final List<FilmBooking> filmBookingList;
+    private static FilmBookingDAOImpl instance = null;
 
-    private final DatabaseConnection databaseConnection;
+    private Session session;
 
-    public FilmBookingDAOImpl() {
-        filmBookingList = new ArrayList<>();
-        databaseConnection = DatabaseConnection.getInstance();
+    private FilmBookingDAOImpl() {
+    }
 
+    public static FilmBookingDAOImpl getInstance() {
+        if (instance == null)
+            instance = new FilmBookingDAOImpl();
+        return instance;
+    }
+
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
     public List<FilmBooking> getAll() {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-        String queryGetAll = "SELECT * FROM " + TABLE_NAME;
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryGetAll);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        List<FilmBooking> result;
 
-            while (resultSet.next()) {
-                String filmBookingID = resultSet.getString("film_booking_id");
-                String username = resultSet.getString("username");
-                String showtimeID = resultSet.getString("showtime_id");
-                LocalDateTime bookingDate = resultSet.getTimestamp("booking_date").toLocalDateTime();
-                String seatsData = resultSet.getString("seats");
-                double totalPrice = resultSet.getDouble("total_fee");
+        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+        // declare an object that want to query
+        CriteriaQuery<FilmBooking> criteriaQuery = criteriaBuilder.createQuery(FilmBooking.class);
+        Root<FilmBooking> rootEntry = criteriaQuery.from(FilmBooking.class);
+        CriteriaQuery<FilmBooking> all = criteriaQuery.select(rootEntry);
 
-                FilmBooking newFilmBooking = new FilmBooking(filmBookingID, username, showtimeID, bookingDate, seatsData,
-                        totalPrice);
+        TypedQuery<FilmBooking> allQuery = this.session.createQuery(all);
 
-                filmBookingList.add(0, newFilmBooking);
-            }
-            resultSet.close();
-            preparedStatement.close();
-            databaseConnection.close();
-            return filmBookingList;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        result = allQuery.getResultList();
+
+        return result;
     }
 
     @Override
     public FilmBooking getByID(String id) {
-        getAll();
-        for (FilmBooking filmBooking : filmBookingList
-        ) {
-            if (id.equalsIgnoreCase(filmBooking.getFilmBookingID())) return filmBooking;
+        long lID = Long.parseLong(id);
+        FilmBooking result = null;
+
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<FilmBooking> criteriaQuery = criteriaBuilder.createQuery(FilmBooking.class);
+            Root<FilmBooking> rootEntry = criteriaQuery.from(FilmBooking.class);
+            criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), lID));
+
+            TypedQuery<FilmBooking> typedQuery = this.session.createQuery(criteriaQuery);
+
+            result = typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            e.printStackTrace(System.out);
         }
-        return null;
+
+        return result;
     }
 
     @Override
     public void save(FilmBooking filmBooking) {
-        int largestID = this.getAll().isEmpty() ? 0 : Integer.parseInt(this.getAll().get(0).getFilmBookingID());
-        for (FilmBooking fb : this.getAll()) {
-            if (Integer.parseInt(fb.getFilmBookingID()) > largestID)
-                largestID = Integer.parseInt(fb.getFilmBookingID());
-        }
-        largestID++;
-        filmBooking.setFilmBookingID(String.valueOf(largestID));
-
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-        String queryAdd = "INSERT INTO " + TABLE_NAME + "(film_booking_id, username, showtime_id, booking_date, " +
-                "seats, " +
-                "total_fee) " +
-                "VALUES(?, ?, ?, ?, ?, ?)";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryAdd);
-            preparedStatement.setString(1, String.valueOf(largestID));
-            preparedStatement.setString(2, filmBooking.getUsername());
-            preparedStatement.setString(3, filmBooking.getShowtimeID());
-            preparedStatement.setTimestamp(4, Timestamp.valueOf(filmBooking.getBookingDate()));
-            preparedStatement.setString(5, filmBooking.getSeatsData());
-            preparedStatement.setDouble(6, filmBooking.getTotalFee());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.persist(filmBooking);
+        transaction.commit();
     }
 
     @Override
     public void update(FilmBooking filmBooking) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-
-        //showtime_id, username, booking_date, seat, total_price
-        String querySet = "UPDATE " + TABLE_NAME
-                + " SET showtime_id = ?, username = ?, booking_date = ?, seats = ?, total_fee = ? WHERE " +
-                "film_booking_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(querySet);
-
-            preparedStatement.setString(1, filmBooking.getShowtimeID());
-            preparedStatement.setString(2, filmBooking.getUsername());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(filmBooking.getBookingDate()));
-            preparedStatement.setString(4, filmBooking.getSeatsData());
-            preparedStatement.setDouble(5, filmBooking.getTotalFee());
-
-            preparedStatement.setString(6, filmBooking.getFilmBookingID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.merge(filmBooking);
+        transaction.commit();
     }
 
     @Override
     public void delete(FilmBooking filmBooking) {
-        databaseConnection.connect();
-        Connection connection = databaseConnection.getConnection();
-        String queryDel = "DELETE FROM " + TABLE_NAME + " WHERE film_booking_id = ?";
-
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryDel);
-            preparedStatement.setString(1, filmBooking.getFilmBookingID());
-
-            preparedStatement.executeUpdate();
-
-            preparedStatement.close();
-            databaseConnection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        Transaction transaction = session.beginTransaction();
+        session.remove(filmBooking);
+        transaction.commit();
     }
-}
 
+}

@@ -1,18 +1,14 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.Genre;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.model.view.FilmGenreDetailView;
-import com.filmbooking.model.view.ShowtimeView;
-import com.filmbooking.services.IFilmGenreDetailViewServices;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IShowtimeServices;
-import com.filmbooking.services.IShowtimeViewServices;
-import com.filmbooking.services.impls.FilmGenreDetailViewServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -23,15 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "filmInfo", value = "/film-info")
 public class FilmInfoController extends HttpServlet {
     private IFilmServices filmServices;
-    private IFilmGenreDetailViewServices filmGenreDetailViewServices;
     private IShowtimeServices showtimeServices;
-    private IShowtimeViewServices showtimeViewServices;
     private String queryString;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     public void init() throws ServletException {
@@ -42,28 +36,23 @@ public class FilmInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         queryString = req.getQueryString();
 
-        filmServices = new FilmServicesImpl();
-        filmGenreDetailViewServices = new FilmGenreDetailViewServicesImpl();
-        showtimeViewServices = new ShowtimeViewServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
         String filmID = req.getParameter("film-id");
 
         Film bookedFilm = filmServices.getByFilmID(filmID);
 
-        List<Showtime> showtimeListOfThisFilm = showtimeServices.getByFilmID(filmID);
-        List<ShowtimeView> showtimeViewsOfThisFilm = showtimeViewServices.getViewFromShowtimes(showtimeListOfThisFilm);
-
         // get film genre names
         StringBuilder filmGenreNames = new StringBuilder();
-        List<FilmGenreDetailView> genreDetailsOfFilm = filmGenreDetailViewServices.getByFilmID(filmID);
 
-        for (FilmGenreDetailView filmGenreDetailView : genreDetailsOfFilm
+        for (Genre genre : bookedFilm.getGenreList()
         ) {
             if (filmGenreNames.length() > 1)
-                filmGenreNames.append(", ").append(filmGenreDetailView.getGenreName());
+                filmGenreNames.append(", ").append(genre.getGenreName());
             else
-                filmGenreNames.append(filmGenreDetailView.getGenreName());
+                filmGenreNames.append(genre.getGenreName());
         }
 
         req.setAttribute("sectionTitle", "Thông tin đặt phim");
@@ -71,34 +60,40 @@ public class FilmInfoController extends HttpServlet {
 
         req.setAttribute("filmData", bookedFilm);
         req.setAttribute("filmGenreNames", filmGenreNames.toString());
-        req.setAttribute("showtimeViewDetails", showtimeViewsOfThisFilm);
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("film-info.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+
         if (req.getSession().getAttribute("loginUser") == null) {
             RedirectPageUtils.redirectPage("login", queryString, req, resp);
             return;
         }
         String bookedShowtimeID = req.getParameter("showtime-id");
+        Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
 
         FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
-        filmBooking.setShowtimeID(bookedShowtimeID);
+        filmBooking.setShowtime(bookedShowtime);
+
         req.getSession(false).setAttribute("filmBooking", filmBooking);
 
         resp.sendRedirect("book-film");
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmServices = null;
-        filmGenreDetailViewServices = null;
         showtimeServices = null;
-        showtimeViewServices = null;
-
+        hibernateSessionProvider = null;
     }
 }

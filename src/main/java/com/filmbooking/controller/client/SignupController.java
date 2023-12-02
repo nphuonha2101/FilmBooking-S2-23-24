@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -17,8 +18,8 @@ import java.io.IOException;
 
 @WebServlet(name = "signup", value = "/signup")
 public class SignupController extends HttpServlet {
-
     private IUserServices userServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     public void init() throws ServletException {
@@ -36,12 +37,14 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        userServices = new UserServicesImpl(hibernateSessionProvider);
+
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String userEmail = StringUtils.handlesInputString(req.getParameter("email"));
         String userPassword = StringUtils.handlesInputString(req.getParameter("password"));
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
-        userServices = new UserServicesImpl();
 
         // username existed!
         if (userServices.getByUsername(username) != null) {
@@ -64,10 +67,13 @@ public class SignupController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("signup.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServices = null;
+        hibernateSessionProvider = null;
     }
 }

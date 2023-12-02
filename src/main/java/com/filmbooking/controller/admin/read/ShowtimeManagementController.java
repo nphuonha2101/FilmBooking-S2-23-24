@@ -1,9 +1,8 @@
 package com.filmbooking.controller.admin.read;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.IShowtimeServices;
-import com.filmbooking.services.IShowtimeViewServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.services.impls.ShowtimeViewServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -16,14 +15,16 @@ import java.io.IOException;
 
 @WebServlet("/showtime-management")
 public class ShowtimeManagementController extends HttpServlet {
-    private IShowtimeViewServices showtimeViewServices;
     private IShowtimeServices showtimeServices;
+    private HibernateSessionProvider hibernateSessionProvider;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeViewServices = new ShowtimeViewServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        req.setAttribute("showtimeViewDetails", showtimeViewServices.getAll());
+        System.out.println(showtimeServices.countAvailableSeats());
+
+        req.setAttribute("showtimeList", showtimeServices.getAll());
         req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
         req.setAttribute("pageTitle", "showtimeManagementTitle");
 
@@ -33,11 +34,13 @@ public class ShowtimeManagementController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
-        showtimeViewServices = null;
         showtimeServices = null;
+        hibernateSessionProvider = null;
     }
 }

@@ -3,6 +3,7 @@ package com.filmbooking.controller.admin.delete;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -14,9 +15,13 @@ import java.io.IOException;
 @WebServlet("/delete-showtime")
 public class DeleteShowtimeController extends HttpServlet {
     private IShowtimeServices showtimeServices;
+    private HibernateSessionProvider hibernateSessionProvider;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeServices = new ShowtimeServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+
 
         String showtimeID = req.getParameter("showtime-id_hidden");
 
@@ -26,10 +31,13 @@ public class DeleteShowtimeController extends HttpServlet {
 
         resp.sendRedirect("showtime-management");
 
+        hibernateSessionProvider.closeSession();
+
     }
 
     @Override
     public void destroy() {
         showtimeServices = null;
+        hibernateSessionProvider = null;
     }
 }

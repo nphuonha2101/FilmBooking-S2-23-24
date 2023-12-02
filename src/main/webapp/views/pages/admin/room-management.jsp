@@ -53,7 +53,7 @@
                             <td>${room.roomName}</td>
                             <td>${room.seatRows}</td>
                             <td>${room.seatCols}</td>
-                            <td>${room.theaterName}</td>
+                            <td>${room.theater.theaterName}</td>
                             <td>${room.seatRows * room.seatCols}</td>
 
                             <td>

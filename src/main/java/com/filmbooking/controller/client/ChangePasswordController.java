@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 public class ChangePasswordController extends HttpServlet {
     private IUserServices userServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,23 +33,24 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        userServices = new UserServicesImpl(hibernateSessionProvider);
+
         String currentPassword = req.getParameter("current-password");
         String newPassword = StringUtils.handlesInputString(req.getParameter("new-password"));
         String confirmNewPassword = StringUtils.handlesInputString(req.getParameter("confirm-new-password"));
 
-        userServices = new UserServicesImpl();
+        HttpSession session = req.getSession();
+        User loginUser = (User) session.getAttribute("loginUser");
 
-        HttpSession userLoginSession = req.getSession();
-        User loginUsername = (User) userLoginSession.getAttribute("loginUser");
 
-        User foundUser = userServices.getByUsername(loginUsername.getUsername());
-
-        if (foundUser.getUserPassword().equals(StringUtils.generateSHA256String(currentPassword))) {
+        if (loginUser.getUserPassword().equals(StringUtils.generateSHA256String(currentPassword))) {
             if (newPassword.equals(confirmNewPassword)) {
                 newPassword = StringUtils.generateSHA256String(newPassword);
-                foundUser.setUserPassword(newPassword);
+                loginUser.setUserPassword(newPassword);
+                session.setAttribute("loginUser", loginUser);
 
-                userServices.update(foundUser);
+                userServices.update(loginUser);
                 req.setAttribute("statusCodeSuccess", StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL.getStatusCode());
                 req.setAttribute("pageTitle", "changePasswordTitle");
                 render(req, resp);
@@ -64,12 +67,13 @@ public class ChangePasswordController extends HttpServlet {
             req.setAttribute("pageTitle", "changePasswordTitle");
             render(req, resp);
         }
-
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServices = null;
+        hibernateSessionProvider = null;
     }
 
     private void render(HttpServletRequest req, HttpServletResponse resp) {

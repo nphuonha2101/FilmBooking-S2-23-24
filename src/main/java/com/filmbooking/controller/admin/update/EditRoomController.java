@@ -1,6 +1,7 @@
 package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IShowtimeServices;
@@ -23,11 +24,13 @@ public class EditRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private ITheaterServices theaterServices;
     private Room editRoom;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices = new RoomServicesImpl();
-        theaterServices = new TheaterServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
         String roomID = req.getParameter("room-id_hidden");
         editRoom = roomServices.getByRoomID(roomID);
@@ -41,10 +44,15 @@ public class EditRoomController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("edit-room.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         int seatRows = Integer.parseInt(req.getParameter("seat-rows"));
         int seatCols = Integer.parseInt(req.getParameter("seat-cols"));
@@ -56,11 +64,14 @@ public class EditRoomController extends HttpServlet {
         roomServices.update(editRoom);
 
         resp.sendRedirect("room-management");
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         roomServices = null;
         editRoom = null;
+        hibernateSessionProvider = null;
     }
 }

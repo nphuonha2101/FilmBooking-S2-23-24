@@ -1,56 +1,77 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.StringUtils;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "showtimes")
 public class Showtime {
-    private String showtimeID;
-    private String filmID;
-    private String roomID;
-    private LocalDateTime showtimeDate;
-    private String seatsData;
-    private String[][] seatsMatrix;
+    @Column(name = "showtime_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long showtimeID;
+    @ManyToOne
+    @JoinColumn(name = "film_id")
+    private Film film;
 
-    public Showtime(String showtimeID, String filmID, String roomID, LocalDateTime showtimeDate, String seatsData) {
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private Room room;
+    @Column(name = "showtime_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime showtimeDate;
+    @Column(name = "seats_data")
+    private String seatsData;
+
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    private List<FilmBooking> filmBookingList;
+
+    public Showtime() {
+    }
+
+    public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
         this.showtimeID = showtimeID;
-        this.filmID = filmID;
-        this.roomID = roomID;
+        this.film = film;
+        this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = seatsData;
-        this.seatsMatrix = StringUtils.convertTo2DArr(seatsData);
+        this.filmBookingList = filmBookingList;
     }
 
-    public Showtime(String filmID, Room room, LocalDateTime showtimeDate) {
-        this.filmID = filmID;
-        this.roomID = room.getRoomID();
+    public Showtime(Film film, Room room, LocalDateTime showtimeDate) {
+        this.film = film;
+        this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
-        this.seatsMatrix = room.getSeatMatrix();
+        this.filmBookingList = new ArrayList<>();
     }
 
-    public String getShowtimeID() {
+    public long getShowtimeID() {
         return showtimeID;
     }
 
-    public void setShowtimeID(String showtimeID) {
+    public void setShowtimeID(long showtimeID) {
         this.showtimeID = showtimeID;
     }
 
-    public String getFilmID() {
-        return filmID;
+    public Film getFilm() {
+        return film;
     }
 
-    public void setFilmID(String filmID) {
-        this.filmID = filmID;
+    public void setFilm(Film film) {
+        this.film = film;
     }
 
-    public String getRoomID() {
-        return roomID;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRoomID(String roomID) {
-        this.roomID = roomID;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     public LocalDateTime getShowtimeDate() {
@@ -67,16 +88,19 @@ public class Showtime {
 
     public void setSeatsData(String seatsData) {
         this.seatsData = seatsData;
-        this.seatsMatrix = StringUtils.convertTo2DArr(seatsData);
     }
 
-    public String[][] getSeatsMatrix() {
-        return seatsMatrix;
-    }
 
     public void setSeatsMatrix(String[][] seatsMatrix) {
-        this.seatsMatrix = seatsMatrix;
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
+    }
+
+    public List<FilmBooking> getFilmBookingList() {
+        return filmBookingList;
+    }
+
+    public void setFilmBookingList(List<FilmBooking> filmBookingList) {
+        this.filmBookingList = filmBookingList;
     }
 
     /**
@@ -84,17 +108,20 @@ public class Showtime {
      * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
      */
     public void bookSeats(String[] seats) {
+        String[][] seatsMatrix = StringUtils.convertTo2DArr(this.seatsData);
         for (String seat : seats) {
             int row = Integer.parseInt(seat.split(" ")[0]);
             int col = Integer.parseInt(seat.split(" ")[1]);
-            this.seatsMatrix[row][col] = "1";
+            seatsMatrix[row][col] = "1";
         }
-        this.seatsData = StringUtils.arr2DToString(this.seatsMatrix);
+        this.seatsData = StringUtils.arr2DToString(seatsMatrix);
     }
 
     public int countAvailableSeats() {
+        System.out.println(seatsData);
+        String seatMatrix[][] = StringUtils.convertTo2DArr(this.seatsData);
+
         int count = 0;
-        String[][] seatMatrix = this.getSeatsMatrix();
         for (String[] row : seatMatrix) {
             for (String s : row) {
                 if (s.equalsIgnoreCase("0"))
@@ -102,5 +129,22 @@ public class Showtime {
             }
         }
         return count;
+    }
+
+    public String[][] getSeatsMatrix() {
+        return StringUtils.convertTo2DArr(this.seatsData);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Showtime) {
+            Showtime showtime = (Showtime) obj;
+            return this.showtimeID == showtime.getShowtimeID()
+            && this.film.equals(showtime.getFilm())
+            && this.room.equals(showtime.getRoom())
+            && this.showtimeDate.equals(showtime.getShowtimeDate())
+            && this.seatsData.equals(showtime.getSeatsData());
+        }
+        return false;
     }
 }

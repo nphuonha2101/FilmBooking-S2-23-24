@@ -47,18 +47,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="showtimeView" items="${showtimeViewDetails}" varStatus="loop">
+                <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
                     <tr>
-                        <td>${showtimeView.showtimeID}</td>
-                        <td>${showtimeView.filmName}</td>
-                        <td>${showtimeView.roomName}</td>
-                        <td>${availableSeats[showtimeView.showtimeID]}</td>
-                        <td>${showtimeView.showtimeDate}</td>
+                        <td>${showtime.showtimeID}</td>
+                        <td>${showtime.film.filmName}</td>
+                        <td>${showtime.room.roomName}</td>
+                        <td>${availableSeats[showtime.showtimeID]}</td>
+                        <td>${showtime.showtimeDate}</td>
 
                         <td>
                             <form class="hide hidden-form" method="get">
                                 <input type="hidden" name="showtime-id_hidden"
-                                       value="${showtimeView.showtimeID}"/>
+                                       value="${showtime.showtimeID}"/>
                             </form>
                             <button class="submit-button delete-button">
                                 <span class="material-symbols-rounded warning-color">delete</span>

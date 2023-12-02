@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
@@ -60,7 +61,7 @@
                     <div class="centered-vertical-content wrapper">
                         <iframe class="trailer-frame"
                                 src="${film.filmTrailerLink}"
-                                title="${film.filmName} Trailer" frameborder="0"
+                                title="${film.filmName} Trailer"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen></iframe>
                     </div>
@@ -74,11 +75,11 @@
 
                 <div class="wrapper two-col__wrapper">
                     <div class="wrapper">
-                        <c:set var="showtimeDetailsViews" value="${showtimeViewDetails}"/>
+                        <c:set var="showtimeList" value="${film.showtimeList}"/>
                         <select name="select-showtime" id="select-showtime">
-                            <c:forEach var="showtimeDetails" items="${showtimeDetailsViews}" varStatus="loop">
-                                <option value="${showtimeDetails.showtimeID}">${showtimeDetails.roomName}
-                                    - ${showtimeDetails.theaterName} - ${showtimeDetails.showtimeDate}</option>
+                            <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
+                                <option value="${showtime.showtimeID}">${showtime.room.roomName}
+                                    - ${showtime.room.theater.theaterName} - ${showtime.showtimeDate}</option>
                             </c:forEach>
                         </select>
                     </div>

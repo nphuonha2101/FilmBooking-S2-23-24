@@ -15,7 +15,6 @@ public enum StatusCodeEnum {
     SENT_RESET_PASSWD_EMAIL(202, "Đã gửi email đặt lại mật khẩu"),
     PASSWORD_CHANGE_SUCCESSFUL(203, "Đổi mật khẩu thành công"),
     CREATE_NEW_USER_SUCCESSFUL(204, "Tạo người dùng mới thành công"),
-
     NOT_VALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế");
 

@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
@@ -18,10 +19,12 @@ import java.util.List;
 @WebServlet("/search")
 public class SearchController extends HttpServlet {
     private IFilmServices filmServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String searchQuery = req.getParameter("search");
 
@@ -40,10 +43,12 @@ public class SearchController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("search-results.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmServices = null;
+        hibernateSessionProvider = null;
     }
 }

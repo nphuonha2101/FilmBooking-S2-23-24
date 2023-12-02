@@ -1,6 +1,6 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.model.User;
+import com.filmbooking.model.Genre;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -12,19 +12,22 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class UserDAOImpl implements IDAO<User> {
-    private static UserDAOImpl instance = null;
+public class GenreDAOImpl implements IDAO<Genre> {
+    private static GenreDAOImpl instance;
     private Session session;
 
-    private UserDAOImpl() {
+
+    private GenreDAOImpl() {
+
     }
 
-    public static UserDAOImpl getInstance() {
+    public static GenreDAOImpl getInstance() {
         if (instance == null) {
-            instance = new UserDAOImpl();
+            instance = new GenreDAOImpl();
         }
         return instance;
     }
+
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
@@ -32,34 +35,33 @@ public class UserDAOImpl implements IDAO<User> {
     }
 
     @Override
-    public List<User> getAll() {
-        List<User> result;
+    public List<Genre> getAll() {
+        List<Genre> result;
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
         // declare an object that want to query
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> rootEntry = criteriaQuery.from(User.class);
-        CriteriaQuery<User> all = criteriaQuery.select(rootEntry);
+        CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
+        Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
+        CriteriaQuery<Genre> all = criteriaQuery.select(rootEntry);
 
-        TypedQuery<User> allQuery = this.session.createQuery(all);
+        TypedQuery<Genre> allQuery = this.session.createQuery(all);
 
         result = allQuery.getResultList();
 
         return result;
     }
 
-
     @Override
-    public User getByID(String id) {
-        User result = null;
+    public Genre getByID(String id) {
+        Genre result = null;
 
         try {
             CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-            Root<User> rootEntry = criteriaQuery.from(User.class);
+            CriteriaQuery<Genre> criteriaQuery = criteriaBuilder.createQuery(Genre.class);
+            Root<Genre> rootEntry = criteriaQuery.from(Genre.class);
             criteriaQuery.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
-            TypedQuery<User> typedQuery = this.session.createQuery(criteriaQuery);
+            TypedQuery<Genre> typedQuery = this.session.createQuery(criteriaQuery);
 
             result = typedQuery.getSingleResult();
         } catch (NoResultException e) {
@@ -70,23 +72,23 @@ public class UserDAOImpl implements IDAO<User> {
     }
 
     @Override
-    public void save(User user) {
+    public void save(Genre genre) {
         Transaction transaction = session.beginTransaction();
-        session.persist(user);
+        session.persist(genre);
         transaction.commit();
     }
 
     @Override
-    public void update(User user) {
+    public void update(Genre genre) {
         Transaction transaction = session.beginTransaction();
-        session.merge(user);
+        session.merge(genre);
         transaction.commit();
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(Genre genre) {
         Transaction transaction = session.beginTransaction();
-        session.remove(user);
+        session.remove(genre);
         transaction.commit();
     }
 
