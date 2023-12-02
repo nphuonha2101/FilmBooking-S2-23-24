@@ -34,13 +34,6 @@ public class FilmManagementController extends HttpServlet {
 
         hibernateSessionProvider.closeSession();
 
-//        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
     }
 
     @Override

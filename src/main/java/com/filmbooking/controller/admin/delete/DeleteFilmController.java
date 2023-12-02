@@ -25,11 +25,9 @@ public class DeleteFilmController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-
         String filmID = req.getParameter("film-id_hidden");
-        System.out.println("DeleteFilmController Test: " + filmID);
 
-        System.out.println(filmServices.getByFilmID(filmID));
+//        System.out.println(filmServices.getByFilmID(filmID));
 
         Film deletedFilm = filmServices.getByFilmID(filmID);
         filmServices.delete(deletedFilm);
@@ -43,8 +41,7 @@ public class DeleteFilmController extends HttpServlet {
         resp.sendRedirect("admin");
 
         hibernateSessionProvider.closeSession();
-
-
+        System.out.println(hibernateSessionProvider.getSession());
     }
 
     @Override

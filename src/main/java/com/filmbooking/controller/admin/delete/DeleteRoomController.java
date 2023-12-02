@@ -25,7 +25,6 @@ public class DeleteRoomController extends HttpServlet {
         String roomID = req.getParameter("room-id_hidden");
         System.out.println("DeleteFilmController Test: " + roomID);
 
-
         Room deletedRoom = roomServices.getByRoomID(roomID);
         roomServices.delete(deletedRoom);
 

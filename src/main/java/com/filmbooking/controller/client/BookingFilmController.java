@@ -64,7 +64,6 @@ public class BookingFilmController extends HttpServlet {
         String seats = req.getParameter("seats");
 
         if (!seats.isEmpty()) {
-
             bookedFilm = filmBooking.getShowtime().getFilm();
             filmBooking.setSeatsData(seats);
             filmBooking.setBookingDate(LocalDateTime.now());
@@ -86,9 +85,7 @@ public class BookingFilmController extends HttpServlet {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
 
             resp.sendRedirect("book-film");
-
         }
-
         hibernateSessionProvider.closeSession();
     }
 

@@ -27,7 +27,7 @@ public class Film {
     private String filmTrailerLink;
     @Column(name = "img_path")
     private String imgPath;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "film_genres",
             joinColumns = @JoinColumn(name = "film_id"),
