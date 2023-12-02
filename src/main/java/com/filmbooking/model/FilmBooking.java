@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "film_bookings")
 public class FilmBooking {
-    @Column(name = "film_booking_id")
+    @Column(name = "film_booking_id", insertable = false, updatable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmBookingID;
     @ManyToOne
     @JoinColumn(name = "showtime_id")

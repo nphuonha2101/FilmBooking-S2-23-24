@@ -8,9 +8,9 @@ import java.util.List;
 @Entity
 @Table(name = "rooms")
 public class Room {
-    @Column(name = "room_id")
+    @Column(name = "room_id", updatable = false, insertable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomID;
     @Column(name = "room_name")
     private String roomName;
