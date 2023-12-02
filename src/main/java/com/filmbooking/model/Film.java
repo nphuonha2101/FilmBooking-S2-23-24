@@ -7,9 +7,9 @@ import java.util.List;
 @Entity
 @Table(name = "films")
 public class Film {
-    @Column(name = "film_id")
+    @Column(name = "film_id", updatable = false , insertable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmID;
     @Column(name = "film_name")
     private String filmName;

@@ -58,10 +58,10 @@
                             <c:choose>
                                 <c:when test="${editShowtime.room.roomID eq room.roomID}">
                                     <option selected value="${room.roomID}">${room.roomName}
-                                        - ${room.theaterName}</option>
+                                        - ${room.theater.theaterName}</option>
                                 </c:when>
                                 <c:otherwise>
-                                    <option value="${room.roomID}">${room.roomName} - ${room.theaterName}</option>
+                                    <option value="${room.roomID}">${room.roomName} - ${room.theater.theaterName}</option>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>

@@ -10,9 +10,9 @@ import java.util.List;
 @Entity
 @Table(name = "showtimes")
 public class Showtime {
-    @Column(name = "showtime_id")
+    @Column(name = "showtime_id", updatable = false, insertable = false)
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long showtimeID;
     @ManyToOne
     @JoinColumn(name = "film_id")
