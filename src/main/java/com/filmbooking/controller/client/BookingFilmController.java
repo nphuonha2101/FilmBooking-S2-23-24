@@ -81,10 +81,10 @@ public class BookingFilmController extends HttpServlet {
 
             resp.sendRedirect("home");
         } else {
-            req.setAttribute("pageTitle", "bookingFilmTitle");
-            req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
+            // req.setAttribute("pageTitle", "bookingFilmTitle");
+            // req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
 
-            resp.sendRedirect("book-film");
+            //resp.sendRedirect("book-film");
         }
         hibernateSessionProvider.closeSession();
     }
