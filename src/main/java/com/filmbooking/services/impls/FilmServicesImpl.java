@@ -21,7 +21,7 @@ public class FilmServicesImpl implements IFilmServices {
 
     public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
         filmDAO = FilmDAOImpl.getInstance();
-        genreServices = new GenreServicesImpl();
+        genreServices = new GenreServicesImpl(sessionProvider);
         filmDAO.setSessionProvider(sessionProvider);
     }
 

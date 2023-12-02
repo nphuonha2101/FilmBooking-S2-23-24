@@ -109,11 +109,13 @@ button {
 }
 
 .float {
-    box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.3);
+    /*box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.3);*/
     -moz-animation: fade;
     -moz-animation-duration: 0.4s;
     animation-name: fade;
     animation-duration: 0.4s;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
 }
 
 .float-tab-dynamic {
@@ -229,18 +231,18 @@ button {
 
 .nav-links {
     color: #222222;
-    border-radius: 10px;
-    padding: 0.5rem;
+    /*border-radius: 10px;*/
+    padding: 0 !important;
+    border-bottom: 2px solid transparent;
+
 }
 
 .nav-links:hover {
-    /*color: #201a17;*/
-    /*background-color: #ffdbca;*/
-    background-color: #f6f9fc;
-    text-decoration: dashed;
+
+    background-color: transparent;
+    border-bottom: 2px solid #0556f3;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
-    /*letter-spacing: 2px;*/
 }
 
 .light-filled-button {
@@ -1357,7 +1359,7 @@ width: calc(60vw) !important;
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
-    top: 120%;
+    top: 150%;
     left: 50%;
     margin-left: -60px;
 
