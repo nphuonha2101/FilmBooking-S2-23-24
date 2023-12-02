@@ -5,8 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertiesUtils {
-    private static final String APPLICATION_PROPERTIES_FILE_PATH_TEST = "src/main/resources/properties/application.properties";
-    private static final String APPLICATION_PROPERTIES_FILE_PATH = "C:\\Users\\nphuonha\\Desktop\\FilmBooking-WebProgramming\\target\\classes\\properties\\application.properties";
+    private static final String APPLICATION_PROPERTIES_PATH = "/properties/application.properties";
     private final Properties properties;
     private static PropertiesUtils instance = null;
 
@@ -23,12 +22,13 @@ public class PropertiesUtils {
     }
 
     private void loadPropertiesFile() {
+        System.out.println();
         try {
-            InputStream inputStream = new FileInputStream(APPLICATION_PROPERTIES_FILE_PATH);
+            InputStream inputStream = this.getClass().getResourceAsStream(APPLICATION_PROPERTIES_PATH);
             properties.load(inputStream);
 
         } catch (Exception e) {
-            throw new RuntimeException("Cannot load properties file: " + APPLICATION_PROPERTIES_FILE_PATH);
+            throw new RuntimeException("Cannot load properties file: " + APPLICATION_PROPERTIES_PATH);
         }
     }
 
