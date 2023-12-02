@@ -4,26 +4,24 @@ import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.TheaterDAOImpl;
 import com.filmbooking.model.Theater;
 import com.filmbooking.services.ITheaterServices;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class TheaterServicesImpl implements ITheaterServices {
-
     private final IDAO<Theater> theaterDAO;
-
     public TheaterServicesImpl() {
         theaterDAO = new TheaterDAOImpl();
     }
 
-    @Override
-    public void openSession() {
-        theaterDAO.openSession();
+    public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
+        theaterDAO = new TheaterDAOImpl();
+        setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void closeSession() {
-        theaterDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        theaterDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -34,12 +32,6 @@ public class TheaterServicesImpl implements ITheaterServices {
     @Override
     public Theater getByID(String id) {
         return theaterDAO.getByID(id);
-    }
-
-    @Override
-    public HashMap<String, Theater> getTheaterAndTheaterID() {
-//        return this.getObjectAndObjectID(this.getAll());
-        return null;
     }
 
     @Override

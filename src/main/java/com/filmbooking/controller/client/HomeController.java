@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.utils.ContextPathUtils;
@@ -15,11 +16,12 @@ import java.io.IOException;
 @WebServlet(name = "home", value = "/home")
 public class HomeController extends HttpServlet {
     private IFilmServices filmServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
-        filmServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
 //            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("navigation-bar.jsp"));
         req.setAttribute("title", "Phim mới ra rạp");
@@ -31,12 +33,12 @@ public class HomeController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("home.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        filmServices.closeSession();
-
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmServices = null;
+        hibernateSessionProvider = null;
     }
 }

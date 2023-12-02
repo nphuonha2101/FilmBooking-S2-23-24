@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertiesUtils {
     private static final String APPLICATION_PROPERTIES_FILE_PATH_TEST = "src/main/resources/properties/application.properties";
-    private static final String APPLICATION_PROPERTIES_FILE_PATH = "C:\\Users\\doanq\\OneDrive\\Máy tính\\FilmBooking-WebProgramming\\target\\classes\\properties\\application.properties";
+    private static final String APPLICATION_PROPERTIES_FILE_PATH = "C:\\Users\\nphuonha\\Desktop\\FilmBooking-WebProgramming\\target\\classes\\properties\\application.properties";
     private final Properties properties;
     private static PropertiesUtils instance = null;
 

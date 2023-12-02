@@ -154,3 +154,5 @@ INSERT INTO public.rooms (room_id, room_name, theater_id, seat_rows, seat_cols, 
 INSERT INTO public.rooms (room_id, room_name, theater_id, seat_rows, seat_cols, seats_data) VALUES (3, 'R003', '1', 9, 9, '000000000 000000000 000000000 000000000 000000000 000000000 000000000 000000000 000000000');
 
 select * from showtimes;
+select * from user_infos;
+select * from film_bookings;

@@ -1,6 +1,7 @@
 package com.filmbooking.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ public class FilmBooking {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long filmBookingID;
     @ManyToOne
+    @JoinColumn(name = "showtime_id")
     private Showtime showtime;
     @ManyToOne
     @JoinColumn(name="username")
@@ -88,6 +90,7 @@ public class FilmBooking {
     }
 
     public String[] getSeats() {
+        this.seats = seatsData.split(", ");
         return seats;
     }
 

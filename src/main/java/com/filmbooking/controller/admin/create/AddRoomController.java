@@ -9,6 +9,7 @@ import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,11 +22,13 @@ import java.io.IOException;
 public class AddRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private ITheaterServices theaterServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        theaterServices = new TheaterServicesImpl();
-        theaterServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+
+        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "addRoomTitle");
 
@@ -38,14 +41,15 @@ public class AddRoomController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
 
-        theaterServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices = new RoomServicesImpl();
-        roomServices.openSession();
-        theaterServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         String theaterID = StringUtils.handlesInputString(req.getParameter("theater-id"));
@@ -60,7 +64,13 @@ public class AddRoomController extends HttpServlet {
 
         resp.sendRedirect("room-management");
 
-        theaterServices.closeSession();
-        roomServices.closeSession();
+        hibernateSessionProvider.closeSession();
+    }
+
+    @Override
+    public void destroy() {
+        roomServices = null;
+        theaterServices = null;
+        hibernateSessionProvider = null;
     }
 }

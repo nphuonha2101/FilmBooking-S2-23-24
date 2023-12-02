@@ -41,12 +41,14 @@
                         <c:set var="theater" value="${showtime.room.theater}"/>
                         <%--get film for each showtime--%>
                         <c:set var="film" value="${showtime.film}"/>
+                        <%--get room for each showtime--%>
+                        <c:set var="room" value="${showtime.room}"/>
 
                         <div class="wrapper accordion-wrapper">
                             <button class="accordion wrapper">
                                 <span class="font-bold">
                                     <fmt:message bundle="${msg}" key="username"/>:
-                                </span> ${filmBookingData.username}
+                                </span> ${filmBookingData.user.username}
                                 - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:
                             </span> ${filmBookingData.bookingDate}
                                 - <span class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:</span> ${film.filmName}
@@ -66,7 +68,7 @@
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="room"/>:
                                             <span>${room.roomName}</span></p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="showtime"/>:
-                                            <span>${showtime.showtimDate}</span>
+                                            <span>${showtime.showtimeDate}</span>
                                         </p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="theater"/>:
                                             <span>${theater.theaterName}</span>

@@ -124,7 +124,7 @@ public class Room {
     }
 
     public String[][] getSeatMatrix() {
-        return seatMatrix;
+        return StringUtils.convertTo2DArr(this.seatData);
     }
 
     public void setSeatMatrix(String[][] seatMatrix) {

@@ -5,6 +5,7 @@ import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IFilmBookingServices;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,19 +13,18 @@ import java.util.stream.Collectors;
 public class FilmBookingServicesImpl implements IFilmBookingServices {
     private final IDAO<FilmBooking> filmBookingDAO;
 
+    public FilmBookingServicesImpl(HibernateSessionProvider sessionProvider) {
+        this.filmBookingDAO = FilmBookingDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
+    }
 
     public FilmBookingServicesImpl() {
         this.filmBookingDAO = FilmBookingDAOImpl.getInstance();
     }
 
     @Override
-    public void openSession() {
-        filmBookingDAO.openSession();
-    }
-
-    @Override
-    public void closeSession() {
-        filmBookingDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        filmBookingDAO.setSessionProvider(sessionProvider);
     }
 
     @Override

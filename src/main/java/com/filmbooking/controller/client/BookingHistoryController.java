@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.User;
 import com.filmbooking.services.*;
@@ -17,12 +18,12 @@ import java.io.IOException;
 @WebServlet("/booking-history")
 public class BookingHistoryController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new FilmBookingServicesImpl();
-
-        filmBookingServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "bookingHistoryTitle");
 
@@ -38,11 +39,12 @@ public class BookingHistoryController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        filmBookingServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmBookingServices = null;
+        hibernateSessionProvider = null;
     }
 }

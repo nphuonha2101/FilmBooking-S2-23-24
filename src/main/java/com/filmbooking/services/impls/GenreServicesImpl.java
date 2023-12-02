@@ -4,6 +4,7 @@ import com.filmbooking.dao.GenreDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.IGenreServices;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 
 import java.util.List;
 
@@ -14,14 +15,14 @@ public class GenreServicesImpl implements IGenreServices {
         genreDAO = GenreDAOImpl.getInstance();
     }
 
-    @Override
-    public void openSession() {
-        genreDAO.openSession();
+    public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
+        genreDAO = GenreDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void closeSession() {
-        genreDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        genreDAO.setSessionProvider(sessionProvider);
     }
 
     @Override

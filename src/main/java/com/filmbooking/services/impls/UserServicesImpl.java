@@ -2,13 +2,12 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.UserDAOImpl;
-import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
-import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.utils.mailUtils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegex;
@@ -18,19 +17,18 @@ import java.util.List;
 public class UserServicesImpl implements IUserServices {
     private final IDAO<User> userDAO;
 
-
     public UserServicesImpl() {
         userDAO = UserDAOImpl.getInstance();
     }
 
-    @Override
-    public void openSession() {
-        userDAO.openSession();
+    public UserServicesImpl(HibernateSessionProvider sessionProvider) {
+        userDAO = UserDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void closeSession() {
-        userDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        userDAO.setSessionProvider(sessionProvider);
     }
 
     @Override

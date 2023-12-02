@@ -1,6 +1,7 @@
 package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.IShowtimeServices;
@@ -23,14 +24,13 @@ public class EditRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private ITheaterServices theaterServices;
     private Room editRoom;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices = new RoomServicesImpl();
-        theaterServices = new TheaterServicesImpl();
-
-        roomServices.openSession();
-        theaterServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
         String roomID = req.getParameter("room-id_hidden");
         editRoom = roomServices.getByRoomID(roomID);
@@ -45,13 +45,13 @@ public class EditRoomController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("edit-room.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        roomServices.closeSession();
-        theaterServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         int seatRows = Integer.parseInt(req.getParameter("seat-rows"));
@@ -65,12 +65,13 @@ public class EditRoomController extends HttpServlet {
 
         resp.sendRedirect("room-management");
 
-        roomServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         roomServices = null;
         editRoom = null;
+        hibernateSessionProvider = null;
     }
 }

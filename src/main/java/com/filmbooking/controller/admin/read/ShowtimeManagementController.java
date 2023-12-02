@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin.read;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
@@ -15,11 +16,11 @@ import java.io.IOException;
 @WebServlet("/showtime-management")
 public class ShowtimeManagementController extends HttpServlet {
     private IShowtimeServices showtimeServices;
+    private HibernateSessionProvider hibernateSessionProvider;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeServices = new ShowtimeServicesImpl();
-
-        showtimeServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
         System.out.println(showtimeServices.countAvailableSeats());
 
@@ -34,11 +35,12 @@ public class ShowtimeManagementController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
 
-        showtimeServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         showtimeServices = null;
+        hibernateSessionProvider = null;
     }
 }

@@ -2,13 +2,12 @@ package com.filmbooking.services;
 
 
 import com.filmbooking.model.Room;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface IRoomServices {
-    void openSession();
-    void closeSession();
+    void setSessionProvider(HibernateSessionProvider sessionProvider);
     List<Room> getAll();
     Room getByRoomID(String id);
     void save(Room room);

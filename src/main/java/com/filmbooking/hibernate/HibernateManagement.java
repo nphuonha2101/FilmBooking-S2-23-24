@@ -1,29 +1,32 @@
-package com.filmbooking.utils;
+package com.filmbooking.hibernate;
 
 import com.filmbooking.model.*;
+import com.filmbooking.utils.PropertiesUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import java.io.File;
-
-public class HibernateUtils {
-    private static HibernateUtils instance;
+public class HibernateManagement {
+    private static HibernateManagement instance;
     private final SessionFactory sessionFactory;
 
-    private HibernateUtils() {
+    private HibernateManagement() {
         sessionFactory = buildSessionFactory();
     }
 
-    public static HibernateUtils getInstance() {
+    public static HibernateManagement getInstance() {
         if (instance == null)
-            instance = new HibernateUtils();
+            synchronized (HibernateManagement.class) {
+                if (instance == null)
+                    instance = new HibernateManagement();
+            }
         return instance;
     }
 
     /**
      * This {@link SessionFactory} must be created once and only one
+     *
      * @return {@link SessionFactory}
      */
     private SessionFactory buildSessionFactory() {
@@ -44,11 +47,12 @@ public class HibernateUtils {
     }
 
     /**
-     * Open session of hibernate
+     * Get {@link SessionFactory} of hibernate
+     *
      * @return {@link Session}
      */
-    public Session openSession() {
-        return this.sessionFactory.openSession();
+    public SessionFactory getSessionFactory() {
+        return this.sessionFactory;
     }
 
 }

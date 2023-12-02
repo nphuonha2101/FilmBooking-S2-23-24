@@ -43,7 +43,7 @@
 
                         <c:forEach var="film" items="${filmData}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${editShowtime.filmID eq film.filmID}">
+                                <c:when test="${editShowtime.film.filmID eq film.filmID}">
                                     <option selected value="${film.filmID}">${film.filmName}</option>
                                 </c:when>
                                 <c:otherwise>
@@ -56,7 +56,7 @@
                     <select name="room-id" id="room-id">
                         <c:forEach var="room" items="${roomData}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${editShowtime.roomID eq room.roomID}">
+                                <c:when test="${editShowtime.room.roomID eq room.roomID}">
                                     <option selected value="${room.roomID}">${room.roomName}
                                         - ${room.theaterName}</option>
                                 </c:when>

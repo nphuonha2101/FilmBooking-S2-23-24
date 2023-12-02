@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 public class ChangeInfoController extends HttpServlet {
     private IUserServices userServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,8 +33,8 @@ public class ChangeInfoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userServices = new UserServicesImpl();
-        userServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        userServices = new UserServicesImpl(hibernateSessionProvider);
 
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String email = StringUtils.handlesInputString(req.getParameter("email"));
@@ -60,6 +62,12 @@ public class ChangeInfoController extends HttpServlet {
             RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
         }
 
-        userServices.closeSession();
+        hibernateSessionProvider.closeSession();
+    }
+
+    @Override
+    public void destroy() {
+        userServices = null;
+        hibernateSessionProvider = null;
     }
 }

@@ -1,11 +1,7 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
-import com.filmbooking.model.Showtime;
-import com.filmbooking.model.User;
-import com.filmbooking.utils.HibernateUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -14,18 +10,14 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
     private static FilmBookingDAOImpl instance = null;
-    private final HibernateUtils hibernateUtils;
+
     private Session session;
 
     private FilmBookingDAOImpl() {
-        hibernateUtils = HibernateUtils.getInstance();
     }
 
     public static FilmBookingDAOImpl getInstance() {
@@ -34,9 +26,10 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
         return instance;
     }
 
+
     @Override
-    public void openSession() {
-        this.session = hibernateUtils.openSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
@@ -98,12 +91,4 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
         transaction.commit();
     }
 
-    @Override
-    public Session getSession() {
-        if (session != null) {
-            return this.session;
-        } else {
-            throw new RuntimeException("Not active Hibernate Session");
-        }
-    }
 }

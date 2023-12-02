@@ -2,33 +2,29 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.ShowtimeDAOImpl;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class ShowtimeServicesImpl implements IShowtimeServices {
     private final IDAO<Showtime> showtimeDAO;
-    private final IFilmBookingServices filmBookingServices;
 
     public ShowtimeServicesImpl() {
         this.showtimeDAO = ShowtimeDAOImpl.getInstance();
-        filmBookingServices = new FilmBookingServicesImpl();
-//        hideOldShowtime();
+    }
+
+    public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
+        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void openSession() {
-        showtimeDAO.openSession();
-    }
-
-    @Override
-    public void closeSession() {
-        showtimeDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        showtimeDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -39,23 +35,6 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     @Override
     public Showtime getByID(String id) {
         return showtimeDAO.getByID(id);
-    }
-
-    @Override
-    public List<Showtime> getByFilmID(String filmID) {
-        List<Showtime> result = new ArrayList<>();
-        for (Showtime showtime : this.getAll()
-        ) {
-//            if (showtime.getFilm().getFilmID().equalsIgnoreCase(filmID))
-//                result.add(showtime);
-        }
-        return result;
-    }
-
-    @Override
-    public HashMap<String, Showtime> getShowtimeAndShowtimeID() {
-//        return this.getObjectAndObjectID(this.getAll());
-        return null;
     }
 
     @Override
@@ -87,6 +66,18 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
         ) {
             int availableSeats = showtime.countAvailableSeats();
             result.put(showtime.getShowtimeID(), availableSeats);
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<Long, String[][]> getShowtimeIDAndSeatMatrix() {
+        HashMap<Long, String[][]> result = new HashMap<>();
+
+        for (Showtime showtime : getAll()
+        ) {
+            String[][] seatsMatrix = showtime.getSeatsMatrix();
+            result.put(showtime.getShowtimeID(), seatsMatrix);
         }
         return result;
     }

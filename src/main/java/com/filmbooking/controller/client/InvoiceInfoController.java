@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
 import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
@@ -16,22 +17,20 @@ import java.util.Arrays;
 @WebServlet("/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
-
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new FilmBookingServicesImpl();
-        filmBookingServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
 
         String bookingID = req.getParameter("booking-id");
 
         System.out.println("Booking ID: " + bookingID);
 
         FilmBooking filmBooking = filmBookingServices.getByFilmBookingID(bookingID);
-        System.out.println(filmBooking);
-        System.out.println(Arrays.toString(filmBooking.getSeats()));
-        Showtime bookedShowtime = filmBooking.getShowtime();
 
+        Showtime bookedShowtime = filmBooking.getShowtime();
         Room bookedRoom = bookedShowtime.getRoom();
         Film bookedFilm = bookedShowtime.getFilm();
         Theater bookedTheater = bookedRoom.getTheater();
@@ -46,11 +45,12 @@ public class InvoiceInfoController extends HttpServlet {
         req.setAttribute("pageTitle", "invoiceInfoTitle");
         req.getRequestDispatcher(ContextPathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
 
-        filmBookingServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmBookingServices = null;
+        hibernateSessionProvider = null;
     }
 }

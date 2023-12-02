@@ -58,7 +58,7 @@
                         <td>
                             <form class="hide hidden-form" method="get">
                                 <input type="hidden" name="showtime-id_hidden"
-                                       value="${showtimeView.showtimeID}"/>
+                                       value="${showtime.showtimeID}"/>
                             </form>
                             <button class="submit-button delete-button">
                                 <span class="material-symbols-rounded warning-color">delete</span>

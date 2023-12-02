@@ -15,6 +15,7 @@ public class Showtime {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long showtimeID;
     @ManyToOne
+    @JoinColumn(name = "film_id")
     private Film film;
 
     @ManyToOne
@@ -25,12 +26,12 @@ public class Showtime {
     private LocalDateTime showtimeDate;
     @Column(name = "seats_data")
     private String seatsData;
-    @Transient
-    private String[][] seatsMatrix;
+
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<FilmBooking> filmBookingList;
 
-    public Showtime() {}
+    public Showtime() {
+    }
 
     public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
         this.showtimeID = showtimeID;
@@ -46,7 +47,6 @@ public class Showtime {
         this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
-        this.seatsMatrix = room.getSeatMatrix();
         this.filmBookingList = new ArrayList<>();
     }
 
@@ -88,15 +88,10 @@ public class Showtime {
 
     public void setSeatsData(String seatsData) {
         this.seatsData = seatsData;
-        this.seatsMatrix = StringUtils.convertTo2DArr(seatsData);
     }
 
-    public String[][] getSeatsMatrix() {
-        return seatsMatrix;
-    }
 
     public void setSeatsMatrix(String[][] seatsMatrix) {
-        this.seatsMatrix = seatsMatrix;
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
     }
 
@@ -113,18 +108,20 @@ public class Showtime {
      * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
      */
     public void bookSeats(String[] seats) {
+        String[][] seatsMatrix = StringUtils.convertTo2DArr(this.seatsData);
         for (String seat : seats) {
             int row = Integer.parseInt(seat.split(" ")[0]);
             int col = Integer.parseInt(seat.split(" ")[1]);
-            this.seatsMatrix[row][col] = "1";
+            seatsMatrix[row][col] = "1";
         }
-        this.seatsData = StringUtils.arr2DToString(this.seatsMatrix);
+        this.seatsData = StringUtils.arr2DToString(seatsMatrix);
     }
 
     public int countAvailableSeats() {
         System.out.println(seatsData);
+        String seatMatrix[][] = StringUtils.convertTo2DArr(this.seatsData);
+
         int count = 0;
-        String[][] seatMatrix = StringUtils.convertTo2DArr(this.seatsData);
         for (String[] row : seatMatrix) {
             for (String s : row) {
                 if (s.equalsIgnoreCase("0"))
@@ -132,6 +129,10 @@ public class Showtime {
             }
         }
         return count;
+    }
+
+    public String[][] getSeatsMatrix() {
+        return StringUtils.convertTo2DArr(this.seatsData);
     }
 
     @Override

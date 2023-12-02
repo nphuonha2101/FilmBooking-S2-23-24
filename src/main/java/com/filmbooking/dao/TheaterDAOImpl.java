@@ -1,11 +1,7 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
-import com.filmbooking.model.Film;
-import com.filmbooking.model.Room;
-import com.filmbooking.model.Showtime;
 import com.filmbooking.model.Theater;
-import com.filmbooking.utils.HibernateUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -14,20 +10,13 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TheaterDAOImpl implements IDAO<Theater> {
     private static TheaterDAOImpl instance = null;
-    private final HibernateUtils hibernateUtils;
     private Session session;
 
     public TheaterDAOImpl() {
-        hibernateUtils = HibernateUtils.getInstance();
     }
 
     public static TheaterDAOImpl getInstance() {
@@ -38,8 +27,8 @@ public class TheaterDAOImpl implements IDAO<Theater> {
     }
 
     @Override
-    public void openSession() {
-        this.session = hibernateUtils.openSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
@@ -100,14 +89,5 @@ public class TheaterDAOImpl implements IDAO<Theater> {
         Transaction transaction = session.beginTransaction();
         session.remove(theater);
         transaction.commit();
-    }
-
-    @Override
-    public Session getSession() {
-        if (session != null)
-            return this.session;
-        else {
-            throw new RuntimeException("Not active Hibernate Session");
-        }
     }
 }

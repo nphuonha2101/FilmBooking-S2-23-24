@@ -12,6 +12,7 @@ import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,15 +28,15 @@ public class AddShowtimeController extends HttpServlet {
     private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
     private IRoomServices roomServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
-        roomServices = new RoomServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
 
-        filmServices.openSession();
-        roomServices.openSession();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "addShowtimeTitle");
 
@@ -49,17 +50,16 @@ public class AddShowtimeController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
 
-        filmServices.closeSession();
-        roomServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeServices = new ShowtimeServicesImpl();
+        hibernateSessionProvider = new HibernateSessionProvider();
 
-        showtimeServices.openSession();
-        filmServices.openSession();
-        roomServices.openSession();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
@@ -75,10 +75,7 @@ public class AddShowtimeController extends HttpServlet {
 
         resp.sendRedirect("showtime-management");
 
-        showtimeServices.closeSession();
-        filmServices.closeSession();
-        roomServices.closeSession();
-
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
@@ -86,5 +83,6 @@ public class AddShowtimeController extends HttpServlet {
         filmServices = null;
         roomServices = null;
         showtimeServices = null;
+        hibernateSessionProvider = null;
     }
 }

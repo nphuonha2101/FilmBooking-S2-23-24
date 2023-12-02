@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin.read;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
@@ -15,12 +16,12 @@ import java.io.IOException;
 @WebServlet("/room-management")
 public class RoomManagementController extends HttpServlet {
     private IRoomServices roomServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        roomServices = new RoomServicesImpl();
-
-        roomServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "roomManagementTitle");
         req.setAttribute("roomData", roomServices.getAll());
@@ -30,11 +31,12 @@ public class RoomManagementController extends HttpServlet {
                 ContextPathUtils.getAdminPagesPath("room-management.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        roomServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         roomServices = null;
+        hibernateSessionProvider = null;
     }
 }

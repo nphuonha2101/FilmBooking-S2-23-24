@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -17,6 +18,7 @@ import java.io.IOException;
 @WebServlet(name = "forgotPassword", value = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
     private IUserServices userServices;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     public void init() throws ServletException {
@@ -34,8 +36,8 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userServices = new UserServicesImpl();
-        userServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        userServices = new UserServicesImpl(hibernateSessionProvider);
 
         String username = req.getParameter("username");
         String email = req.getParameter("email");
@@ -55,11 +57,12 @@ public class ForgotPasswordController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("forgot.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        userServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServices = null;
+        hibernateSessionProvider = null;
     }
 }

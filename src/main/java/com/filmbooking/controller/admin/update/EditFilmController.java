@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin.update;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.impls.FilmServicesImpl;
@@ -24,14 +25,13 @@ import java.util.List;
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
-
     private Film editFilm;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesImpl();
-
-        filmServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String filmId = req.getParameter("film-id_hidden");
         editFilm = filmServices.getByFilmID(filmId);
@@ -58,12 +58,13 @@ public class EditFilmController extends HttpServlet {
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
 
-        filmServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
@@ -104,13 +105,15 @@ public class EditFilmController extends HttpServlet {
 
         resp.sendRedirect("film-management");
 
-        filmServices.closeSession();
+        hibernateSessionProvider.closeSession();
 
     }
 
     @Override
     public void destroy() {
         filmServices = null;
+        editFilm = null;
+        hibernateSessionProvider = null;
     }
 }
 

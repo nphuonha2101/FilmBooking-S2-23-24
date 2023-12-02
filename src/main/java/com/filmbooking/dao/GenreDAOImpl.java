@@ -1,9 +1,7 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.database.DatabaseConnection;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.utils.HibernateUtils;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -12,21 +10,15 @@ import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GenreDAOImpl implements IDAO<Genre> {
     private static GenreDAOImpl instance;
-    private final HibernateUtils hibernateUtils;
     private Session session;
 
 
     private GenreDAOImpl() {
-        hibernateUtils = HibernateUtils.getInstance();
+
     }
 
     public static GenreDAOImpl getInstance() {
@@ -36,9 +28,10 @@ public class GenreDAOImpl implements IDAO<Genre> {
         return instance;
     }
 
+
     @Override
-    public void openSession() {
-        this.session = hibernateUtils.openSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.session = sessionProvider.getSession();
     }
 
     @Override
@@ -99,12 +92,4 @@ public class GenreDAOImpl implements IDAO<Genre> {
         transaction.commit();
     }
 
-    @Override
-    public Session getSession() {
-        if (session != null)
-            return this.session;
-        else {
-            throw new RuntimeException("Not active Hibernate Session");
-        }
-    }
 }

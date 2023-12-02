@@ -1,5 +1,6 @@
 package com.filmbooking.controller.client;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Genre;
@@ -18,13 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "filmInfo", value = "/film-info")
 public class FilmInfoController extends HttpServlet {
     private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
     private String queryString;
+    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     public void init() throws ServletException {
@@ -35,11 +36,9 @@ public class FilmInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         queryString = req.getQueryString();
 
-        filmServices = new FilmServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
-
-        filmServices.openSession();
-        showtimeServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
         String filmID = req.getParameter("film-id");
 
@@ -66,13 +65,13 @@ public class FilmInfoController extends HttpServlet {
                 ContextPathUtils.getClientPagesPath("film-info.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
 
-        filmServices.closeSession();
-        showtimeServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        showtimeServices.openSession();
+        hibernateSessionProvider = new HibernateSessionProvider();
+        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
         if (req.getSession().getAttribute("loginUser") == null) {
             RedirectPageUtils.redirectPage("login", queryString, req, resp);
@@ -88,13 +87,13 @@ public class FilmInfoController extends HttpServlet {
 
         resp.sendRedirect("book-film");
 
-        showtimeServices.closeSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmServices = null;
         showtimeServices = null;
-
+        hibernateSessionProvider = null;
     }
 }

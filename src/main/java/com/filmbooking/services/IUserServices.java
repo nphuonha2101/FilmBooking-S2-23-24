@@ -2,12 +2,12 @@ package com.filmbooking.services;
 
 import com.filmbooking.model.User;
 import com.filmbooking.services.serviceResult.ServiceResult;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 
 import java.util.List;
 
 public interface IUserServices {
-    void openSession();
-    void closeSession();
+    void setSessionProvider(HibernateSessionProvider sessionProvider);
     List<User> getAll();
     User getByUsername(String id);
     User getByEmail(String email);

@@ -2,10 +2,9 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.RoomDAOImpl;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
-import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.IShowtimeServices;
 
 import java.util.List;
 
@@ -16,14 +15,14 @@ public class RoomServicesImpl implements IRoomServices {
         roomDAO = RoomDAOImpl.getInstance();
     }
 
-    @Override
-    public void openSession() {
-        roomDAO.openSession();
+    public RoomServicesImpl(HibernateSessionProvider sessionProvider) {
+        roomDAO = RoomDAOImpl.getInstance();
+        setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void closeSession() {
-        roomDAO.closeSession();
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        roomDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
