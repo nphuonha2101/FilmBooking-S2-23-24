@@ -32,7 +32,11 @@ public class AddFilmController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        hibernateSessionProvider = new HibernateSessionProvider();
+        genreServices = new GenreServicesImpl(hibernateSessionProvider);
+
         req.setAttribute("pageTitle", "addFilmTitle");
+        req.setAttribute("genres", genreServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("add-film.jsp"),
@@ -40,6 +44,8 @@ public class AddFilmController extends HttpServlet {
 
 //        RenderViewUtils.updateView(req, resp,
 //                ContextPathUtils.getLayoutPath("master.jsp"));
+
+        hibernateSessionProvider.closeSession();
     }
 
     @Override
@@ -63,14 +69,13 @@ public class AddFilmController extends HttpServlet {
         int filmLength = Integer.parseInt(req.getParameter("film-length"));
         String filmDescription = StringUtils.handlesInputString(req.getParameter("film-description"));
         String filmTrailerLink = StringUtils.handlesInputString(req.getParameter("film-trailer-link"));
-        String filmGenreIDs = StringUtils.handlesInputString(req.getParameter("genre-ids"));
-        String[] filmGenreIDArr = filmGenreIDs.split(" ");
+        String[] filmGenreIDs = req.getParameterValues("genre-ids");
 
         Film newFilm = new Film(filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
                 relativeFilePath);
 
         if (FileUploadUtils.uploadFile(req, fileName, "upload-img")) {
-            filmServices.save(newFilm, filmGenreIDArr);
+            filmServices.save(newFilm, filmGenreIDs);
 
             resp.sendRedirect("admin");
         } else {

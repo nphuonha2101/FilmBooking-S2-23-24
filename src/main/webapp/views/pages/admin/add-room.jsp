@@ -19,49 +19,60 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-    <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-        <div class="container ">
-            <jsp:include page="/views/components/admin-panel.jsp"/>
-        </div>
-        <div class="container centered-vertical-content">
+<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+    <div class="container ">
+        <jsp:include page="/views/components/admin-panel.jsp"/>
+    </div>
+    <div class="container centered-vertical-content">
 
-            <h1><fmt:message bundle="${adminMsg}" key="addRoom"/></h1>
-
-
-            <div class="centered-vertical-content wrapper">
+        <h1><fmt:message bundle="${adminMsg}" key="addRoom"/></h1>
 
 
-                <!-- text form in left -->
-                <div class="wrapper centered-vertical-content">
-                    <div>
-                        <form method="post" action="add-room">
+        <div class="centered-vertical-content wrapper">
 
-                            <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/></label>
-                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>" name="room-name"
-                                   id="room-name"
-                                   required/>
-                            <label for="room-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/></label>
-                            <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>" name="room-rows"
-                                   id="room-rows"
-                                   required/>
-                            <label for="room-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/></label>
-                            <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>" name="room-cols"
-                                   id="room-cols"
-                                   required/>
-                            <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/></label>
-                            <select id="theater-id" name="theater-id">
-                                <c:forEach var="theater" items="${theaters}">
-                                    <option value="${theater.theaterID}">${theater.theaterName}
-                                        - ${theater.theaterAddress}</option>
-                                </c:forEach>
-                                <div class="centered-horizontal-content">
-                                    <input class="primary-filled-button button" type="submit"
-                                           value="<fmt:message bundle="${adminMsg}" key="addRoom"/>">
-                                </div>
-                            </select>
-                        </form>
-                    </div>
+
+            <!-- text form in left -->
+            <div class="wrapper centered-vertical-content">
+                <div>
+                    <form method="post" action="add-room">
+
+                        <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>:
+                            <span class="warning-color">*</span>
+                        </label>
+                        <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
+                               name="room-name"
+                               id="room-name"
+                               required/>
+                        <label for="room-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/>:
+                            <span class="warning-color">*</span>
+                        </label>
+                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
+                               name="room-rows"
+                               id="room-rows"
+                               required/>
+                        <label for="room-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/>:
+                            <span class="warning-color">*</span>
+                        </label>
+                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
+                               name="room-cols"
+                               id="room-cols"
+                               required/>
+                        <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/>:
+                            <span class="warning-color">*</span>
+                        </label>
+                        <select id="theater-id" name="theater-id">
+                            <c:forEach var="theater" items="${theaters}">
+                                <option value="${theater.theaterID}">${theater.theaterName}
+                                    - ${theater.theaterAddress}</option>
+                            </c:forEach>
+                            <div class="centered-horizontal-content">
+                                <input class="primary-filled-button button" type="submit"
+                                       value="<fmt:message bundle="${adminMsg}" key="addRoom"/>">
+                            </div>
+                        </select>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>

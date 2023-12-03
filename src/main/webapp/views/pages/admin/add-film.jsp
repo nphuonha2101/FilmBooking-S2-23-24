@@ -19,6 +19,7 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
+<c:set var="genreList" value="${genres}"/>
 
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
@@ -35,15 +36,21 @@
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/></label>
+                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>
+                                <span class="warning-color">: *</span>
+                            </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>" name="film-name"
                                    id="film-name"
                                    required/>
-                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/></label>
+                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>
+                                <span class="warning-color">: *</span>
+                            </label>
                             <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="ticketPrices"/>"
                                    name="film-price" id="film-price"
                                    required/>
-                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/></label>
+                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>
+                                <span class="warning-color">: *</span>
+                            </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="director"/>" name="director" id="director"
                                    required/>
                         </div>
@@ -64,7 +71,9 @@
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/></label>
+                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>
+                                <span class="warning-color">: *</span>
+                            </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>" name="actors" id="actors"
                                    required/>
                         </div>
@@ -72,7 +81,7 @@
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-trailer-link"><fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/></label>
+                            <label for="film-trailer-link"><fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/>:</label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/>"
                                    name="film-trailer-link"
                                    id="film-trailer-link"/>
@@ -81,29 +90,42 @@
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/></label>
+                            <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/>
+                                <span class="warning-color">: *</span>
+                            </label>
                             <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="filmLength"/>"
                                    name="film-length"
                                    id="film-length"
                                    required/>
                         </div>
                     </div>
-                    <div class="wrapper centered-vertical-content">
-                        <div>
-                            <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/></label>
-                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="genreCodes"/>" name="genre-ids"
-                                   id="genre-ids"
-                                   required/>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="wrapper centered-vertical-content">
+                    <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>
+                        <span class="warning-color">: *</span>
+                    </label>
+                    <p>
+                        <span class="font-bold"><fmt:message key="selectedGenres" bundle="${adminMsg}"/>: </span>
+                        <span id="selected-genres"></span>
+                    </p>
+                    <select name="genre-ids"
+                            id="genre-ids"
+                            class="genre-ids-select"
+                            multiple>
+                        <c:forEach items="${genreList}" var="genre">
+                            <option value="${genre.genreID}" selected>${genre.genreName}</option>
+                        </c:forEach>
+                    </select>
+
+
                     <label for="film-description_textarea">
                         <fmt:message bundle="${adminMsg}" key="filmDescription"/>
                     </label>
                     <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
                               placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>"></textarea>
+
+
                     <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${adminMsg}" key="addFilm"/>">
                 </div>
             </form>

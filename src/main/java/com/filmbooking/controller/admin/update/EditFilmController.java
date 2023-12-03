@@ -3,7 +3,10 @@ package com.filmbooking.controller.admin.update;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -24,19 +27,23 @@ import java.util.List;
 @WebServlet(name = "editFilm", value = "/edit-film")
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
-    private FilmServicesImpl filmServices;
+    private IFilmServices filmServices;
     private Film editFilm;
+    private IGenreServices genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
         String filmId = req.getParameter("film-id_hidden");
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
+        req.setAttribute("genres", genreServices.getAll());
+        req.setAttribute("filmGenresStr", editFilm.getFilmGenresStr());
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
@@ -74,9 +81,7 @@ public class EditFilmController extends HttpServlet {
         String filmDescription = StringUtils.handlesInputString(req.getParameter("film-description"));
         String filmTrailerLink = StringUtils.handlesInputString(req.getParameter("film-trailer-link"));
         String filmImgName = StringUtils.handlesInputString(req.getParameter("film-img-name"));
-        String filmGenres = StringUtils.handlesInputString(req.getParameter("genre-ids"));
-
-        String[] filmGenreIDArr = filmGenres.split(" ");
+        String[] filmGenreIDs = req.getParameterValues("genre-ids");
 
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);
@@ -88,7 +93,7 @@ public class EditFilmController extends HttpServlet {
 
         // if not change image
         if (filmImgName == null || filmImgName.isEmpty())
-            filmServices.update(editFilm, filmGenreIDArr);
+            filmServices.update(editFilm, filmGenreIDs);
         else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
@@ -99,7 +104,7 @@ public class EditFilmController extends HttpServlet {
             System.out.println(oldFile.getAbsolutePath());
             // set new img file and upload to server
             editFilm.setImgPath(filmImgPath);
-            filmServices.update(editFilm, filmGenreIDArr);
+            filmServices.update(editFilm, filmGenreIDs);
             FileUploadUtils.uploadFile(req, uuidFileName, "upload-img");
         }
 

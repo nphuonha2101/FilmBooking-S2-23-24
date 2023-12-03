@@ -163,6 +163,14 @@ public class Film {
         this.showtimeList = showtimeList;
     }
 
+    public String getFilmGenresStr() {
+        StringBuilder result = new StringBuilder();
+        for (Genre genre: this.genreList) {
+            result.append(genre.getGenreName()).append(" ");
+        }
+        return result.toString().trim();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Film) {

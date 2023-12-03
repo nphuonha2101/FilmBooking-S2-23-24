@@ -547,6 +547,11 @@ select {
     border: 2px solid #0556f3 !important;
 }
 
+.genre-ids-select {
+    width: calc(44vw) !important;
+    height: max-content !important;
+}
+
 
 /*!* custom scroll bar *!*/
 /*::-webkit-scrollbar {*/
