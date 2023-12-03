@@ -549,7 +549,7 @@ select {
 
 .genre-ids-select {
     width: calc(44vw) !important;
-    height: max-content !important;
+    height: 10rem !important;
 }
 
 
