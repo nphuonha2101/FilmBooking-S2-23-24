@@ -139,7 +139,14 @@
                             class="genre-ids-select"
                             multiple>
                         <c:forEach items="${genreList}" var="genre">
-                            <option value="${genre.genreID}" selected>${genre.genreName}</option>
+                            <c:choose>
+                                <c:when test="${fn:contains(editFilm.genreList, genre)}">
+                                    <option value="${genre.genreID}" selected>${genre.genreName}</option>
+                                </c:when>
+                                <c:otherwise>
+                                    <option value="${genre.genreID}">${genre.genreName}</option>
+                                </c:otherwise>
+                            </c:choose>
                         </c:forEach>
                     </select>
 
