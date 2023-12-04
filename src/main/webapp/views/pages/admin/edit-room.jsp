@@ -34,38 +34,38 @@
                 <div>
                     <c:set var="editRoom" value="${editRoom}"/>
                     <form method="post" action="edit-room">
-                        <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomID"/>
-                            <span class="warning-color">: *</span>
+                        <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomID"/>:
+                            <span class="warning-color"> *</span>
                         </label>
                         <input class="readonly-input" type="text"
                                placeholder="<fmt:message bundle="${adminMsg}" key="roomID"/>" name="room-id"
                                id="room-id"
                                value="${editRoom.roomID}"
                                readonly/>
-                        <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>
-                            <span class="warning-color">: *</span>
+                        <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>:
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
                                name="room-name" id="room-name"
                                value="${editRoom.roomName}"
                                required/>
 
-                        <label for="seat-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/>
-                            <span class="warning-color">: *</span>
+                        <label for="seat-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/>:
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
                                name="seat-rows" id="seat-rows"
                                value="${editRoom.seatRows}"
                                required/>
-                        <label for="seat-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/>
-                            <span class="warning-color">: *</span>
+                        <label for="seat-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/>:
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
                                name="seat-cols" id="seat-cols"
                                value="${editRoom.seatCols}"
                                required/>
-                        <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/>
-                            <span class="warning-color">: *</span>
+                        <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/>:
+                            <span class="warning-color"> *</span>
                         </label>
                         <select id="theater-id" name="theater-id">
                             <c:forEach var="theater" items="${theaters}">

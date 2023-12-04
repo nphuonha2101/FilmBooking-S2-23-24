@@ -42,32 +42,37 @@
         <form action="signup" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
-                <fmt:message bundle="${msg}" key="username"/>
+                <fmt:message bundle="${msg}" key="username"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="text" name="username" id="username" placeholder="<fmt:message bundle="${msg}" key="username"/>" autocomplete="true" required>
 
             <label for="user-full-name">
                 <span class="material-symbols-rounded">badge</span>
-                <fmt:message bundle="${msg}" key="fullname"/>
+                <fmt:message bundle="${msg}" key="fullname"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="text" name="user-full-name" id="user-full-name" placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
                    required>
 
             <label for="email">
                 <span class="material-symbols-rounded">mail</span>
-                <fmt:message bundle="${msg}" key="email"/>
+                <fmt:message bundle="${msg}" key="email"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="email" name="email" id="email" placeholder="Email" autocomplete="true" required>
 
             <label for="password">
                 <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="password"/>
+                <fmt:message bundle="${msg}" key="password"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="password" name="password" id="password" placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
 
             <label for="confirm-password">
                 <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="confirmPassword"/>
+                <fmt:message bundle="${msg}" key="confirmPassword"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="password" name="confirm-password" id="confirm-password" placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"
                    autocomplete="true" required>

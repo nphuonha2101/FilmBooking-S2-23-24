@@ -36,20 +36,20 @@
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>
-                                <span class="warning-color">: *</span>
+                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>" name="film-name"
                                    id="film-name"
                                    required/>
-                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>
-                                <span class="warning-color">: *</span>
+                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="ticketPrices"/>"
                                    name="film-price" id="film-price"
                                    required/>
-                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>
-                                <span class="warning-color">: *</span>
+                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="director"/>" name="director" id="director"
                                    required/>
@@ -71,8 +71,8 @@
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>
-                                <span class="warning-color">: *</span>
+                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>" name="actors" id="actors"
                                    required/>
@@ -90,8 +90,8 @@
 
                     <div class="wrapper centered-vertical-content">
                         <div>
-                            <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/>
-                                <span class="warning-color">: *</span>
+                            <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="filmLength"/>"
                                    name="film-length"
@@ -102,8 +102,8 @@
                 </div>
 
                 <div class="wrapper centered-vertical-content">
-                    <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>
-                        <span class="warning-color">: *</span>
+                    <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <p>
                         <span class="font-bold"><fmt:message key="selectedGenres" bundle="${adminMsg}"/>: </span>
@@ -120,7 +120,7 @@
 
 
                     <label for="film-description_textarea">
-                        <fmt:message bundle="${adminMsg}" key="filmDescription"/>
+                        <fmt:message bundle="${adminMsg}" key="filmDescription"/>:
                     </label>
                     <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
                               placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>"></textarea>

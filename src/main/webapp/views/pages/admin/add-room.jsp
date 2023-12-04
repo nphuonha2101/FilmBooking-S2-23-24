@@ -37,28 +37,28 @@
                     <form method="post" action="add-room">
 
                         <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>:
-                            <span class="warning-color">*</span>
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
                                name="room-name"
                                id="room-name"
                                required/>
                         <label for="room-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/>:
-                            <span class="warning-color">*</span>
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
                                name="room-rows"
                                id="room-rows"
                                required/>
                         <label for="room-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/>:
-                            <span class="warning-color">*</span>
+                            <span class="warning-color"> *</span>
                         </label>
                         <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
                                name="room-cols"
                                id="room-cols"
                                required/>
                         <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/>:
-                            <span class="warning-color">*</span>
+                            <span class="warning-color"> *</span>
                         </label>
                         <select id="theater-id" name="theater-id">
                             <c:forEach var="theater" items="${theaters}">

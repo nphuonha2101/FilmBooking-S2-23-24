@@ -44,14 +44,16 @@
         <form action="forgot-password" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
-                <fmt:message key="username" bundle="${msg}"/>
+                <fmt:message key="username" bundle="${msg}"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="text" name="username" id="username" placeholder=" <fmt:message key="username" bundle="${msg}"/>"
                    autocomplete="true" required>
 
             <label for="email">
                 <span class="material-symbols-rounded">mail</span>
-                <fmt:message key="email" bundle="${msg}"/>
+                <fmt:message key="email" bundle="${msg}"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>" autocomplete="true" required>
 

@@ -32,16 +32,15 @@
             <div>
                 <c:set var="editShowtime" value="${editShowtime}"/>
                 <form method="post" action="edit-showtime">
-                    <label for="showtime-id"><fmt:message bundle="${adminMsg}" key="showtimeID"/>
-                        <span class="warning-color">: *</span>
+                    <label for="showtime-id"><fmt:message bundle="${adminMsg}" key="showtimeID"/>:
                     </label>
                     <input class="readonly-input" type="text"
                            placeholder="<fmt:message bundle="${adminMsg}" key="showtimeID"/>" name="showtime-id"
                            id="showtime-id"
                            value="${editShowtime.showtimeID}"
                            readonly/>
-                    <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>
-                        <span class="warning-color">: *</span>
+                    <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <select name="film-id" id="film-id">
                         <c:forEach var="film" items="${filmData}" varStatus="loop">
@@ -55,8 +54,8 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomName"/>
-                        <span class="warning-color">: *</span>
+                    <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomName"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <select name="room-id" id="room-id">
                         <c:forEach var="room" items="${roomData}" varStatus="loop">
@@ -71,8 +70,8 @@
                             </c:choose>
                         </c:forEach>
                     </select>
-                    <label for="showtime-datetime"><fmt:message bundle="${adminMsg}" key="showtimeDate"/>
-                        <span class="warning-color">: *</span>
+                    <label for="showtime-datetime"><fmt:message bundle="${adminMsg}" key="showtimeDate"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <input type="datetime-local" placeholder="<fmt:message bundle="${adminMsg}" key="showtimeDate"/>"
                            name="showtime-datetime" id="showtime-datetime"

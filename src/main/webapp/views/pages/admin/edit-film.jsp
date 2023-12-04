@@ -46,16 +46,16 @@
                                    value="${editFilm.filmID}"
                                    readonly/>
 
-                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>
-                                <span class="warning-color">: *</span>
+                            <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>"
                                    name="film-name"
                                    id="film-name"
                                    value="${editFilm.filmName}" required/>
 
-                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>
-                                <span class="warning-color">: *</span>
+                            <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="number" min="0"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="ticketPrices"/>"
@@ -63,8 +63,8 @@
                                    value="${editFilm.filmPrice}"
                                    required/>
 
-                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>
-                                <span class="warning-color">: *</span>
+                            <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="director"/>"
                                    name="director"
@@ -88,8 +88,8 @@
 
                     <div class="left-col">
                         <div>
-                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>
-                                <span class="warning-color">: *</span>
+                            <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>:
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>"
                                    name="actors" id="actors"
@@ -115,7 +115,7 @@
                     <div class="left-col">
                         <div>
                             <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/>:
-                                <span class="warning-color">*</span>
+                                <span class="warning-color"> *</span>
                             </label>
                             <input type="number" min="0"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="filmLength"/>" name="film-length"
@@ -124,30 +124,11 @@
                                    required/>
                         </div>
                     </div>
-                    <div class="right-col">
-                        <%--                        <div>--%>
-                        <%--                            <p>--%>
-                        <%--                                <span class="font-bold"><fmt:message key="selectedGenres"--%>
-                        <%--                                                                     bundle="${adminMsg}"/>: </span>--%>
-                        <%--                                <span id="selected-genres">${filmGenresStr}</span>--%>
-                        <%--                            </p>--%>
-                        <%--                            <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>:--%>
-                        <%--                                <span class="warning-color">*</span>--%>
-                        <%--                            </label>--%>
-                        <%--                            <select name="genre-ids"--%>
-                        <%--                                    id="genre-ids"--%>
-                        <%--                                    multiple>--%>
-                        <%--                                <c:forEach items="${genreList}" var="genre">--%>
-                        <%--                                    <option value="${genre.genreID}" selected>${genre.genreName}</option>--%>
-                        <%--                                </c:forEach>--%>
-                        <%--                            </select>--%>
-                        <%--                        </div>--%>
-                    </div>
                 </div>
 
                 <div class="wrapper centered-vertical-content">
-                    <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>
-                        <span class="warning-color">: *</span>
+                    <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <p>
                         <span class="font-bold"><fmt:message key="selectedGenres" bundle="${adminMsg}"/>: </span>
@@ -165,7 +146,7 @@
 
                     <label for="film-description_textarea">
                         <fmt:message bundle="${adminMsg}" key="filmDescription"/>:
-                        <span class="warning-color">*</span>
+                        <span class="warning-color"> *</span>
                     </label>
                     <textarea class="none-resize_textarea" name="film-description" id="film-description_textarea"
                               placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>">${editFilm.filmDescription}</textarea>

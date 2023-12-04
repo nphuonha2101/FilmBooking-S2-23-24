@@ -29,7 +29,8 @@
         <form action="login" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
-                <fmt:message key="usernameOrEmail" bundle="${msg}"/>
+                <fmt:message key="usernameOrEmail" bundle="${msg}"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="text" name="username" id="username"
                    placeholder=" <fmt:message key="usernameOrEmail" bundle="${msg}"/>"
@@ -37,7 +38,8 @@
 
             <label for="password">
                 <span class="material-symbols-rounded">password</span>
-                <fmt:message key="password" bundle="${msg}"/>
+                <fmt:message key="password" bundle="${msg}"/>:
+                <span class="warning-color"> *</span>
             </label>
             <input type="password" name="password" id="password"
                    placeholder=" <fmt:message key="password" bundle="${msg}"/>"

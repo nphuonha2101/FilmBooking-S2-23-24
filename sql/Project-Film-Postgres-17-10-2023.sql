@@ -15,7 +15,7 @@ create table films
     film_director     varchar(100) not null,
     film_cast         varchar(255) not null,
     film_length       int          not null,
-    film_description  varchar,
+    film_description  varchar      not null,
     film_trailer_link varchar,
     img_path          varchar(255) not null
 );
@@ -31,7 +31,7 @@ create table theaters
 create table rooms
 (
     room_id    bigserial primary key,
-    room_name  varchar(50),
+    room_name  varchar(50)  not null,
     theater_id bigint references theaters (theater_id),
     seat_rows  int     not null,
     seat_cols  int     not null,

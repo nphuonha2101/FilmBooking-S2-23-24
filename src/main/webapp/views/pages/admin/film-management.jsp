@@ -19,58 +19,58 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-    <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-        <div class="container ">
-            <jsp:include page="/views/components/admin-panel.jsp"/>
-        </div>
-        <div class="container centered-vertical-content">
+<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+    <div class="container ">
+        <jsp:include page="/views/components/admin-panel.jsp"/>
+    </div>
+    <div class="container centered-vertical-content">
 
-            <h1><fmt:message bundle="${adminMsg}" key="filmManagement"/></h1>
+        <h1><fmt:message bundle="${adminMsg}" key="filmManagement"/></h1>
 
-            <div class="centered-vertical-content wrapper">
-                <div class="justify-right-row wrapper">
-                    <a href="add-film" class="primary-filled-button rounded-button button submit-button icon-button">
-                        <span class="material-symbols-rounded">add</span>
-                        <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewFilm"/></span>
-                    </a>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th><fmt:message bundle="${adminMsg}" key="filmID"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="filmName"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="ticketPrices"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="director"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="actors"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="filmLength"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="actions"/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                        <tr>
-                            <td>${film.filmID}</td>
-                            <td>${film.filmName}</td>
-                            <td>${film.filmPrice} VNĐ</td>
-                            <td>${film.director}</td>
-                            <td>${film.cast}</td>
-                            <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
-                            <td>
-                                <form class="hide hidden-form" method="get">
-                                    <input type="hidden" name="film-id_hidden"
-                                           value="${film.filmID}"/>
-                                </form>
-                                <button class="submit-button delete-button">
-                                    <span class="material-symbols-rounded warning-color">delete</span>
-                                </button>
-                                <button class="submit-button edit-button">
-                                    <span class="material-symbols-rounded primary-color">edit</span>
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+        <div class="centered-vertical-content wrapper">
+            <div class="justify-right-row wrapper">
+                <a href="add-film" class="primary-filled-button rounded-button button submit-button icon-button">
+                    <span class="material-symbols-rounded">add</span>
+                    <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewFilm"/></span>
+                </a>
             </div>
+            <table>
+                <thead>
+                <tr>
+                    <th><fmt:message bundle="${adminMsg}" key="filmID"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="filmName"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="ticketPrices"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="director"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="actors"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="filmLength"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="actions"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="film" items="${filmsData}" varStatus="loop">
+                    <tr>
+                        <td>${film.filmID}</td>
+                        <td>${film.filmName}</td>
+                        <td>${film.filmPrice} VNĐ</td>
+                        <td>${film.director}</td>
+                        <td>${film.cast}</td>
+                        <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
+                        <td>
+                            <form class="hide hidden-form" method="get">
+                                <input type="hidden" name="film-id_hidden"
+                                       value="${film.filmID}"/>
+                            </form>
+                            <button class="submit-button delete-button">
+                                <span class="material-symbols-rounded warning-color">delete</span>
+                            </button>
+                            <button class="submit-button edit-button">
+                                <span class="material-symbols-rounded primary-color">edit</span>
+                            </button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
+</section>
