@@ -163,7 +163,8 @@ public class Film {
         this.showtimeList = showtimeList;
     }
 
-    public String getFilmGenresStr() {
+    public String getFilmGenresStr
+            () {
         StringBuilder result = new StringBuilder();
         for (Genre genre: this.genreList) {
             result.append(genre.getGenreName()).append(" ");

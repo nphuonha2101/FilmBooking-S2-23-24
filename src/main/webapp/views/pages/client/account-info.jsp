@@ -37,15 +37,16 @@
             </tr>
             <tr>
                 <td><fmt:message bundle="${msg}" key="role"/>:</td>
-
-                <c:choose>
-                    <c:when test="${loginUser.accountRole eq 'customer'}">
-                        <td><fmt:message bundle="${msg}" key="customer"/></td>
-                    </c:when>
-                    <c:otherwise>
-                        <td><fmt:message bundle="${msg}" key="admin"/></td>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${not empty loginUser}">
+                    <c:choose>
+                        <c:when test="${loginUser.accountRole eq 'customer'}">
+                            <td><fmt:message bundle="${msg}" key="customer"/></td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><fmt:message bundle="${msg}" key="admin"/></td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
 
             </tr>
             </tbody>

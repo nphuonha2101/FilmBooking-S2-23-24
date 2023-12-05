@@ -99,7 +99,7 @@ public class SendEmail {
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"card\">\n" +
-                "        <img src=\"https://drive.google.com/file/d/1LmTGcED7isFpQ-0WJXVuVbP_6ANxJegL/\" alt=\"Film Booking\" class=\"icon\">\n" +
+                "        <img src=\"https://drive.google.com/file/d/1LmTGcED7isFpQ-0WJXVuVbP_6ANxJegL\" alt=\"Film Booking\" class=\"icon\">\n" +
                 "        <h1>Mật khẩu mới của bạn</h1>\n" +
                 "        <p>Xin chào, có vẻ như là bạn đã quên mật khẩu cũ của mình nên chúng tôi đã tạo một mật khẩu mới cho bạn!</p>\n" +
                 "        <p>Bạn hãy nhập mật khẩu sau để có thể đăng nhập vào tài khoản của mình: <span class=\"bold\">" + password + "</span></p>\n" +
