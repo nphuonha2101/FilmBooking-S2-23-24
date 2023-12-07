@@ -3,7 +3,8 @@ import {$} from "./utils.js"
 let handlesShowSearchModal = {
     start: () => {
         try {
-            const searchButton = $("#search-button");
+            const searchButton = $("#search");
+            console.log(searchButton);
             const modalElement = $("#modal");
 
             searchButton.addEventListener("click", () => {

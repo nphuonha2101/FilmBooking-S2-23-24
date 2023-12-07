@@ -236,7 +236,7 @@ button {
 
 }
 
-.nav-links:hover {
+.nav-links:hover, .nav-active {
 
     background-color: transparent;
     border-bottom: 2px solid #0556f3;

@@ -30,7 +30,7 @@
     <ul id="right-nav-link">
 
         <li>
-            <a class="nav-links small-icon-button" href="home">
+            <a class="nav-links small-icon-button" href="home" id="home">
                 <div class="tooltip ">
                     <span class="material-symbols-rounded">
                         home
@@ -43,7 +43,7 @@
         </li>
 
         <li>
-            <a class="nav-links small-icon-button" id="search-button">
+            <a class="nav-links small-icon-button" id="search">
                 <div class="tooltip">
                      <span class="material-symbols-rounded">
                         search
@@ -59,7 +59,7 @@
             <li>
                 <div class="drop-down-menu">
 
-                    <a class="nav-links small-icon-button" href="account-info">
+                    <a class="nav-links small-icon-button" href="account-info" id="account-info">
                         <span class="material-symbols-rounded">
                             person
                         </span>
@@ -103,7 +103,7 @@
             </c:when>
             <c:when test="${empty sessionScope.loginUser.username}">
                 <li>
-                    <a class="nav-links small-icon-button" href="signup">
+                    <a class="nav-links small-icon-button" href="signup" id="signup">
                         <div class="tooltip">
                             <span class="material-symbols-rounded">
                                 person_add
@@ -115,7 +115,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-links small-icon-button" href="login">
+                    <a class="nav-links small-icon-button" href="login" id="login">
                         <div class="tooltip">
                         <span class="material-symbols-rounded">
                             login
