@@ -52,19 +52,18 @@ public class UserServicesImpl implements IUserServices {
     }
 
     @Override
-    public void save(User user) {
-        userDAO.save(user);
+    public boolean save(User user) {
+        return userDAO.save(user);
     }
 
     @Override
-    public void update(User user) {
-
-        userDAO.update(user);
+    public boolean update(User user) {
+       return userDAO.update(user);
     }
 
     @Override
-    public void delete(User user) {
-        userDAO.delete(user);
+    public boolean delete(User user) {
+        return userDAO.delete(user);
     }
 
     @Override
@@ -119,7 +118,6 @@ public class UserServicesImpl implements IUserServices {
             // if user exist and email not match
             if (!forgotPassUser.getUserEmail().equalsIgnoreCase(email)) {
                 result = new ServiceResult(StatusCodeEnum.EMAIL_NOT_MATCH);
-                return result;
             } else {
                 String newPassword = StringUtils.createRandomStringUtil(9);
                 forgotPassUser.setUserPassword(StringUtils.generateSHA256String(newPassword));
@@ -131,9 +129,9 @@ public class UserServicesImpl implements IUserServices {
                         sendEmail.createResetPasswordEmail(newPassword));
 
                 result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
-                return result;
 
             }
+            return result;
         }
     }
 }

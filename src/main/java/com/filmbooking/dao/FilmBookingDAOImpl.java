@@ -1,7 +1,7 @@
 package com.filmbooking.dao;
 
-import com.filmbooking.model.FilmBooking;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.FilmBooking;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -12,41 +12,17 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
+public class FilmBookingDAOImpl extends AbstractDAOImpl<FilmBooking> {
     private static FilmBookingDAOImpl instance = null;
 
-    private Session session;
-
     private FilmBookingDAOImpl() {
+        super(FilmBooking.class);
     }
 
     public static FilmBookingDAOImpl getInstance() {
         if (instance == null)
             instance = new FilmBookingDAOImpl();
         return instance;
-    }
-
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.session = sessionProvider.getSession();
-    }
-
-    @Override
-    public List<FilmBooking> getAll() {
-        List<FilmBooking> result;
-
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        // declare an object that want to query
-        CriteriaQuery<FilmBooking> criteriaQuery = criteriaBuilder.createQuery(FilmBooking.class);
-        Root<FilmBooking> rootEntry = criteriaQuery.from(FilmBooking.class);
-        CriteriaQuery<FilmBooking> all = criteriaQuery.select(rootEntry);
-
-        TypedQuery<FilmBooking> allQuery = this.session.createQuery(all);
-
-        result = allQuery.getResultList();
-
-        return result;
     }
 
     @Override
@@ -68,27 +44,6 @@ public class FilmBookingDAOImpl implements IDAO<FilmBooking> {
         }
 
         return result;
-    }
-
-    @Override
-    public void save(FilmBooking filmBooking) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(filmBooking);
-        transaction.commit();
-    }
-
-    @Override
-    public void update(FilmBooking filmBooking) {
-        Transaction transaction = session.beginTransaction();
-        session.merge(filmBooking);
-        transaction.commit();
-    }
-
-    @Override
-    public void delete(FilmBooking filmBooking) {
-        Transaction transaction = session.beginTransaction();
-        session.remove(filmBooking);
-        transaction.commit();
     }
 
 }

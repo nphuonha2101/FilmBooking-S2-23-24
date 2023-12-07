@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client;
+package com.filmbooking.controller.client.account;
 
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;

@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client;
+package com.filmbooking.controller.client.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
@@ -52,14 +52,12 @@ public class ChangePasswordController extends HttpServlet {
 
                 userServices.update(loginUser);
                 req.setAttribute("statusCodeSuccess", StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL.getStatusCode());
-                req.setAttribute("pageTitle", "changePasswordTitle");
-                render(req, resp);
                 // confirm password not match
             } else {
                 req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
-                req.setAttribute("pageTitle", "changePasswordTitle");
-                render(req, resp);
             }
+            req.setAttribute("pageTitle", "changePasswordTitle");
+            render(req, resp);
 
             // current password not match
         } else {

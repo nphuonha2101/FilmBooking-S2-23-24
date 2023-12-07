@@ -38,24 +38,18 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     }
 
     @Override
-    public void save(Showtime showtime) {
-        showtimeDAO.save(showtime);
+    public boolean save(Showtime showtime) {
+        return showtimeDAO.save(showtime);
     }
 
     @Override
-    public void update(Showtime showtime) {
-        showtimeDAO.update(showtime);
+    public boolean update(Showtime showtime) {
+        return showtimeDAO.update(showtime);
     }
 
     @Override
-    public void delete(Showtime showtime) {
-        showtimeDAO.delete(showtime);
-    }
-
-    @Override
-    public void bookSeats(Showtime showtime, String[] seats) {
-        showtime.bookSeats(seats);
-        update(showtime);
+    public boolean delete(Showtime showtime) {
+        return showtimeDAO.delete(showtime);
     }
 
     @Override

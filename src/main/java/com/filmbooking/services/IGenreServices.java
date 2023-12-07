@@ -9,7 +9,7 @@ public interface IGenreServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
     List<Genre> getAll();
     Genre getByID(String id);
-    void save(Genre genre);
-    void update(Genre genre);
-    void delete(Genre genre);
+    boolean save(Genre genre);
+    boolean update(Genre genre);
+    boolean delete(Genre genre);
 }

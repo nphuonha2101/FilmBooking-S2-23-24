@@ -174,8 +174,7 @@ public class Film {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Film) {
-            Film film = (Film) obj;
+        if (obj instanceof Film film) {
             return this.filmID == film.getFilmID()
                     && this.filmName.equals(film.getFilmName())
                     && this.filmPrice == film.getFilmPrice()
@@ -191,12 +190,12 @@ public class Film {
 
     @Override
     public String toString() {
-        String result = filmName + " List genre: ";
+        StringBuilder result = new StringBuilder(filmName + " List genre: ");
 
         for (Genre genre: this.genreList) {
-            result += genre.toString() + "\n";
+            result.append(genre.toString()).append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public static void main(String[] args) {

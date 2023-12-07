@@ -18,7 +18,7 @@ public class User {
     private String userPassword;
     @Column(name = "account_role")
     private String accountRole;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
     List<FilmBooking> filmBookingList;
 
     public User() {}
@@ -91,8 +91,7 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof User) {
-            User user = (User) obj;
+        if (obj instanceof User user) {
             return this.username.equals(user.getUsername())
                     && this.userFullName.equals(user.getUserFullName())
                     && this.userEmail.equals(user.getUserEmail())

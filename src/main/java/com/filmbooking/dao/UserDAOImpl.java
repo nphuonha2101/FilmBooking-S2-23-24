@@ -12,11 +12,11 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class UserDAOImpl implements IDAO<User> {
+public class UserDAOImpl extends AbstractDAOImpl<User> {
     private static UserDAOImpl instance = null;
-    private Session session;
 
     private UserDAOImpl() {
+        super(User.class);
     }
 
     public static UserDAOImpl getInstance() {
@@ -25,29 +25,6 @@ public class UserDAOImpl implements IDAO<User> {
         }
         return instance;
     }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.session = sessionProvider.getSession();
-    }
-
-    @Override
-    public List<User> getAll() {
-        List<User> result;
-
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        // declare an object that want to query
-        CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
-        Root<User> rootEntry = criteriaQuery.from(User.class);
-        CriteriaQuery<User> all = criteriaQuery.select(rootEntry);
-
-        TypedQuery<User> allQuery = this.session.createQuery(all);
-
-        result = allQuery.getResultList();
-
-        return result;
-    }
-
 
     @Override
     public User getByID(String id) {
@@ -68,26 +45,4 @@ public class UserDAOImpl implements IDAO<User> {
 
         return result;
     }
-
-    @Override
-    public void save(User user) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(user);
-        transaction.commit();
-    }
-
-    @Override
-    public void update(User user) {
-        Transaction transaction = session.beginTransaction();
-        session.merge(user);
-        transaction.commit();
-    }
-
-    @Override
-    public void delete(User user) {
-        Transaction transaction = session.beginTransaction();
-        session.remove(user);
-        transaction.commit();
-    }
-
 }

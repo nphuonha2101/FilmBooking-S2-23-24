@@ -10,9 +10,9 @@ public interface IRoomServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
     List<Room> getAll();
     Room getByRoomID(String id);
-    void save(Room room);
-    void update(Room room);
-    void delete(Room room);
+    boolean save(Room room);
+    boolean update(Room room);
+    boolean delete(Room room);
 
 
 }

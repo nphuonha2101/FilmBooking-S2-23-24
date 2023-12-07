@@ -12,11 +12,11 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class RoomDAOImpl implements IDAO<Room> {
+public class RoomDAOImpl extends AbstractDAOImpl<Room> {
     private static RoomDAOImpl instance = null;
-    private Session session;
 
     private RoomDAOImpl() {
+        super(Room.class);
     }
 
     public static RoomDAOImpl getInstance() {
@@ -26,27 +26,6 @@ public class RoomDAOImpl implements IDAO<Room> {
         return instance;
     }
 
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.session = sessionProvider.getSession();
-    }
-
-    @Override
-    public List<Room> getAll() {
-        List<Room> result;
-
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        // declare an object that want to query
-        CriteriaQuery<Room> criteriaQuery = criteriaBuilder.createQuery(Room.class);
-        Root<Room> rootEntry = criteriaQuery.from(Room.class);
-        CriteriaQuery<Room> all = criteriaQuery.select(rootEntry);
-
-        TypedQuery<Room> allQuery = this.session.createQuery(all);
-
-        result = allQuery.getResultList();
-
-        return result;
-    }
     @Override
     public Room getByID(String id) {
         long lID = Long.parseLong(id);
@@ -67,24 +46,5 @@ public class RoomDAOImpl implements IDAO<Room> {
 
         return result;
     }
-    @Override
-    public void save(Room room) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(room);
-        transaction.commit();
-    }
 
-    @Override
-    public void update(Room room) {
-        Transaction transaction = session.beginTransaction();
-        session.merge(room);
-        transaction.commit();
-    }
-
-    @Override
-    public void delete(Room room) {
-        Transaction transaction = session.beginTransaction();
-        session.remove(room);
-        transaction.commit();
-    }
 }

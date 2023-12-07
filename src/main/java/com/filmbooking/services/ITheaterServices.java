@@ -9,7 +9,7 @@ public interface ITheaterServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
     List<Theater> getAll();
     Theater getByID(String id);
-    void save(Theater theater);
-    void update(Theater theater);
-    void delete(Theater theater);
+    boolean save(Theater theater);
+    boolean update(Theater theater);
+    boolean delete(Theater theater);
 }

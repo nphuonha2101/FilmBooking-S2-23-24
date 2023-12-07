@@ -11,10 +11,10 @@ public interface IFilmServices {
     Film getByFilmID(String id);
     List<Film> getByFilmName(String name);
 
-    void save(Film film);
-    void save(Film film, String ...genreIDs);
-    void update(Film film);
-    void update(Film film, String ...genreIDs);
-    void delete(Film film);
+    boolean save(Film film);
+    boolean save(Film film, String ...genreIDs);
+    boolean update(Film film);
+    boolean update(Film film, String ...genreIDs);
+    boolean delete(Film film);
 
 }

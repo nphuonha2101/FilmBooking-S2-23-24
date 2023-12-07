@@ -24,10 +24,9 @@ public class StringUtils {
 
     public static String arr2DToString(String[][] arr) {
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                result.append(arr[i][j]);
-
+        for (String[] strings : arr) {
+            for (String string : strings) {
+                result.append(string);
             }
             result.append(" ");
         }
@@ -35,9 +34,9 @@ public class StringUtils {
     }
 
     public static void printArr(String[][] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = 0; j < arr[i].length; j++) {
-                System.out.print(arr[i][j] + " ");
+        for (String[] strings : arr) {
+            for (String string : strings) {
+                System.out.print(string + " ");
             }
             System.out.println();
         }
@@ -50,15 +49,15 @@ public class StringUtils {
             byte[] messageDigest = md.digest(str.getBytes(StandardCharsets.UTF_8));
 
             BigInteger no = new BigInteger(1, messageDigest);
-            String hexText = no.toString(16);
+            StringBuilder hexText = new StringBuilder(no.toString(16));
 
-            while (hexText.length() < 32)
-                hexText += "0" + hexText;
+            while (hexText.length() < 64)
+                hexText.append("0").append(hexText);
 
 
-            return hexText;
+            return hexText.toString();
         } catch (NoSuchAlgorithmException e) {
-            e.getMessage();
+            e.printStackTrace(System.out);
         }
         return null;
     }
@@ -104,6 +103,6 @@ public class StringUtils {
 //        System.out.println(arr2DToString(convertTo2DArr(data)));
 //        System.out.println(createRandomStringUtil(9));
 
-        System.out.println(StringUtils.generateSHA256String("wdt5l36oT").equals("d2d11bd00f91094c7208105d368346b298def1aca0614b7b1429bc29c4990692"));
+        System.out.println(StringUtils.generateSHA256String("wdt5l36oT").equals("f03fe1db2fb7b198b2c560a00723135fa34e59038590435a22e5a6e299d72f0e"));
     }
 }

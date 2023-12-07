@@ -12,11 +12,11 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class TheaterDAOImpl implements IDAO<Theater> {
+public class TheaterDAOImpl extends AbstractDAOImpl<Theater> {
     private static TheaterDAOImpl instance = null;
-    private Session session;
 
     public TheaterDAOImpl() {
+        super(Theater.class);
     }
 
     public static TheaterDAOImpl getInstance() {
@@ -26,27 +26,6 @@ public class TheaterDAOImpl implements IDAO<Theater> {
         return instance;
     }
 
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.session = sessionProvider.getSession();
-    }
-
-    @Override
-    public List<Theater> getAll() {
-        List<Theater> result;
-
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        // declare an object that want to query
-        CriteriaQuery<Theater> criteriaQuery = criteriaBuilder.createQuery(Theater.class);
-        Root<Theater> rootEntry = criteriaQuery.from(Theater.class);
-        CriteriaQuery<Theater> all = criteriaQuery.select(rootEntry);
-
-        TypedQuery<Theater> allQuery = this.session.createQuery(all);
-
-        result = allQuery.getResultList();
-
-        return result;
-    }
 
 
     @Override
@@ -70,24 +49,4 @@ public class TheaterDAOImpl implements IDAO<Theater> {
         return result;
     }
 
-    @Override
-    public void save(Theater theater) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(theater);
-        transaction.commit();
-    }
-
-    @Override
-    public void update(Theater theater) {
-        Transaction transaction = session.beginTransaction();
-        session.merge(theater);
-        transaction.commit();
-    }
-
-    @Override
-    public void delete(Theater theater) {
-        Transaction transaction = session.beginTransaction();
-        session.remove(theater);
-        transaction.commit();
-    }
 }

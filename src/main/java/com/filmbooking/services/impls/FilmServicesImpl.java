@@ -2,10 +2,11 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.FilmDAOImpl;
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.services.*;
-import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.IGenreServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,28 +59,28 @@ public class FilmServicesImpl implements IFilmServices {
     }
 
     @Override
-    public void save(Film film) {
-        filmDAO.save(film);
+    public boolean save(Film film) {
+        return filmDAO.save(film);
     }
 
     @Override
-    public void save(Film film, String... genreIDs) {
+    public boolean save(Film film, String... genreIDs) {
 
         List<Genre> genreList = new ArrayList<>();
         for (String genreID : genreIDs) {
             genreList.add(genreServices.getByID(genreID));
         }
         film.setGenreList(genreList);
-        filmDAO.save(film);
+        return filmDAO.save(film);
     }
 
     @Override
-    public void update(Film film) {
-        filmDAO.update(film);
+    public boolean update(Film film) {
+        return filmDAO.update(film);
     }
 
     @Override
-    public void update(Film film, String... genreIDs) {
+    public boolean update(Film film, String... genreIDs) {
 
         List<Genre> genreList = new ArrayList<>();
         for (String genreID : genreIDs) {
@@ -87,12 +88,12 @@ public class FilmServicesImpl implements IFilmServices {
         }
         film.setGenreList(genreList);
 
-        filmDAO.update(film);
+        return filmDAO.update(film);
     }
 
     @Override
-    public void delete(Film film) {
-        filmDAO.delete(film);
+    public boolean delete(Film film) {
+        return filmDAO.delete(film);
     }
 
     public static void main(String[] args) {

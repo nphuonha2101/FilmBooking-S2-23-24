@@ -78,8 +78,7 @@ public class Theater {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Theater) {
-            Theater theater = (Theater) obj;
+        if (obj instanceof Theater theater) {
             return this.theaterID == theater.getTheaterID()
                     && this.theaterName.equals(theater.getTheaterName())
                     && this.taxCode.equals(theater.getTaxCode())

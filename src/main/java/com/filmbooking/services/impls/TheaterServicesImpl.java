@@ -11,11 +11,11 @@ import java.util.List;
 public class TheaterServicesImpl implements ITheaterServices {
     private final IDAO<Theater> theaterDAO;
     public TheaterServicesImpl() {
-        theaterDAO = new TheaterDAOImpl();
+        theaterDAO = TheaterDAOImpl.getInstance();
     }
 
     public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
-        theaterDAO = new TheaterDAOImpl();
+        theaterDAO = TheaterDAOImpl.getInstance();
         setSessionProvider(sessionProvider);
     }
 
@@ -35,18 +35,18 @@ public class TheaterServicesImpl implements ITheaterServices {
     }
 
     @Override
-    public void save(Theater theater) {
-        theaterDAO.save(theater);
+    public boolean save(Theater theater) {
+        return theaterDAO.save(theater);
     }
 
     @Override
-    public void update(Theater theater) {
-        theaterDAO.update(theater);
+    public boolean update(Theater theater) {
+        return theaterDAO.update(theater);
     }
 
     @Override
-    public void delete(Theater theater) {
-        theaterDAO.delete(theater);
+    public boolean delete(Theater theater) {
+        return theaterDAO.delete(theater);
     }
 
 

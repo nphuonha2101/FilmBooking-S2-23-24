@@ -12,11 +12,11 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class FilmDAOImpl implements IDAO<Film> {
+public class FilmDAOImpl extends AbstractDAOImpl<Film> {
     private static FilmDAOImpl instance = null;
-    private Session session;
 
     private FilmDAOImpl() {
+        super(Film.class);
     }
 
     public static FilmDAOImpl getInstance() {
@@ -25,30 +25,6 @@ public class FilmDAOImpl implements IDAO<Film> {
         }
         return instance;
     }
-
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.session = sessionProvider.getSession();
-    }
-
-    @Override
-    public List<Film> getAll() {
-        List<Film> result;
-
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        // declare an object that want to query
-        CriteriaQuery<Film> criteriaQuery = criteriaBuilder.createQuery(Film.class);
-        Root<Film> rootEntry = criteriaQuery.from(Film.class);
-        CriteriaQuery<Film> all = criteriaQuery.select(rootEntry);
-
-        TypedQuery<Film> allQuery = this.session.createQuery(all);
-
-        result = allQuery.getResultList();
-
-        return result;
-    }
-
 
     @Override
     public Film getByID(String id) {
@@ -70,26 +46,4 @@ public class FilmDAOImpl implements IDAO<Film> {
 
         return result;
     }
-
-    @Override
-    public void save(Film film) {
-        Transaction transaction = session.beginTransaction();
-        session.persist(film);
-        transaction.commit();
-    }
-
-    @Override
-    public void update(Film film) {
-        Transaction transaction = session.beginTransaction();
-        session.merge(film);
-        transaction.commit();
-    }
-
-    @Override
-    public void delete(Film film) {
-        Transaction transaction = session.beginTransaction();
-        session.remove(film);
-        transaction.commit();
-    }
-
 }

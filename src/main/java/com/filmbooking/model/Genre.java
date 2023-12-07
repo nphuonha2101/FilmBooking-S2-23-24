@@ -55,8 +55,7 @@ public class Genre {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Genre) {
-            Genre genre = (Genre) obj;
+        if (obj instanceof Genre genre) {
             return this.genreID.equals(genre.getGenreID())
                     && this.genreName.equals(genre.getGenreName());
         }

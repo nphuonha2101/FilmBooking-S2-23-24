@@ -2,9 +2,9 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.GenreDAOImpl;
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.IGenreServices;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 
 import java.util.List;
 
@@ -36,17 +36,17 @@ public class GenreServicesImpl implements IGenreServices {
     }
 
     @Override
-    public void save(Genre genre) {
-        genreDAO.save(genre);
+    public boolean save(Genre genre) {
+        return genreDAO.save(genre);
     }
 
     @Override
-    public void update(Genre genre) {
-        genreDAO.update(genre);
+    public boolean update(Genre genre) {
+        return genreDAO.update(genre);
     }
 
     @Override
-    public void delete(Genre genre) {
-        genreDAO.delete(genre);
+    public boolean delete(Genre genre) {
+        return genreDAO.delete(genre);
     }
 }

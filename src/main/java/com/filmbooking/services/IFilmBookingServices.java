@@ -11,7 +11,7 @@ public interface IFilmBookingServices {
     List<FilmBooking> getAll();
     FilmBooking getByFilmBookingID(String id);
     List<FilmBooking> getAllByUser(User user);
-    void save(FilmBooking filmBooking);
-    void update(FilmBooking filmBooking);
-    void delete(FilmBooking filmBooking);
+    boolean save(FilmBooking filmBooking);
+    boolean update(FilmBooking filmBooking);
+    boolean delete(FilmBooking filmBooking);
 }

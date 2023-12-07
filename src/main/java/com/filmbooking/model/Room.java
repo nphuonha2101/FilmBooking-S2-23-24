@@ -74,16 +74,17 @@ public class Room {
     private void generateSeatsData() {
         this.seatMatrix = new String[seatRows][seatCols];
         this.seatData = "";
+        StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < seatRows; i++) {
             for (int j = 0; j < seatCols; j++) {
-                this.seatData += "0";
+                stringBuilder.append("0");
                 this.seatMatrix[i][j] = "0";
 
             }
-            this.seatData += " ";
+            stringBuilder.append(" ");
         }
-        this.seatData = this.seatData.trim();
+        this.seatData = stringBuilder.toString().trim();
     }
 
 
@@ -157,8 +158,7 @@ public class Room {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Room) {
-            Room room = (Room) obj;
+        if (obj instanceof Room room) {
             return this.roomID == room.getRoomID()
                     && this.roomName.equals(room.getRoomName())
                     && this.seatRows == room.getSeatRows()

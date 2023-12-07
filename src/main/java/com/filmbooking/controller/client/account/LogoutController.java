@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client;
+package com.filmbooking.controller.client.account;
 
 import com.filmbooking.model.User;
 import jakarta.servlet.ServletException;

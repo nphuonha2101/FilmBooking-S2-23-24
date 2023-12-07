@@ -137,8 +137,7 @@ public class Showtime {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Showtime) {
-            Showtime showtime = (Showtime) obj;
+        if (obj instanceof Showtime showtime) {
             return this.showtimeID == showtime.getShowtimeID()
             && this.film.equals(showtime.getFilm())
             && this.room.equals(showtime.getRoom())

@@ -36,18 +36,18 @@ public class RoomServicesImpl implements IRoomServices {
     }
 
     @Override
-    public void save(Room room) {
-        roomDAO.save(room);
+    public boolean save(Room room) {
+        return roomDAO.save(room);
     }
 
     @Override
-    public void update(Room room) {
-        roomDAO.update(room);
+    public boolean update(Room room) {
+        return roomDAO.update(room);
     }
 
     @Override
-    public void delete(Room room) {
-        roomDAO.delete(room);
+    public boolean delete(Room room) {
+        return roomDAO.delete(room);
     }
 
 }

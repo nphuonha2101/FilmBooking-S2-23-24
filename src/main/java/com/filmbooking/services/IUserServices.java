@@ -11,9 +11,9 @@ public interface IUserServices {
     List<User> getAll();
     User getByUsername(String id);
     User getByEmail(String email);
-    void save(User user);
-    void update(User user);
-    void delete(User user);
+    boolean save(User user);
+    boolean update(User user);
+    boolean delete(User user);
     ServiceResult userAuthentication(String usernameOrEmail, String password);
     ServiceResult userForgotPassword(String username, String email);
 

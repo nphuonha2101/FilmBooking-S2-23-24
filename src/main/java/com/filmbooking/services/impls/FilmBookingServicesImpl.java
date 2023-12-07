@@ -44,19 +44,18 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     }
 
     @Override
-    public void save(FilmBooking filmBooking) {
-        filmBookingDAO.save(filmBooking);
+    public boolean save(FilmBooking filmBooking) {
+        return filmBookingDAO.save(filmBooking);
     }
 
     @Override
-    public void update(FilmBooking filmBooking) {
-        filmBookingDAO.update(filmBooking);
+    public boolean update(FilmBooking filmBooking) {
+        return filmBookingDAO.update(filmBooking);
     }
 
     @Override
-    public void delete(FilmBooking filmBooking) {
-        filmBookingDAO.delete(filmBooking);
-
+    public boolean delete(FilmBooking filmBooking) {
+        return filmBookingDAO.delete(filmBooking);
     }
 
 
