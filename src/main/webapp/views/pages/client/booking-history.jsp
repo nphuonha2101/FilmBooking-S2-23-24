@@ -52,10 +52,14 @@
                                 - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:
                             </span> ${filmBookingData.bookingDate}
                                 - <span class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:</span> ${film.filmName}
+                                - <span class="font-bold"><fmt:message bundle="${msg}" key="totalPrice"/>:</span> ${filmBookingData.totalFee} VNĐ
+                                - <span class="font-bold"><fmt:message bundle="${msg}" key="theaterAgency"/>:</span> ${theater.theaterName}
                             </button>
                             <div class="accordion-panel">
                                 <div class="two-col__wrapper wrapper">
                                     <div class="wrapper">
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="username"/>: <span>${filmBookingData.user.username}</span></p>
+                                        <p class="font-bold"><fmt:message bundle="${msg}" key="userFullName"/>: <span>${filmBookingData.user.userFullName}</span></p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="date"/>: <span>${filmBookingData.bookingDate}</span></p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="seat"/>: <span>${filmBookingData.seatsData}</span></p>
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="totalPrice"/>: <span>${filmBookingData.totalFee}</span> <span>VNĐ</span></p>
