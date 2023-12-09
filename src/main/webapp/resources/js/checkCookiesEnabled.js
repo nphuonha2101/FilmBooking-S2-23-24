@@ -1,4 +1,4 @@
-import {$, handlesCloseButton} from './utils';
+import {$, handlesCloseButton} from './utils.js';
 
 let checkCookiesEnabled = {
     start: () => {

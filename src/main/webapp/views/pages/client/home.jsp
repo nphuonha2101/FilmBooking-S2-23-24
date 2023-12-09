@@ -46,14 +46,14 @@
         </div>
     </div>
 
+<%--    Pagination--%>
     <div class="centered-vertical-content">
-
         <div class="centered-horizontal-content pagination-wrapper">
             <div class="previous centered-horizontal-content">
                 <c:choose>
-                    <c:when test="${param.page > 1}">
+                    <c:when test="${currentPage > 1}">
                         <div class="tooltip">
-                            <a class="button rounded-button" href="home?page=${param.page - 1}"><span
+                            <a class="button rounded-button" href="home?page=${currentPage - 1}"><span
                                     class="material-symbols-rounded">
                             navigate_before
                             </span>
@@ -76,17 +76,17 @@
             <div class="centered-vertical-content wrapper">
                 <form action="home" name="page" method="get" class="pagination-form">
                     <input type="number" min="1" max="${totalPages}" name="page"
-                           class="pagination-input" required/>
+                           class="pagination-input" value="${currentPage}" required/>
                     <input type="submit" class="button primary-filled-button rounded-button pagination-button"
                            value="<fmt:message key="goToPage" bundle="${msg}"/>">
                 </form>
             </div>
             <div class="next centered-horizontal-content">
                 <c:choose>
-                    <c:when test="${param.page < totalPages}">
+                    <c:when test="${currentPage < totalPages}">
                         <div class="tooltip">
 
-                            <a class="button rounded-button" href="home?page=${param.page + 1}"><span
+                            <a class="button rounded-button" href="home?page=${currentPage + 1}"><span
                                     class="material-symbols-rounded">
                             navigate_next
                             </span>
@@ -106,7 +106,7 @@
                 </c:choose>
             </div>
         </div>
-        <p><fmt:message key="currentPage" bundle="${msg}"/> ${currentPage} / ${totalPages} <fmt:message key="pages"
+        <p><fmt:message key="currentPage" bundle="${msg}"/>: ${currentPage} / ${totalPages} <fmt:message key="pages"
                                                                                                         bundle="${msg}"/></p>
     </div>
 
