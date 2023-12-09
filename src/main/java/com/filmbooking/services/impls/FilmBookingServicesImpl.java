@@ -1,6 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.FilmBookingDAOImpl;
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -14,12 +14,12 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
     private final IDAO<FilmBooking> filmBookingDAO;
 
     public FilmBookingServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.filmBookingDAO = FilmBookingDAOImpl.getInstance();
+        this.filmBookingDAO = new GenericDAOImpl<>(FilmBooking.class);
         setSessionProvider(sessionProvider);
     }
 
     public FilmBookingServicesImpl() {
-        this.filmBookingDAO = FilmBookingDAOImpl.getInstance();
+        this.filmBookingDAO = new GenericDAOImpl<>(FilmBooking.class);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
 
     @Override
     public FilmBooking getByFilmBookingID(String id) {
-        return filmBookingDAO.getByID(id);
+        return filmBookingDAO.getByID(id, true);
 
     }
 

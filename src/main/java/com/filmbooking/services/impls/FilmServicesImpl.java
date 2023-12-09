@@ -1,6 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.FilmDAOImpl;
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
@@ -16,12 +16,12 @@ public class FilmServicesImpl implements IFilmServices {
     private final IGenreServices genreServices;
 
     public FilmServicesImpl() {
-        filmDAO = FilmDAOImpl.getInstance();
+        filmDAO = new GenericDAOImpl<>(Film.class);
         genreServices = new GenreServicesImpl();
     }
 
     public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
-        filmDAO = FilmDAOImpl.getInstance();
+        filmDAO = new GenericDAOImpl<>(Film.class);
         genreServices = new GenreServicesImpl(sessionProvider);
         filmDAO.setSessionProvider(sessionProvider);
     }
@@ -29,6 +29,11 @@ public class FilmServicesImpl implements IFilmServices {
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
         filmDAO.setSessionProvider(sessionProvider);
+    }
+
+    @Override
+    public long getTotalRecords() {
+        return filmDAO.getTotalRecords();
     }
 
     /**
@@ -43,7 +48,7 @@ public class FilmServicesImpl implements IFilmServices {
 
     @Override
     public Film getByFilmID(String id) {
-        return filmDAO.getByID(id);
+        return filmDAO.getByID(id, true);
     }
 
     @Override
@@ -56,6 +61,11 @@ public class FilmServicesImpl implements IFilmServices {
                 result.add(film);
         }
         return result;
+    }
+
+    @Override
+    public List<Film> getByOffset(int offset, int limit) {
+        return filmDAO.getByOffset(offset, limit);
     }
 
     @Override
@@ -96,9 +106,5 @@ public class FilmServicesImpl implements IFilmServices {
         return filmDAO.delete(film);
     }
 
-    public static void main(String[] args) {
-        FilmServicesImpl filmServices = new FilmServicesImpl();
 
-        System.out.println(filmServices.getAll());
-    }
 }

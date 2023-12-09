@@ -1,6 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenreDAOImpl;
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
@@ -12,11 +12,11 @@ public class GenreServicesImpl implements IGenreServices {
     private final IDAO<Genre> genreDAO;
 
     public GenreServicesImpl() {
-        genreDAO = GenreDAOImpl.getInstance();
+        genreDAO = new GenericDAOImpl<>(Genre.class);
     }
 
     public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
-        genreDAO = GenreDAOImpl.getInstance();
+        genreDAO = new GenericDAOImpl<>(Genre.class);
         setSessionProvider(sessionProvider);
     }
 
@@ -32,7 +32,7 @@ public class GenreServicesImpl implements IGenreServices {
 
     @Override
     public Genre getByID(String id) {
-        return genreDAO.getByID(id);
+        return genreDAO.getByID(id, false);
     }
 
     @Override

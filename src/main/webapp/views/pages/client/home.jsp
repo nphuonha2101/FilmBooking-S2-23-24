@@ -23,7 +23,7 @@
 <section class="section">
     <div class="wrapper">
 
-        <h2 class="title"><fmt:message key="newFilmArriveSectionTitle" bundle="${pageTitle}"/> </h2>
+        <h2 class="title"><fmt:message key="newFilmArriveSectionTitle" bundle="${pageTitle}"/></h2>
 
         <div class="grid-items wrapper">
 
@@ -35,10 +35,8 @@
                          id="film-img-card-${loop.index}"></div>
                     <div class="wrapper">
                         <h4>${film.filmName}</h4>
-                            <%--                    <p>Phòng: ${film.roomID}</p>--%>
                         <p><fmt:message bundle="${msg}" key="ticketPrices"/>: ${film.filmPrice} VNĐ/người</p>
                         <p><fmt:message bundle="${msg}" key="director"/>: ${film.director}</p>
-                            <%--                    <p>Thể loại: ${film.genre}</p>--%>
                     </div>
                     <form action="film-info" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="film-id" value="${film.filmID}">
@@ -47,4 +45,63 @@
             </c:forEach>
         </div>
     </div>
+
+    <div class="centered-vertical-content">
+        <div class="centered-horizontal-content pagination-wrapper">
+            <div class="previous centered-horizontal-content">
+                <c:choose>
+                    <c:when test="${param.page > 1}">
+                        <div class="tooltip">
+                            <a class="button rounded-button" href="home?page=${param.page - 1}"><span class="material-symbols-rounded">
+                            navigate_before
+                            </span>
+                            </a>
+                            <span class="tooltip-text"><fmt:message key="previousPage" bundle="${msg}"/></span>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="tooltip">
+                            <a class="button rounded-button" href="home?page=${totalPages}"><span class="material-symbols-rounded">
+                            navigate_before
+                            </span>
+                            </a>
+                            <span class="tooltip-text"><fmt:message key="previousPage" bundle="${msg}"/></span>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="centered-vertical-content wrapper">
+                <form action="home" name="page" method="get" class="pagination-form">
+                    <input type="text" min="1" max="0{totalPages}" name="page"
+                           class="pagination-input" required/>
+                    <input type="submit" class="button primary-filled-button rounded-button pagination-button"
+                           value="<fmt:message key="goToPage" bundle="${msg}"/>">
+                </form>
+            </div>
+            <div class="next centered-horizontal-content">
+                <c:choose>
+                    <c:when test="${param.page < totalPages}">
+                        <div class="tooltip">
+
+                            <a class="button rounded-button" href="home?page=${param.page + 1}"><span class="material-symbols-rounded">
+                            navigate_next
+                            </span>
+                            </a>
+                            <span class="tooltip-text"><fmt:message key="nextPage" bundle="${msg}"/></span>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="tooltip">
+                            <a class="button rounded-button" href="home?page=1"><span class="material-symbols-rounded">
+                            navigate_next
+                            </span>
+                            </a>
+                            <span class="tooltip-text"><fmt:message key="nextPage" bundle="${msg}"/></span>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
+    </div>
+
 </section>

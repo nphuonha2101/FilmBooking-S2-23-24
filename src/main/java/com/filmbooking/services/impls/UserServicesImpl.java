@@ -1,7 +1,7 @@
 package com.filmbooking.services.impls;
 
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.dao.UserDAOImpl;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -18,11 +18,11 @@ public class UserServicesImpl implements IUserServices {
     private final IDAO<User> userDAO;
 
     public UserServicesImpl() {
-        userDAO = UserDAOImpl.getInstance();
+        userDAO = new GenericDAOImpl<>(User.class);
     }
 
     public UserServicesImpl(HibernateSessionProvider sessionProvider) {
-        userDAO = UserDAOImpl.getInstance();
+        userDAO = new GenericDAOImpl<>(User.class);
         setSessionProvider(sessionProvider);
     }
 
@@ -38,7 +38,7 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public User getByUsername(String id) {
-        return userDAO.getByID(id);
+        return userDAO.getByID(id, false);
     }
 
     @Override

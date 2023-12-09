@@ -1,6 +1,7 @@
 package com.filmbooking.controller.client;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.utils.ContextPathUtils;
@@ -12,22 +13,30 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "home", value = "/home")
 public class HomeController extends HttpServlet {
     private IFilmServices filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
+    private static final int LIMIT = 8;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int offset = 0;
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-//            req.setAttribute("navigationComponent", ContextPathUtils.getComponentPagesPath("navigation-bar.jsp"));
-        req.setAttribute("title", "Phim mới ra rạp");
-        req.setAttribute("filmsData", filmServices.getAll());
+        if (req.getParameter("pages") != null)
+            offset = (Integer.parseInt(req.getParameter("pages")) - 1) * LIMIT;
+        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
 
-//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getLayoutPath("master.jsp"));
+        List<Film> films = filmServices.getByOffset(offset, LIMIT);
+
+
+        req.setAttribute("totalPages", totalPages);
+        req.setAttribute("filmsData", films);
+
         req.setAttribute("pageTitle", "homeTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("home.jsp"),
@@ -41,4 +50,5 @@ public class HomeController extends HttpServlet {
         filmServices = null;
         hibernateSessionProvider = null;
     }
+
 }

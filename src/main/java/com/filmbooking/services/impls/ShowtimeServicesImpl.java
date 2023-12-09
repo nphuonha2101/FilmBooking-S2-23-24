@@ -1,10 +1,9 @@
 package com.filmbooking.services.impls;
 
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.dao.ShowtimeDAOImpl;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
 
 import java.util.HashMap;
@@ -14,11 +13,11 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     private final IDAO<Showtime> showtimeDAO;
 
     public ShowtimeServicesImpl() {
-        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+        this.showtimeDAO = new GenericDAOImpl<>(Showtime.class);
     }
 
     public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.showtimeDAO = ShowtimeDAOImpl.getInstance();
+        this.showtimeDAO = new GenericDAOImpl<>(Showtime.class);
         setSessionProvider(sessionProvider);
     }
 
@@ -34,7 +33,7 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
 
     @Override
     public Showtime getByID(String id) {
-        return showtimeDAO.getByID(id);
+        return showtimeDAO.getByID(id, true);
     }
 
     @Override

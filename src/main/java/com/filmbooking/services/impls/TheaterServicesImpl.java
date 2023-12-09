@@ -1,7 +1,7 @@
 package com.filmbooking.services.impls;
 
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.dao.TheaterDAOImpl;
 import com.filmbooking.model.Theater;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.hibernate.HibernateSessionProvider;
@@ -11,11 +11,11 @@ import java.util.List;
 public class TheaterServicesImpl implements ITheaterServices {
     private final IDAO<Theater> theaterDAO;
     public TheaterServicesImpl() {
-        theaterDAO = TheaterDAOImpl.getInstance();
+        theaterDAO = new GenericDAOImpl<>(Theater.class);
     }
 
     public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
-        theaterDAO = TheaterDAOImpl.getInstance();
+        theaterDAO = new GenericDAOImpl<>(Theater.class);
         setSessionProvider(sessionProvider);
     }
 
@@ -31,7 +31,7 @@ public class TheaterServicesImpl implements ITheaterServices {
 
     @Override
     public Theater getByID(String id) {
-        return theaterDAO.getByID(id);
+        return theaterDAO.getByID(id, true);
     }
 
     @Override

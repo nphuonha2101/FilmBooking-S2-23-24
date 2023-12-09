@@ -1,7 +1,7 @@
 package com.filmbooking.services.impls;
 
+import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
-import com.filmbooking.dao.RoomDAOImpl;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
@@ -12,11 +12,11 @@ public class RoomServicesImpl implements IRoomServices {
     private final IDAO<Room> roomDAO;
 
     public RoomServicesImpl() {
-        roomDAO = RoomDAOImpl.getInstance();
+        roomDAO = new GenericDAOImpl<>(Room.class);
     }
 
     public RoomServicesImpl(HibernateSessionProvider sessionProvider) {
-        roomDAO = RoomDAOImpl.getInstance();
+        roomDAO = new GenericDAOImpl<>(Room.class);
         setSessionProvider(sessionProvider);
     }
 
@@ -32,7 +32,7 @@ public class RoomServicesImpl implements IRoomServices {
 
     @Override
     public Room getByRoomID(String id) {
-        return roomDAO.getByID(id);
+        return roomDAO.getByID(id, true);
     }
 
     @Override
