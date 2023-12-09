@@ -47,12 +47,14 @@
     </div>
 
     <div class="centered-vertical-content">
+
         <div class="centered-horizontal-content pagination-wrapper">
             <div class="previous centered-horizontal-content">
                 <c:choose>
                     <c:when test="${param.page > 1}">
                         <div class="tooltip">
-                            <a class="button rounded-button" href="home?page=${param.page - 1}"><span class="material-symbols-rounded">
+                            <a class="button rounded-button" href="home?page=${param.page - 1}"><span
+                                    class="material-symbols-rounded">
                             navigate_before
                             </span>
                             </a>
@@ -61,7 +63,8 @@
                     </c:when>
                     <c:otherwise>
                         <div class="tooltip">
-                            <a class="button rounded-button" href="home?page=${totalPages}"><span class="material-symbols-rounded">
+                            <a class="button rounded-button" href="home?page=${totalPages}"><span
+                                    class="material-symbols-rounded">
                             navigate_before
                             </span>
                             </a>
@@ -72,7 +75,7 @@
             </div>
             <div class="centered-vertical-content wrapper">
                 <form action="home" name="page" method="get" class="pagination-form">
-                    <input type="text" min="1" max="0{totalPages}" name="page"
+                    <input type="number" min="1" max="${totalPages}" name="page"
                            class="pagination-input" required/>
                     <input type="submit" class="button primary-filled-button rounded-button pagination-button"
                            value="<fmt:message key="goToPage" bundle="${msg}"/>">
@@ -83,7 +86,8 @@
                     <c:when test="${param.page < totalPages}">
                         <div class="tooltip">
 
-                            <a class="button rounded-button" href="home?page=${param.page + 1}"><span class="material-symbols-rounded">
+                            <a class="button rounded-button" href="home?page=${param.page + 1}"><span
+                                    class="material-symbols-rounded">
                             navigate_next
                             </span>
                             </a>
@@ -102,6 +106,8 @@
                 </c:choose>
             </div>
         </div>
+        <p><fmt:message key="currentPage" bundle="${msg}"/> ${currentPage} / ${totalPages} <fmt:message key="pages"
+                                                                                                        bundle="${msg}"/></p>
     </div>
 
 </section>

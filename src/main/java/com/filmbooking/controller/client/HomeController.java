@@ -2,8 +2,8 @@ package com.filmbooking.controller.client;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -24,24 +24,31 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int offset = 0;
+        int currentPage = 1;
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        if (req.getParameter("pages") != null)
-            offset = (Integer.parseInt(req.getParameter("pages")) - 1) * LIMIT;
+        if (req.getParameter("page") != null) {
+            currentPage = Integer.parseInt(req.getParameter("page"));
+            offset = (currentPage - 1) * LIMIT;
+        }
+
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
 
-        List<Film> films = filmServices.getByOffset(offset, LIMIT);
+        if (currentPage < 0 || currentPage > totalPages)
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        else {
+            List<Film> films = filmServices.getByOffset(offset, LIMIT);
 
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("filmsData", films);
 
-        req.setAttribute("totalPages", totalPages);
-        req.setAttribute("filmsData", films);
-
-        req.setAttribute("pageTitle", "homeTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("home.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
-
+            req.setAttribute("pageTitle", "homeTitle");
+            RenderViewUtils.renderViewToLayout(req, resp,
+                    ContextPathUtils.getClientPagesPath("home.jsp"),
+                    ContextPathUtils.getLayoutPath("master.jsp"));
+        }
         hibernateSessionProvider.closeSession();
     }
 
