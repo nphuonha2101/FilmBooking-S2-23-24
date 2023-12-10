@@ -5,6 +5,7 @@ import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,22 +27,13 @@ public class RoomManagementController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
-        int offset = 0;
         int currentPage = 1;
-
-        if (req.getParameter("page") != null) {
-            currentPage = Integer.parseInt(req.getParameter("page"));
-            offset = (currentPage - 1) * LIMIT;
-        }
-
         int totalPages = (int) Math.ceil((double) roomServices.getTotalRecords() / LIMIT);
+        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        if (currentPage < 0 || currentPage > totalPages) resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        else {
+        if (offset != -1) {
             List<Room> rooms = roomServices.getByOffset(offset, LIMIT);
 
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("totalPages", totalPages);
             req.setAttribute("roomData", rooms);
             req.setAttribute("pageUrl", "room-management");
 

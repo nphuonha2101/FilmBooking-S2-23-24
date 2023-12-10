@@ -5,6 +5,7 @@ import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,23 +27,14 @@ public class ShowtimeManagementController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        int offset = 0;
+
         int currentPage = 1;
-
-        if (req.getParameter("page") != null) {
-            currentPage = Integer.parseInt(req.getParameter("page"));
-            offset = (currentPage - 1) * LIMIT;
-        }
-
         int totalPages = (int) Math.ceil((double) showtimeServices.getTotalRecords() / LIMIT);
+        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        if (currentPage < 0 || currentPage > totalPages)
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        else {
+        if (offset != -1) {
             List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT);
 
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("totalPages", totalPages);
             req.setAttribute("showtimeList", showtimeList);
             req.setAttribute("pageUrl", "showtime-management");
 

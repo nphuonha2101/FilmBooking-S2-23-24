@@ -5,6 +5,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,23 +27,13 @@ public class HomeController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        int offset = 0;
         int currentPage = 1;
-
-        if (req.getParameter("page") != null) {
-            currentPage = Integer.parseInt(req.getParameter("page"));
-            offset = (currentPage - 1) * LIMIT;
-        }
-
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
+        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        if (currentPage < 0 || currentPage > totalPages)
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        else {
+        if (offset != -1) {
             List<Film> films = filmServices.getByOffset(offset, LIMIT);
 
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("totalPages", totalPages);
             req.setAttribute("filmsData", films);
             req.setAttribute("pageUrl", "home");
 

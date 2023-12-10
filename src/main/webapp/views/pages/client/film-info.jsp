@@ -45,12 +45,16 @@
                 </div>
             </div>
 
+            <br>
+
             <div class="wrapper centered-vertical-content" id="film-description">
-                <div class="wrapper title-filled_wrapper centered-vertical-content">
-                    <h3><fmt:message bundle="${msg}" key="description"/></h3>
-                </div>
-                <div class="wrapper">
-                    <p>${film.filmDescription}</p>
+                <div class="wrapper outlined-container">
+                    <div class="wrapper centered-vertical-content">
+                        <h3><fmt:message bundle="${msg}" key="description"/></h3>
+                    </div>
+                    <div class="wrapper">
+                        <p>${film.filmDescription}</p>
+                    </div>
                 </div>
             </div>
 
@@ -58,37 +62,41 @@
 
             <div class="wrapper centered-vertical-content">
                 <c:if test="${not empty film.filmTrailerLink}">
-                    <div class="wrapper title-filled_wrapper centered-vertical-content">
-                        <h3>Trailer</h3>
-                    </div>
-                    <div class="centered-vertical-content wrapper">
-                        <iframe class="trailer-frame"
-                                src="${film.filmTrailerLink}"
-                                title="${film.filmName} Trailer"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                allowfullscreen></iframe>
+                    <div class="wrapper outlined-container">
+                        <div class="wrapper centered-vertical-content">
+                            <h3>Trailer</h3>
+                        </div>
+                        <div class="centered-vertical-content wrapper">
+                            <iframe class="trailer-frame"
+                                    src="${film.filmTrailerLink}"
+                                    title="${film.filmName} Trailer"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen></iframe>
+                        </div>
                     </div>
                 </c:if>
             </div>
             <br>
             <div class="wrapper centered-vertical-content">
-                <div class="wrapper title-filled_wrapper centered-vertical-content">
-                    <h3><fmt:message bundle="${msg}" key="chooseShowtime"/></h3>
-                </div>
-
-                <div class="wrapper two-col__wrapper">
-                    <div class="wrapper">
-                        <c:set var="showtimeList" value="${film.showtimeList}"/>
-                        <select name="select-showtime" id="select-showtime">
-                            <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
-                                <option value="${showtime.showtimeID}">${showtime.room.roomName}
-                                    - ${showtime.room.theater.theaterName} - ${showtime.showtimeDate}</option>
-                            </c:forEach>
-                        </select>
+                <div class="wrapper outlined-container">
+                    <div class="wrapper centered-vertical-content">
+                        <h3><fmt:message bundle="${msg}" key="chooseShowtime"/></h3>
                     </div>
 
-                    <div class="wrapper centered-vertical-content">
-                        <p><fmt:message bundle="${msg}" key="showtime"/>: <span id="selected-showtime"></span></p>
+                    <div class="wrapper two-col__wrapper">
+                        <div class="wrapper">
+                            <c:set var="showtimeList" value="${film.showtimeList}"/>
+                            <select name="select-showtime" id="select-showtime">
+                                <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
+                                    <option value="${showtime.showtimeID}">${showtime.room.roomName}
+                                        - ${showtime.room.theater.theaterName} - ${showtime.showtimeDate}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+
+                        <div class="wrapper centered-vertical-content">
+                            <p><fmt:message bundle="${msg}" key="showtime"/>: <span id="selected-showtime"></span></p>
+                        </div>
                     </div>
                 </div>
             </div>
