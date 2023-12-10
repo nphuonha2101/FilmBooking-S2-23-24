@@ -34,7 +34,7 @@
                          style="background-image: url('<c:url value="${film.imgPath}"/>')"
                          id="film-img-card-${loop.index}"></div>
                     <div class="overlay">
-                        <h4>${film.filmName}</h4>
+                        <h3>${film.filmName}</h3>
                         <p>
                             <span class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>:</span>
                                 ${film.filmPrice} VNĐ/<fmt:message bundle="${msg}" key="person"/>
