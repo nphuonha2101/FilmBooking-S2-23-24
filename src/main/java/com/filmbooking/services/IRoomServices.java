@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface IRoomServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
+    long getTotalRecords();
+    List<Room> getByOffset(int offset, int limit);
     List<Room> getAll();
     Room getByRoomID(String id);
     boolean save(Room room);

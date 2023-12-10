@@ -23,10 +23,11 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int offset = 0;
-        int currentPage = 1;
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
+
+        int offset = 0;
+        int currentPage = 1;
 
         if (req.getParameter("page") != null) {
             currentPage = Integer.parseInt(req.getParameter("page"));
@@ -43,6 +44,7 @@ public class HomeController extends HttpServlet {
             req.setAttribute("currentPage", currentPage);
             req.setAttribute("totalPages", totalPages);
             req.setAttribute("filmsData", films);
+            req.setAttribute("pageUrl", "home");
 
             req.setAttribute("pageTitle", "homeTitle");
             RenderViewUtils.renderViewToLayout(req, resp,

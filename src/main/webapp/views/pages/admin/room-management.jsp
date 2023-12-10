@@ -19,59 +19,63 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-    <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-        <div class="container ">
-            <jsp:include page="/views/components/admin-panel.jsp"/>
-        </div>
-        <div class="container centered-vertical-content">
+<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+    <div class="container ">
+        <jsp:include page="/views/components/admin-panel.jsp"/>
+    </div>
+    <div class="container centered-vertical-content">
 
-            <h1><fmt:message bundle="${adminMsg}" key="roomManagement"/></h1>
+        <h1><fmt:message bundle="${adminMsg}" key="roomManagement"/></h1>
 
-            <div class="centered-vertical-content wrapper">
-                <div class="justify-right-row wrapper">
-                    <a href="add-room" class="primary-filled-button rounded-button button submit-button icon-button">
-                        <span class="material-symbols-rounded">add</span>
-                        <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewRoom"/></span>
-                    </a>
-                </div>
-                <table>
-                    <thead>
-                    <tr>
-                        <th><fmt:message bundle="${adminMsg}" key="roomID"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="roomName"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="roomRows"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="roomCols"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="theaterAgency"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="totalSeats"/></th>
-                        <th><fmt:message bundle="${adminMsg}" key="actions"/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="room" items="${roomData}" varStatus="loop">
-                        <tr>
-                            <td>${room.roomID}</td>
-                            <td>${room.roomName}</td>
-                            <td>${room.seatRows}</td>
-                            <td>${room.seatCols}</td>
-                            <td>${room.theater.theaterName}</td>
-                            <td>${room.seatRows * room.seatCols}</td>
-
-                            <td>
-                                <form class="hide hidden-form" method="get">
-                                    <input type="hidden" name="room-id_hidden"
-                                           value="${room.roomID}"/>
-                                </form>
-                                <button class="submit-button delete-button">
-                                    <span class="material-symbols-rounded warning-color">delete</span>
-                                </button>
-                                <button class="submit-button edit-button">
-                                    <span class="material-symbols-rounded primary-color">edit</span>
-                                </button>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+        <div class="centered-vertical-content wrapper">
+            <div class="justify-right-row wrapper">
+                <a href="add-room" class="primary-filled-button rounded-button button submit-button icon-button">
+                    <span class="material-symbols-rounded">add</span>
+                    <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewRoom"/></span>
+                </a>
             </div>
+            <table>
+                <thead>
+                <tr>
+                    <th><fmt:message bundle="${adminMsg}" key="roomID"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="roomName"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="roomRows"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="roomCols"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="theaterAgency"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="totalSeats"/></th>
+                    <th><fmt:message bundle="${adminMsg}" key="actions"/></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="room" items="${roomData}" varStatus="loop">
+                    <tr>
+                        <td>${room.roomID}</td>
+                        <td>${room.roomName}</td>
+                        <td>${room.seatRows}</td>
+                        <td>${room.seatCols}</td>
+                        <td>${room.theater.theaterName}</td>
+                        <td>${room.seatRows * room.seatCols}</td>
+
+                        <td>
+                            <form class="hide hidden-form" method="get">
+                                <input type="hidden" name="room-id_hidden"
+                                       value="${room.roomID}"/>
+                            </form>
+                            <button class="submit-button delete-button">
+                                <span class="material-symbols-rounded warning-color">delete</span>
+                            </button>
+                            <button class="submit-button edit-button">
+                                <span class="material-symbols-rounded primary-color">edit</span>
+                            </button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </section>
+
+        <%--        Pagination--%>
+        <jsp:include page="/views/components/pagination.jsp"/>
+
+    </div>
+</section>

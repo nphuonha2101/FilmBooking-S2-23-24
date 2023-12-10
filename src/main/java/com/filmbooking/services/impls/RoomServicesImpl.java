@@ -26,6 +26,16 @@ public class RoomServicesImpl implements IRoomServices {
     }
 
     @Override
+    public long getTotalRecords() {
+        return roomDAO.getTotalRecords();
+    }
+
+    @Override
+    public List<Room> getByOffset(int offset, int limit) {
+        return roomDAO.getByOffset(offset, limit);
+    }
+
+    @Override
     public List<Room> getAll() {
         return roomDAO.getAll();
     }

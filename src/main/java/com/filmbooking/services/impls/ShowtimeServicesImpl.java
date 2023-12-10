@@ -27,6 +27,16 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     }
 
     @Override
+    public long getTotalRecords() {
+        return showtimeDAO.getTotalRecords();
+    }
+
+    @Override
+    public List<Showtime> getByOffset(int offset, int limit) {
+        return showtimeDAO.getByOffset(offset, limit);
+    }
+
+    @Override
     public List<Showtime> getAll() {
         return showtimeDAO.getAll();
     }

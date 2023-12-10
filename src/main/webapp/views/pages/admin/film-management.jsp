@@ -72,5 +72,9 @@
                 </tbody>
             </table>
         </div>
+
+        <%--        Pagination--%>
+        <jsp:include page="/views/components/pagination.jsp"/>
+
     </div>
 </section>
