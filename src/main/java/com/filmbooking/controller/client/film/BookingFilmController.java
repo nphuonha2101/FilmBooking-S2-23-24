@@ -46,7 +46,6 @@ public class BookingFilmController extends HttpServlet {
         req.setAttribute("showtimeIDAndSeatMatrix", showtimeIDAndSeatMatrix);
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
-        req.setAttribute("sectionTitle", "Đặt vé");
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("book-film.jsp"),

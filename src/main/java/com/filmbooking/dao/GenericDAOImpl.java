@@ -13,10 +13,10 @@ import java.util.List;
 
 public class GenericDAOImpl<T> implements IDAO<T> {
     private Session session;
-    private final Class<T> typeOfData;
+    private final Class<T> classOfData;
 
-    public GenericDAOImpl(Class<T> typeOfData) {
-        this.typeOfData = typeOfData;
+    public GenericDAOImpl(Class<T> classOfData) {
+        this.classOfData = classOfData;
     }
 
     @Override
@@ -30,7 +30,7 @@ public class GenericDAOImpl<T> implements IDAO<T> {
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
 
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
-        Root<T> rootEntry = criteriaQuery.from(typeOfData);
+        Root<T> rootEntry = criteriaQuery.from(classOfData);
         criteriaQuery.select(criteriaBuilder.count(rootEntry));
 
         TypedQuery<Long> typedQuery = this.session.createQuery(criteriaQuery);
@@ -45,8 +45,8 @@ public class GenericDAOImpl<T> implements IDAO<T> {
         List<T> result;
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.typeOfData);
-        Root<T> rootEntry = criteriaQuery.from(this.typeOfData);
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.classOfData);
+        Root<T> rootEntry = criteriaQuery.from(this.classOfData);
         criteriaQuery.select(rootEntry).orderBy(criteriaBuilder.desc(rootEntry.get("id")));
 
         TypedQuery<T> typedQuery = this.session.createQuery(criteriaQuery);
@@ -65,8 +65,8 @@ public class GenericDAOImpl<T> implements IDAO<T> {
         List<T> result;
 
         CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.typeOfData);
-        Root<T> rootEntry = criteriaQuery.from(this.typeOfData);
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.classOfData);
+        Root<T> rootEntry = criteriaQuery.from(this.classOfData);
         CriteriaQuery<T> all = criteriaQuery.select(rootEntry);
 
         TypedQuery<T> allQuery = this.session.createQuery(all);
@@ -82,8 +82,8 @@ public class GenericDAOImpl<T> implements IDAO<T> {
 
         try {
             CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(typeOfData);
-            Root<T> rootEntry = criteriaQuery.from(typeOfData);
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(classOfData);
+            Root<T> rootEntry = criteriaQuery.from(classOfData);
 
             if (isLongID) {
                 long lID = Long.parseLong(id);

@@ -29,14 +29,28 @@
 
             <!-- create film cards -->
             <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                <div class="item-cards container centered-vertical-content" id="card-${loop.index}">
+                <div class="item-cards centered-vertical-content" id="card-${loop.index}">
                     <div class="film-img-in-card"
                          style="background-image: url('<c:url value="${film.imgPath}"/>')"
                          id="film-img-card-${loop.index}"></div>
-                    <div class="wrapper">
+                    <div class="overlay">
                         <h4>${film.filmName}</h4>
-                        <p><fmt:message bundle="${msg}" key="ticketPrices"/>: ${film.filmPrice} VNĐ/người</p>
-                        <p><fmt:message bundle="${msg}" key="director"/>: ${film.director}</p>
+                        <p>
+                            <span class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>:</span>
+                                ${film.filmPrice} VNĐ/<fmt:message bundle="${msg}" key="person"/>
+                        </p>
+                        <p>
+                            <span class="font-bold"><fmt:message bundle="${msg}" key="director"/>:</span>
+                                ${film.director}
+                        </p>
+                        <p>
+                            <span class="font-bold"><fmt:message bundle="${msg}" key="cast"/>:</span>
+                                ${film.cast}
+                        </p>
+                        <p>
+                            <span class="font-bold"><fmt:message bundle="${msg}" key="filmLength"/>:</span>
+                                ${film.filmLength} <fmt:message bundle="${msg}" key="minutes"/>
+                        </p>
                     </div>
                     <form action="film-info" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="film-id" value="${film.filmID}">
@@ -46,7 +60,7 @@
         </div>
     </div>
 
-<%--    Pagination--%>
+    <%--    Pagination--%>
     <div class="centered-vertical-content">
         <div class="centered-horizontal-content pagination-wrapper">
             <div class="previous centered-horizontal-content">
@@ -107,7 +121,7 @@
             </div>
         </div>
         <p><fmt:message key="currentPage" bundle="${msg}"/>: ${currentPage} / ${totalPages} <fmt:message key="pages"
-                                                                                                        bundle="${msg}"/></p>
+                                                                                                         bundle="${msg}"/></p>
     </div>
 
 </section>
