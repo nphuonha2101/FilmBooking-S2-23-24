@@ -1080,16 +1080,20 @@ select {
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    height: auto;
-    width: auto;
     opacity: 0;
     transition: 0.3s ease-in-out;
-    overflow: hidden;
+    overflow-y: auto;
     background-color: rgba(229, 229, 229, 0.8);
     backdrop-filter: blur(15px);
     padding: 0.5rem;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    max-height: 80%;
+    scrollbar-width: none;
+}
+
+.overlay::-webkit-scrollbar {
+    display: none;
 }
 
 .item-cards:hover > .overlay {
