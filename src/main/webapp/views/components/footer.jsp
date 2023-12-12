@@ -24,7 +24,24 @@
     <div>
         <div class="footer-text">
             <h2>FilmBooking</h2>
-            <p><fmt:message key="footerCopyright" bundle="${msg}"/> </p>
+            <p><fmt:message key="footerCopyright" bundle="${msg}"/></p>
+        </div>
+
+        <br>
+
+        <div class="wrapper">
+            <ul class="link-list">
+                <li>
+                    <a href="mailto:filmbookingdn@gmail.com"><span class="material-symbols-rounded">email</span>:
+                        filmbookingdn@gmail.com</a>
+                </li>
+                <li>
+                    <a href="https://maps.app.goo.gl/de3LBriUR8etmBcSA" target="_blank"><span
+                            class="material-symbols-rounded">map</span>:
+                        <fmt:message key="addressInfo" bundle="${msg}"/>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -40,8 +57,10 @@
         <h2><fmt:message key="aboutUsFooter" bundle="${msg}"/></h2>
         <ul class="link-list">
 
-            <li><a href="https://github.com/conmuaxadan" target="_blank">-> <fmt:message key="footerDQDGitHub" bundle="${msg}"/></a></li>
-            <li><a href="https://github.com/nphuonha2101" target="_blank">-> <fmt:message key="footerNPNGitHub" bundle="${msg}"/></a></li>
+            <li><a href="https://github.com/conmuaxadan" target="_blank">-> <fmt:message key="footerDQDGitHub"
+                                                                                         bundle="${msg}"/></a></li>
+            <li><a href="https://github.com/nphuonha2101" target="_blank">-> <fmt:message key="footerNPNGitHub"
+                                                                                          bundle="${msg}"/></a></li>
             <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">->
                 <fmt:message key="footerProjectGitHub" bundle="${msg}"/>
             </a>
