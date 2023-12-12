@@ -89,13 +89,13 @@ public class StringUtils {
 
 
     public static String handlesInputString(String str) {
+        assert str != null;
         str = str.trim();
         str = str.replaceAll("<script>", "&lt;script&gt;");
         str = str.replaceAll("</script>", "&lt;/script&gt;");
 
         return str;
     }
-
 
     public static void main(String[] args) {
 //        String data = "01010101 01010101 01010101";

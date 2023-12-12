@@ -25,21 +25,8 @@
     <div class="centered-vertical-content container form__container">
         <h2 class="title"><fmt:message key="forgotPassSectionTitle" bundle="${pageTitle}"/></h2>
 
-        <c:if test="${not empty statusCodeSuccess}">
-            <span class="successful-span message-span" id="successful-message">
-                    <span class="material-symbols-rounded">
-                        task_alt </span>
-                <fmt:message key="${statusCodeSuccess}" bundle="${statusCode}"/>
-            </span>
-        </c:if>
-
-        <c:if test="${not empty statusCodeErr}">
-            <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-rounded">
-                warning</span>
-                <fmt:message key="${statusCodeErr}" bundle="${statusCode}"/>
-            </span>
-        </c:if>
+        <%--        Status Code Messages--%>
+        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
         <form action="forgot-password" method="post">
             <label for="username">

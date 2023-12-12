@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Deprecated
 public class DatabaseConnection {
     private Connection connection = null;
     private static DatabaseConnection instance = null;

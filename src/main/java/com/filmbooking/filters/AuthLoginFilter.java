@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/account-info", "/booking-history", "/book-film", "/change-info",
-"/change-password", })
+"/change-password" })
 public class AuthLoginFilter extends HttpFilter {
 
     @Override

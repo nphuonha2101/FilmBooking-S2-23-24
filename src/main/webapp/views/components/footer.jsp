@@ -31,11 +31,11 @@
 
         <div class="wrapper">
             <ul class="link-list">
-                <li>
+                <li class="justify-left-row centered-horizontal-content">
                     <a href="mailto:filmbookingdn@gmail.com"><span class="material-symbols-rounded">email</span>:
                         filmbookingdn@gmail.com</a>
                 </li>
-                <li>
+                <li class="justify-left-row centered-horizontal-content">
                     <a href="https://maps.app.goo.gl/de3LBriUR8etmBcSA" target="_blank"><span
                             class="material-symbols-rounded">map</span>:
                         <fmt:message key="addressInfo" bundle="${msg}"/>

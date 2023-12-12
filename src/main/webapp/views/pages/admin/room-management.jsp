@@ -28,6 +28,10 @@
         <h1><fmt:message bundle="${adminMsg}" key="roomManagement"/></h1>
 
         <div class="centered-vertical-content wrapper">
+
+            <%--        Status Code Messages--%>
+            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
             <div class="justify-right-row wrapper">
                 <a href="add-room" class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>

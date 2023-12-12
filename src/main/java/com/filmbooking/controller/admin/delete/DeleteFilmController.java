@@ -1,11 +1,11 @@
 package com.filmbooking.controller.admin.delete;
 
 
-import com.filmbooking.model.Film;
-import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.utils.fileUtils.FileUtils;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
+import com.filmbooking.services.IFilmServices;
+import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.utils.fileUtils.FileUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -30,15 +30,16 @@ public class DeleteFilmController extends HttpServlet {
 //        System.out.println(filmServices.getByFilmID(filmID));
 
         Film deletedFilm = filmServices.getByFilmID(filmID);
-        filmServices.delete(deletedFilm);
+        if (filmServices.delete(deletedFilm)) {
 
-        // delete film image
-        String filmImgFilePath = FileUtils.getRealWebappPath(req) + deletedFilm.getImgPath();
-        System.out.println("DeleteFilmController Test: " + filmImgFilePath);
-        File file = new File(filmImgFilePath);
-        file.delete();
+            // delete film image
+            String filmImgFilePath = FileUtils.getRealWebappPath(req) + deletedFilm.getImgPath();
+            System.out.println("DeleteFilmController Test: " + filmImgFilePath);
+            File file = new File(filmImgFilePath);
+            file.delete();
 
-        resp.sendRedirect("admin");
+            resp.sendRedirect("admin");
+        }
 
         hibernateSessionProvider.closeSession();
         System.out.println(hibernateSessionProvider.getSession());

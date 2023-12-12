@@ -47,9 +47,7 @@ public class BookingFilmController extends HttpServlet {
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
 
-        RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("book-film.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("book-film.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -63,27 +61,29 @@ public class BookingFilmController extends HttpServlet {
         String seats = req.getParameter("seats");
 
         if (!seats.isEmpty()) {
-            bookedFilm = filmBooking.getShowtime().getFilm();
-            filmBooking.setSeatsData(seats);
-            filmBooking.setBookingDate(LocalDateTime.now());
-            int numberOfSeats = filmBooking.getSeats().length;
+            // clone film booking to allow user book film again if they want (user stay on the same page)
+            // because save method we use persist() method of hibernate, so we need to clone film booking to avoid
+            FilmBooking filmBookingClone = filmBooking.clone();
+            bookedFilm = filmBookingClone.getShowtime().getFilm();
+            filmBookingClone.setSeatsData(seats);
+            filmBookingClone.setBookingDate(LocalDateTime.now());
+            int numberOfSeats = filmBookingClone.getSeats().length;
             double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
-            filmBooking.setTotalFee(totalFee);
+            filmBookingClone.setTotalFee(totalFee);
 
-            Showtime bookedShowtime = filmBooking.getShowtime();
-            bookedShowtime.bookSeats(filmBooking.getSeats());
-
-            showtimeServices.update(bookedShowtime);
-            filmBookingServices.save(filmBooking);
+            if (filmBookingServices.save(filmBookingClone)) {
+                Showtime bookedShowtime = filmBookingClone.getShowtime();
+                bookedShowtime.bookSeats(filmBookingClone.getSeats());
+                showtimeServices.update(bookedShowtime);
+            }
             //reset film booking
-            filmBooking.resetFilmBooking();
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOK_FILM_SUCCESSFUL.getStatusCode());
+            doGet(req, resp);
 
-            resp.sendRedirect("home");
+
         } else {
-            // req.setAttribute("pageTitle", "bookingFilmTitle");
-            // req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
-
-            //resp.sendRedirect("book-film");
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
+            doGet(req, resp);
         }
         hibernateSessionProvider.closeSession();
     }
@@ -96,4 +96,6 @@ public class BookingFilmController extends HttpServlet {
         bookedFilm = null;
         hibernateSessionProvider = null;
     }
+
+
 }

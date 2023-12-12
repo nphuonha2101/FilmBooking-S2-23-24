@@ -1,7 +1,7 @@
 package com.filmbooking.controller.admin.create;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.model.Genre;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
@@ -10,7 +10,6 @@ import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.utils.uuidUtils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,8 +19,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet(name = "addFilm", value = "/add-film")
 @MultipartConfig
@@ -41,9 +38,6 @@ public class AddFilmController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getAdminPagesPath("add-film.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));
-
-//        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -71,18 +65,23 @@ public class AddFilmController extends HttpServlet {
         String filmTrailerLink = StringUtils.handlesInputString(req.getParameter("film-trailer-link"));
         String[] filmGenreIDs = req.getParameterValues("genre-ids");
 
+        if (filmName.isBlank() || filmDirector.isBlank() || filmActors.isBlank() || filmDescription.isBlank()
+                || filmGenreIDs == null || filmGenreIDs.length == 0) {
+            return;
+        }
+
         Film newFilm = new Film(filmName, filmPrice, filmDirector, filmActors, filmLength, filmDescription, filmTrailerLink,
                 relativeFilePath);
 
         if (FileUploadUtils.uploadFile(req, fileName, "upload-img")) {
             filmServices.save(newFilm, filmGenreIDs);
-
             resp.sendRedirect("admin");
         } else {
             RenderViewUtils.renderViewToLayout(req, resp,
                     ContextPathUtils.getAdminPagesPath("add-film.jsp"),
                     ContextPathUtils.getLayoutPath("master.jsp"));
         }
+
 
         hibernateSessionProvider.closeSession();
     }

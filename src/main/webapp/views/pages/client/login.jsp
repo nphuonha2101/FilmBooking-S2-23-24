@@ -19,12 +19,8 @@
     <div class="centered-vertical-content container form__container">
         <h2 class="title"><fmt:message key="loginSectionTitle" bundle="${pageTitle}"/></h2>
 
-        <c:if test="${not empty statusCodeErr}">
-            <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-rounded">warning</span>
-                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
-            </span>
-        </c:if>
+        <%--        Status Code Messages--%>
+        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
         <form action="login" method="post">
             <label for="username">

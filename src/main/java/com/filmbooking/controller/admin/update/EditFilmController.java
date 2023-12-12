@@ -31,6 +31,7 @@ public class EditFilmController extends HttpServlet {
     private Film editFilm;
     private IGenreServices genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
+    private String filmId;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +39,7 @@ public class EditFilmController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
-        String filmId = req.getParameter("film-id_hidden");
+        filmId = req.getParameter("film-id_hidden");
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
@@ -83,6 +84,12 @@ public class EditFilmController extends HttpServlet {
         String filmImgName = StringUtils.handlesInputString(req.getParameter("film-img-name"));
         String[] filmGenreIDs = req.getParameterValues("genre-ids");
 
+        if (filmName.isBlank() || filmDirector.isBlank() || filmActors.isBlank() || filmDescription.isBlank()
+                || filmGenreIDs == null || filmGenreIDs.length == 0) {
+            resp.sendRedirect(req.getHeader("referer"));
+            return;
+        }
+
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);
         editFilm.setDirector(filmDirector);
@@ -98,14 +105,18 @@ public class EditFilmController extends HttpServlet {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
 
-            // delete old img file
-            File oldFile = new File(FileUtils.getRealWebappPath(req) + editFilm.getImgPath());
-            oldFile.delete();
-            System.out.println(oldFile.getAbsolutePath());
             // set new img file and upload to server
-            editFilm.setImgPath(filmImgPath);
-            filmServices.update(editFilm, filmGenreIDs);
-            FileUploadUtils.uploadFile(req, uuidFileName, "upload-img");
+            if (FileUploadUtils.uploadFile(req, uuidFileName, "upload-img")) {
+
+                // delete old img file
+                File oldFile = new File(FileUtils.getRealWebappPath(req) + editFilm.getImgPath());
+                oldFile.delete();
+
+                System.out.println(oldFile.getAbsolutePath());
+
+                editFilm.setImgPath(filmImgPath);
+                filmServices.update(editFilm, filmGenreIDs);
+            }
         }
 
         resp.sendRedirect("film-management");
@@ -119,6 +130,7 @@ public class EditFilmController extends HttpServlet {
         filmServices = null;
         editFilm = null;
         hibernateSessionProvider = null;
+        genreServices = null;
     }
 }
 

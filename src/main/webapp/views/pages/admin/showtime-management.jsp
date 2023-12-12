@@ -28,6 +28,10 @@
         <h1><fmt:message bundle="${adminMsg}" key="showtimeManagement"/></h1>
 
         <div class="centered-vertical-content wrapper">
+
+            <%--        Status Code Messages--%>
+            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
             <div class="justify-right-row wrapper">
                 <a href="add-showtime"
                    class="primary-filled-button rounded-button button submit-button icon-button">

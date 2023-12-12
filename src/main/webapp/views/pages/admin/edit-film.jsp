@@ -31,8 +31,11 @@
 
         <h1><fmt:message bundle="${adminMsg}" key="editFilm"/></h1>
 
-
         <form method="post" action="edit-film" enctype="multipart/form-data">
+
+            <%--        Status Code Messages--%>
+            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
             <div class="centered-vertical-content">
                 <div class="two-col__wrapper centered-vertical-content wrapper">
                     <!-- text form in left -->

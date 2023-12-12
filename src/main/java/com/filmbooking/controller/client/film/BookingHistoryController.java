@@ -34,7 +34,6 @@ public class BookingHistoryController extends HttpServlet {
             else
                 req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
-
         RenderViewUtils.renderViewToLayout(req, resp,
                 ContextPathUtils.getClientPagesPath("booking-history.jsp"),
                 ContextPathUtils.getLayoutPath("master.jsp"));

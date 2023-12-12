@@ -23,36 +23,27 @@
 
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title"><fmt:message key="signupSectionTitle" bundle="${pageTitle}"/> </h2>
+        <h2 class="title"><fmt:message key="signupSectionTitle" bundle="${pageTitle}"/></h2>
 
-        <c:if test="${not empty statusCodeSuccess}">
-            <span class="successful-span message-span">
-                <span class="material-symbols-rounded">task_alt</span>
-                <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
-            </span>
-        </c:if>
-
-        <c:if test="${not empty statusCodeErr}">
-            <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-rounded">warning</span>
-                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
-            </span>
-        </c:if>
-
+        <%--        Status Code Messages--%>
+        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        
         <form action="signup" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="text" name="username" id="username" placeholder="<fmt:message bundle="${msg}" key="username"/>" autocomplete="true" required>
+            <input type="text" name="username" id="username" placeholder="<fmt:message bundle="${msg}" key="username"/>"
+                   autocomplete="true" required>
 
             <label for="user-full-name">
                 <span class="material-symbols-rounded">badge</span>
                 <fmt:message bundle="${msg}" key="fullname"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="text" name="user-full-name" id="user-full-name" placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
+            <input type="text" name="user-full-name" id="user-full-name"
+                   placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
                    required>
 
             <label for="email">
@@ -67,19 +58,23 @@
                 <fmt:message bundle="${msg}" key="password"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="password" name="password" id="password" placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
+            <input type="password" name="password" id="password"
+                   placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
 
             <label for="confirm-password">
                 <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="confirmPassword"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="password" name="confirm-password" id="confirm-password" placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"
+            <input type="password" name="confirm-password" id="confirm-password"
+                   placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"
                    autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="register"/>">
+            <input type="submit" class="primary-filled-button button"
+                   value="<fmt:message bundle="${msg}" key="register"/>">
         </form>
-        <p><fmt:message bundle="${msg}" key="ifHaveAccount"/> <span><a class="links" href="login"><fmt:message bundle="${msg}" key="login"/></a> </span></p>
+        <p><fmt:message bundle="${msg}" key="ifHaveAccount"/> <span><a class="links" href="login"><fmt:message
+                bundle="${msg}" key="login"/></a> </span></p>
 
     </div>
 </section>

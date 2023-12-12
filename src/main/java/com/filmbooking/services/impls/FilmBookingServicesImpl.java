@@ -2,10 +2,10 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,7 +40,7 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
 
     @Override
     public List<FilmBooking> getAllByUser(User user) {
-        return this.getAll().stream().filter(filmBooking -> filmBooking.getUser().equals(user)).collect(Collectors.toList());
+        return this.getAll().stream().filter(filmBooking -> filmBooking.getUser().getUsername().equals(user.getUsername())).collect(Collectors.toList());
     }
 
     @Override

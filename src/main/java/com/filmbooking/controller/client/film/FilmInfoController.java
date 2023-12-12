@@ -9,9 +9,11 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,7 +42,7 @@ public class FilmInfoController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        String filmID = req.getParameter("film-id");
+        String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
 
         Film bookedFilm = filmServices.getByFilmID(filmID);
 
@@ -77,16 +79,26 @@ public class FilmInfoController extends HttpServlet {
             RedirectPageUtils.redirectPage("login", queryString, req, resp);
             return;
         }
-        String bookedShowtimeID = req.getParameter("showtime-id");
-        Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
 
-        FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
-        filmBooking.setShowtime(bookedShowtime);
+        String bookedShowtimeID = StringUtils.handlesInputString(req.getParameter("showtime-id"));
+        System.out.println("bookedShowtimeID = " + bookedShowtimeID);
 
-        req.getSession(false).setAttribute("filmBooking", filmBooking);
+        if (!(bookedShowtimeID.isEmpty() || bookedShowtimeID.isBlank())) {
 
-        resp.sendRedirect("book-film");
+            Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
+            if (bookedShowtime != null) {
 
+                FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
+                filmBooking.setShowtime(bookedShowtime);
+
+                req.getSession(false).setAttribute("filmBooking", filmBooking);
+
+                resp.sendRedirect("book-film");
+                return;
+            }
+        } else {
+            resp.sendRedirect(req.getHeader("referer"));
+        }
         hibernateSessionProvider.closeSession();
     }
 

@@ -64,21 +64,25 @@ public class GenericDAOImpl<T> implements IDAO<T> {
     public List<T> getAll() {
         List<T> result;
 
-        CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.classOfData);
-        Root<T> rootEntry = criteriaQuery.from(this.classOfData);
-        CriteriaQuery<T> all = criteriaQuery.select(rootEntry);
+        try {
+            CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
+            CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.classOfData);
+            Root<T> rootEntry = criteriaQuery.from(this.classOfData);
+            CriteriaQuery<T> all = criteriaQuery.select(rootEntry);
 
-        TypedQuery<T> allQuery = this.session.createQuery(all);
+            TypedQuery<T> allQuery = this.session.createQuery(all);
 
-        result = allQuery.getResultList();
-
+            result = allQuery.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            result = null;
+        }
         return result;
     }
 
     @Override
     public T getByID(String id, boolean isLongID) {
-        T result = null;
+        T result;
 
         try {
             CriteriaBuilder criteriaBuilder = this.session.getCriteriaBuilder();
@@ -96,6 +100,7 @@ public class GenericDAOImpl<T> implements IDAO<T> {
             result = typedQuery.getSingleResult();
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
+            result = null;
         }
 
         return result;

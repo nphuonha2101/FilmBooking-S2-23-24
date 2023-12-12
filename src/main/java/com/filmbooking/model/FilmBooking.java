@@ -1,13 +1,12 @@
 package com.filmbooking.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "film_bookings")
-public class FilmBooking {
+public class FilmBooking implements Cloneable {
     @Column(name = "film_booking_id", insertable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +15,7 @@ public class FilmBooking {
     @JoinColumn(name = "showtime_id")
     private Showtime showtime;
     @ManyToOne
-    @JoinColumn(name="username")
+    @JoinColumn(name = "username")
     private User user;
     @Column(name = "booking_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -105,7 +104,8 @@ public class FilmBooking {
 
     public void setSeatsData(String seatsData) {
         this.seatsData = seatsData;
-        this.seats = seatsData.split(", ");
+        if (seatsData != null)
+            this.seats = seatsData.split(", ");
     }
 
     public double getTotalFee() {
@@ -118,7 +118,6 @@ public class FilmBooking {
 
     public void resetFilmBooking() {
         this.filmBookingID = 0;
-        this.showtime = null;
         this.bookingDate = null;
         this.seats = new String[0];
     }
@@ -138,5 +137,20 @@ public class FilmBooking {
                     && this.totalFee == filmBooking.getTotalFee();
         }
         return false;
+    }
+
+    @Override
+    public FilmBooking clone() {
+        try {
+            FilmBooking clone = (FilmBooking) super.clone();
+            clone.setShowtime(this.showtime);
+            clone.setUser(this.user);
+            clone.setBookingDate(this.bookingDate);
+            clone.setSeatsData(this.seatsData);
+            clone.setTotalFee(this.totalFee);
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -46,13 +46,11 @@ public class LoginController extends HttpServlet {
 
         User loginUser = null;
 
-
         ServiceResult serviceResult = userServices.userAuthentication(username, password);
         if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
-            req.setAttribute("pageTitle", "loginTitle");
             req.setAttribute("statusCodeErr", serviceResult.getStatus().getStatusCode());
 
-            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
+            doGet(req, resp);
         } else {
             HttpSession session = req.getSession();
             loginUser = (User) serviceResult.getData();

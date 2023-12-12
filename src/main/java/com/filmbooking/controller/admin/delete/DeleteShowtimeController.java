@@ -1,9 +1,9 @@
 package com.filmbooking.controller.admin.delete;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,14 +22,12 @@ public class DeleteShowtimeController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-
         String showtimeID = req.getParameter("showtime-id_hidden");
 
         Showtime deleteShowtime = showtimeServices.getByID(showtimeID);
 
-        showtimeServices.delete(deleteShowtime);
-
-        resp.sendRedirect("showtime-management");
+        if (showtimeServices.delete(deleteShowtime))
+            resp.sendRedirect("showtime-management");
 
         hibernateSessionProvider.closeSession();
 

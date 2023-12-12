@@ -28,6 +28,10 @@
         <h2 class="title"><fmt:message key="filmInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <div id="film-details" class="centered-vertical-content">
+
+            <%--        Status Code Messages--%>
+            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
             <div class="two-col__wrapper">
                 <div class="film-img-box" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
