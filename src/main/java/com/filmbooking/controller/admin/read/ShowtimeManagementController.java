@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/showtime-management")
+@WebServlet("/admin/management/showtime")
 public class ShowtimeManagementController extends HttpServlet {
     private IShowtimeServices showtimeServices;
     private HibernateSessionProvider hibernateSessionProvider;

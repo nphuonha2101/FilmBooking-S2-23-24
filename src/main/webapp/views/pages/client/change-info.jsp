@@ -24,12 +24,12 @@
 <c:set var="loginUser" value="${sessionScope.loginUser}"/>
 <section class="content section centered-vertical-content">
     <div class="centered-vertical-content container form__container">
-        <h2 class="title"><fmt:message key="changeInfoSectionTitle" bundle="${pageTitle}"/> </h2>
+        <h2 class="title"><fmt:message key="changeInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="change-info" method="post">
+        <form action="${pageContext.request.contextPath}/auth/change-info" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>
@@ -48,17 +48,24 @@
                 <span class="material-symbols-rounded">mail</span>
                 <fmt:message bundle="${msg}" key="email"/>
             </label>
-            <input type="email" name="email" id="email" value="${loginUser.userEmail}" placeholder="    <fmt:message bundle="${msg}" key="email"/>"
+            <input type="email" name="email" id="email" value="${loginUser.userEmail}"
+                   placeholder="    <fmt:message bundle="${msg}" key="email"/>"
                    autocomplete="true" required>
 
             <label for="password">
                 <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="typeYourPassword"/>
             </label>
-            <input type="password" name="password" id="password" placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true" required>
+            <input type="password" name="password" id="password"
+                   placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="change"/> ">
+            <input type="submit" class="primary-filled-button button"
+                   value="<fmt:message bundle="${msg}" key="change"/> ">
         </form>
-        <p><fmt:message bundle="${msg}" key="return"/> <span><a class="links" href="account-info"><fmt:message bundle="${msg}" key="info"/> </a> </span></p>
+        <p><fmt:message bundle="${msg}" key="return"/>
+            <span><a class="links" href="${pageContext.request.contextPath}/auth/account-info">
+                <fmt:message bundle="${msg}" key="info"/>
+            </a></span>
+        </p>
     </div>
 </section>

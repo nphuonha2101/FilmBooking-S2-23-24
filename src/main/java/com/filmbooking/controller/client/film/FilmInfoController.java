@@ -9,7 +9,6 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -93,7 +92,7 @@ public class FilmInfoController extends HttpServlet {
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect("book-film");
+                resp.sendRedirect("/auth/book-film");
                 return;
             }
         } else {

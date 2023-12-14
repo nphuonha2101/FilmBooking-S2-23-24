@@ -39,14 +39,8 @@
     <jsp:include page="/views/components/navigation-bar.jsp"/>
 </header>
 <main>
-    <section class="hero section">
-        <div class="wrapper" id="banner">
-            <jsp:include page="${bannerPage}"/>
-        </div>
-    </section>
     <jsp:include page="${dynamicContents}"/>
     <jsp:include page="/views/pages/client/search-modal.jsp"/>
-
 </main>
 
 <footer>

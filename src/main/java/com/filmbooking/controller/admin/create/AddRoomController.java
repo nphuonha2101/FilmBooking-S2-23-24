@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "addRoom", value = "/add-room")
+@WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private ITheaterServices theaterServices;
@@ -62,7 +62,7 @@ public class AddRoomController extends HttpServlet {
 
         roomServices.save(newRoom);
 
-        resp.sendRedirect("room-management");
+        resp.sendRedirect("/admin/management/room");
 
         hibernateSessionProvider.closeSession();
     }

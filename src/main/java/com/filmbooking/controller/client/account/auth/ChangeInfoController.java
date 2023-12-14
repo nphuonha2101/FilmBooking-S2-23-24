@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.account;
+package com.filmbooking.controller.client.account.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(value = "/change-info")
+@WebServlet(value = "/auth/change-info")
 
 public class ChangeInfoController extends HttpServlet {
     private IUserServices userServices;
@@ -53,7 +53,7 @@ public class ChangeInfoController extends HttpServlet {
                 loginUser.setUserFullName(userFullName);
                 loginUser.setUserEmail(email);
                 userServices.update(loginUser);
-                resp.sendRedirect("account-info");
+                resp.sendRedirect("/auth/account-info");
             }
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());

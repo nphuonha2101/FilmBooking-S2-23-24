@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.account;
+package com.filmbooking.controller.client.account.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebServlet(value = "/change-password")
+@WebServlet(value = "/auth/change-password")
 
 public class ChangePasswordController extends HttpServlet {
     private IUserServices userServices;

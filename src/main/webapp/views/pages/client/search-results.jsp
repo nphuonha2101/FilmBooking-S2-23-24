@@ -42,7 +42,7 @@
                             <p><fmt:message bundle="${msg}" key="director"/>: ${film.director}</p>
                                 <%--                    <p>Thể loại: ${film.genre}</p>--%>
                         </div>
-                        <form action="film-info" class="hidden-form" id="hidden-form" method="get">
+                        <form action="${pageContext.request.contextPath}/film-info" class="hidden-form" id="hidden-form" method="get">
                             <input type="hidden" name="film-id" value="${film.filmID}">
                         </form>
                     </div>
@@ -53,7 +53,8 @@
         <c:if test="${empty filmsData}">
             <div class="wrapper centered-horizontal-content">
                 <h2><fmt:message key="${statusCodeErr}" bundle="${statusCode}"/> <fmt:message key="withKeyword"
-                                                                                           bundle="${msg}"/> "${searchQuery}"    </h2>
+                                                                                           bundle="${msg}"/> "${searchQuery}"
+                </h2>
             </div>
         </c:if>
     </div>

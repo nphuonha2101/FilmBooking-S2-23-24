@@ -20,8 +20,8 @@
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
     <div class="admin-panel">
         <h4><fmt:message key="managementTools" bundle="${adminMsg}"/></h4>
-        <a class="links button rounded-button" href="film-management"><fmt:message key="filmManagement" bundle="${adminMsg}"/> </a>
-        <a class="links button rounded-button" href="showtime-management"><fmt:message key="showtimeManagement" bundle="${adminMsg}"/></a>
-        <a class="links button rounded-button" href="room-management"><fmt:message key="roomManagement" bundle="${adminMsg}"/></a>
+        <a class="links button rounded-button" href="${pageContext.request.contextPath}/admin/management/film"><fmt:message key="filmManagement" bundle="${adminMsg}"/> </a>
+        <a class="links button rounded-button" href="${pageContext.request.contextPath}/admin/management/showtime"><fmt:message key="showtimeManagement" bundle="${adminMsg}"/></a>
+        <a class="links button rounded-button" href="${pageContext.request.contextPath}/admin/management/room"><fmt:message key="roomManagement" bundle="${adminMsg}"/></a>
     </div>
 

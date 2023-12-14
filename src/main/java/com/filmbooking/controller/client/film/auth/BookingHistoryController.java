@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.film;
+package com.filmbooking.controller.client.film.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/booking-history")
+@WebServlet("/auth/booking-history")
 public class BookingHistoryController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;

@@ -11,15 +11,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/account-info", "/booking-history", "/book-film", "/change-info",
-"/change-password" })
+@WebFilter("/auth/*")
 public class AuthLoginFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser == null) {
-            res.sendRedirect("login");
+            res.sendRedirect("/login");
             return;
         }
         chain.doFilter(req, res);

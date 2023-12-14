@@ -33,7 +33,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="justify-right-row wrapper">
-                <a href="add-film" class="primary-filled-button rounded-button button submit-button icon-button">
+                <a href="${pageContext.request.contextPath}/admin/add/film" class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewFilm"/></span>
                 </a>
@@ -60,16 +60,12 @@
                         <td>${film.cast}</td>
                         <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
                         <td>
-                            <form class="hide hidden-form" method="get">
-                                <input type="hidden" name="film-id_hidden"
-                                       value="${film.filmID}"/>
-                            </form>
-                            <button class="submit-button delete-button">
+                            <a href="${pageContext.request.contextPath}/admin/delete/film?film-id=${film.filmID}">
                                 <span class="material-symbols-rounded warning-color">delete</span>
-                            </button>
-                            <button class="submit-button edit-button">
+                            </a>
+                            <a href="${pageContext.request.contextPath}/admin/edit/film?film-id=${film.filmID}">
                                 <span class="material-symbols-rounded primary-color">edit</span>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>

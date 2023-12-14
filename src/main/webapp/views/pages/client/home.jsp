@@ -52,7 +52,7 @@
                                 ${film.filmLength} <fmt:message bundle="${msg}" key="minutes"/>
                         </p>
                     </div>
-                    <form action="film-info" class="hidden-form" id="hidden-form" method="get">
+                    <form action="${pageContext.request.contextPath}/film-info" class="hidden-form" id="hidden-form" method="get">
                         <input type="hidden" name="film-id" value="${film.filmID}">
                     </form>
                 </div>

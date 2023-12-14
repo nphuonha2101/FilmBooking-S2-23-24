@@ -11,9 +11,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin", "/add-film", "/edit-film", "/delete-film", "/film-management",
-        "/room-management","/add-room", "/edit-room", "/delete-room", "/showtime-management", "/add-showtime", "/edit" +
-        "-showtime", "/delete-showtime", "/invoice-info"})
+@WebFilter("/admin/*")
 public class AuthAdminLoginFilter extends HttpFilter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -27,7 +25,7 @@ public class AuthAdminLoginFilter extends HttpFilter {
         HttpSession userSession = req.getSession();
         User loginUser = (User) userSession.getAttribute("loginUser");
         if (loginUser == null) {
-            RedirectPageUtils.redirectPage("login", null, req, resp);
+            RedirectPageUtils.redirectPage("/login", null, req, resp);
             return;
         } else {
             String accountRole = loginUser.getAccountRole();

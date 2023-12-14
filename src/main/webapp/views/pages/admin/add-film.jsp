@@ -34,7 +34,7 @@
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-            <form method="post" action="add-film" enctype="multipart/form-data">
+            <form method="post" action="${pageContext.request.contextPath}/admin/add/film" enctype="multipart/form-data">
                 <div class="two-col__wrapper centered-vertical-content wrapper">
                     <!-- text form in left -->
                     <div class="wrapper centered-vertical-content">

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@WebServlet("/add-showtime")
+@WebServlet("/admin/add/showtime")
 public class AddShowtimeController extends HttpServlet {
     private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
@@ -73,7 +73,7 @@ public class AddShowtimeController extends HttpServlet {
 
         showtimeServices.save(newShowtime);
 
-        resp.sendRedirect("showtime-management");
+        resp.sendRedirect("/admin/management/showtime");
 
         hibernateSessionProvider.closeSession();
     }

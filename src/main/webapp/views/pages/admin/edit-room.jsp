@@ -33,7 +33,7 @@
             <div class="wrapper centered-vertical-content">
                 <div>
                     <c:set var="editRoom" value="${editRoom}"/>
-                    <form method="post" action="edit-room">
+                    <form method="post" action="${pageContext.request.contextPath}/admin/edit/room">
                         <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomID"/>:
                             <span class="warning-color"> *</span>
                         </label>

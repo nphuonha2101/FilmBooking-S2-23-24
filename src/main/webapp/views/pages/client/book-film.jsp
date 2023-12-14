@@ -100,7 +100,7 @@
         </div>
 
         <div class="wrapper centered-vertical-content">
-            <form action="book-film" method="post">
+            <form action="${pageContext.request.contextPath}/auth/book-film" method="post">
                 <input type="hidden" name="seats" id="seats">
                 <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="booking"/>">
             </form>

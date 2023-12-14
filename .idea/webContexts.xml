@@ -11,6 +11,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin/add-film.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin/admin.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin/film-management.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/admin" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/client/book-film.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/client" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/client/forgot.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/client" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/client/home.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/client" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/views/pages/client/signup.jsp" value="file://$PROJECT_DIR$/src/main/webapp/views/pages/client" />

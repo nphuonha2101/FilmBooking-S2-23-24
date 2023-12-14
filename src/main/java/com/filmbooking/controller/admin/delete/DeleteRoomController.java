@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "deleteRoom", value = "/delete-room")
+@WebServlet(name = "deleteRoom", value = "/admin/delete/room")
 public class DeleteRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -22,12 +22,12 @@ public class DeleteRoomController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
-        String roomID = req.getParameter("room-id_hidden");
+        String roomID = req.getParameter("room-id");
         System.out.println("DeleteFilmController Test: " + roomID);
 
         Room deletedRoom = roomServices.getByRoomID(roomID);
         if (roomServices.delete(deletedRoom))
-            resp.sendRedirect("room-management");
+            resp.sendRedirect("/admin/management/room");
 
         hibernateSessionProvider.closeSession();
     }

@@ -51,11 +51,13 @@
             </tr>
             </tbody>
         </table>
+
         <div class="wrapper justify-right-row">
-            <a class="links" style="margin: 0 1rem;" href="change-password"><fmt:message bundle="${msg}"
+            <a class="links" style="margin: 0 1rem;" href="${pageContext.request.contextPath}/auth/change-password"><fmt:message bundle="${msg}"
                                                                                          key="changePasswd"/></a>
             <a class="primary-filled-button button rounded-button"
-               href="change-info?username=${loginUser.username}"><fmt:message bundle="${msg}" key="changeInfo"/></a>
+               href="${pageContext.request.contextPath}/auth/change-info?username=${loginUser.username}"><fmt:message bundle="${msg}" key="changeInfo"/>
+            </a>
         </div>
     </div>
 </section>

@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/room-management")
+@WebServlet("/admin/management/room")
 public class RoomManagementController extends HttpServlet {
     private IRoomServices roomServices;
     private HibernateSessionProvider hibernateSessionProvider;

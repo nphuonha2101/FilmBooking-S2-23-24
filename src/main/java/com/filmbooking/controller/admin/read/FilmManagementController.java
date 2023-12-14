@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "filmManagement", value = "/film-management")
+@WebServlet(name = "filmManagement", value = "/admin/management/film")
 public class FilmManagementController extends HttpServlet {
     private IFilmServices filmServices;
     private HibernateSessionProvider hibernateSessionProvider;

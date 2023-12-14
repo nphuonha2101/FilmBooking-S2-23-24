@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.film;
+package com.filmbooking.controller.client.film.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-@WebServlet(name = "bookFilm", value = "/book-film")
+@WebServlet(name = "bookFilm", value = "/auth/book-film")
 public class BookingFilmController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
     private IShowtimeServices showtimeServices;

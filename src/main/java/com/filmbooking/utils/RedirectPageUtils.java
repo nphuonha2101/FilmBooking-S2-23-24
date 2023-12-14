@@ -27,7 +27,7 @@ public class RedirectPageUtils {
             resp.sendRedirect(previousPage);
             return;
         }
-        resp.sendRedirect("home");
+        resp.sendRedirect("/home");
     }
 }
 

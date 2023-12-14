@@ -26,31 +26,14 @@
             <h2>FilmBooking</h2>
             <p><fmt:message key="footerCopyright" bundle="${msg}"/></p>
         </div>
-
-        <br>
-
-        <div class="wrapper">
-            <ul class="link-list">
-                <li class="justify-left-row centered-horizontal-content">
-                    <a href="mailto:filmbookingdn@gmail.com"><span class="material-symbols-rounded">email</span>:
-                        filmbookingdn@gmail.com</a>
-                </li>
-                <li class="justify-left-row centered-horizontal-content">
-                    <a href="https://maps.app.goo.gl/de3LBriUR8etmBcSA" target="_blank"><span
-                            class="material-symbols-rounded">map</span>:
-                        <fmt:message key="addressInfo" bundle="${msg}"/>
-                    </a>
-                </li>
-            </ul>
-        </div>
     </div>
 
     <div>
         <h2><fmt:message key="footerQuickLinks" bundle="${msg}"/></h2>
         <ul class="link-list">
-            <li><a href="home">-> <fmt:message key="home" bundle="${msg}"/></a></li>
-            <li><a href="booking-history">-> <fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
-            <li><a href="account-info">-> <fmt:message key="yourAccount" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/home">-> <fmt:message key="home" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/auth/booking-history">-> <fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/auth/account-info">-> <fmt:message key="yourAccount" bundle="${msg}"/></a></li>
         </ul>
     </div>
     <div>

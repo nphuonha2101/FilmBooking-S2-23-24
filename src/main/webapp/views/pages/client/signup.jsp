@@ -28,7 +28,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
         
-        <form action="signup" method="post">
+        <form action="${pageContext.request.contextPath}/signup" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>:
@@ -73,7 +73,7 @@
             <input type="submit" class="primary-filled-button button"
                    value="<fmt:message bundle="${msg}" key="register"/>">
         </form>
-        <p><fmt:message bundle="${msg}" key="ifHaveAccount"/> <span><a class="links" href="login"><fmt:message
+        <p><fmt:message bundle="${msg}" key="ifHaveAccount"/> <span><a class="links" href="${pageContext.request.contextPath}/login"><fmt:message
                 bundle="${msg}" key="login"/></a> </span></p>
 
     </div>

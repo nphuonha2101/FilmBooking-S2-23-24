@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "editRoom", value = "/edit-room")
+@WebServlet(name = "editRoom", value = "/admin/edit/room")
 public class EditRoomController extends HttpServlet {
     private IRoomServices roomServices;
     private ITheaterServices theaterServices;
@@ -32,7 +32,7 @@ public class EditRoomController extends HttpServlet {
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
         theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
-        String roomID = req.getParameter("room-id_hidden");
+        String roomID = req.getParameter("room-id");
         editRoom = roomServices.getByRoomID(roomID);
 
         req.setAttribute("pageTitle", "editRoomTitle");
@@ -63,7 +63,7 @@ public class EditRoomController extends HttpServlet {
 
         roomServices.update(editRoom);
 
-        resp.sendRedirect("room-management");
+        resp.sendRedirect("/admin/management/room");
 
         hibernateSessionProvider.closeSession();
     }
@@ -73,5 +73,6 @@ public class EditRoomController extends HttpServlet {
         roomServices = null;
         editRoom = null;
         hibernateSessionProvider = null;
+        theaterServices = null;
     }
 }

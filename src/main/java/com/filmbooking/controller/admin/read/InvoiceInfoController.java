@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client;
+package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebServlet("/invoice-info")
+@WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
     private IFilmBookingServices filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;

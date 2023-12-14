@@ -108,7 +108,7 @@
             <%--            </div>--%>
 
             <div class="wrapper centered-vertical-content">
-                <form action="film-info" method="post">
+                <form action="${pageContext.request.contextPath}/film-info" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
                     <input class="primary-filled-button button" type="submit"
                            value="<fmt:message bundle="${msg}" key="continue"/>">

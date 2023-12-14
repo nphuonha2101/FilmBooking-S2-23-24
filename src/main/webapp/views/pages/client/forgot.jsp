@@ -28,13 +28,14 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="forgot-password" method="post">
+        <form action="${pageContext.request.contextPath}/forgot-password" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message key="username" bundle="${msg}"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="text" name="username" id="username" placeholder=" <fmt:message key="username" bundle="${msg}"/>"
+            <input type="text" name="username" id="username"
+                   placeholder=" <fmt:message key="username" bundle="${msg}"/>"
                    autocomplete="true" required>
 
             <label for="email">
@@ -42,11 +43,17 @@
                 <fmt:message key="email" bundle="${msg}"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>" autocomplete="true" required>
+            <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>"
+                   autocomplete="true" required>
 
-            <input type="submit" class="primary-filled-button button" value=" <fmt:message key="send" bundle="${msg}"/>">
+            <input type="submit" class="primary-filled-button button"
+                   value=" <fmt:message key="send" bundle="${msg}"/>">
+
             <div class="centered-vertical-content">
-                <p><fmt:message key="return" bundle="${msg}"/> <span> <a class="links" href="login"><fmt:message key="login" bundle="${msg}"/>!</a></span></p>
+                <p><fmt:message key="return" bundle="${msg}"/>
+                    <span> <a class="links" href="${pageContext.request.contextPath}/login">
+                        <fmt:message key="login" bundle="${msg}"/>!</a></span>
+                </p>
             </div>
         </form>
     </div>

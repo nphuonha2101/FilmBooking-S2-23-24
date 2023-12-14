@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
-@WebServlet(name = "deleteFilm", value = "/delete-film")
+@WebServlet(name = "deleteFilm", value = "/admin/delete/film")
 public class DeleteFilmController extends HttpServlet {
     private IFilmServices filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -25,7 +25,7 @@ public class DeleteFilmController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        String filmID = req.getParameter("film-id_hidden");
+        String filmID = req.getParameter("film-id");
 
 //        System.out.println(filmServices.getByFilmID(filmID));
 
@@ -38,7 +38,7 @@ public class DeleteFilmController extends HttpServlet {
             File file = new File(filmImgFilePath);
             file.delete();
 
-            resp.sendRedirect("admin");
+            resp.sendRedirect("/admin/management/film");
         }
 
         hibernateSessionProvider.closeSession();

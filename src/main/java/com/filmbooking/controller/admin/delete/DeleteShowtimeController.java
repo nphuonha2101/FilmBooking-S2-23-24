@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/delete-showtime")
+@WebServlet("/admin/delete/showtime")
 public class DeleteShowtimeController extends HttpServlet {
     private IShowtimeServices showtimeServices;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -22,12 +22,12 @@ public class DeleteShowtimeController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        String showtimeID = req.getParameter("showtime-id_hidden");
+        String showtimeID = req.getParameter("showtime-id");
 
         Showtime deleteShowtime = showtimeServices.getByID(showtimeID);
 
         if (showtimeServices.delete(deleteShowtime))
-            resp.sendRedirect("showtime-management");
+            resp.sendRedirect("/admin/management/showtime");
 
         hibernateSessionProvider.closeSession();
 

@@ -30,7 +30,7 @@
 
         <div class="centered-vertical-content wrapper">
             <div>
-                <form method="post" action="add-showtime">
+                <form method="post" action="${pageContext.request.contextPath}/admin/add/showtime">
 
                     <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>:
                         <span class="warning-color"> *</span>

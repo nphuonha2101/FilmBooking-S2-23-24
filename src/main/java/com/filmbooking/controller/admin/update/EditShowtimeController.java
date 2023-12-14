@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@WebServlet(name = "editShowtime", value = "/edit-showtime")
+@WebServlet(name = "editShowtime", value = "/admin/edit/showtime")
 public class EditShowtimeController extends HttpServlet {
     private IFilmServices filmServices;
     private IShowtimeServices showtimeServices;
@@ -38,7 +38,7 @@ public class EditShowtimeController extends HttpServlet {
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
-        String showtimeID = req.getParameter("showtime-id_hidden");
+        String showtimeID = req.getParameter("showtime-id");
         editShowtime = showtimeServices.getByID(showtimeID);
 
         req.setAttribute("pageTitle", "editShowtimeTitle");
@@ -78,9 +78,9 @@ public class EditShowtimeController extends HttpServlet {
 
         showtimeServices.update(editShowtime);
 
-        resp.sendRedirect("showtime-management");
+        resp.sendRedirect("/admin/management/showtime");
 
-        hibernateSessionProvider.getSession();
+        hibernateSessionProvider.closeSession();
     }
 
     @Override

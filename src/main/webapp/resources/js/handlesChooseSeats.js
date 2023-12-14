@@ -11,7 +11,7 @@ let handlesChooseSeats = {
 
 
                     if (this.classList.contains('seats-unavailable'))
-                        alert('Ghế này đã có người chọn rồi');
+                        alert('Ghế này đã có người chọn rồi! (This seat has already booked!');
                     else if
                     (this.classList.contains('seats-active')) {
                         this.classList.remove('seats-active')

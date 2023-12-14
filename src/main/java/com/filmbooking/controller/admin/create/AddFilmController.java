@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "addFilm", value = "/add-film")
+@WebServlet(name = "addFilm", value = "/admin/add/film")
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
     private IFilmServices filmServices;
@@ -75,7 +75,7 @@ public class AddFilmController extends HttpServlet {
 
         if (FileUploadUtils.uploadFile(req, fileName, "upload-img")) {
             filmServices.save(newFilm, filmGenreIDs);
-            resp.sendRedirect("admin");
+            resp.sendRedirect("/admin/management/film");
         } else {
             RenderViewUtils.renderViewToLayout(req, resp,
                     ContextPathUtils.getAdminPagesPath("add-film.jsp"),

@@ -24,11 +24,10 @@
             </button>
         </div>
 
-        <form action="search" method="get" id="search-form">
+        <form action="${pageContext.request.contextPath}/search" method="get" id="search-form">
             <div class="centered-horizontal-content">
                 <input type="text" name="search" id="search-input-form"
                        placeholder="<fmt:message key="seachPlaceholder" bundle="${msg}"/>"/>
-
                 <span>&ensp;</span>
             </div>
         </form>

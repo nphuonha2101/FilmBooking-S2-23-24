@@ -60,16 +60,12 @@
                         <td>${showtime.showtimeDate}</td>
 
                         <td>
-                            <form class="hide hidden-form" method="get">
-                                <input type="hidden" name="showtime-id_hidden"
-                                       value="${showtime.showtimeID}"/>
-                            </form>
-                            <button class="submit-button delete-button">
+                            <a href="${pageContext.request.contextPath}/admin/delete/showtime?showtime-id=${showtime.showtimeID}">
                                 <span class="material-symbols-rounded warning-color">delete</span>
-                            </button>
-                            <button class="submit-button edit-button">
+                            </a>
+                            <a href="${pageContext.request.contextPath}/admin/edit/showtime?showtime-id=${showtime.showtimeID}">
                                 <span class="material-symbols-rounded primary-color">edit</span>
-                            </button>
+                            </a>
                         </td>
                     </tr>
                 </c:forEach>

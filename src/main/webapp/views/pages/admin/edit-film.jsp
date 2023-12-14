@@ -31,7 +31,7 @@
 
         <h1><fmt:message bundle="${adminMsg}" key="editFilm"/></h1>
 
-        <form method="post" action="edit-film" enctype="multipart/form-data">
+        <form method="post" action="${pageContext.request.contextPath}/admin/edit/film" enctype="multipart/form-data">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>

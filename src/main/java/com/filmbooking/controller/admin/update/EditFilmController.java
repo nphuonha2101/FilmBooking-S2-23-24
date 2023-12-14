@@ -7,6 +7,7 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.ContextPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -24,7 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "editFilm", value = "/edit-film")
+@WebServlet(name = "editFilm", value = "/admin/edit/film")
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private IFilmServices filmServices;
@@ -39,7 +40,8 @@ public class EditFilmController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
-        filmId = req.getParameter("film-id_hidden");
+
+            filmId = req.getParameter("film-id");
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
@@ -99,7 +101,7 @@ public class EditFilmController extends HttpServlet {
         editFilm.setFilmTrailerLink(filmTrailerLink);
 
         // if not change image
-        if (filmImgName == null || filmImgName.isEmpty())
+        if (filmImgName.isEmpty())
             filmServices.update(editFilm, filmGenreIDs);
         else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
@@ -119,7 +121,7 @@ public class EditFilmController extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("film-management");
+        resp.sendRedirect("/admin/management/film");
 
         hibernateSessionProvider.closeSession();
 

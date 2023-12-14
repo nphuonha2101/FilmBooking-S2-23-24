@@ -16,21 +16,7 @@ public class HttpStatusController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int httpStatusCode = resp.getStatus();
 
-        System.out.println("Error code: " + httpStatusCode);
-        switch (httpStatusCode) {
-            case HttpServletResponse.SC_NOT_FOUND:
-                req.setAttribute("errorImgName", "404img.svg");
-                break;
-            case HttpServletResponse.SC_UNAUTHORIZED:
-                req.setAttribute("errorImgName", "403img.svg");
-                break;
-            case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
-                req.setAttribute("errorImgName", "500img.svg");
-                break;
-            case HttpServletResponse.SC_BAD_REQUEST:
-                req.setAttribute("errorImgName", "400img.svg");
-                break;
-        }
+        req.setAttribute("errorImgName", "httpStatusImg.svg");
 
         req.setAttribute("httpErrorCode", httpStatusCode);
         req.setAttribute("httpErrorMessage", "http" + httpStatusCode);
