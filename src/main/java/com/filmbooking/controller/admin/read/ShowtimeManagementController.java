@@ -36,7 +36,8 @@ public class ShowtimeManagementController extends HttpServlet {
             List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT);
 
             req.setAttribute("showtimeList", showtimeList);
-            req.setAttribute("pageUrl", "showtime-management");
+            // set page url for pagination
+            req.setAttribute("pageUrl", "admin/management/showtime");
 
             req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
             req.setAttribute("pageTitle", "showtimeManagementTitle");

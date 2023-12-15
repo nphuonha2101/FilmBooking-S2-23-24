@@ -36,7 +36,8 @@ public class FilmManagementController extends HttpServlet {
             List<Film> films = filmServices.getByOffset(offset, LIMIT);
 
             req.setAttribute("filmsData", films);
-            req.setAttribute("pageUrl", "film-management");
+            // set page url for pagination
+            req.setAttribute("pageUrl", "admin/management/film");
 
             req.setAttribute("pageTitle", "filmManagementTitle");
 

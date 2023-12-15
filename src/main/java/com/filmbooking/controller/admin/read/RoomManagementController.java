@@ -35,7 +35,8 @@ public class RoomManagementController extends HttpServlet {
             List<Room> rooms = roomServices.getByOffset(offset, LIMIT);
 
             req.setAttribute("roomData", rooms);
-            req.setAttribute("pageUrl", "room-management");
+            // set page url for pagination
+            req.setAttribute("pageUrl", "admin/management/room");
 
             req.setAttribute("pageTitle", "roomManagementTitle");
 
