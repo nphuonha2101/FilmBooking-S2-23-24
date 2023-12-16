@@ -45,22 +45,21 @@
                         <c:set var="room" value="${showtime.room}"/>
 
                         <div class="wrapper accordion-wrapper">
-                            <button class="accordion wrapper">
+                            <button class="accordion wrapper accordion-text-box">
                                <span class="material-symbols-rounded accordion-icon">
                                     expand_more
                                 </span>
                                 <span class="font-bold">
                                     <fmt:message bundle="${msg}" key="username"/>:
-                                </span> ${filmBookingData.user.username}
-                                - <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:
-                            </span> ${filmBookingData.bookingDate}
-                                - <span class="font-bold"><fmt:message bundle="${msg}"
-                                                                       key="filmName"/>:</span> ${film.filmName}
-                                - <span class="font-bold"><fmt:message bundle="${msg}"
-                                                                       key="totalPrice"/>:</span> ${filmBookingData.totalFee}
-                                VNĐ
-                                - <span class="font-bold"><fmt:message bundle="${msg}"
-                                                                       key="theaterAgency"/>:</span> ${theater.theaterName}
+                                </span> ${filmBookingData.user.username} &ndash;
+                                  <span class="font-bold"><fmt:message bundle="${msg}" key="date"/>:
+                            </span> ${filmBookingData.bookingDate} &ndash;
+                                <span class="font-bold"><fmt:message bundle="${msg}"
+                                                                            key="filmName"/>: </span> ${film.filmName} &ndash;
+                               <span class="font-bold"><fmt:message bundle="${msg}"
+                                                                            key="totalPrice"/>: </span> ${filmBookingData.totalFee} VNĐ &ndash;
+                               <span class="font-bold"><fmt:message bundle="${msg}"
+                                                                            key="theaterAgency"/>: </span> ${theater.theaterName}
                             </button>
                             <div class="accordion-panel">
                                 <div class="two-col__wrapper wrapper">

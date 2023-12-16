@@ -30,7 +30,7 @@
             <!-- create film cards -->
             <c:forEach var="film" items="${filmsData}" varStatus="loop">
                 <div class="item-cards centered-vertical-content" id="card-${loop.index}">
-                    <div class="film-img-in-card"
+                    <div class="film-img-in-card div-img"
                          style="background-image: url('<c:url value="${film.imgPath}"/>')"
                          id="film-img-card-${loop.index}"></div>
                     <div class="overlay">

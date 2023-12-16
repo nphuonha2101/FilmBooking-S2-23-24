@@ -39,9 +39,15 @@ main {
     margin: 0 2rem;
 }
 
+span {
+    margin: 0 0.25rem;
+}
+
 .font-bold {
     font-weight: 600 !important;
 }
+
+
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
@@ -293,7 +299,6 @@ button {
     background-color: transparent !important;
     padding: 1rem;
     margin-bottom: 1rem;
-
 }
 
 .film-description_container {
@@ -1059,11 +1064,7 @@ select {
     max-width: calc(22vw);
     min-height: calc(18vw);
     max-height: calc(22vw);
-    background-position: center;
-    background-repeat: no-repeat;
-    border: none;
     border-radius: 6px;
-    background-size: cover;
 }
 
 .film-img-in-card {
@@ -1071,6 +1072,10 @@ select {
     top: 0;
     width: 100%;
     padding-top: 125%;
+
+}
+
+.div-img {
     background-position: center;
     background-repeat: no-repeat;
     border: none;
@@ -1276,26 +1281,28 @@ thead > tr > th {
 }
 
 .accordion {
-    background-color: #e6f5ff;
+    background-color: #eceef1;
     color: #212529;
     cursor: pointer;
     padding: 1rem;
     text-align: left;
-    border: none;
     outline: none;
-    transition: .3s;
     border-radius: 0.5rem !important;
     margin: 0.5rem 0;
     text-overflow: ellipsis !important;
+    border: none;
+    transition: 0.3s ease-out;
 }
 
 .accordion:hover {
-    box-shadow: 0 0 40px 0 rgba(102, 102, 102, 0.17);
+    box-shadow: 2px 5px 10px 0 rgba(196, 196, 196, 0.82);
+    transition: 0.3s ease-out;
 }
 
 .accordion.active {
     background-color: #0556f3;
     color: #fff;
+    transition: 0.3s ease-out;
 }
 
 .accordion-panel {
@@ -1312,6 +1319,13 @@ thead > tr > th {
 .accordion-wrapper {
     animation-name: slide-in-elliptic-top-fwd;
     animation-duration: 0.4s;
+}
+
+.accordion-text-box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
 }
 
 .img-language {

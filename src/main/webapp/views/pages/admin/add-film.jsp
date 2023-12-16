@@ -64,7 +64,7 @@
                     <!-- hidden form in right -->
                     <div class="wrapper centered-vertical-content">
                         <input type="file" id="upload-img" name="upload-img"/>
-                        <div class="film-img-box" id="film-img"></div>
+                        <div class="film-img-box div-img" id="film-img"></div>
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
                         <label style="margin: 2rem;" for="upload-img"
                                class="primary-filled-button button rounded-button">

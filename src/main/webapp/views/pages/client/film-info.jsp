@@ -33,7 +33,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="two-col__wrapper">
-                <div class="film-img-box" style="background-image: url('<c:url value="${film.imgPath}"/>')"
+                <div class="film-img-box div-img" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
                 <div class="wrapper">
                     <h3> ${film.filmName}</h3>
