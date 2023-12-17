@@ -33,7 +33,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="justify-right-row wrapper">
-                <a href="add-room" class="primary-filled-button rounded-button button submit-button icon-button">
+                <a href="${pageContext.request.contextPath}/admin/add/room" class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewRoom"/></span>
                 </a>

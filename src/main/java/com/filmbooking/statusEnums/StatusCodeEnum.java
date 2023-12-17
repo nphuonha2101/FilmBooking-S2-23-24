@@ -6,7 +6,7 @@ public enum StatusCodeEnum {
     SENT_RESET_PASSWD_EMAIL(202, "Đã gửi email đặt lại mật khẩu"),
     PASSWORD_CHANGE_SUCCESSFUL(203, "Đổi mật khẩu thành công"),
     CREATE_NEW_USER_SUCCESSFUL(204, "Tạo người dùng mới thành công"),
-    BOOK_FILM_SUCCESSFUL(205, "Đặt vé thành công"),
+    BOOKING_FILM_SUCCESSFUL(205, "Đặt vé thành công"),
     UPDATE_FILM_SUCCESSFUL(206, "Cập nhật phim thành công"),
     DELETE_FILM_SUCCESSFUL(207, "Xóa phim thành công"),
     ADD_FILM_SUCCESSFUL(208, "Thêm phim thành công"),
@@ -31,7 +31,11 @@ public enum StatusCodeEnum {
     IMG_UPLOAD_NOT_FOUND(411, "Không tìm thấy ảnh tải lên"),
     NOT_VALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
-    PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc");
+    PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),
+    BOOKING_FILM_FAILED(504, "Đặt phim bị lỗi"),
+    SEATS_HAVE_ALREADY_BOOKED(505, "Ghế này đã có người đặt!");
+    ;
+
 
     private final int statusCode;
     private final String message;

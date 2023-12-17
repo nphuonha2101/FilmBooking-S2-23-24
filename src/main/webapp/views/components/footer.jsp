@@ -31,20 +31,20 @@
     <div>
         <h2><fmt:message key="footerQuickLinks" bundle="${msg}"/></h2>
         <ul class="link-list">
-            <li><a href="${pageContext.request.contextPath}/home">-> <fmt:message key="home" bundle="${msg}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/auth/booking-history">-> <fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/auth/account-info">-> <fmt:message key="yourAccount" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="home" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/auth/booking-history"><fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
+            <li><a href="${pageContext.request.contextPath}/auth/account-info"><fmt:message key="yourAccount" bundle="${msg}"/></a></li>
         </ul>
     </div>
     <div>
         <h2><fmt:message key="aboutUsFooter" bundle="${msg}"/></h2>
         <ul class="link-list">
 
-            <li><a href="https://github.com/conmuaxadan" target="_blank">-> <fmt:message key="footerDQDGitHub"
+            <li><a href="https://github.com/conmuaxadan" target="_blank"><fmt:message key="footerDQDGitHub"
                                                                                          bundle="${msg}"/></a></li>
-            <li><a href="https://github.com/nphuonha2101" target="_blank">-> <fmt:message key="footerNPNGitHub"
+            <li><a href="https://github.com/nphuonha2101" target="_blank"><fmt:message key="footerNPNGitHub"
                                                                                           bundle="${msg}"/></a></li>
-            <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">->
+            <li><a href="https://github.com/nphuonha2101/FilmBooking-WebProgramming" target="_blank">
                 <fmt:message key="footerProjectGitHub" bundle="${msg}"/>
             </a>
             </li>
@@ -65,7 +65,7 @@ expand_less</span>
 <script type="module" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesAccordions.js"/>"></script>
-<script type="module" src="<c:url value="/resources/js/handlesAnimation.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesSearchModal.js"/>"></script>
-<script type="module" src="<c:url value="/resources/js/checkCookiesEnabled.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesDisplaySelectedGenres.js"/>"></script>
+<%--<script type="module" src="<c:url value="/resources/js/checkCookiesEnabled.js"/>"></script>--%>
+<%--<script type="module" src="<c:url value="/resources/js/handlesAnimation.js"/>"></script>--%>

@@ -73,11 +73,16 @@ public class BookingFilmController extends HttpServlet {
 
             if (filmBookingServices.save(filmBookingClone)) {
                 Showtime bookedShowtime = filmBookingClone.getShowtime();
-                bookedShowtime.bookSeats(filmBookingClone.getSeats());
-                showtimeServices.update(bookedShowtime);
+                // if seats have not booked!
+                if (bookedShowtime.bookSeats(filmBookingClone.getSeats())) {
+                    showtimeServices.update(bookedShowtime);
+                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOKING_FILM_SUCCESSFUL.getStatusCode());
+                } else {
+                    req.setAttribute("statusCodeErr", StatusCodeEnum.SEATS_HAVE_ALREADY_BOOKED.getStatusCode());
+                }
+            } else {
+                req.setAttribute("statusCodeErr", StatusCodeEnum.BOOKING_FILM_FAILED.getStatusCode());
             }
-            //reset film booking
-            req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOK_FILM_SUCCESSFUL.getStatusCode());
             doGet(req, resp);
 
 

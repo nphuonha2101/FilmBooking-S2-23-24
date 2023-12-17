@@ -23,6 +23,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
+<%--<link rel="preconnect" href="https://fonts.googleapis.com">--%>
+<%--<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--%>
+<%--<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800&display=swap" rel="stylesheet">--%>
+
 <link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
 <link rel="icon" href="<c:url value='/resources/images/site-logo.png'/>"/>
 

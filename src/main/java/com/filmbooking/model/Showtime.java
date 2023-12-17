@@ -107,14 +107,19 @@ public class Showtime {
      * Book seat
      * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
      */
-    public void bookSeats(String[] seats) {
+    public synchronized boolean bookSeats(String[] seats) {
         String[][] seatsMatrix = StringUtils.convertTo2DArr(this.seatsData);
         for (String seat : seats) {
             int row = Integer.parseInt(seat.split(" ")[0]);
             int col = Integer.parseInt(seat.split(" ")[1]);
+
+            if (seatsMatrix[row][col].equals("1"))
+                return false;
+
             seatsMatrix[row][col] = "1";
         }
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
+        return true;
     }
 
     public int countAvailableSeats() {

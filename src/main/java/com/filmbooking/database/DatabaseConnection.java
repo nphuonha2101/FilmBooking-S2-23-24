@@ -1,6 +1,7 @@
 package com.filmbooking.database;
 
 import com.filmbooking.utils.PropertiesUtils;
+import org.hibernate.boot.model.relational.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

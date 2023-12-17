@@ -33,7 +33,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="justify-right-row wrapper">
-                <a href="add-showtime"
+                <a href="${pageContext.request.contextPath}/admin/add/showtime"
                    class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
