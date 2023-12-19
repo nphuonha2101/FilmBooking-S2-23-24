@@ -2,6 +2,7 @@ package com.filmbooking.filters;
 
 
 import com.filmbooking.model.User;
+import com.filmbooking.utils.PathUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
@@ -18,7 +19,7 @@ public class AuthLoginFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser == null) {
-            res.sendRedirect("/login");
+            res.sendRedirect(PathUtils.getURLWithContextPath(req, "/login"));
             return;
         }
         chain.doFilter(req, res);

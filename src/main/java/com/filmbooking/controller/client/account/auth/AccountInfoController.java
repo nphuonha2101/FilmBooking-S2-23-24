@@ -1,6 +1,6 @@
 package com.filmbooking.controller.client.account.auth;
 
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,8 +18,8 @@ public class AccountInfoController extends HttpServlet {
 
         req.setAttribute("pageTitle", "accountInfoTitle");
         System.out.println(req.getSession().getAttribute("loginUser"));
-        RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("account-info.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("account-info.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
     }
 
 }

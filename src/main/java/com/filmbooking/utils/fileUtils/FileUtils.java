@@ -40,14 +40,14 @@ public class FileUtils {
     }
 
     /**
-     * Get real context path of the project
+     * Get deployed application path of the project
      * the path will be used to save file to the server.
      * <br>
      * Example: [E:/Java Workspace]/FilmBooking-WebProgramming/
-     * @param req HttpServletRequest use to get servlet context and get real path
-     * @return a real context path of the project
+     * @param req   HttpServletRequest use to get servlet context and get real path
+     * @return      a real context path of the project
      */
-    public static String getRealContextPath(HttpServletRequest req) {
+    public static String getDeployedApplicationPath(HttpServletRequest req) {
         String[] realContextPathArr = req.getServletContext().getRealPath("/").split("\\\\");
 
         System.out.println(Arrays.toString(realContextPathArr));
@@ -67,7 +67,7 @@ public class FileUtils {
      * @return a real webapp path of the project
      */
     public static String getRealWebappPath(HttpServletRequest req) {
-        return getRealContextPath(req) + "src/main/webapp";
+        return getDeployedApplicationPath(req) + "src/main/webapp";
     }
 
     public static void main(String[] args) {

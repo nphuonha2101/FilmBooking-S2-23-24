@@ -9,7 +9,7 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -63,8 +63,8 @@ public class FilmInfoController extends HttpServlet {
         req.setAttribute("filmGenreNames", filmGenreNames.toString());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("film-info.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("film-info.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -83,7 +83,6 @@ public class FilmInfoController extends HttpServlet {
         System.out.println("bookedShowtimeID = " + bookedShowtimeID);
 
         if (!(bookedShowtimeID.isEmpty() || bookedShowtimeID.isBlank())) {
-
             Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
             if (bookedShowtime != null) {
 
@@ -92,7 +91,7 @@ public class FilmInfoController extends HttpServlet {
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect("/auth/book-film");
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/book-film"));
                 return;
             }
         } else {

@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -39,8 +39,8 @@ public class HomeController extends HttpServlet {
 
             req.setAttribute("pageTitle", "homeTitle");
             RenderViewUtils.renderViewToLayout(req, resp,
-                    ContextPathUtils.getClientPagesPath("home.jsp"),
-                    ContextPathUtils.getLayoutPath("master.jsp"));
+                    PathUtils.getClientPagesPath("home.jsp"),
+                    PathUtils.getLayoutPath("master.jsp"));
         }
         hibernateSessionProvider.closeSession();
     }

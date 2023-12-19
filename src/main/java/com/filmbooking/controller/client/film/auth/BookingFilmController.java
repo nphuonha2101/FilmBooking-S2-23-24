@@ -9,7 +9,7 @@ import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -47,7 +47,7 @@ public class BookingFilmController extends HttpServlet {
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
 
-        RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("book-film.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("book-film.jsp"), PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

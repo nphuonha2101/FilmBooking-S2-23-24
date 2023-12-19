@@ -15,9 +15,6 @@ public class StringUtils {
             String[] cols = rows[i].split("");
             result[i] = new String[cols.length];
             System.arraycopy(cols, 0, result[i], 0, cols.length);
-//            for (int j = 0; j < cols.length; j++) {
-//                result[i][j] = cols[j];
-//            }
         }
         return result;
     }
@@ -79,13 +76,12 @@ public class StringUtils {
     }
 
     private static char createRandomLowerCaseChar() {
-        return (char) (97  + (26 * Math.random()));
+        return (char) (97 + (26 * Math.random()));
     }
 
     private static char createRandomUpperCaseChar() {
         return (char) (65 + (26 * Math.random()));
     }
-
 
 
     public static String handlesInputString(String str) {

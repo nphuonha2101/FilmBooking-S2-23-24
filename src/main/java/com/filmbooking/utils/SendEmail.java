@@ -1,6 +1,5 @@
-package com.filmbooking.utils.mailUtils;
+package com.filmbooking.utils;
 
-import com.filmbooking.utils.PropertiesUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -23,7 +22,10 @@ public class SendEmail {
         return instance;
     }
 
-
+    /**
+     * Get session to send email
+     * @return a {@link Session}
+     */
     private Session getSession() {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");

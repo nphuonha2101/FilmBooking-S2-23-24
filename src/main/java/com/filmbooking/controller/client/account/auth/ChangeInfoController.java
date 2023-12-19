@@ -5,7 +5,7 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -27,8 +27,8 @@ public class ChangeInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "changeInfoTitle");
 
-        RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-info.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override
@@ -48,18 +48,18 @@ public class ChangeInfoController extends HttpServlet {
             if (!email.equalsIgnoreCase(loginUser.getUserEmail()) && userServices.getByEmail(email) != null) {
                 req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
                 req.setAttribute("pageTitle", "changeInfoTitle");
-                RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
+                RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-info.jsp"), PathUtils.getLayoutPath("master.jsp"));
             } else {
                 loginUser.setUserFullName(userFullName);
                 loginUser.setUserEmail(email);
                 userServices.update(loginUser);
-                resp.sendRedirect("/auth/account-info");
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/account-info"));
             }
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
             req.setAttribute("pageTitle", "changeInfoTitle");
-//            RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"));
-            RenderViewUtils.renderViewToLayout(req, resp, ContextPathUtils.getClientPagesPath("change-info.jsp"), ContextPathUtils.getLayoutPath("master.jsp"));
+//            RenderViewUtils.updateView(req, resp, PathUtils.getClientPagesPath("change-info.jsp"));
+            RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-info.jsp"), PathUtils.getLayoutPath("master.jsp"));
         }
 
         hibernateSessionProvider.closeSession();

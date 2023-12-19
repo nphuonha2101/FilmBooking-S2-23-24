@@ -1,5 +1,6 @@
 package com.filmbooking.controller.admin.create;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
@@ -9,10 +10,9 @@ import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -44,11 +44,11 @@ public class AddShowtimeController extends HttpServlet {
         req.setAttribute("roomData", roomServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("add-showtime.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getAdminPagesPath("add-showtime.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
+//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -73,7 +73,7 @@ public class AddShowtimeController extends HttpServlet {
 
         showtimeServices.save(newShowtime);
 
-        resp.sendRedirect("/admin/management/showtime");
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));
 
         hibernateSessionProvider.closeSession();
     }

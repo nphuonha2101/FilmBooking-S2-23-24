@@ -7,13 +7,12 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
-import com.filmbooking.utils.uuidUtils.UUIDUtils;
+import com.filmbooking.utils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -41,7 +40,7 @@ public class EditFilmController extends HttpServlet {
         genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
 
-            filmId = req.getParameter("film-id");
+        filmId = req.getParameter("film-id");
         editFilm = filmServices.getByFilmID(filmId);
 
         req.setAttribute("editFilm", editFilm);
@@ -62,11 +61,11 @@ public class EditFilmController extends HttpServlet {
         req.setAttribute("pageTitle", "editFilmTitle");
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("edit-film.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getAdminPagesPath("edit-film.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
+//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -105,7 +104,7 @@ public class EditFilmController extends HttpServlet {
             filmServices.update(editFilm, filmGenreIDs);
         else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
-            String filmImgPath = ContextPathUtils.getUploadFileRelativePath(uuidFileName);
+            String filmImgPath = PathUtils.getUploadFileRelativePath(uuidFileName);
 
             // set new img file and upload to server
             if (FileUploadUtils.uploadFile(req, uuidFileName, "upload-img")) {
@@ -121,7 +120,7 @@ public class EditFilmController extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/admin/management/film");
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/film"));
 
         hibernateSessionProvider.closeSession();
 

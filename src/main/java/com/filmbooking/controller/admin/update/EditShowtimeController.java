@@ -10,7 +10,7 @@ import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -48,11 +48,11 @@ public class EditShowtimeController extends HttpServlet {
         req.setAttribute("roomData", roomServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("edit-showtime.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getAdminPagesPath("edit-showtime.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
+//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -78,7 +78,7 @@ public class EditShowtimeController extends HttpServlet {
 
         showtimeServices.update(editShowtime);
 
-        resp.sendRedirect("/admin/management/showtime");
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));
 
         hibernateSessionProvider.closeSession();
     }

@@ -1,9 +1,12 @@
 package com.filmbooking.controller.client.account;
 
-import com.filmbooking.model.User;
+import com.filmbooking.utils.PathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -19,7 +22,7 @@ public class LogoutController extends HttpServlet {
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
-            resp.sendRedirect("/login");
-        } else resp.sendRedirect("/home");
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/login"));
+        } else resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/home"));
     }
 }

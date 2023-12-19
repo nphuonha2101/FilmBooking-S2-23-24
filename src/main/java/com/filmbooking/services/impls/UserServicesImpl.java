@@ -8,9 +8,9 @@ import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.utils.mailUtils.SendEmail;
+import com.filmbooking.utils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
-import com.filmbooking.utils.validateUtils.UserRegex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
 import java.util.List;
 
@@ -72,8 +72,8 @@ public class UserServicesImpl implements IUserServices {
         // hash password
         password = StringUtils.generateSHA256String(password);
         // determine login method
-        boolean isEmail = Regex.validate(UserRegex.USER_EMAIL, usernameOrEmail);
-        boolean isUsername = Regex.validate(UserRegex.USERNAME, usernameOrEmail);
+        boolean isEmail = Regex.validate(UserRegexEnum.USER_EMAIL, usernameOrEmail);
+        boolean isUsername = Regex.validate(UserRegexEnum.USERNAME, usernameOrEmail);
 
         User loginUser = null;
         // login by email

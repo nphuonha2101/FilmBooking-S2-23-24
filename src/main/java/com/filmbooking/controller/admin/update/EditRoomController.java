@@ -1,14 +1,12 @@
 package com.filmbooking.controller.admin.update;
 
-import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -42,8 +40,8 @@ public class EditRoomController extends HttpServlet {
         req.setAttribute("theaters", theaterServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("edit-room.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getAdminPagesPath("edit-room.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -63,7 +61,7 @@ public class EditRoomController extends HttpServlet {
 
         roomServices.update(editRoom);
 
-        resp.sendRedirect("/admin/management/room");
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
 
         hibernateSessionProvider.closeSession();
     }

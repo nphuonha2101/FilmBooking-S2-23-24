@@ -1,6 +1,6 @@
 package com.filmbooking.controller.httpStatus;
 
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -23,7 +23,7 @@ public class HttpStatusController extends HttpServlet {
         req.setAttribute("pageTitle", "http" + httpStatusCode + "Title");
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getErrorPagesPath("error.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getErrorPagesPath("error.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
     }
 }

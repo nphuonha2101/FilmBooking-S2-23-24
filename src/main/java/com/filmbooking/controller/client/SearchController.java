@@ -5,7 +5,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,8 +40,8 @@ public class SearchController extends HttpServlet {
 
         req.setAttribute("pageTitle", "searchResultsTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("search-results.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("search-results.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -43,11 +43,11 @@ public class ShowtimeManagementController extends HttpServlet {
             req.setAttribute("pageTitle", "showtimeManagementTitle");
 
             RenderViewUtils.renderViewToLayout(req, resp,
-                    ContextPathUtils.getAdminPagesPath("showtime-management.jsp"),
-                    ContextPathUtils.getLayoutPath("master.jsp"));
+                    PathUtils.getAdminPagesPath("showtime-management.jsp"),
+                    PathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
+//                PathUtils.getLayoutPath("master.jsp"));
         }
 
         hibernateSessionProvider.closeSession();

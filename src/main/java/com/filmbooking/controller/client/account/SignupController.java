@@ -5,7 +5,7 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -30,8 +30,8 @@ public class SignupController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "signupTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("signup.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("signup.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
     }
 
@@ -65,8 +65,8 @@ public class SignupController extends HttpServlet {
 
         req.setAttribute("pageTitle", "signupTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("signup.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("signup.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

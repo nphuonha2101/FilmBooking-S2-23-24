@@ -5,7 +5,7 @@ import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -29,8 +29,8 @@ public class ForgotPasswordController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "forgotPassTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("forgot.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("forgot.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
     }
 
@@ -52,10 +52,10 @@ public class ForgotPasswordController extends HttpServlet {
 
 
         req.setAttribute("pageTitle", "forgotPassTitle");
-//        RenderViewUtils.updateView(req, resp, ContextPathUtils.getClientPagesPath("forgot.jsp"));
+//        RenderViewUtils.updateView(req, resp, PathUtils.getClientPagesPath("forgot.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getClientPagesPath("forgot.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getClientPagesPath("forgot.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

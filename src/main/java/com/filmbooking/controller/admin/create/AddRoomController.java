@@ -6,7 +6,7 @@ import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
-import com.filmbooking.utils.ContextPathUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.hibernate.HibernateSessionProvider;
@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 @WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
@@ -35,11 +36,11 @@ public class AddRoomController extends HttpServlet {
         req.setAttribute("theaters", theaterServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                ContextPathUtils.getAdminPagesPath("add-room.jsp"),
-                ContextPathUtils.getLayoutPath("master.jsp"));
+                PathUtils.getAdminPagesPath("add-room.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                ContextPathUtils.getLayoutPath("master.jsp"));
+//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -62,7 +63,7 @@ public class AddRoomController extends HttpServlet {
 
         roomServices.save(newRoom);
 
-        resp.sendRedirect("/admin/management/room");
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
 
         hibernateSessionProvider.closeSession();
     }

@@ -5,6 +5,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,7 +39,7 @@ public class DeleteFilmController extends HttpServlet {
             File file = new File(filmImgFilePath);
             file.delete();
 
-            resp.sendRedirect("/admin/management/film");
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/film"));
         }
 
         hibernateSessionProvider.closeSession();

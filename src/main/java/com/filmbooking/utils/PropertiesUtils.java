@@ -21,6 +21,9 @@ public class PropertiesUtils {
         return instance;
     }
 
+    /**
+     * Load properties file
+     */
     private void loadPropertiesFile() {
         System.out.println();
         try {

@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
+import com.filmbooking.utils.PathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,7 +28,7 @@ public class DeleteRoomController extends HttpServlet {
 
         Room deletedRoom = roomServices.getByRoomID(roomID);
         if (roomServices.delete(deletedRoom))
-            resp.sendRedirect("/admin/management/room");
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
 
         hibernateSessionProvider.closeSession();
     }
