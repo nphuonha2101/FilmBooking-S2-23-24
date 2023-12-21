@@ -4,8 +4,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.PaginationUtils;
+import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -31,11 +31,16 @@ public class HomeController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        if (offset != -1) {
-            List<Film> films = filmServices.getByOffset(offset, LIMIT);
+        // if offset == -2, it means that the current page is not valid
+        if (offset != -2) {
+            // if offset == -1, it means that no data is found
+            if (offset != -1) {
+                List<Film> films = filmServices.getByOffset(offset, LIMIT);
 
-            req.setAttribute("filmsData", films);
-            req.setAttribute("pageUrl", "home");
+                req.setAttribute("filmsData", films);
+                req.setAttribute("pageUrl", "home");
+
+            }
 
             req.setAttribute("pageTitle", "homeTitle");
             RenderViewUtils.renderViewToLayout(req, resp,
