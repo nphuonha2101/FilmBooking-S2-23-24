@@ -29,6 +29,8 @@ public enum StatusCodeEnum {
     SHOWTIME_NOT_FOUND(409, "Không tìm thấy suất chiếu"),
     IMG_UPLOAD_FAILED(410, "Tải ảnh lên thất bại"),
     IMG_UPLOAD_NOT_FOUND(411, "Không tìm thấy ảnh tải lên"),
+    NO_DATA(412, "Không có dữ liệu"),
+
     NOT_VALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
     PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),

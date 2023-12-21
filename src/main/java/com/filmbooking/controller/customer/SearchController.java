@@ -32,15 +32,15 @@ public class SearchController extends HttpServlet {
 
         if (searchFilmList.isEmpty()) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.FILM_NOT_FOUND.getStatusCode());
-            req.setAttribute("searchQuery", searchQuery);
-        }
-        else
+            req.setAttribute("searchQuery", "\"" + searchQuery + "\"");
+            req.setAttribute("messageDescription", "filmNotFoundWithKeyword");
+        } else
             req.setAttribute("filmsData", searchFilmList);
 
-
+        req.setAttribute("sectionTitle", "searchResultsSectionTitle");
         req.setAttribute("pageTitle", "searchResultsTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getClientPagesPath("search-results.jsp"),
+                PathUtils.getClientPagesPath("home.jsp"),
                 PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();

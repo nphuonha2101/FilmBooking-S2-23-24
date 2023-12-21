@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -39,9 +40,11 @@ public class HomeController extends HttpServlet {
 
                 req.setAttribute("filmsData", films);
                 req.setAttribute("pageUrl", "home");
+            } else
+                req.setAttribute("statusCodeErr", StatusCodeEnum.NO_DATA.getStatusCode());
 
-            }
 
+            req.setAttribute("sectionTitle", "newFilmArriveSectionTitle");
             req.setAttribute("pageTitle", "homeTitle");
             RenderViewUtils.renderViewToLayout(req, resp,
                     PathUtils.getClientPagesPath("home.jsp"),
