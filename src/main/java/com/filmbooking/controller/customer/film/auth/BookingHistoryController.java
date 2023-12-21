@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.film.auth;
+package com.filmbooking.controller.customer.film.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;

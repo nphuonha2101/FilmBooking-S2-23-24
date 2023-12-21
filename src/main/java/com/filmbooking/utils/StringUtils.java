@@ -49,8 +49,7 @@ public class StringUtils {
             StringBuilder hexText = new StringBuilder(no.toString(16));
 
             while (hexText.length() < 64)
-                hexText.append("0").append(hexText);
-
+                hexText.insert(0, "0");
 
             return hexText.toString();
         } catch (NoSuchAlgorithmException e) {
@@ -99,6 +98,6 @@ public class StringUtils {
 //        System.out.println(arr2DToString(convertTo2DArr(data)));
 //        System.out.println(createRandomStringUtil(9));
 
-        System.out.println(StringUtils.generateSHA256String("wdt5l36oT").equals("f03fe1db2fb7b198b2c560a00723135fa34e59038590435a22e5a6e299d72f0e"));
+        System.out.println(StringUtils.generateSHA256String("1234"));
     }
 }

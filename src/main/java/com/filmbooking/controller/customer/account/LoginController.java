@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.account;
+package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {

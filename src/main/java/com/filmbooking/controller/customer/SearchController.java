@@ -1,11 +1,11 @@
-package com.filmbooking.controller.client;
+package com.filmbooking.controller.customer;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
-import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,32 +16,33 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "home", value = "/home")
-public class HomeController extends HttpServlet {
+@WebServlet("/search")
+public class SearchController extends HttpServlet {
     private IFilmServices filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
-    private static final int LIMIT = 8;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
-        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
+        String searchQuery = req.getParameter("search");
 
-        if (offset != -1) {
-            List<Film> films = filmServices.getByOffset(offset, LIMIT);
+        List<Film> searchFilmList = filmServices.getByFilmName(searchQuery);
 
-            req.setAttribute("filmsData", films);
-            req.setAttribute("pageUrl", "home");
-
-            req.setAttribute("pageTitle", "homeTitle");
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    PathUtils.getClientPagesPath("home.jsp"),
-                    PathUtils.getLayoutPath("master.jsp"));
+        if (searchFilmList.isEmpty()) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.FILM_NOT_FOUND.getStatusCode());
+            req.setAttribute("searchQuery", searchQuery);
         }
+        else
+            req.setAttribute("filmsData", searchFilmList);
+
+
+        req.setAttribute("pageTitle", "searchResultsTitle");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                PathUtils.getClientPagesPath("search-results.jsp"),
+                PathUtils.getLayoutPath("master.jsp"));
+
         hibernateSessionProvider.closeSession();
     }
 
@@ -50,5 +51,4 @@ public class HomeController extends HttpServlet {
         filmServices = null;
         hibernateSessionProvider = null;
     }
-
 }

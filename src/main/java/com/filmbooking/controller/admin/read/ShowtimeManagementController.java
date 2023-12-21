@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/admin/management/showtime")
+@WebServlet(name="showtimeManagement", value="/admin/management/showtime")
 public class ShowtimeManagementController extends HttpServlet {
     private IShowtimeServices showtimeServices;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -32,22 +32,23 @@ public class ShowtimeManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) showtimeServices.getTotalRecords() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        if (offset != -1) {
-            List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT);
+        // if page valid (offset != -2)
+        if (offset != -2) {
+            // if page has data (offset != -1)
+            if (offset != -1) {
+                List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT);
 
-            req.setAttribute("showtimeList", showtimeList);
-            // set page url for pagination
-            req.setAttribute("pageUrl", "admin/management/showtime");
+                req.setAttribute("showtimeList", showtimeList);
+                // set page url for pagination
+                req.setAttribute("pageUrl", "admin/management/showtime");
 
-            req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
+                req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
+            }
+
             req.setAttribute("pageTitle", "showtimeManagementTitle");
-
             RenderViewUtils.renderViewToLayout(req, resp,
                     PathUtils.getAdminPagesPath("showtime-management.jsp"),
                     PathUtils.getLayoutPath("master.jsp"));
-
-//        RenderViewUtils.updateView(req, resp,
-//                PathUtils.getLayoutPath("master.jsp"));
         }
 
         hibernateSessionProvider.closeSession();

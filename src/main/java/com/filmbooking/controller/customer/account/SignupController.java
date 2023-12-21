@@ -1,4 +1,4 @@
-package com.filmbooking.controller.client.account;
+package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
