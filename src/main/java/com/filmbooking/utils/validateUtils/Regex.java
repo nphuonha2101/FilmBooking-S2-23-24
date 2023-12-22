@@ -22,5 +22,6 @@ public class Regex {
     public static void main(String[] args) {
         System.out.println(validate(UserRegexEnum.USER_EMAIL, "nphuonha" ));
         System.out.println(validate(UserRegexEnum.USER_EMAIL, "21130122@st.hcmuaf.edu.vn" ));
+        System.out.println(validate(UserRegexEnum.USER_FULL_NAME, "Nguyễn Phương Nhã"));
     }
 }

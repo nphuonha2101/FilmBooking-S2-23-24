@@ -3,7 +3,7 @@ package com.filmbooking.utils.validateUtils;
 public enum UserRegexEnum {
     USERNAME("^[a-zA-Z]\\w{2,20}$"),
     USER_EMAIL("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z.]{2,}$"),
-    USER_FULL_NAME("^[A-Z][a-z]+(\\\\s[A-Z][a-z]+)*$");
+    USER_FULL_NAME("^[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{Mn}]+(\\s[\\p{Lu}\\p{Lt}][\\p{Ll}\\p{Mn}]+)*$");
 
     private final String regex;
     UserRegexEnum(String regex) {

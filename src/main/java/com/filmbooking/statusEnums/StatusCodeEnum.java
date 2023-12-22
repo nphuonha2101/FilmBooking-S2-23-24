@@ -31,7 +31,7 @@ public enum StatusCodeEnum {
     IMG_UPLOAD_NOT_FOUND(411, "Không tìm thấy ảnh tải lên"),
     NO_DATA(412, "Không có dữ liệu"),
 
-    NOT_VALID_INPUT(501, "Dữ liệu không hợp lệ"),
+    INVALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
     PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),
     BOOKING_FILM_FAILED(504, "Đặt phim bị lỗi"),

@@ -8,6 +8,8 @@ import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.validateUtils.Regex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -45,6 +47,18 @@ public class SignupController extends HttpServlet {
         String userEmail = StringUtils.handlesInputString(req.getParameter("email"));
         String userPassword = StringUtils.handlesInputString(req.getParameter("password"));
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
+
+        // validate input
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) || !Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName) || !Regex.validate(UserRegexEnum.USERNAME, username)) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
+
+            req.setAttribute("pageTitle", "signupTitle");
+            RenderViewUtils.renderViewToLayout(req, resp,
+                    PathUtils.getClientPagesPath("signup.jsp"),
+                    PathUtils.getLayoutPath("master.jsp"));
+            return;
+        }
+
 
         // username existed!
         if (userServices.getByUsername(username) != null) {

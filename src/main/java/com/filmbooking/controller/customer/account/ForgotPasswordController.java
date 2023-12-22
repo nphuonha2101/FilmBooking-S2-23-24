@@ -7,6 +7,8 @@ import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.validateUtils.Regex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,10 +42,20 @@ public class ForgotPasswordController extends HttpServlet {
         userServices = new UserServicesImpl(hibernateSessionProvider);
 
         String username = req.getParameter("username");
-        String email = req.getParameter("email");
+        String userEmail = req.getParameter("email");
 
+        // validate input
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) || !Regex.validate(UserRegexEnum.USERNAME, username)) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
+            req.setAttribute("pageTitle", "forgotPassTitle");
+            RenderViewUtils.renderViewToLayout(req, resp,
+                    PathUtils.getClientPagesPath("forgot.jsp"),
+                    PathUtils.getLayoutPath("master.jsp"));
+            return;
+        }
 
-        ServiceResult forgotPassResult = userServices.userForgotPassword(username, email);
+        // get result from userServices
+        ServiceResult forgotPassResult = userServices.userForgotPassword(username, userEmail);
 
         if (forgotPassResult.getStatus().equals(StatusCodeEnum.SUCCESSFUL))
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());
@@ -52,7 +64,6 @@ public class ForgotPasswordController extends HttpServlet {
 
 
         req.setAttribute("pageTitle", "forgotPassTitle");
-//        RenderViewUtils.updateView(req, resp, PathUtils.getClientPagesPath("forgot.jsp"));
         RenderViewUtils.renderViewToLayout(req, resp,
                 PathUtils.getClientPagesPath("forgot.jsp"),
                 PathUtils.getLayoutPath("master.jsp"));

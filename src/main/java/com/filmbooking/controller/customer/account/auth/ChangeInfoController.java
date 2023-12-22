@@ -8,6 +8,8 @@ import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.validateUtils.Regex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -40,6 +42,16 @@ public class ChangeInfoController extends HttpServlet {
         String email = StringUtils.handlesInputString(req.getParameter("email"));
         String password = StringUtils.generateSHA256String(StringUtils.handlesInputString(req.getParameter("password")));
 
+        // validate input
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, email) || !Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
+            req.setAttribute("pageTitle", "changeInfoTitle");
+            RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-info.jsp"), PathUtils.getLayoutPath("master.jsp"));
+
+            return;
+        }
+
+
         HttpSession session = req.getSession();
         User loginUser = (User) session.getAttribute("loginUser");
 
@@ -58,7 +70,6 @@ public class ChangeInfoController extends HttpServlet {
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
             req.setAttribute("pageTitle", "changeInfoTitle");
-//            RenderViewUtils.updateView(req, resp, PathUtils.getClientPagesPath("change-info.jsp"));
             RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-info.jsp"), PathUtils.getLayoutPath("master.jsp"));
         }
 
