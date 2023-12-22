@@ -105,7 +105,7 @@ public class UserServicesImpl implements IUserServices {
     }
 
     @Override
-    public ServiceResult userForgotPassword(String username, String email) {
+    public ServiceResult userForgotPassword(String username, String email, String language) {
         ServiceResult result = null;
 
         User forgotPassUser = getByUsername(username);
@@ -126,7 +126,7 @@ public class UserServicesImpl implements IUserServices {
                 SendEmail sendEmail = SendEmail.getInstance();
                 sendEmail.sendEmailToUser(forgotPassUser.getUserEmail(),
                         "Mật khẩu mới của bạn",
-                        sendEmail.createResetPasswordEmail(newPassword));
+                        sendEmail.loadResetEmailFromHTML(forgotPassUser, newPassword, language));
 
                 result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
 

@@ -55,7 +55,8 @@ public class ForgotPasswordController extends HttpServlet {
         }
 
         // get result from userServices
-        ServiceResult forgotPassResult = userServices.userForgotPassword(username, userEmail);
+        String currentLanguage = (String) req.getSession().getAttribute("lang");
+        ServiceResult forgotPassResult = userServices.userForgotPassword(username, userEmail, currentLanguage);
 
         if (forgotPassResult.getStatus().equals(StatusCodeEnum.SUCCESSFUL))
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());

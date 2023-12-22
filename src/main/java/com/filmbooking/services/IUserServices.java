@@ -15,6 +15,5 @@ public interface IUserServices {
     boolean update(User user);
     boolean delete(User user);
     ServiceResult userAuthentication(String usernameOrEmail, String password);
-    ServiceResult userForgotPassword(String username, String email);
-
+    ServiceResult userForgotPassword(String username, String email, String language);
 }
