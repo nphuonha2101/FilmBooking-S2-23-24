@@ -2,13 +2,13 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.statusEnums.StatusCodeEnum;
+import com.filmbooking.utils.SendEmailUtils;
 import com.filmbooking.utils.StringUtils;
-import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.utils.SendEmail;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
@@ -58,7 +58,7 @@ public class UserServicesImpl implements IUserServices {
 
     @Override
     public boolean update(User user) {
-       return userDAO.update(user);
+        return userDAO.update(user);
     }
 
     @Override
@@ -123,10 +123,12 @@ public class UserServicesImpl implements IUserServices {
                 forgotPassUser.setUserPassword(StringUtils.generateSHA256String(newPassword));
                 update(forgotPassUser);
 
-                SendEmail sendEmail = SendEmail.getInstance();
-                sendEmail.sendEmailToUser(forgotPassUser.getUserEmail(),
-                        "Mật khẩu mới của bạn",
-                        sendEmail.loadResetEmailFromHTML(forgotPassUser, newPassword, language));
+                String emailSubject = language == null || language.equals("default") ? "Mật khẩu mới của bạn" : "Your new password";
+
+                SendEmailUtils sendEmailUtils = SendEmailUtils.getInstance();
+                sendEmailUtils.sendEmailToUser(forgotPassUser.getUserEmail(),
+                        emailSubject,
+                        sendEmailUtils.loadResetEmailFromHTML(forgotPassUser, newPassword, language));
 
                 result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
 

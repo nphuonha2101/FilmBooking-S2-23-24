@@ -8,24 +8,23 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.Properties;
 
-public class SendEmail {
-    private static SendEmail instance;
+public class SendEmailUtils {
+    private static SendEmailUtils instance;
     private final PropertiesUtils propertiesUtils;
 
 
-    private SendEmail() {
+    private SendEmailUtils() {
         propertiesUtils = PropertiesUtils.getInstance();
     }
 
-    public static SendEmail getInstance() {
+    public static SendEmailUtils getInstance() {
         if (instance == null) {
-            instance = new SendEmail();
+            instance = new SendEmailUtils();
         }
         return instance;
     }
@@ -86,6 +85,7 @@ public class SendEmail {
             while ((line = reader.readLine()) != null) {
                 line = line.replaceAll("/userFullName/", userInfo.getUserFullName());
                 line = line.replaceAll("/newPassword/", newPassword);
+                line = line.replaceAll("/username/", userInfo.getUsername());
                 stringBuilder.append(line).append("\n");
             }
 
@@ -98,13 +98,13 @@ public class SendEmail {
     }
 
     public static void main(String[] args) throws IOException {
-        SendEmail sendEmail = SendEmail.getInstance();
-//        sendEmail.createResetPasswordEmail("123456");
+        SendEmailUtils sendEmailUtils = SendEmailUtils.getInstance();
+//        sendEmailUtils.createResetPasswordEmail("123456");
 //        Properties properties = PropertiesUtils.getInstance().getProperties();
 //        System.out.println(properties.getProperty("email.appPassword"));
-//        sendEmail.sendEmailToUser("21130122@st.hcmuaf.edu.vn", "Test", "Test");
+//        sendEmailUtils.sendEmailToUser("21130122@st.hcmuaf.edu.vn", "Test", "Test");
 
         User user = new User();
-        System.out.println(sendEmail.loadResetEmailFromHTML(user, "123456", "default"));
+        System.out.println(sendEmailUtils.loadResetEmailFromHTML(user, "123456", "default"));
     }
 }
