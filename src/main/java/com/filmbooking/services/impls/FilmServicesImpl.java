@@ -52,13 +52,37 @@ public class FilmServicesImpl implements IFilmServices {
     }
 
     @Override
-    public List<Film> getByFilmName(String name) {
-        name = name.toLowerCase();
+    public List<Film> searchFilms(String keyword, double beginPrice, double endPrice) {
+        keyword = keyword.toLowerCase();
         List<Film> result = new ArrayList<>();
 
         for (Film film : this.getAll()) {
-            if (film.getFilmName().toLowerCase().contains(name))
-                result.add(film);
+            // Check if keyword is not blank then check if film name contains keyword
+            if (!keyword.isBlank()) {
+                if (film.toString().toLowerCase().contains(keyword)) {
+                    if (endPrice > 0) {
+                        if (film.getFilmPrice() >= beginPrice && film.getFilmPrice() <= endPrice) {
+                            result.add(film);
+                        }
+                    } else {
+                        if (film.getFilmPrice() >= beginPrice) {
+                            result.add(film);
+                        }
+                    }
+                }
+            }
+            // if keyword is blank then find with price
+            else {
+                if (endPrice > 0) {
+                    if (film.getFilmPrice() >= beginPrice && film.getFilmPrice() <= endPrice) {
+                        result.add(film);
+                    }
+                } else {
+                    if (film.getFilmPrice() >= beginPrice) {
+                        result.add(film);
+                    }
+                }
+            }
         }
         return result;
     }

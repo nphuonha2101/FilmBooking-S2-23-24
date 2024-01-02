@@ -26,9 +26,11 @@ public class SearchController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        String searchQuery = req.getParameter("search");
+        String searchQuery = req.getParameter("q");
+        double beginPriceNumber = Double.parseDouble(req.getParameter("beginPrice"));
+        double endPriceNumber = Double.parseDouble(req.getParameter("endPrice"));
 
-        List<Film> searchFilmList = filmServices.getByFilmName(searchQuery);
+        List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
 
         if (searchFilmList.isEmpty()) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.FILM_NOT_FOUND.getStatusCode());

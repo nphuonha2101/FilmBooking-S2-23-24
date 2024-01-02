@@ -532,6 +532,13 @@ select {
     background-color: #fff !important;
 }
 
+.small-input {
+    height: 2.5rem !important;
+    width: 5rem !important;
+    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
+    background-color: #fff !important;
+}
+
 .pagination-button {
     height: 2.5rem !important;
     text-align: center;
@@ -1017,6 +1024,8 @@ select {
     animation-duration: 0.5s;
     -moz-animation-name: fade;
     -moz-animation-duration: 0.5s;
+    overflow-y: auto;
+    padding: 1rem 0;
 }
 
 .modal-content {

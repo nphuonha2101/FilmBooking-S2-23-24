@@ -16,7 +16,7 @@ public interface IFilmServices {
 
     Film getByFilmID(String id);
 
-    List<Film> getByFilmName(String name);
+    List<Film> searchFilms(String keyword, double beginPrice, double endPrice);
 
     boolean save(Film film);
 

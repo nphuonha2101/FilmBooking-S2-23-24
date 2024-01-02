@@ -25,10 +25,22 @@
         </div>
 
         <form action="${pageContext.request.contextPath}/search" method="get" id="search-form">
-            <div class="centered-horizontal-content">
-                <input type="text" name="search" id="search-input-form"
+            <div class="centered-horizontal-content wrapper">
+                <input type="text" name="q" id="search-input-form"
                        placeholder="<fmt:message key="seachPlaceholder" bundle="${msg}"/>"/>
-                <span>&ensp;</span>
+            </div>
+
+            <div style="border: 2px solid #ccedff !important;" class="outlined-container">
+                <h4><fmt:message key="priceRange" bundle="${msg}"/> </h4>
+                <span style="text-transform: capitalize"><fmt:message key="from" bundle="${msg}"/> </span>
+                <input type="number" class="small-input" min="0" value="0" name="beginPrice">
+                <span style="text-transform: capitalize"><fmt:message key="to" bundle="${msg}"/> </span>
+                <input type="number" class="small-input" min="0" value="0" name="endPrice">
+            </div>
+
+            <div class="wrapper centered-vertical-content">
+                <input type="submit" value="<fmt:message key="search" bundle="${msg}"/>"
+                       class="button primary-filled-button rounded-button"/>
             </div>
         </form>
 

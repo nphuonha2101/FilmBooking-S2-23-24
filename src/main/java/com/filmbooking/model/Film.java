@@ -190,18 +190,16 @@ public class Film {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder(filmName + " List genre: ");
+        String filmInfo = this.filmName + " | " + this.director + " | " + this.cast;
+
+        StringBuilder result = new StringBuilder(filmInfo + " | ");
 
         for (Genre genre: this.genreList) {
-            result.append(genre.toString()).append("\n");
+            result.append(genre.toString()).append(" ");
         }
         return result.toString();
     }
 
     public static void main(String[] args) {
-//        Film film = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
-//        Film film1 = new Film("1", "2", 3, "4", "5", 6, "7", "8", "9");
-//
-//        System.out.println(film.equals(film1));
     }
 }
