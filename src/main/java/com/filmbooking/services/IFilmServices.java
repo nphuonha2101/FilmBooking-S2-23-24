@@ -15,6 +15,7 @@ public interface IFilmServices {
     List<Film> getAll();
 
     Film getByFilmID(String id);
+    Film getBySlug(String slug);
 
     List<Film> searchFilms(String keyword, double beginPrice, double endPrice);
 

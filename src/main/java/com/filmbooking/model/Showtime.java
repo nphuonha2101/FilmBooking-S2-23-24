@@ -29,17 +29,10 @@ public class Showtime {
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<FilmBooking> filmBookingList;
+    @Column(name = "slug")
+    private String slug;
 
     public Showtime() {
-    }
-
-    public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, List<FilmBooking> filmBookingList) {
-        this.showtimeID = showtimeID;
-        this.film = film;
-        this.room = room;
-        this.showtimeDate = showtimeDate;
-        this.seatsData = seatsData;
-        this.filmBookingList = filmBookingList;
     }
 
     public Showtime(Film film, Room room, LocalDateTime showtimeDate) {
@@ -48,6 +41,7 @@ public class Showtime {
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
         this.filmBookingList = new ArrayList<>();
+        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     public long getShowtimeID() {
@@ -103,8 +97,17 @@ public class Showtime {
         this.filmBookingList = filmBookingList;
     }
 
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
     /**
      * Book seat
+     *
      * @param seats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
      */
     public synchronized boolean bookSeats(String[] seats) {
@@ -144,10 +147,10 @@ public class Showtime {
     public boolean equals(Object obj) {
         if (obj instanceof Showtime showtime) {
             return this.showtimeID == showtime.getShowtimeID()
-            && this.film.equals(showtime.getFilm())
-            && this.room.equals(showtime.getRoom())
-            && this.showtimeDate.equals(showtime.getShowtimeDate())
-            && this.seatsData.equals(showtime.getSeatsData());
+                    && this.film.equals(showtime.getFilm())
+                    && this.room.equals(showtime.getRoom())
+                    && this.showtimeDate.equals(showtime.getShowtimeDate())
+                    && this.seatsData.equals(showtime.getSeatsData());
         }
         return false;
     }

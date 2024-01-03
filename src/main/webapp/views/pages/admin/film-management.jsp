@@ -60,10 +60,10 @@
                         <td>${film.cast}</td>
                         <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/delete/film?film-id=${film.filmID}">
+                            <a href="${pageContext.request.contextPath}/admin/delete/film?film=${film.slug}">
                                 <span class="material-symbols-rounded warning-color">delete</span>
                             </a>
-                            <a href="${pageContext.request.contextPath}/admin/edit/film?film-id=${film.filmID}">
+                            <a href="${pageContext.request.contextPath}/admin/edit/film?film=${film.slug}">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
                         </td>

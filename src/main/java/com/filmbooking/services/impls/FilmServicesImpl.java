@@ -52,6 +52,15 @@ public class FilmServicesImpl implements IFilmServices {
     }
 
     @Override
+    public Film getBySlug(String slug) {
+        for (Film film : filmDAO.getAll()) {
+            if (film.getSlug().equalsIgnoreCase(slug))
+                return film;
+        }
+        return null;
+    }
+
+    @Override
     public List<Film> searchFilms(String keyword, double beginPrice, double endPrice) {
         keyword = keyword.toLowerCase();
         List<Film> result = new ArrayList<>();

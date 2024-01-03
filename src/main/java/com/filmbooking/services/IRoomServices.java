@@ -1,6 +1,7 @@
 package com.filmbooking.services;
 
 
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface IRoomServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
     long getTotalRecords();
+    Room getBySlug(String slug);
     List<Room> getByOffset(int offset, int limit);
     List<Room> getAll();
     Room getByRoomID(String id);

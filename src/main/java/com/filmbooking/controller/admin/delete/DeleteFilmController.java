@@ -26,11 +26,9 @@ public class DeleteFilmController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
-        String filmID = req.getParameter("film-id");
+        String filmSlug = req.getParameter("film");
 
-//        System.out.println(filmServices.getByFilmID(filmID));
-
-        Film deletedFilm = filmServices.getByFilmID(filmID);
+        Film deletedFilm = filmServices.getBySlug(filmSlug);
         if (filmServices.delete(deletedFilm)) {
 
             // delete film image

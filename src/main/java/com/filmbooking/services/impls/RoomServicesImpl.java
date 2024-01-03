@@ -3,6 +3,7 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 
@@ -28,6 +29,15 @@ public class RoomServicesImpl implements IRoomServices {
     @Override
     public long getTotalRecords() {
         return roomDAO.getTotalRecords();
+    }
+
+    @Override
+    public Room getBySlug(String slug) {
+        for (Room room : roomDAO.getAll()) {
+            if (room.getSlug().equalsIgnoreCase(slug))
+                return room;
+        }
+        return null;
     }
 
     @Override

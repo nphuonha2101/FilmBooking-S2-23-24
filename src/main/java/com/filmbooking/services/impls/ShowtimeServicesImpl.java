@@ -3,6 +3,7 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 
@@ -29,6 +30,15 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
     @Override
     public long getTotalRecords() {
         return showtimeDAO.getTotalRecords();
+    }
+
+    @Override
+    public Showtime getBySlug(String slug) {
+        for (Showtime showtime : showtimeDAO.getAll()) {
+            if (showtime.getSlug().equalsIgnoreCase(slug))
+                return showtime;
+        }
+        return null;
     }
 
     @Override

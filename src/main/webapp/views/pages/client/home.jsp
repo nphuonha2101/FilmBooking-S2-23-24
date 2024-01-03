@@ -57,7 +57,7 @@
                             <form action="${pageContext.request.contextPath}/film-info" class="hidden-form"
                                   id="hidden-form"
                                   method="get">
-                                <input type="hidden" name="film-id" value="${film.filmID}">
+                                <input type="hidden" name="film" value="${film.slug}">
                             </form>
                         </div>
                     </c:forEach>

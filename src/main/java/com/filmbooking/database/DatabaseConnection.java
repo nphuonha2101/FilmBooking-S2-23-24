@@ -1,7 +1,6 @@
 package com.filmbooking.database;
 
 import com.filmbooking.utils.PropertiesUtils;
-import org.hibernate.boot.model.relational.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +27,7 @@ public class DatabaseConnection {
         try {
             Class.forName(propertiesUtils.getProperty("db.driverName"));
             connection = DriverManager.getConnection(propertiesUtils.getProperty("db.url"),
-                   propertiesUtils.getProperty("db.username"), propertiesUtils.getProperty("db.userPassword"));
+                    propertiesUtils.getProperty("db.username"), propertiesUtils.getProperty("db.userPassword"));
 
 
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");

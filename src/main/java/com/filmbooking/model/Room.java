@@ -27,37 +27,10 @@ public class Room {
     private Theater theater;
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
+    @Column(name = "slug")
+    private String slug;
 
-    public Room() {}
-
-    /**
-     * Using this constructor to display room information
-     */
-    public Room(long roomID, String roomName, int seatRows, int seatCols, String[][] seatMatrix, Theater theater,
-                List<Showtime> showtimeList) {
-        this.roomID = roomID;
-        this.roomName = roomName;
-        this.seatRows = seatRows;
-        this.seatCols = seatCols;
-        this.seatMatrix = seatMatrix;
-        this.seatData = StringUtils.arr2DToString(seatMatrix);
-        this.theater = theater;
-        this.showtimeList = showtimeList;
-    }
-
-    /**
-     * Get from database constructor
-     */
-    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, Theater theater,
-                List<Showtime> showtimeList) {
-        this.roomID = roomID;
-        this.roomName = roomName;
-        this.seatRows = seatRows;
-        this.seatCols = seatCols;
-        this.seatData = seatData;
-        this.seatMatrix = StringUtils.convertTo2DArr(seatData);
-        this.theater = theater;
-        this.showtimeList = showtimeList;
+    public Room() {
     }
 
     /**
@@ -68,6 +41,7 @@ public class Room {
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.theater = theater;
+        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
         generateSeatsData();
     }
 
@@ -86,8 +60,6 @@ public class Room {
         }
         this.seatData = stringBuilder.toString().trim();
     }
-
-
 
 
     public long getRoomID() {
@@ -154,6 +126,14 @@ public class Room {
 
     public void setSeatData(String seatData) {
         this.seatData = seatData;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
     }
 
     @Override

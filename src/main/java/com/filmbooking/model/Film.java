@@ -1,5 +1,6 @@
 package com.filmbooking.model;
 
+import com.filmbooking.utils.StringUtils;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "films")
 public class Film {
-    @Column(name = "film_id", updatable = false , insertable = false)
+    @Column(name = "film_id", updatable = false, insertable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmID;
@@ -27,6 +28,8 @@ public class Film {
     private String filmTrailerLink;
     @Column(name = "img_path")
     private String imgPath;
+    @Column(name = "slug")
+    private String slug;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "film_genres",
@@ -54,26 +57,8 @@ public class Film {
         this.imgPath = imgPath;
         this.genreList = null;
         this.showtimeList = null;
+        this.slug = StringUtils.createSlug(this.filmName, 50);
     }
-
-    /**
-     * For get from database constructor
-     */
-    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength,
-                String filmDescription, String filmTrailerLink, String imgPath, List<Genre> genreList, List<Showtime> showtimeList) {
-        this.filmID = filmID;
-        this.filmName = filmName;
-        this.filmPrice = filmPrice;
-        this.director = director;
-        this.cast = cast;
-        this.filmLength = filmLength;
-        this.filmDescription = filmDescription;
-        this.filmTrailerLink = filmTrailerLink;
-        this.imgPath = imgPath;
-        this.genreList = genreList;
-        this.showtimeList = showtimeList;
-    }
-
 
     public long getFilmID() {
         return filmID;
@@ -163,10 +148,18 @@ public class Film {
         this.showtimeList = showtimeList;
     }
 
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
     public String getFilmGenresStr
             () {
         StringBuilder result = new StringBuilder();
-        for (Genre genre: this.genreList) {
+        for (Genre genre : this.genreList) {
             result.append(genre.getGenreName()).append(" ");
         }
         return result.toString().trim();
@@ -194,7 +187,7 @@ public class Film {
 
         StringBuilder result = new StringBuilder(filmInfo + " | ");
 
-        for (Genre genre: this.genreList) {
+        for (Genre genre : this.genreList) {
             result.append(genre.toString()).append(" ");
         }
         return result.toString();

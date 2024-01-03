@@ -41,9 +41,9 @@ public class FilmInfoController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
+        String filmSlug = StringUtils.handlesInputString(req.getParameter("film"));
 
-        Film bookedFilm = filmServices.getByFilmID(filmID);
+        Film bookedFilm = filmServices.getBySlug(filmSlug);
 
         // get film genre names
         StringBuilder filmGenreNames = new StringBuilder();

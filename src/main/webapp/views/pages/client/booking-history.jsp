@@ -79,7 +79,7 @@
                                     <div class="wrapper">
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
                                             <span><a
-                                                    href="${pageContext.request.contextPath}/film-info?film-id=${film.filmID}">
+                                                    href="${pageContext.request.contextPath}/film-info?film=${film.slug}">
                                                     ${film.filmName}
                                             </a></span>
                                         </p>

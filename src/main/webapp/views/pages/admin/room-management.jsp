@@ -61,10 +61,10 @@
                         <td>${room.seatRows * room.seatCols}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/delete/room?room-id=${room.roomID}">
+                            <a href="${pageContext.request.contextPath}/admin/delete/room?room=${room.slug}">
                                 <span class="material-symbols-rounded warning-color">delete</span>
                             </a>
-                            <a href="${pageContext.request.contextPath}/admin/edit/room?room-id=${room.roomID}">
+                            <a href="${pageContext.request.contextPath}/admin/edit/room?room=${room.slug}">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
                         </td>

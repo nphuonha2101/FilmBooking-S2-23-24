@@ -30,8 +30,8 @@ public class EditRoomController extends HttpServlet {
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
         theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
-        String roomID = req.getParameter("room-id");
-        editRoom = roomServices.getByRoomID(roomID);
+        String roomSlug = req.getParameter("room");
+        editRoom = roomServices.getBySlug(roomSlug);
 
         req.setAttribute("pageTitle", "editRoomTitle");
 

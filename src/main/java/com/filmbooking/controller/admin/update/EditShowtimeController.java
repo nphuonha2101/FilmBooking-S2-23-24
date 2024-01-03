@@ -38,8 +38,8 @@ public class EditShowtimeController extends HttpServlet {
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
-        String showtimeID = req.getParameter("showtime-id");
-        editShowtime = showtimeServices.getByID(showtimeID);
+        String showtimeSlug = req.getParameter("showtime");
+        editShowtime = showtimeServices.getBySlug(showtimeSlug);
 
         req.setAttribute("pageTitle", "editShowtimeTitle");
 
@@ -50,9 +50,6 @@ public class EditShowtimeController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 PathUtils.getAdminPagesPath("edit-showtime.jsp"),
                 PathUtils.getLayoutPath("master.jsp"));
-
-//        RenderViewUtils.updateView(req, resp,
-//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

@@ -31,15 +31,6 @@ public class User {
         this.accountRole = accountRole;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword, String accountRole, List<FilmBooking> filmBookingList) {
-        this.username = username;
-        this.userFullName = userFullName;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.accountRole = accountRole;
-        this.filmBookingList = filmBookingList;
-    }
-
     // ------ GETTER AND SETTER ------ //
     public String getUsername() {
         return username;

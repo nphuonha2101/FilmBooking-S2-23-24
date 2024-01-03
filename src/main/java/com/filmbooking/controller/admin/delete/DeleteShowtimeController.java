@@ -23,9 +23,9 @@ public class DeleteShowtimeController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-        String showtimeID = req.getParameter("showtime-id");
+        String showtimeSlug = req.getParameter("showtime");
 
-        Showtime deleteShowtime = showtimeServices.getByID(showtimeID);
+        Showtime deleteShowtime = showtimeServices.getBySlug(showtimeSlug);
 
         if (showtimeServices.delete(deleteShowtime))
             resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));

@@ -60,10 +60,10 @@
                         <td>${showtime.showtimeDate}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/delete/showtime?showtime-id=${showtime.showtimeID}">
+                            <a href="${pageContext.request.contextPath}/admin/delete/showtime?showtime=${showtime.slug}">
                                 <span class="material-symbols-rounded warning-color">delete</span>
                             </a>
-                            <a href="${pageContext.request.contextPath}/admin/edit/showtime?showtime-id=${showtime.showtimeID}">
+                            <a href="${pageContext.request.contextPath}/admin/edit/showtime?showtime=${showtime.slug}">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
                         </td>

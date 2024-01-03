@@ -31,7 +31,6 @@ public class EditFilmController extends HttpServlet {
     private Film editFilm;
     private IGenreServices genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
-    private String filmId;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,8 +39,8 @@ public class EditFilmController extends HttpServlet {
         genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
 
-        filmId = req.getParameter("film-id");
-        editFilm = filmServices.getByFilmID(filmId);
+        String filmSlug = req.getParameter("film");
+        editFilm = filmServices.getBySlug(filmSlug);
 
         req.setAttribute("editFilm", editFilm);
         req.setAttribute("genres", genreServices.getAll());
@@ -63,9 +62,6 @@ public class EditFilmController extends HttpServlet {
         RenderViewUtils.renderViewToLayout(req, resp,
                 PathUtils.getAdminPagesPath("edit-film.jsp"),
                 PathUtils.getLayoutPath("master.jsp"));
-
-//        RenderViewUtils.updateView(req, resp,
-//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

@@ -22,20 +22,6 @@ public class Theater {
 
     public Theater() {}
 
-    public Theater(long theaterID, String theaterName, String taxCode, String theaterAddress, List<Room> roomList) {
-        this.theaterID = theaterID;
-        this.theaterName = theaterName;
-        this.taxCode = taxCode;
-        this.theaterAddress = theaterAddress;
-        this.roomList = roomList;
-    }
-
-    public Theater(String theaterName, String taxCode, String theaterAddress, List<Room> roomList) {
-        this.theaterName = theaterName;
-        this.taxCode = taxCode;
-        this.theaterAddress = theaterAddress;
-    }
-
     public String getTheaterName() {
         return theaterName;
     }

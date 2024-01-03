@@ -1,5 +1,6 @@
 package com.filmbooking.services;
 
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface IShowtimeServices {
     void setSessionProvider(HibernateSessionProvider sessionProvider);
     long getTotalRecords();
+    Showtime getBySlug(String slug);
     List<Showtime> getByOffset(int offset, int limit);
     List<Showtime> getAll();
     Showtime getByID(String id);

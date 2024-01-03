@@ -23,10 +23,10 @@ public class DeleteRoomController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
-        String roomID = req.getParameter("room-id");
-        System.out.println("DeleteFilmController Test: " + roomID);
+        String roomSlug = req.getParameter("room");
+        System.out.println("DeleteFilmController Test: " + roomSlug);
 
-        Room deletedRoom = roomServices.getByRoomID(roomID);
+        Room deletedRoom = roomServices.getBySlug(roomSlug);
         if (roomServices.delete(deletedRoom))
             resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
 
