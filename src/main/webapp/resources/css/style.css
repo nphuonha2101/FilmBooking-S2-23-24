@@ -290,6 +290,9 @@ button {
     background-color: #fff;
     border-radius: 10px;
     padding: 1rem;
+
+    box-shadow:  20px 20px 60px #e7e7e7,
+    -20px -20px 60px #ffffff;
 }
 
 .outlined-container {
@@ -1024,8 +1027,7 @@ select {
     animation-duration: 0.5s;
     -moz-animation-name: fade;
     -moz-animation-duration: 0.5s;
-    overflow-y: auto;
-    padding: 1rem 0;
+
 }
 
 .modal-content {
@@ -1034,6 +1036,9 @@ select {
     padding: 2rem;
     width: 80%;
     margin: 10% auto;
+    overflow-y: auto;
+
+    box-shadow: none !important;
 }
 
 .modal-footer {
@@ -1056,32 +1061,6 @@ select {
     margin-bottom: 2rem;
 }
 
-.wide-card {
-    width: calc(50vw);
-    padding: 0.5rem;
-    margin: 0.25rem;
-    align-items: center;
-    background-color: #f2f6ff;
-    border-radius: 5px;
-}
-
-.wide-card_contents {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 0.4fr 0.4fr;
-    grid-column-gap: 5px;
-    align-items: center;
-    justify-content: center;
-
-    * {
-        text-overflow: ellipsis;
-    }
-}
-
-.wide-card:hover {
-    transition: 0.3s ease-out;
-    -moz-transition: 0.3s ease-out;
-    box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
-}
 
 .film-img-box {
     min-width: calc(18vw);
@@ -1089,6 +1068,10 @@ select {
     min-height: calc(18vw);
     max-height: calc(22vw);
     border-radius: 6px;
+    padding-top: 100px;
+
+    box-shadow:  20px 20px 60px #d9d9d9,
+    -20px -20px 60px #ffffff;
 }
 
 .film-img-in-card {

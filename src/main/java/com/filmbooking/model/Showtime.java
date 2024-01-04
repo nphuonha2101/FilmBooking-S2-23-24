@@ -58,6 +58,7 @@ public class Showtime {
 
     public void setFilm(Film film) {
         this.film = film;
+        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     public Room getRoom() {
@@ -66,6 +67,7 @@ public class Showtime {
 
     public void setRoom(Room room) {
         this.room = room;
+        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     public LocalDateTime getShowtimeDate() {
@@ -74,6 +76,7 @@ public class Showtime {
 
     public void setShowtimeDate(LocalDateTime showtimeDate) {
         this.showtimeDate = showtimeDate;
+        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     public String getSeatsData() {

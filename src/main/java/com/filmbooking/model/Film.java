@@ -74,6 +74,7 @@ public class Film {
 
     public void setFilmName(String filmName) {
         this.filmName = filmName;
+        this.slug = StringUtils.createSlug(filmName, 50);
     }
 
     public double getFilmPrice() {

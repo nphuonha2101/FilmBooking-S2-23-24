@@ -76,6 +76,7 @@ public class Room {
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
     }
 
     public int getSeatRows() {

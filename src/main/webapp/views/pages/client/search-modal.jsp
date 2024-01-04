@@ -33,9 +33,9 @@
             <div style="border: 2px solid #ccedff !important;" class="outlined-container">
                 <h4><fmt:message key="priceRange" bundle="${msg}"/> </h4>
                 <span style="text-transform: capitalize"><fmt:message key="from" bundle="${msg}"/> </span>
-                <input type="number" class="small-input" min="0" value="0" name="beginPrice">
+                <input type="number" class="small-input" min="0" value="0" name="begin-price">
                 <span style="text-transform: capitalize"><fmt:message key="to" bundle="${msg}"/> </span>
-                <input type="number" class="small-input" min="0" value="0" name="endPrice">
+                <input type="number" class="small-input" min="0" value="0" name="end-price">
             </div>
 
             <div class="wrapper centered-vertical-content">

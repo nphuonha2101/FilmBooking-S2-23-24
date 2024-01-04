@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 public class StringUtils {
     /**
      * Convert string to 2 dimension array.
+     *
      * @param data data that you want to create 2D array. For each element in a row separated with "" character and
      *             each row separated with " " character.
      * @return an 2D array from <b>data</b>
@@ -30,7 +31,8 @@ public class StringUtils {
 
     /**
      * Convert 2D array to String. For each element in a row separated with "" character and
-     *      *             each row separated with " " character.
+     *             each row separated with " " character.
+     *
      * @param arr an 2D array want to convert to String.
      * @return a String from 2D array.
      */
@@ -57,7 +59,8 @@ public class StringUtils {
 
     /**
      * Generate a hex String using {@link MessageDigest} and algorithm <b>SHA-256</b>.
-     * A String from SHA-265 have length equals 64
+     * A String from SHA-256 have length equals 64
+     *
      * @param str a String that want to convert to SHA-256 hex String
      * @return a hex String from SHA-256 algorithm
      */
@@ -81,6 +84,7 @@ public class StringUtils {
 
     /**
      * Create random String with uppercase character, lowercase character, and number from 0-9.
+     *
      * @param length is a result length that you want.
      * @return a random String
      */
@@ -117,7 +121,7 @@ public class StringUtils {
     }
 
     /**
-     * Create slug from a name using method {@link} with a slug's length. Ex: "Nhắm Mắt Thấy Mùa Hè" => "nham-mat-thay-mua-he".
+     * Create slug from a name using method {@link StringUtils#removeDiacriticalMarks(String)} with a slug's length. Ex: "Nhắm Mắt Thấy Mùa Hè" => "nham-mat-thay-mua-he".
      *
      * @param name       is a name that want to create slug
      * @param slugLength is a slug's length
@@ -130,6 +134,10 @@ public class StringUtils {
 
         while ((countCharacters <= slugLength) && nameTokens.hasMoreTokens()) {
             String token = nameTokens.nextToken();
+
+            if (countCharacters + token.length() > slugLength)
+                break;
+
             slugBuilder.append(token).append(" ");
             countCharacters = slugBuilder.length();
         }
@@ -152,6 +160,7 @@ public class StringUtils {
 
     /**
      * Handle input String from {@link jakarta.servlet.http.HttpServletRequest#getParameter(String)} to avoid JavaScript injection.
+     *
      * @param str that a string want to handle.
      * @return a string after handle (trim string, remove <b>script</b> tag with equivalent HTML code.
      */
@@ -165,6 +174,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
+
         System.out.println(StringUtils.generateSHA256String("1234"));
+        System.out.println(StringUtils.createSlug("Nhắm mawst thấy mùa hè Nhắm mt thấy mùa hè Nhắm mt thấy mùa hè Nhắm mt thấy mùa hè", 20));
     }
 }

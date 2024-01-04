@@ -27,8 +27,8 @@ public class SearchController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         String searchQuery = req.getParameter("q");
-        double beginPriceNumber = Double.parseDouble(req.getParameter("beginPrice"));
-        double endPriceNumber = Double.parseDouble(req.getParameter("endPrice"));
+        double beginPriceNumber = Double.parseDouble(req.getParameter("begin-price"));
+        double endPriceNumber = Double.parseDouble(req.getParameter("end-price"));
 
         List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
 
