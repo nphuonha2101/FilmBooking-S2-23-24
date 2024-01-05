@@ -291,7 +291,7 @@ button {
     border-radius: 10px;
     padding: 1rem;
 
-    box-shadow:  20px 20px 60px #e7e7e7,
+    box-shadow: 20px 20px 60px #e7e7e7,
     -20px -20px 60px #ffffff;
 }
 
@@ -305,6 +305,10 @@ button {
 
 .film-description_container {
     background-color: #f2ebbf;
+}
+
+.fit-content-width {
+    width: fit-content !important;
 }
 
 .film-description_container > * {
@@ -1070,7 +1074,7 @@ select {
     border-radius: 6px;
     padding-top: 100px;
 
-    box-shadow:  20px 20px 60px #d9d9d9,
+    box-shadow: 20px 20px 60px #d9d9d9,
     -20px -20px 60px #ffffff;
 }
 
@@ -1406,4 +1410,18 @@ thead > tr > th {
         align-items: center;
         justify-content: center;
     }
+}
+
+.film_score_box {
+    border-radius: 100px;
+    background-color: #ffefb7;
+    color: #212529;
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.film-vote-stars {
+    color: #212529 !important;
 }

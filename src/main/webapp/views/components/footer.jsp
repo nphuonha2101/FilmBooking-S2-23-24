@@ -61,11 +61,10 @@ expand_less</span>
 <!-- JavaScript -->
 <script type="module" src="<c:url value="/resources/js/handlesScrolls.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/utils.js"/>"></script>
+<script type="module" src="<c:url value="/resources/js/handlesFilmVoteStars.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesUploadFilmImg.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesAccordions.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesSearchModal.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesDisplaySelectedGenres.js"/>"></script>
-<%--<script type="module" src="<c:url value="/resources/js/checkCookiesEnabled.js"/>"></script>--%>
-<%--<script type="module" src="<c:url value="/resources/js/handlesAnimation.js"/>"></script>--%>

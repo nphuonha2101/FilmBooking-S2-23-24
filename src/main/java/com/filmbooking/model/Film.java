@@ -3,6 +3,7 @@ package com.filmbooking.model;
 import com.filmbooking.utils.StringUtils;
 import jakarta.persistence.*;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Entity
@@ -39,6 +40,8 @@ public class Film {
     private List<Genre> genreList;
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
+    @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
+    private List<FilmVote> filmVoteList;
 
     public Film() {
     }
@@ -57,6 +60,7 @@ public class Film {
         this.imgPath = imgPath;
         this.genreList = null;
         this.showtimeList = null;
+        this.filmVoteList = null;
         this.slug = StringUtils.createSlug(this.filmName, 50);
     }
 
@@ -155,6 +159,28 @@ public class Film {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public List<FilmVote> getFilmVoteList() {
+        return filmVoteList;
+    }
+
+    public void setFilmVoteList(List<FilmVote> filmVoteList) {
+        this.filmVoteList = filmVoteList;
+    }
+
+    public String getFilmVoteScoresStr() {
+        DecimalFormat decimalFormat = new DecimalFormat("#0.00");
+        double totalScores = 0;
+
+        if (!this.filmVoteList.isEmpty()) {
+            for (FilmVote filmVote : this.filmVoteList) {
+                totalScores += filmVote.getScores();
+            }
+            return decimalFormat.format(totalScores / this.filmVoteList.size());
+        }
+
+        return String.valueOf(totalScores);
     }
 
     public String getFilmGenresStr
