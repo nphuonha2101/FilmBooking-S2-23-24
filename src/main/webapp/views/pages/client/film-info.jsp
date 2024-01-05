@@ -38,6 +38,24 @@
                 <div class="wrapper">
                     <h3> ${film.filmName}</h3>
                     <br>
+                    <div class="centered-horizontal-content fit-content-width">
+                        <div class="film_score_box">
+                            <h3>
+                              ${filmScores}/5
+                            </h3>
+                            <span> (${totalFilmVotes} <fmt:message key="votes" bundle="${msg}"/>)</span>
+                        </div>
+                        <c:forEach begin="1" end="5" step="1" varStatus="loop">
+                            <a href="${pageContext.request.contextPath}/vote-film?film=${param.film}&scores=${loop.index}"
+                               class="film-vote-stars" id="${loop.index}">
+                                <span class="material-symbols-rounded">
+                                    star
+                                </span>
+                            </a>
+                        </c:forEach>
+                    </div>
+                    <br>
+
                     <p class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>: <span>${film.filmPrice} VNĐ/<fmt:message
                             bundle="${msg}" key="person"/></span></p>
                     <p class="font-bold"><fmt:message bundle="${msg}" key="director"/>: <span>${film.director} </span>

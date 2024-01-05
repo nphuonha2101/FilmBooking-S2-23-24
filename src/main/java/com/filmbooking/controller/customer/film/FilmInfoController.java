@@ -61,6 +61,8 @@ public class FilmInfoController extends HttpServlet {
 
         req.setAttribute("filmData", bookedFilm);
         req.setAttribute("filmGenreNames", filmGenreNames.toString());
+        req.setAttribute("filmScores", bookedFilm.getFilmVoteScoresStr());
+        req.setAttribute("totalFilmVotes", bookedFilm.getFilmVoteList().size());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 PathUtils.getClientPagesPath("film-info.jsp"),

@@ -87,6 +87,13 @@ create table food_bookings
     film_booking_id bigint references film_bookings (film_booking_id)
 );
 
+create table film_votes
+(
+    film_vote_id bigserial primary key,
+    film_id      bigint references films (film_id),
+    scores        decimal not null
+);
+
 
 -- Genre
 insert into genres (genre_id, genre_name) values ('haikich', 'Hài kịch');
@@ -96,6 +103,12 @@ insert into genres (genre_id, genre_name) values ('trinhtham', 'Trinh thám');
 insert into genres (genre_id, genre_name) values ('hoathinh', 'Hoạt hình');
 insert into genres (genre_id, genre_name) values ('vientuong', 'Viễn tưởng');
 insert into genres (genre_id, genre_name) values ('hanhdong', 'Hành động');
+insert into genres (genre_id, genre_name) values ('phieuluu', 'Phiêu lưu');
+insert into genres (genre_id, genre_name) values ('giatgan', 'Giật gân');
+insert into genres (genre_id, genre_name) values ('kinhdi', 'Kinh dị');
+insert into genres (genre_id, genre_name) values ('kyao', 'Kỳ ảo');
+insert into genres (genre_id, genre_name) values ('khoahoc', 'Khoa học');
+insert into genres (genre_id, genre_name) values ('tailieu', 'Tài liệu');
 
 -- Film
 insert into films (film_id, film_name, film_price, film_director, film_cast, film_length, film_description, film_trailer_link, img_path, slug) values (1, 'Oppenheimer', 85000, 'Christopher Nolan', 'Cillian Murphy, Emily Blunt, Matt Damon, Robert Downey Jr., Florence Pugh, Josh Hartnett, Casey Affleck, ...', 180, '“Oppenheimer” là một bộ phim điện ảnh tiểu sử, tái hiện câu chuyện có thật về quá trình tạo ra bom nguyên tử - thứ vũ khí huỷ diệt đã được thả xuống Hiroshima và Nagasaki, Nhật Bản vào năm 1945. Bộ phim đặt ra những câu hỏi, cũng chính là những băn khoăn mà các nhà khoa học đã đưa ra vào thời điểm đó về quyền lực, đạo đức và tham vọng.

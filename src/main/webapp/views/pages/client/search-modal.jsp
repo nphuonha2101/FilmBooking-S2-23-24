@@ -36,6 +36,8 @@
                 <input type="number" class="small-input" min="0" value="0" name="begin-price">
                 <span style="text-transform: capitalize"><fmt:message key="to" bundle="${msg}"/> </span>
                 <input type="number" class="small-input" min="0" value="0" name="end-price">
+
+                <span>VND</span>
             </div>
 
             <div class="wrapper centered-vertical-content">
