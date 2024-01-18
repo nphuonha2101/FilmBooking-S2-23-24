@@ -26,19 +26,7 @@ public class FilmBooking implements Cloneable {
     private String seatsData;
     @Column(name = "total_fee")
     private double totalFee;
-
-    public FilmBooking(long filmBookingID, User user, Showtime showtime, LocalDateTime bookingDate,
-                       String seatsData, double totalFee) {
-
-        this.filmBookingID = filmBookingID;
-        this.showtime = showtime;
-        this.user = user;
-        this.bookingDate = bookingDate;
-        this.seatsData = seatsData;
-        this.seats = seatsData.split(", ");
-        this.totalFee = totalFee;
-    }
-
+    
     public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] seats, double totalFee) {
         this.showtime = showtime;
         this.user = user;

@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -61,30 +62,36 @@ public class BookingFilmController extends HttpServlet {
         String seats = req.getParameter("seats");
 
         if (!seats.isEmpty()) {
-            // clone film booking to allow user book film again if they want (user stay on the same page)
-            // because save method we use persist() method of hibernate, so we need to clone film booking to avoid
-            FilmBooking filmBookingClone = filmBooking.clone();
-            bookedFilm = filmBookingClone.getShowtime().getFilm();
-            filmBookingClone.setSeatsData(seats);
-            filmBookingClone.setBookingDate(LocalDateTime.now());
-            int numberOfSeats = filmBookingClone.getSeats().length;
+            bookedFilm = filmBooking.getShowtime().getFilm();
+            filmBooking.setSeatsData(seats);
+            filmBooking.setBookingDate(LocalDateTime.now());
+            int numberOfSeats = filmBooking.getSeats().length;
             double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
-            filmBookingClone.setTotalFee(totalFee);
+            filmBooking.setTotalFee(totalFee);
 
-            if (filmBookingServices.save(filmBookingClone)) {
-                Showtime bookedShowtime = filmBookingClone.getShowtime();
-                // if seats have not booked!
-                if (bookedShowtime.bookSeats(filmBookingClone.getSeats())) {
-                    showtimeServices.update(bookedShowtime);
-                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOKING_FILM_SUCCESSFUL.getStatusCode());
-                } else {
-                    req.setAttribute("statusCodeErr", StatusCodeEnum.SEATS_HAVE_ALREADY_BOOKED.getStatusCode());
-                }
-            } else {
-                req.setAttribute("statusCodeErr", StatusCodeEnum.BOOKING_FILM_FAILED.getStatusCode());
-            }
-            doGet(req, resp);
+            HttpSession session = req.getSession(false);
+            session.setAttribute("filmBooking", filmBooking);
 
+            Showtime showtime = filmBooking.getShowtime();
+            showtime.reserveSeats(seats.split(", "));
+
+            showtimeServices.update(showtime);
+
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/checkout"));
+
+//            if (filmBookingServices.save(filmBookingClone)) {
+//                Showtime bookedShowtime = filmBookingClone.getShowtime();
+//                // if seats have not booked!
+//                if (bookedShowtime.bookSeats(filmBookingClone.getSeats())) {
+//                    showtimeServices.update(bookedShowtime);
+//                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOKING_FILM_SUCCESSFUL.getStatusCode());
+//                } else {
+//                    req.setAttribute("statusCodeErr", StatusCodeEnum.SEATS_HAVE_ALREADY_BOOKED.getStatusCode());
+//                }
+//            } else {
+//                req.setAttribute("statusCodeErr", StatusCodeEnum.BOOKING_FILM_FAILED.getStatusCode());
+//            }
+//            doGet(req, resp);
 
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());

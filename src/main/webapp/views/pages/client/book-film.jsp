@@ -50,7 +50,7 @@
                                     <c:forEach var="roomSeat" items="${roomSeatsRow}" varStatus="seat">
                                         <td style="padding: 0; height: 2.5rem">
                                             <c:choose>
-                                                <c:when test="${roomSeat eq '1'}">
+                                                <c:when test="${roomSeat eq '1' || roomSeat eq '2'}">
                                                     <button class="seats seats-unavailable">${row.index}
                                                             ${seat.index}</button>
                                                 </c:when>
