@@ -1,10 +1,13 @@
 package com.filmbooking.utils;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
+import java.util.Base64;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -31,7 +34,7 @@ public class StringUtils {
 
     /**
      * Convert 2D array to String. For each element in a row separated with "" character and
-     *             each row separated with " " character.
+     * each row separated with " " character.
      *
      * @param arr an 2D array want to convert to String.
      * @return a String from 2D array.
@@ -81,6 +84,30 @@ public class StringUtils {
         }
         return null;
     }
+
+
+    public static String hmacSHA512(String secretKey, String data) {
+        try {
+            Mac mac = Mac.getInstance("HmacSHA512");
+            SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "HmacSHA512");
+            mac.init(secretKeySpec);
+            byte[] digest = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+
+            // Convert the digest bytes to a hex string
+            BigInteger bigInt = new BigInteger(1, digest);
+            StringBuilder hexString = new StringBuilder(bigInt.toString(16));
+
+            // Pad with 0s to ensure the hex string has a length of 128
+            while (hexString.length() < 128) {
+                hexString.insert(0, "0");
+            }
+
+            return hexString.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to calculate hmacSHA512", e);
+        }
+    }
+
 
     /**
      * Create random String with uppercase character, lowercase character, and number from 0-9.

@@ -26,19 +26,13 @@ public class FilmBooking implements Cloneable {
     private String seatsData;
     @Column(name = "total_fee")
     private double totalFee;
-
-    public FilmBooking(long filmBookingID, User user, Showtime showtime, LocalDateTime bookingDate,
-                       String seatsData, double totalFee) {
-
-        this.filmBookingID = filmBookingID;
-        this.showtime = showtime;
-        this.user = user;
-        this.bookingDate = bookingDate;
-        this.seatsData = seatsData;
-        this.seats = seatsData.split(", ");
-        this.totalFee = totalFee;
-    }
-
+    @Column(name ="payment_status")
+    private String paymentStatus;
+    @Transient
+    private LocalDateTime expireDate;
+    @Transient
+    private String vnpayTxnRef;
+    
     public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] seats, double totalFee) {
         this.showtime = showtime;
         this.user = user;
@@ -54,6 +48,7 @@ public class FilmBooking implements Cloneable {
         this.user = null;
         this.bookingDate = null;
         this.seats = new String[0];
+        this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
     public long getFilmBookingID() {
@@ -86,6 +81,7 @@ public class FilmBooking implements Cloneable {
 
     public void setBookingDate(LocalDateTime bookingDate) {
         this.bookingDate = bookingDate;
+        this.expireDate = bookingDate.plusMinutes(1);
     }
 
     public String[] getSeats() {
@@ -116,10 +112,22 @@ public class FilmBooking implements Cloneable {
         this.totalFee = totalFee;
     }
 
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
     public void resetFilmBooking() {
         this.filmBookingID = 0;
         this.bookingDate = null;
         this.seats = new String[0];
+        this.showtime = null;
+        this.totalFee = 0;
+        this.paymentStatus = null;
+        this.expireDate = null;
     }
 
     @Override
@@ -153,4 +161,25 @@ public class FilmBooking implements Cloneable {
             throw new AssertionError();
         }
     }
+
+    /**
+     * Determines if FilmBooking is expired (15 minutes)
+     * @return true of FilmBooking is expired
+     */
+    public boolean isExpired() {
+        return this.expireDate.isBefore(LocalDateTime.now());
+    }
+
+    public String getVnpayTxnRef() {
+        return vnpayTxnRef;
+    }
+
+    /**
+     * Each FilmBooking has an VNPayTxnRef, if payment with VNPay successful then change the VNPayTxnRef
+     */
+    public void createNewVNPayTxnRef() {
+        this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
+    }
+
+
 }

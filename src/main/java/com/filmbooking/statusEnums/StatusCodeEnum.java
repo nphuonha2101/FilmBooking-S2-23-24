@@ -16,6 +16,7 @@ public enum StatusCodeEnum {
     UPDATE_ROOM_SUCCESSFUL(212, "Cập nhật phòng chiếu thành công"),
     DELETE_ROOM_SUCCESSFUL(213, "Xóa phòng chiếu thành công"),
     ADD_ROOM_SUCCESSFUL(214, "Thêm phòng chiếu thành công"),
+    PAYMENT_SUCCESSFUL(215, "Thanh toán thành công"),
     REMOVE_OLD_IMG_FAILED(300, "Xóa ảnh cũ thất bại"),
     USERNAME_NOT_FOUND(400, "Tên người dùng không tồn tại"),
     EMAIL_NOT_FOUND(401, "Email người dùng không tồn tại"),
@@ -35,7 +36,8 @@ public enum StatusCodeEnum {
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
     PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),
     BOOKING_FILM_FAILED(504, "Đặt phim bị lỗi"),
-    SEATS_HAVE_ALREADY_BOOKED(505, "Ghế này đã có người đặt!");
+    SEATS_HAVE_ALREADY_BOOKED(505, "Ghế này đã có người đặt!"),
+    PAYMENT_FAILED(506, "Thanh toán thất bại");
     ;
 
 

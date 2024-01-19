@@ -57,7 +57,8 @@ create table film_bookings
     showtime_id     bigint references showtimes (showtime_id),
     booking_date    timestamp    not null,
     seats           varchar(100) not null,
-    total_fee       numeric      not null
+    total_fee       numeric      not null,
+    payment_status  varchar(10)  not null default 'pending'
 );
 
 create table genres

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: NhaNguyen
-  Date: 02-10-2023
-  Time: 3:19 PM
+  User: ConMuaXaDan
+  Date: 1/19/2024
+  Time: 9:32 AM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -25,17 +25,13 @@
 
 <div class="wrapper centered-vertical-content">
     <div class="centered-vertical-content wrapper">
+        <img alt="${statusCode}" src="<c:url value="/resources/images/${paymentStatusImg}"/>"
 
-        <h1 class="font-Merriweather">${httpErrorCode}</h1>
-        <h3 class="font-Merriweather"><fmt:message key="${httpErrorMessage}"
-                                                   bundle="${statusCodeMsg}"/></h3>
-
-        <%-- img source: https://github.com/blairlee227/IlluStatus?tab=readme-ov-file --%>
-        <img alt="${httpErrorCode}" src="<c:url value="/resources/images/${errorImgName}"/>"
-             style=" width: calc(60vw) !important;"
         />
-        <a href="${pageContext.request.contextPath}/home" class="button primary-filled-button rounded-button"><fmt:message key="home"
-                                                                                        bundle="${msg}"/></a>
+        <h3 class="font-Merriweather"><fmt:message key="${statusCode}"
+                                                   bundle="${statusCodeMsg}"/></h3>
+        <a href="${pageContext.request.contextPath}/home"
+           class="button primary-filled-button rounded-button"><fmt:message key="home"
+                                                                            bundle="${msg}"/></a>
     </div>
 </div>
-

@@ -25,7 +25,7 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h1><fmt:message bundle="${adminMsg}" key="addShowtime"/></h1>
+        <h2><fmt:message bundle="${adminMsg}" key="addShowtime"/></h2>
 
 
         <div class="centered-vertical-content wrapper">

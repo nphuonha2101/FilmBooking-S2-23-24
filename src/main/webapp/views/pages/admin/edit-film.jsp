@@ -29,7 +29,7 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h1><fmt:message bundle="${adminMsg}" key="editFilm"/></h1>
+        <h2><fmt:message bundle="${adminMsg}" key="editFilm"/></h2>
 
         <form method="post" action="${pageContext.request.contextPath}/admin/edit/film" enctype="multipart/form-data">
 

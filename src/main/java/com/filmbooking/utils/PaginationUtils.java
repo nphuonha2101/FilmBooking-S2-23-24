@@ -34,7 +34,7 @@ public class PaginationUtils {
             return -1;
         }
         // if currentPage is invalid
-        if (currentPage < 0 || currentPage > totalPages) {
+        if (currentPage <= 0 || currentPage > totalPages) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return -2;
         } else {

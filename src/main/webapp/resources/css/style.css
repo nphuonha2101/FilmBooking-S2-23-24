@@ -1425,3 +1425,15 @@ thead > tr > th {
 .film-vote-stars {
     color: #212529 !important;
 }
+
+#checkout_two-cols {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-column-gap: 0.5rem;
+}
+
+input[type='radio'] + label {
+    width: 100%;
+    border-radius: 5px;
+}
+
