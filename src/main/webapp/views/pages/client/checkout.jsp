@@ -38,7 +38,8 @@
                 <div class="film-img-box div-img" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
                 <div class="wrapper">
-                    <a href="${pageContext.request.contextPath}/film-info?film=${film.slug}"> <h3>${film.filmName}</h3></a>
+                    <a href="${pageContext.request.contextPath}/film-info?film=${film.slug}"><h3>${film.filmName}</h3>
+                    </a>
 
 
                     <p class="font-bold"><fmt:message bundle="${msg}" key="ticketPrices"/>: <span>${film.filmPrice} VNĐ/<fmt:message
@@ -68,7 +69,7 @@
                     <td>${film.filmPrice}</td>
 
                 </tr>
-                <tr>
+                <tr style="font-weight: bold; background-color: #e5e5e5;">
                     <td>
                         <fmt:message bundle="${msg}" key="totalPrice"/>
                     </td>
@@ -78,25 +79,35 @@
                 </tr>
             </table>
 
-            <h3><fmt:message bundle="${msg}" key="paymentMethod"/></h3>
+            <br>
+
+            <h4><fmt:message bundle="${msg}" key="paymentMethod"/></h4>
 
             <form action="${pageContext.request.contextPath}/auth/checkout" method="post">
                 <div class="centered-horizontal-content wrapper justify-left-row">
-                    <input type="radio" name="payment-method" value="cash" checked>
-                    &nbsp;&nbsp;
-                    <img src="<c:url value="/resources/images/icons8-cash-35.png"/>" alt="cash">
-                    &nbsp;&nbsp;
-                    <span><fmt:message bundle="${msg}" key="cash"/></span>
+                    <input type="radio" id="cash-radio" name="payment-method" value="cash" checked>
+                    &nbsp;<label for="cash-radio">
+                        &nbsp;&nbsp;
+                        <img src="<c:url value="/resources/images/icons8-cash-35.png"/>" alt="cash">
+                        &nbsp;&nbsp;
+                        <span><fmt:message bundle="${msg}" key="cash"/></span>
+                    </label>
+
                 </div>
                 <div class="centered-horizontal-content wrapper justify-left-row">
-                    <input type="radio" name="payment-method" value="vnpay">
-                    &nbsp;&nbsp;
-                    <img src="<c:url value="/resources/images/logo-vnpay.png"/>" alt="VNPay">
-                    &nbsp;&nbsp;
-                    <span>VNPAY</span>
+
+                    <input type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
+
+                    &nbsp;<label for="vnpay-radio">
+                        &nbsp;&nbsp;
+                        <img src="<c:url value="/resources/images/logo-vnpay.png"/>" alt="VNPay">
+                        &nbsp;&nbsp;
+                        <span>VNPAY</span>
+                    </label>
                 </div>
 
-                <input type="submit" class="primary-filled-button button rounded-button" value="<fmt:message bundle="${msg}" key="payment"/>"/>
+                <input type="submit" class="primary-filled-button button rounded-button"
+                       value="<fmt:message bundle="${msg}" key="payment"/>"/>
             </form>
         </div>
     </div>

@@ -162,6 +162,10 @@ public class FilmBooking implements Cloneable {
         }
     }
 
+    /**
+     * Determines if FilmBooking is expired (15 minutes)
+     * @return true of FilmBooking is expired
+     */
     public boolean isExpired() {
         return this.expireDate.isBefore(LocalDateTime.now());
     }
@@ -170,6 +174,9 @@ public class FilmBooking implements Cloneable {
         return vnpayTxnRef;
     }
 
+    /**
+     * Each FilmBooking has an VNPayTxnRef, if payment with VNPay successful then change the VNPayTxnRef
+     */
     public void createNewVNPayTxnRef() {
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }

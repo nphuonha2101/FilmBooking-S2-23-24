@@ -1432,3 +1432,8 @@ thead > tr > th {
     grid-column-gap: 0.5rem;
 }
 
+input[type='radio'] + label {
+    width: 100%;
+    border-radius: 5px;
+}
+
