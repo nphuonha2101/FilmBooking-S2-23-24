@@ -59,6 +59,7 @@ public class BookingFilmController extends HttpServlet {
         filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
+
         String seats = req.getParameter("seats");
 
         if (!seats.isEmpty()) {

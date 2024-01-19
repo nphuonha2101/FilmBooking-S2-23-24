@@ -22,13 +22,13 @@ public class VNPay {
         propertiesUtils = PropertiesUtils.getInstance();
     }
 
-    public String getPaymentURL(double amount, String orderInfo, String customerIP, String locate) {
+    public String getPaymentURL(double amount, String orderInfo, String customerIP, String locate, String vnp_TxnRef) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String vnp_TxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
+
         String vnp_TmnCode = propertiesUtils.getProperty("vnp_TmnCode");
 
-        int intAmount = (int) (Math.floor(amount) * 100);
+        int intAmount = (int) amount * 100;
         System.out.println(intAmount);
 
         Map<String, String> vnp_Params = new HashMap<>();

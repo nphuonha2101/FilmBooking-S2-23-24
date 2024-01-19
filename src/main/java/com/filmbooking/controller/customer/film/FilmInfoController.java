@@ -87,8 +87,17 @@ public class FilmInfoController extends HttpServlet {
         if (!(bookedShowtimeID.isEmpty() || bookedShowtimeID.isBlank())) {
             Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
             if (bookedShowtime != null) {
-
                 FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
+
+                // release old showtime
+                Showtime oldShowtime = filmBooking.getShowtime();
+                if (oldShowtime != null && filmBooking.getSeats() != null) {
+                    oldShowtime.releaseSeats(filmBooking.getSeats());
+                    showtimeServices.update(oldShowtime);
+                }
+
+                // reset filmbooking and add new showtime
+                filmBooking.resetFilmBooking();
                 filmBooking.setShowtime(bookedShowtime);
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);

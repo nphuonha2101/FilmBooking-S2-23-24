@@ -49,37 +49,35 @@ public class CheckoutController extends HttpServlet {
         HttpSession session = req.getSession(false);
         FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
 
-        if (paymentMethod.equalsIgnoreCase("cash")) {
-            if (filmBookingServices.save(filmBooking)) {
-                Showtime bookedShowtime = filmBooking.getShowtime();
-                if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
-                    showtimeServices.update(bookedShowtime);
-                }
+        if (!filmBooking.isExpired()) {
+            if (paymentMethod.equalsIgnoreCase("cash")) {
+                PaymentController.handlePaymentSuccess(req, resp, filmBooking, showtimeServices, filmBookingServices);
             }
-        }
-        // get vnpay payment url
-        else {
-            int amount = (int) Math.round(filmBooking.getTotalFee());
-            String locate = "";
-            String language = (String) req.getAttribute("lang");
+            // get vnpay payment url
+            else {
+                double amount = filmBooking.getTotalFee();
+                String locate = "";
+                String language = (String) req.getAttribute("lang");
 
-            if (language == null || language.equals("default"))
-                locate = "vn";
-            else
-                locate = "us";
+                if (language == null || language.equals("default"))
+                    locate = "vn";
+                else
+                    locate = "us";
 
-            String orderInfo = "";
-            if (locate.equals("vn"))
-                orderInfo = "THANH TOAN FILM BOOKING ";
-            else
-                orderInfo = "FILM BOOKING PAYMENT ";
+                String orderInfo = "";
+                if (locate.equals("vn"))
+                    orderInfo = "THANH TOAN FILMBOOKING ";
+                else
+                    orderInfo = "FILM BOOKING PAYMENT ";
 
-            orderInfo += +filmBooking.getFilmBookingID() + " - " + filmBooking.getShowtime().getFilm().getFilmName() + " - " + filmBooking.getUser().getUsername() + " - " + filmBooking.getBookingDate();
+                orderInfo += filmBooking.getFilmBookingID() + " - " + filmBooking.getShowtime().getFilm().getFilmName() + " - " + filmBooking.getUser().getUsername() + " - " + filmBooking.getBookingDate();
 
-            String paymentUrl = new VNPay().getPaymentURL(amount, orderInfo, req.getRemoteAddr(), locate);
+                String paymentUrl = new VNPay().getPaymentURL(amount, orderInfo, req.getRemoteAddr(), locate, filmBooking.getVnpayTxnRef());
 
-            resp.sendRedirect(paymentUrl);
-        }
+                resp.sendRedirect(paymentUrl);
+            }
+        } else PaymentController.handlePaymentFailed(req, resp, filmBooking, showtimeServices, filmBookingServices);
+
         hibernateSessionProvider.closeSession();
 
     }
