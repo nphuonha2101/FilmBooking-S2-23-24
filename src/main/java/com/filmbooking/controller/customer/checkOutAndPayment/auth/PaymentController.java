@@ -24,7 +24,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/auth/payment")
 public class PaymentController extends HttpServlet {
@@ -44,12 +43,12 @@ public class PaymentController extends HttpServlet {
         FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
 
         if (vnPayRespCode.equals("00")) {
-            handlePaymentSuccess(req, resp, filmBooking,showtimeServices,filmBookingServices);
+            handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.SUCCESS);
 
 
             System.out.println("OK");
         } else {
-            handlePaymentFailed(req, resp, filmBooking,showtimeServices,filmBookingServices);
+            handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
 
             System.out.println("Not OK");
         }
@@ -57,36 +56,52 @@ public class PaymentController extends HttpServlet {
         hibernateSessionProvider.closeSession();
     }
 
-    static void handlePaymentSuccess(HttpServletRequest req, HttpServletResponse resp, FilmBooking filmBooking, IShowtimeServices showtimeServices, IFilmBookingServices filmBookingServices) throws ServletException, IOException {
-        filmBooking.setPaymentStatus("paid");
-        if (filmBookingServices.save(filmBooking)) {
-            Showtime bookedShowtime = filmBooking.getShowtime();
-            if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
-                showtimeServices.update(bookedShowtime);
+    static void handlePayment(HttpServletRequest req, HttpServletResponse resp, FilmBooking filmBooking,
+                              IShowtimeServices showtimeServices,
+                              IFilmBookingServices filmBookingServices, PaymentStatus paymentStatus) throws ServletException, IOException {
+
+        switch (paymentStatus) {
+            case SUCCESS -> {
+                filmBooking.setPaymentStatus("paid");
+                if (filmBookingServices.save(filmBooking)) {
+                    Showtime bookedShowtime = filmBooking.getShowtime();
+                    if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
+                        showtimeServices.update(bookedShowtime);
+                    }
+                }
+
+                filmBooking.resetFilmBooking();
+                filmBooking.createNewVNPayTxnRef();
+                req.getSession(false).setAttribute("filmBooking", filmBooking);
+
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=success"));
+            }
+            case FAILED -> {
+                Showtime bookedShowtime = filmBooking.getShowtime();
+                if (bookedShowtime.releaseSeats(filmBooking.getSeats()))
+                    showtimeServices.update(bookedShowtime);
+
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=failed"));
+            }
+            case PENDING -> {
+                if (filmBookingServices.save(filmBooking)) {
+                    Showtime bookedShowtime = filmBooking.getShowtime();
+                    if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
+                        showtimeServices.update(bookedShowtime);
+                    }
+                }
+
+                filmBooking.resetFilmBooking();
+                filmBooking.createNewVNPayTxnRef();
+                req.getSession(false).setAttribute("filmBooking", filmBooking);
+
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=pending"));
             }
         }
 
-        filmBooking.resetFilmBooking();
-        filmBooking.createNewVNPayTxnRef();
-        req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-        req.setAttribute("pageTitle", "paymentResultTitle");
-        req.setAttribute("statusCode", StatusCodeEnum.PAYMENT_SUCCESSFUL.getStatusCode());
-        req.setAttribute("paymentStatusImg", "success.png");
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("payment-status.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
     }
 
-    static void handlePaymentFailed(HttpServletRequest req, HttpServletResponse resp, FilmBooking filmBooking, IShowtimeServices showtimeServices, IFilmBookingServices filmBookingServices) {
-        Showtime bookedShowtime = filmBooking.getShowtime();
-        if (bookedShowtime.releaseSeats(filmBooking.getSeats()))
-            showtimeServices.update(bookedShowtime);
-        req.setAttribute("pageTitle", "paymentResultTitle");
-        req.setAttribute("statusCode", StatusCodeEnum.PAYMENT_FAILED.getStatusCode());
-        req.setAttribute("paymentStatusImg", "failed.png");
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("payment-status.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
-    }
 
     @Override
     public void destroy() {

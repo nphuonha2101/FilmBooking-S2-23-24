@@ -24,14 +24,17 @@
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <div class="wrapper centered-vertical-content">
-    <div class="centered-vertical-content wrapper">
-        <img alt="${statusCode}" src="<c:url value="/resources/images/${paymentStatusImg}"/>"
+    <div class="centered-vertical-content w-50">
 
-        />
-        <h3 class="font-Merriweather"><fmt:message key="${statusCode}"
-                                                   bundle="${statusCodeMsg}"/></h3>
-        <a href="${pageContext.request.contextPath}/home"
-           class="button primary-filled-button rounded-button"><fmt:message key="home"
-                                                                            bundle="${msg}"/></a>
+            <%--        Img copyright: https://www.flaticon.com/authors/marz-gallery--%>
+            <img alt="${statusCode}" src="<c:url value="/resources/images/${paymentStatusImg}"/>"/>
+            <h3 class="font-Merriweather"><fmt:message key="${statusCode}"
+                                                       bundle="${statusCodeMsg}"/></h3>
+
+            <p style="text-align: center"><fmt:message key="${paymentMessage}" bundle="${msg}"/></p>
+
+            <a href="${pageContext.request.contextPath}/home"
+               class="button primary-filled-button rounded-button"><fmt:message key="home"
+                                                                                bundle="${msg}"/></a>
     </div>
 </div>

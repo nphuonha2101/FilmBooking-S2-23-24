@@ -1,6 +1,7 @@
 package com.filmbooking.statusEnums;
 
 public enum StatusCodeEnum {
+    PAYMENT_PENDING(100, "Đang chờ thanh toán"),
     SUCCESSFUL(200, "Thành công"),
     FOUND_USER(201, "Tìm thấy người dùng"),
     SENT_RESET_PASSWD_EMAIL(202, "Đã gửi email đặt lại mật khẩu"),
