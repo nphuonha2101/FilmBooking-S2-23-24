@@ -385,6 +385,10 @@ button {
     align-items: center;
 }
 
+.w-50 {
+    width: calc(50vw) !important;
+}
+
 .block-list {
     display: inline-block;
 }

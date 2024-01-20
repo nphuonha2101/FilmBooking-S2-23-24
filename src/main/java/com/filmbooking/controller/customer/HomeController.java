@@ -40,9 +40,10 @@ public class HomeController extends HttpServlet {
 
                 req.setAttribute("filmsData", films);
                 req.setAttribute("pageUrl", "home");
-            } else
+            } else {
                 req.setAttribute("statusCodeErr", StatusCodeEnum.NO_DATA.getStatusCode());
-
+                req.setAttribute("messageDescription", "noData");
+            }
 
             req.setAttribute("sectionTitle", "newFilmArriveSectionTitle");
             req.setAttribute("pageTitle", "homeTitle");

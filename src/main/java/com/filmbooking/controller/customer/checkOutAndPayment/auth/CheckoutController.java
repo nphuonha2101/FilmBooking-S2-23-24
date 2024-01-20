@@ -8,7 +8,6 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
-import com.filmbooking.model.Showtime;
 import com.filmbooking.payment.VNPay;
 import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
@@ -51,13 +50,13 @@ public class CheckoutController extends HttpServlet {
 
         if (!filmBooking.isExpired()) {
             if (paymentMethod.equalsIgnoreCase("cash")) {
-                PaymentController.handlePaymentSuccess(req, resp, filmBooking, showtimeServices, filmBookingServices);
+                PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.PENDING);
             }
             // get vnpay payment url
             else {
                 double amount = filmBooking.getTotalFee();
                 String locate = "";
-                String language = (String) req.getAttribute("lang");
+                String language = (String) session.getAttribute("lang");
 
                 if (language == null || language.equals("default"))
                     locate = "vn";
@@ -76,7 +75,7 @@ public class CheckoutController extends HttpServlet {
 
                 resp.sendRedirect(paymentUrl);
             }
-        } else PaymentController.handlePaymentFailed(req, resp, filmBooking, showtimeServices, filmBookingServices);
+        } else PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
 
         hibernateSessionProvider.closeSession();
 
