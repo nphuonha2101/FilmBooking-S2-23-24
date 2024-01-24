@@ -26,7 +26,7 @@ public class AuthAdminLoginFilter extends HttpFilter {
         HttpSession userSession = req.getSession();
         User loginUser = (User) userSession.getAttribute("loginUser");
         if (loginUser == null) {
-            RedirectPageUtils.redirectPage(PathUtils.getURLWithContextPath(req, "/login"), null, req, resp);
+            RedirectPageUtils.redirectPage(PathUtils.getURLWithContextPath(req, resp,  "/login"), null, req, resp);
             return;
         } else {
             String accountRole = loginUser.getAccountRole();

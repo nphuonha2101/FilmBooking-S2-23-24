@@ -28,7 +28,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="${pageContext.request.contextPath}/forgot-password" method="post">
+        <form action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message key="username" bundle="${msg}"/>:
@@ -51,7 +51,7 @@
 
             <div class="centered-vertical-content">
                 <p><fmt:message key="return" bundle="${msg}"/>
-                    <span> <a class="links" href="${pageContext.request.contextPath}/login">
+                    <span> <a class="links" href="<c:url value="${pageContext.request.contextPath}/login"/>">
                         <fmt:message key="login" bundle="${msg}"/>!</a></span>
                 </p>
             </div>

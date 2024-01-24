@@ -22,7 +22,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form action="<c:url value="${pageContext.request.contextPath}/login"/>" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message key="usernameOrEmail" bundle="${msg}"/>:
@@ -43,10 +43,12 @@
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message key="login" bundle="${msg}"/>">
         </form>
-        <p><fmt:message key="dontHaveAccount" bundle="${msg}"/> <span><a class="links" href="${pageContext.request.contextPath}/signup"><fmt:message
+        <p><fmt:message key="dontHaveAccount" bundle="${msg}"/> <span>
+            <a class="links" href="<c:url value="${pageContext.request.contextPath}/signup"/>"><fmt:message
                 key="signupNow" bundle="${msg}"/> </a> </span>
         </p>
-        <p><fmt:message key="Or" bundle="${msg}"/> <span><a class="links" href="${pageContext.request.contextPath}/forgot-password"><fmt:message
+        <p><fmt:message key="Or" bundle="${msg}"/> <span>
+            <a class="links" href="<c:url value="${pageContext.request.contextPath}/forgot-password"/>"><fmt:message
                 key="youForgotPassword" bundle="${msg}"/></a> </span></p>
     </div>
 </section>

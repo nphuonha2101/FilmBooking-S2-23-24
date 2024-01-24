@@ -19,7 +19,7 @@ public class AuthLoginFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser == null) {
-            res.sendRedirect(PathUtils.getURLWithContextPath(req, "/login"));
+            res.sendRedirect(PathUtils.getURLWithContextPath(req, res,  "/login"));
             return;
         }
         chain.doFilter(req, res);

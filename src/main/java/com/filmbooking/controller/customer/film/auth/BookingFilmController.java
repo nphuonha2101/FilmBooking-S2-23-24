@@ -78,7 +78,7 @@ public class BookingFilmController extends HttpServlet {
 
             showtimeServices.update(showtime);
 
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/checkout"));
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp,  "/auth/checkout"));
 
 //            if (filmBookingServices.save(filmBookingClone)) {
 //                Showtime bookedShowtime = filmBookingClone.getShowtime();

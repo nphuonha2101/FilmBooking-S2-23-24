@@ -102,7 +102,7 @@ public class FilmInfoController extends HttpServlet {
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/book-film"));
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp,  "/auth/book-film"));
                 return;
             }
         } else {

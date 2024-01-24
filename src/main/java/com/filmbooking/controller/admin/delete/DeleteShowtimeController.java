@@ -30,10 +30,10 @@ public class DeleteShowtimeController extends HttpServlet {
 
         if (showtimeServices.delete(deleteShowtime)) {
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_SHOWTIME_SUCCESSFUL.getStatusCode());
-            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, "/admin/management/showtime")).forward(req, resp);
+            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_SHOWTIME_FAILED.getStatusCode());
-            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, "/admin/management/showtime")).forward(req, resp);
+            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

@@ -36,8 +36,8 @@ public class LogoutController extends HttpServlet {
                 hibernateSessionProvider.closeSession();
             }
             session.invalidate();
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/login"));
-        } else resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/home"));
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/login"));
+        } else resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/home"));
 
     }
 }

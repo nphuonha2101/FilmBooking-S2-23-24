@@ -38,7 +38,7 @@
                 <div class="film-img-box div-img" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
                 <div class="wrapper">
-                    <a href="${pageContext.request.contextPath}/film-info?film=${film.slug}"><h3>${film.filmName}</h3>
+                    <a href="<c:url value="${pageContext.request.contextPath}/film-info?film=${film.slug}"/>"><h3>${film.filmName}</h3>
                     </a>
 
 
@@ -83,7 +83,7 @@
 
             <h4><fmt:message bundle="${msg}" key="paymentMethod"/></h4>
 
-            <form action="${pageContext.request.contextPath}/auth/checkout" method="post">
+            <form action="<c:url value="${pageContext.request.contextPath}/auth/checkout"/>" method="post">
                 <div class="centered-horizontal-content wrapper justify-left-row">
                     <input type="radio" id="cash-radio" name="payment-method" value="cash" checked>
                     &nbsp;<label for="cash-radio">

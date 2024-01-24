@@ -71,14 +71,14 @@ public class PaymentController extends HttpServlet {
                 filmBooking.createNewVNPayTxnRef();
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=success"));
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/auth/payment-status?status=success"));
             }
             case FAILED -> {
                 Showtime bookedShowtime = filmBooking.getShowtime();
                 if (bookedShowtime.releaseSeats(filmBooking.getSeats()))
                     showtimeServices.update(bookedShowtime);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=failed"));
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/auth/payment-status?status=failed"));
             }
             case PENDING -> {
                 if (filmBookingServices.save(filmBooking)) {
@@ -92,7 +92,7 @@ public class PaymentController extends HttpServlet {
                 filmBooking.createNewVNPayTxnRef();
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=pending"));
+                resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp,  "/auth/payment-status?status=pending"));
             }
         }
 
