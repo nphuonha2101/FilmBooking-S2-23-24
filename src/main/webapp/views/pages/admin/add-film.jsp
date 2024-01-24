@@ -31,7 +31,7 @@
 
         <div class="centered-vertical-content wrapper">
 
-            <%--        Status Code Messages--%>
+            <%-- Status Code Messages--%>
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <form method="post" action="${pageContext.request.contextPath}/admin/add/film" enctype="multipart/form-data">
@@ -124,6 +124,7 @@
 
                     <label for="film-description_textarea">
                         <fmt:message bundle="${adminMsg}" key="filmDescription"/>:
+                        <span class="warning-color"> *</span>
                     </label>
                     <textarea class="none-resize_textarea" id="film-description_textarea" name="film-description"
                               placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>"></textarea>

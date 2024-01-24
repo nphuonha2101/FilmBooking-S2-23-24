@@ -10,6 +10,7 @@ import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -47,8 +48,6 @@ public class AddShowtimeController extends HttpServlet {
                 PathUtils.getAdminPagesPath("add-showtime.jsp"),
                 PathUtils.getLayoutPath("master.jsp"));
 
-//        RenderViewUtils.updateView(req, resp,
-//                PathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -73,7 +72,8 @@ public class AddShowtimeController extends HttpServlet {
 
         showtimeServices.save(newShowtime);
 
-        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));
+        req.setAttribute("statusCodeSuccess", StatusCodeEnum.ADD_SHOWTIME_SUCCESSFUL.getStatusCode());
+        doGet(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

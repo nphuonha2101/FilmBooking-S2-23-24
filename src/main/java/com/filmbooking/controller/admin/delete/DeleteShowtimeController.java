@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,8 +27,13 @@ public class DeleteShowtimeController extends HttpServlet {
 
         Showtime deleteShowtime = showtimeServices.getBySlug(showtimeSlug);
 
-        if (showtimeServices.delete(deleteShowtime))
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));
+        if (showtimeServices.delete(deleteShowtime)) {
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_SHOWTIME_SUCCESSFUL.getStatusCode());
+            doGet(req, resp);
+        } else {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_SHOWTIME_FAILED.getStatusCode());
+            doGet(req, resp);
+        }
 
         hibernateSessionProvider.closeSession();
 

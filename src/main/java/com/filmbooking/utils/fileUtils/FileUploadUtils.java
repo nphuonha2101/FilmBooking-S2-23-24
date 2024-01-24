@@ -13,6 +13,7 @@ public class FileUploadUtils {
         try {
             String realFilePath = FileUtils.getDeployedApplicationPath(req) + PathUtils.getFileUploadPath(fileName);
 
+            System.out.println(realFilePath);
             Part filePart = req.getPart(uploadElementName);
 
             if (filePart == null) {

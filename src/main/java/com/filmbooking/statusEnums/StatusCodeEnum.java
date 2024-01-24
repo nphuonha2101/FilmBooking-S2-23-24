@@ -38,8 +38,16 @@ public enum StatusCodeEnum {
     PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),
     BOOKING_FILM_FAILED(504, "Đặt phim bị lỗi"),
     SEATS_HAVE_ALREADY_BOOKED(505, "Ghế này đã có người đặt!"),
-    PAYMENT_FAILED(506, "Thanh toán thất bại");
-    ;
+    PAYMENT_FAILED(506, "Thanh toán thất bại"),
+    ADD_FILM_FAILED(507, "Thêm phim thất bại"),
+    ADD_SHOWTIME_FAILED(508, "Thêm suất chiếu thất bại"),
+    ADD_ROOM_FAILED(509, "Thêm phòng chiếu thất bại"),
+    DELETE_FILM_FAILED(510, "Xóa phim thất bại"),
+    DELETE_SHOWTIME_FAILED(511, "Xóa suất chiếu thất bại"),
+    DELETE_ROOM_FAILED(512, "Xóa phòng chiếu thất bại"),
+    UPDATE_FILM_FAILED(513, "Cập nhật phim thất bại"),
+    UPDATE_SHOWTIME_FAILED(514, "Cập nhật suất chiếu thất bại"),
+    UPDATE_ROOM_FAILED(515, "Cập nhật phòng chiếu thất bại");
 
 
     private final int statusCode;

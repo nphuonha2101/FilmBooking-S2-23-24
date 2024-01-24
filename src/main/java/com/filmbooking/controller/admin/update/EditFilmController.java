@@ -7,12 +7,13 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.UUIDUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
-import com.filmbooking.utils.UUIDUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -83,7 +84,8 @@ public class EditFilmController extends HttpServlet {
 
         if (filmName.isBlank() || filmDirector.isBlank() || filmActors.isBlank() || filmDescription.isBlank()
                 || filmGenreIDs == null || filmGenreIDs.length == 0) {
-            resp.sendRedirect(req.getHeader("referer"));
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_FILL_ALL_REQUIRED_FIELDS.getStatusCode());
+            doGet(req, resp);
             return;
         }
 
@@ -113,6 +115,12 @@ public class EditFilmController extends HttpServlet {
 
                 editFilm.setImgPath(filmImgPath);
                 filmServices.update(editFilm, filmGenreIDs);
+
+                req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+                doGet(req, resp);
+            } else {
+                req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
+                doGet(req, resp);
             }
         }
 

@@ -5,6 +5,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
 import jakarta.servlet.ServletException;
@@ -37,7 +38,12 @@ public class DeleteFilmController extends HttpServlet {
             File file = new File(filmImgFilePath);
             file.delete();
 
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/film"));
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_FILM_SUCCESSFUL.getStatusCode());
+            doGet(req, resp);
+        }
+        else {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_FILM_FAILED.getStatusCode());
+            doGet(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

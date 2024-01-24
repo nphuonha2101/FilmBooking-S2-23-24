@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,8 +27,13 @@ public class DeleteRoomController extends HttpServlet {
         System.out.println("DeleteFilmController Test: " + roomSlug);
 
         Room deletedRoom = roomServices.getBySlug(roomSlug);
-        if (roomServices.delete(deletedRoom))
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
+        if (roomServices.delete(deletedRoom)) {
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_ROOM_SUCCESSFUL.getStatusCode());
+            doGet(req, resp);
+        } else {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_ROOM_FAILED.getStatusCode());
+            doGet(req, resp);
+        }
 
         hibernateSessionProvider.closeSession();
     }

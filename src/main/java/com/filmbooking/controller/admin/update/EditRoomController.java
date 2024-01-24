@@ -6,6 +6,7 @@ import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -61,7 +62,8 @@ public class EditRoomController extends HttpServlet {
 
         roomServices.update(editRoom);
 
-        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
+        req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_ROOM_SUCCESSFUL.getStatusCode());
+        doGet(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

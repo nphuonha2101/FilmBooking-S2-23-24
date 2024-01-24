@@ -33,10 +33,12 @@
 
         <form method="post" action="${pageContext.request.contextPath}/admin/edit/film" enctype="multipart/form-data">
 
-            <%--        Status Code Messages--%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="centered-vertical-content">
+
+                <%--        Status Code Messages--%>
+                <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
                 <div class="two-col__wrapper centered-vertical-content wrapper">
                     <!-- text form in left -->
                     <div class="left-col">

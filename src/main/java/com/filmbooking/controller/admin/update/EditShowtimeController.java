@@ -10,6 +10,7 @@ import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -75,7 +76,8 @@ public class EditShowtimeController extends HttpServlet {
 
         showtimeServices.update(editShowtime);
 
-        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/showtime"));
+        req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_SHOWTIME_SUCCESSFUL.getStatusCode());
+        doGet(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

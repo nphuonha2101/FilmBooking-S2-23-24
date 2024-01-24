@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "film_bookings")
 public class FilmBooking implements Cloneable {
+    private static final int EXPIRE_TIME = 15;
+
     @Column(name = "film_booking_id", insertable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class FilmBooking implements Cloneable {
     private LocalDateTime expireDate;
     @Transient
     private String vnpayTxnRef;
-    
+
     public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] seats, double totalFee) {
         this.showtime = showtime;
         this.user = user;
@@ -81,7 +83,7 @@ public class FilmBooking implements Cloneable {
 
     public void setBookingDate(LocalDateTime bookingDate) {
         this.bookingDate = bookingDate;
-        this.expireDate = bookingDate.plusMinutes(1);
+        this.expireDate = bookingDate.plusMinutes(EXPIRE_TIME);
     }
 
     public String[] getSeats() {
@@ -163,7 +165,7 @@ public class FilmBooking implements Cloneable {
     }
 
     /**
-     * Determines if FilmBooking is expired (15 minutes)
+     * Determines if FilmBooking is expired (default is 15 minutes)
      * @return true of FilmBooking is expired
      */
     public boolean isExpired() {

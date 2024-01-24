@@ -30,6 +30,8 @@
 
         <div class="centered-vertical-content wrapper">
 
+            <%-- Status Code Messages--%>
+            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <!-- text form in left -->
             <div class="wrapper centered-vertical-content">

@@ -6,11 +6,12 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
-import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import com.filmbooking.utils.UUIDUtils;
+import com.filmbooking.utils.fileUtils.FileUploadUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -67,6 +68,8 @@ public class AddFilmController extends HttpServlet {
 
         if (filmName.isBlank() || filmDirector.isBlank() || filmActors.isBlank() || filmDescription.isBlank()
                 || filmGenreIDs == null || filmGenreIDs.length == 0) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_FILL_ALL_REQUIRED_FIELDS.getStatusCode());
+            doGet(req, resp);
             return;
         }
 
@@ -75,11 +78,12 @@ public class AddFilmController extends HttpServlet {
 
         if (FileUploadUtils.uploadFile(req, fileName, "upload-img")) {
             filmServices.save(newFilm, filmGenreIDs);
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/film"));
+
+            req.setAttribute("statusCodeSuccess", StatusCodeEnum.ADD_FILM_SUCCESSFUL.getStatusCode());
+            doGet(req, resp);
         } else {
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    PathUtils.getAdminPagesPath("add-film.jsp"),
-                    PathUtils.getLayoutPath("master.jsp"));
+            req.setAttribute("statusCodeErr", StatusCodeEnum.ADD_FILM_FAILED.getStatusCode());
+            doGet(req, resp);
         }
 
 

@@ -1,15 +1,16 @@
 package com.filmbooking.controller.admin.create;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.statusEnums.StatusCodeEnum;
 import com.filmbooking.utils.PathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 @WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
@@ -63,7 +63,8 @@ public class AddRoomController extends HttpServlet {
 
         roomServices.save(newRoom);
 
-        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/admin/management/room"));
+        req.setAttribute("statusCodeSuccess", StatusCodeEnum.ADD_ROOM_SUCCESSFUL.getStatusCode());
+        doGet(req, resp);
 
         hibernateSessionProvider.closeSession();
     }
