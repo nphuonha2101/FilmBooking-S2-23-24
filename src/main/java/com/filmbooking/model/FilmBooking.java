@@ -87,6 +87,9 @@ public class FilmBooking implements Cloneable {
     }
 
     public String[] getBookedSeats() {
+        if (this.seatsData != null) {
+            this.bookedSeats = seatsData.split(", ");
+        }
         return this.bookedSeats;
     }
 

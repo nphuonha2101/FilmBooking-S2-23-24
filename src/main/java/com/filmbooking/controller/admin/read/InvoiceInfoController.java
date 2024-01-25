@@ -29,17 +29,9 @@ public class InvoiceInfoController extends HttpServlet {
 
         FilmBooking filmBooking = filmBookingServices.getByFilmBookingID(bookingID);
 
-        Showtime bookedShowtime = filmBooking.getShowtime();
-        Room bookedRoom = bookedShowtime.getRoom();
-        Film bookedFilm = bookedShowtime.getFilm();
-        Theater bookedTheater = bookedRoom.getTheater();
-
+        System.out.println(filmBooking);
 
         req.setAttribute("bookedFilmBooking", filmBooking);
-        req.setAttribute("bookedFilm", bookedFilm);
-        req.setAttribute("bookedShowtime", bookedShowtime);
-        req.setAttribute("bookedRoom", bookedRoom);
-        req.setAttribute("bookedTheater", bookedTheater);
 
         req.setAttribute("pageTitle", "invoiceInfoTitle");
         req.getRequestDispatcher(PathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
