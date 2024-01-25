@@ -91,8 +91,8 @@ public class FilmInfoController extends HttpServlet {
 
                 // release old showtime
                 Showtime oldShowtime = filmBooking.getShowtime();
-                if (oldShowtime != null && filmBooking.getSeats() != null) {
-                    oldShowtime.releaseSeats(filmBooking.getSeats());
+                if (oldShowtime != null && filmBooking.getBookedSeats() != null) {
+                    oldShowtime.releaseSeats(filmBooking.getBookedSeats());
                     showtimeServices.update(oldShowtime);
                 }
 

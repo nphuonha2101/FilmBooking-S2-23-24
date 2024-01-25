@@ -66,7 +66,7 @@ public class BookingFilmController extends HttpServlet {
             bookedFilm = filmBooking.getShowtime().getFilm();
             filmBooking.setSeatsData(seats);
             filmBooking.setBookingDate(LocalDateTime.now());
-            int numberOfSeats = filmBooking.getSeats().length;
+            int numberOfSeats = filmBooking.getBookedSeats().length;
             double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
             filmBooking.setTotalFee(totalFee);
 

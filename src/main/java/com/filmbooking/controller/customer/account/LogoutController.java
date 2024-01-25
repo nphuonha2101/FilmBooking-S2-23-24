@@ -28,10 +28,12 @@ public class LogoutController extends HttpServlet {
         if (session != null) {
             FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
             Showtime showtime = filmBooking.getShowtime();
-            if ( showtime != null ) {
+
+            if (filmBooking.getBookedSeats() != null && showtime != null) {
+                System.out.println(filmBooking.getBookedSeats());
                 HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
                 IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-                showtime.releaseSeats(filmBooking.getSeats());
+                showtime.releaseSeats(filmBooking.getBookedSeats());
                 showtimeServices.update(showtime);
                 hibernateSessionProvider.closeSession();
             }

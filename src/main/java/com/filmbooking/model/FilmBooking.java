@@ -23,24 +23,24 @@ public class FilmBooking implements Cloneable {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime bookingDate;
     @Transient
-    private String[] seats;
+    private String[] bookedSeats;
     @Column(name = "seats")
     private String seatsData;
     @Column(name = "total_fee")
     private double totalFee;
-    @Column(name ="payment_status")
+    @Column(name = "payment_status")
     private String paymentStatus;
     @Transient
     private LocalDateTime expireDate;
     @Transient
     private String vnpayTxnRef;
 
-    public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] seats, double totalFee) {
+    public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] bookedSeats, double totalFee) {
         this.showtime = showtime;
         this.user = user;
         this.bookingDate = bookingDate;
-        this.seats = seats;
-        this.seatsData = String.join(", ", seats);
+        this.bookedSeats = bookedSeats;
+        this.seatsData = String.join(", ", bookedSeats);
         this.totalFee = totalFee;
     }
 
@@ -49,7 +49,7 @@ public class FilmBooking implements Cloneable {
         this.showtime = null;
         this.user = null;
         this.bookingDate = null;
-        this.seats = new String[0];
+        this.bookedSeats = null;
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
@@ -86,14 +86,13 @@ public class FilmBooking implements Cloneable {
         this.expireDate = bookingDate.plusMinutes(EXPIRE_TIME);
     }
 
-    public String[] getSeats() {
-        this.seats = seatsData.split(", ");
-        return seats;
+    public String[] getBookedSeats() {
+        return this.bookedSeats;
     }
 
-    public void setSeats(String[] seats) {
-        this.seats = seats;
-        this.seatsData = String.join(", ", seats);
+    public void setBookedSeats(String[] bookedSeats) {
+        this.bookedSeats = bookedSeats;
+        this.seatsData = String.join(", ", bookedSeats);
     }
 
     public String getSeatsData() {
@@ -103,7 +102,7 @@ public class FilmBooking implements Cloneable {
     public void setSeatsData(String seatsData) {
         this.seatsData = seatsData;
         if (seatsData != null)
-            this.seats = seatsData.split(", ");
+            this.bookedSeats = seatsData.split(", ");
     }
 
     public double getTotalFee() {
@@ -125,7 +124,7 @@ public class FilmBooking implements Cloneable {
     public void resetFilmBooking() {
         this.filmBookingID = 0;
         this.bookingDate = null;
-        this.seats = new String[0];
+        this.bookedSeats = new String[0];
         this.showtime = null;
         this.totalFee = 0;
         this.paymentStatus = null;
@@ -166,6 +165,7 @@ public class FilmBooking implements Cloneable {
 
     /**
      * Determines if FilmBooking is expired (default is 15 minutes)
+     *
      * @return true of FilmBooking is expired
      */
     public boolean isExpired() {
