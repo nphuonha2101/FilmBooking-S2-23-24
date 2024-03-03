@@ -34,7 +34,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div>
-                <form method="post" action="${pageContext.request.contextPath}/admin/add/showtime">
+                <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/add/showtime"/>">
 
                     <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>:
                         <span class="warning-color"> *</span>

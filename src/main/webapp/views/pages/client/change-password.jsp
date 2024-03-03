@@ -28,7 +28,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="${pageContext.request.contextPath}/auth/change-password" method="post">
+        <form action="<c:url value="${pageContext.request.contextPath}/auth/change-password"/>" method="post">
             <label for="current-password">
                 <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="password"/>
@@ -54,7 +54,7 @@
                    value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>
         <p><fmt:message bundle="${msg}" key="return"/>
-            <span><a class="links" href="${pageContext.request.contextPath}/auth/account-info">
+            <span><a class="links" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
             <fmt:message bundle="${msg}" key="info"/> </a> </span>
         </p>
     </div>

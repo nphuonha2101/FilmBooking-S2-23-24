@@ -66,7 +66,7 @@ public class BookingFilmController extends HttpServlet {
             bookedFilm = filmBooking.getShowtime().getFilm();
             filmBooking.setSeatsData(seats);
             filmBooking.setBookingDate(LocalDateTime.now());
-            int numberOfSeats = filmBooking.getSeats().length;
+            int numberOfSeats = filmBooking.getBookedSeats().length;
             double totalFee = numberOfSeats * bookedFilm.getFilmPrice();
             filmBooking.setTotalFee(totalFee);
 
@@ -78,7 +78,7 @@ public class BookingFilmController extends HttpServlet {
 
             showtimeServices.update(showtime);
 
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/checkout"));
+            resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp,  "/auth/checkout"));
 
 //            if (filmBookingServices.save(filmBookingClone)) {
 //                Showtime bookedShowtime = filmBookingClone.getShowtime();

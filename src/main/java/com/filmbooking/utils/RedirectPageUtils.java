@@ -19,7 +19,7 @@ public class RedirectPageUtils {
     public static void redirectPage(String toPage, String currentQueryString, HttpServletRequest req,
                                     HttpServletResponse resp) throws IOException {
         HttpSession userSession = req.getSession(false);
-        String previousPageURI = PathUtils.getURLWithContextPath(req, req.getRequestURI());
+        String previousPageURI = PathUtils.getURLWithContextPath(req, resp,  req.getRequestURI());
         if (currentQueryString != null)
             previousPageURI += "?" + currentQueryString;
         System.out.println("previous page: " + previousPageURI);
@@ -43,7 +43,7 @@ public class RedirectPageUtils {
             resp.sendRedirect(previousPage);
             return;
         }
-        resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/home"));
+        resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/home"));
     }
 }
 

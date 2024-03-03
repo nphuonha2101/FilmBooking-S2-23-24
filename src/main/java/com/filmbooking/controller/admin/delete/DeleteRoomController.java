@@ -30,10 +30,10 @@ public class DeleteRoomController extends HttpServlet {
         Room deletedRoom = roomServices.getBySlug(roomSlug);
         if (roomServices.delete(deletedRoom)) {
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_ROOM_SUCCESSFUL.getStatusCode());
-            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, "/admin/management/room")).forward(req, resp);
+            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_ROOM_FAILED.getStatusCode());
-            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, "/admin/management/room")).forward(req, resp);
+            req.getRequestDispatcher(PathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

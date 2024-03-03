@@ -8,7 +8,6 @@ import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,12 +23,12 @@ public class DeleteExpiredFilmBookingFilter extends HttpFilter {
         FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
         Showtime showtime = filmBooking.getShowtime();
 
-        if (showtime != null && filmBooking.getSeats() != null && filmBooking.isExpired()) {
+        if (showtime != null && filmBooking.getBookedSeats() != null && filmBooking.isExpired()) {
             System.out.println("Expired: " + filmBooking.isExpired());
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
             IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
-            showtime.releaseSeats(filmBooking.getSeats());
+            showtime.releaseSeats(filmBooking.getBookedSeats());
             showtimeServices.update(showtime);
 
             hibernateSessionProvider.closeSession();
