@@ -29,7 +29,6 @@ public class DatabaseConnection {
             connection = DriverManager.getConnection(propertiesUtils.getProperty("db.url"),
                     propertiesUtils.getProperty("db.username"), propertiesUtils.getProperty("db.userPassword"));
 
-
 //            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 //            String DB_URL = "jdbc:sqlserver://localhost;databaseName=FilmBooking;user=sqlserver;password=nphuonha2101" +
 //                    ";encrypt=true;trustServerCertificate=true;loginTimeout=30";

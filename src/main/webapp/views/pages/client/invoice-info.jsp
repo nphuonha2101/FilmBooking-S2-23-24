@@ -56,7 +56,7 @@
 <c:set var="theater" value="${room.theater}"/>
 <main>
     <section>
-        <c:forEach var="seat" items="${filmBooking.seats}" varStatus="loop">
+        <c:forEach var="seat" items="${filmBooking.bookedSeats}" varStatus="loop">
             <div class="centered-vertical-content">
                 <p>================================================</p>
 

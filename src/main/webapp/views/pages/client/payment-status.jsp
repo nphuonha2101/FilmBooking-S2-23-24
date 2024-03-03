@@ -33,7 +33,7 @@
 
             <p style="text-align: center"><fmt:message key="${paymentMessage}" bundle="${msg}"/></p>
 
-            <a href="${pageContext.request.contextPath}/home"
+            <a href="<c:url value="${pageContext.request.contextPath}/home"/>"
                class="button primary-filled-button rounded-button"><fmt:message key="home"
                                                                                 bundle="${msg}"/></a>
     </div>

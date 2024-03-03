@@ -50,6 +50,7 @@ public class CheckoutController extends HttpServlet {
 
         if (!filmBooking.isExpired()) {
             if (paymentMethod.equalsIgnoreCase("cash")) {
+                filmBooking.setPaymentStatus("pending");
                 PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.PENDING);
             }
             // get vnpay payment url

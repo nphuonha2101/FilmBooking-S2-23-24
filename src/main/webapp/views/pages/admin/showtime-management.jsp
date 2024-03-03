@@ -33,7 +33,7 @@
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
             <div class="justify-right-row wrapper">
-                <a href="${pageContext.request.contextPath}/admin/add/showtime"
+                <a href="<c:url value="${pageContext.request.contextPath}/admin/add/showtime"/>"
                    class="primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
@@ -60,10 +60,10 @@
                         <td>${showtime.showtimeDate}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/delete/showtime?showtime=${showtime.slug}">
+                            <a href="<c:url value="${pageContext.request.contextPath}/admin/delete/showtime?showtime=${showtime.slug}"/>">
                                 <span class="material-symbols-rounded warning-color">delete</span>
                             </a>
-                            <a href="${pageContext.request.contextPath}/admin/edit/showtime?showtime=${showtime.slug}">
+                            <a href="<c:url value="${pageContext.request.contextPath}/admin/edit/showtime?showtime=${showtime.slug}"/>">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
                         </td>

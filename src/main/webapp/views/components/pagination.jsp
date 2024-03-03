@@ -28,7 +28,7 @@
                     <c:when test="${currentPage > 1}">
                         <div class="tooltip">
                             <a class="button rounded-button primary-color"
-                               href="${pageContext.request.contextPath}/${pageUrl}?page=${currentPage - 1}"><span
+                               href="<c:url value="${pageContext.request.contextPath}/${pageUrl}?page=${currentPage - 1}"/>"><span
                                     class="material-symbols-rounded">
                             navigate_before
                             </span>
@@ -39,7 +39,7 @@
                     <c:otherwise>
                         <div class="tooltip">
                             <a class="button rounded-button primary-color"
-                               href="${pageContext.request.contextPath}/${pageUrl}?page=${totalPages}"><span
+                               href="<c:url value="${pageContext.request.contextPath}/${pageUrl}?page=${totalPages}"/>"><span
                                     class="material-symbols-rounded">
                             navigate_before
                             </span>
@@ -50,7 +50,7 @@
                 </c:choose>
             </div>
             <div class="centered-vertical-content wrapper">
-                <form action="${pageContext.request.contextPath}/${pageUrl}" name="page" method="get"
+                <form action="<c:url value="${pageContext.request.contextPath}/${pageUrl}"/>" name="page" method="get"
                       class="pagination-form">
                     <input type="number" min="1" max="${totalPages}" name="page"
                            class="pagination-input" value="${currentPage}" required/>
@@ -64,7 +64,7 @@
                         <div class="tooltip">
 
                             <a class="button rounded-button primary-color"
-                               href="${pageContext.request.contextPath}/${pageUrl}?page=${currentPage + 1}"><span
+                               href="<c:url value="${pageContext.request.contextPath}/${pageUrl}?page=${currentPage + 1}"/>"><span
                                     class="material-symbols-rounded">
                             navigate_next
                             </span>
@@ -75,7 +75,7 @@
                     <c:otherwise>
                         <div class="tooltip">
                             <a class="button rounded-button primary-color"
-                               href="${pageContext.request.contextPath}/${pageUrl}?page=1"><span
+                               href="<c:url value="${pageContext.request.contextPath}/${pageUrl}?page=1"/>"><span
                                     class="material-symbols-rounded">
                             navigate_next
                             </span>
