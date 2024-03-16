@@ -1,6 +1,6 @@
 package com.filmbooking.services.serviceResult;
 
-import com.filmbooking.statusEnums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 
 public class ServiceResult {
     private StatusCodeEnum status;

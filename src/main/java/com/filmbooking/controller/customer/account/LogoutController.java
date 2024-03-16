@@ -5,7 +5,7 @@ import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -36,8 +36,8 @@ public class LogoutController extends HttpServlet {
                 hibernateSessionProvider.closeSession();
             }
             session.invalidate();
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/login"));
-        } else resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/home"));
+            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/login"));
+        } else resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/home"));
 
     }
 }

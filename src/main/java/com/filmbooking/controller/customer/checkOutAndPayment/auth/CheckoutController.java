@@ -13,7 +13,7 @@ import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -33,8 +33,8 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "checkoutTitle");
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("checkout.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("checkout.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override
@@ -71,11 +71,18 @@ public class CheckoutController extends HttpServlet {
 
                 orderInfo += filmBooking.getFilmBookingID() + " - " + filmBooking.getShowtime().getFilm().getFilmName() + " - " + filmBooking.getUser().getUsername() + " - " + filmBooking.getBookingDate();
 
-                String paymentUrl = new VNPay().getPaymentURL(amount, orderInfo, req.getRemoteAddr(), locate, filmBooking.getVnpayTxnRef());
+                VNPay vnPay = new VNPay();
+                String paymentUrl = vnPay.addAmount(amount)
+                        .addTxnRef(filmBooking.getVnpayTxnRef())
+                        .addOrderInfo(orderInfo)
+                        .addLocale(req)
+                        .addCustomerIP(req)
+                        .getPaymentURL();
 
                 resp.sendRedirect(paymentUrl);
             }
-        } else PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
+        } else
+            PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
 
         hibernateSessionProvider.closeSession();
 

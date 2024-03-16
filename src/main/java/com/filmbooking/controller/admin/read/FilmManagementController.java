@@ -6,7 +6,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.PaginationUtils;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,7 +45,7 @@ public class FilmManagementController extends HttpServlet {
             }
 
             req.setAttribute("pageTitle", "filmManagementTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getAdminPagesPath("film-management.jsp"), PathUtils.getLayoutPath("master.jsp"));
+            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("film-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
         }
 
         hibernateSessionProvider.closeSession();
