@@ -4,8 +4,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -27,8 +27,8 @@ public class ChangePasswordController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "changePasswordTitle");
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getClientPagesPath("change-password.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+                WebAppPathUtils.getClientPagesPath("change-password.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ChangePasswordController extends HttpServlet {
     }
 
     private void render(HttpServletRequest req, HttpServletResponse resp) {
-//        RenderViewUtils.updateView(req, resp,  PathUtils.getClientPagesPath("change-password.jsp"));
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("change-password.jsp"), PathUtils.getLayoutPath("master.jsp"));
+//        RenderViewUtils.updateView(req, resp,  WebAppPathUtils.getClientPagesPath("change-password.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-password.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 }

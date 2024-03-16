@@ -3,11 +3,12 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.GenericDAOImpl;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.SendEmailUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
@@ -119,21 +120,33 @@ public class UserServicesImpl implements IUserServices {
             if (!forgotPassUser.getUserEmail().equalsIgnoreCase(email)) {
                 result = new ServiceResult(StatusCodeEnum.EMAIL_NOT_MATCH);
             } else {
-                String newPassword = StringUtils.createRandomStringUtil(9);
-                forgotPassUser.setUserPassword(StringUtils.generateSHA256String(newPassword));
-                update(forgotPassUser);
+                // prepare Token
+                TokenModel tokenModel = new TokenModel(forgotPassUser.getUserEmail(), forgotPassUser.getUsername());
 
+                // send Email
                 String emailSubject = language == null || language.equals("default") ? "Mật khẩu mới của bạn" : "Your new password";
-
-                SendEmailUtils sendEmailUtils = SendEmailUtils.getInstance();
-                sendEmailUtils.sendEmailToUser(forgotPassUser.getUserEmail(),
-                        emailSubject,
-                        sendEmailUtils.loadResetEmailFromHTML(forgotPassUser, newPassword, language));
+//                AbstractSendEmail abstractSendEmail = AbstractSendEmail.getInstance();
+//                abstractSendEmail.sendEmailToUser(forgotPassUser.getUserEmail(),
+//                        emailSubject,
+//                        abstractSendEmail.loadResetEmailFromHTML(forgotPassUser, tokenModel.getToken(), language));
 
                 result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
 
             }
             return result;
         }
+    }
+
+    @Override
+    public ServiceResult userResetPassword(String token, String newPassword) {
+
+
+
+        return null;
+    }
+
+    @Override
+    public ServiceResult userChangePassword(String username, String oldPassword, String newPassword) {
+        return null;
     }
 }

@@ -8,8 +8,8 @@ import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,7 +48,7 @@ public class BookingFilmController extends HttpServlet {
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
 
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("book-film.jsp"), PathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("book-film.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -78,7 +78,7 @@ public class BookingFilmController extends HttpServlet {
 
             showtimeServices.update(showtime);
 
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/checkout"));
+            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/checkout"));
 
 //            if (filmBookingServices.save(filmBookingClone)) {
 //                Showtime bookedShowtime = filmBookingClone.getShowtime();

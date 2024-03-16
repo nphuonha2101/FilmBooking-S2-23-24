@@ -13,9 +13,7 @@ import com.filmbooking.services.IFilmBookingServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
-import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -71,14 +69,14 @@ public class PaymentController extends HttpServlet {
                 filmBooking.createNewVNPayTxnRef();
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=success"));
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=success"));
             }
             case FAILED -> {
                 Showtime bookedShowtime = filmBooking.getShowtime();
                 if (bookedShowtime.releaseSeats(filmBooking.getSeats()))
                     showtimeServices.update(bookedShowtime);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=failed"));
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=failed"));
             }
             case PENDING -> {
                 if (filmBookingServices.save(filmBooking)) {
@@ -92,7 +90,7 @@ public class PaymentController extends HttpServlet {
                 filmBooking.createNewVNPayTxnRef();
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
 
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, "/auth/payment-status?status=pending"));
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=pending"));
             }
         }
 

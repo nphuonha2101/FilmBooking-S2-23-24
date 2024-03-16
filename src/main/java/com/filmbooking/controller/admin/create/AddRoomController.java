@@ -7,8 +7,8 @@ import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
@@ -36,11 +36,11 @@ public class AddRoomController extends HttpServlet {
         req.setAttribute("theaters", theaterServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getAdminPagesPath("add-room.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+                WebAppPathUtils.getAdminPagesPath("add-room.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
 
 //        RenderViewUtils.updateView(req, resp,
-//                PathUtils.getLayoutPath("master.jsp"));
+//                WebAppPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

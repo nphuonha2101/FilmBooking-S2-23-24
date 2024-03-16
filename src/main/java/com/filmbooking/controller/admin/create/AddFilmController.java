@@ -6,8 +6,8 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.UUIDUtils;
@@ -37,8 +37,8 @@ public class AddFilmController extends HttpServlet {
         req.setAttribute("genres", genreServices.getAll());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getAdminPagesPath("add-film.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+                WebAppPathUtils.getAdminPagesPath("add-film.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -55,7 +55,7 @@ public class AddFilmController extends HttpServlet {
         // generate uuid from filename
         fileName = UUIDUtils.generateRandomUUID(fileName);
 
-        String relativeFilePath = PathUtils.getUploadFileRelativePath(fileName);
+        String relativeFilePath = WebAppPathUtils.getUploadFileRelativePath(fileName);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));

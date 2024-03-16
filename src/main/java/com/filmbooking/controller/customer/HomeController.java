@@ -4,9 +4,9 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.statusEnums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.utils.PaginationUtils;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,8 +48,8 @@ public class HomeController extends HttpServlet {
             req.setAttribute("sectionTitle", "newFilmArriveSectionTitle");
             req.setAttribute("pageTitle", "homeTitle");
             RenderViewUtils.renderViewToLayout(req, resp,
-                    PathUtils.getClientPagesPath("home.jsp"),
-                    PathUtils.getLayoutPath("master.jsp"));
+                    WebAppPathUtils.getClientPagesPath("home.jsp"),
+                    WebAppPathUtils.getLayoutPath("master.jsp"));
         }
         hibernateSessionProvider.closeSession();
     }
