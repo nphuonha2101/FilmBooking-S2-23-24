@@ -1,24 +1,26 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.services.ITokenServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 
 public class TokenServicesImpl implements ITokenServices {
-    IDAO<TokenModel> tokenDAO;
+    DataAccessObjects<TokenModel> tokenDataAccessObjects;
 
     public TokenServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.tokenDAO = new GenericDAOImpl<>(TokenModel.class);
-//        setSessionProvider(sessionProvider);
+        this.tokenDataAccessObjects = new DataAccessObjects<>(TokenModel.class);
+        this.tokenDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public ServiceResult saveToken(TokenModel tokenModel) {
-
-        return null;
+        if (tokenDataAccessObjects.save(tokenModel)) {
+            return new ServiceResult(StatusCodeEnum.SUCCESSFUL);
+        }
+        return new ServiceResult(StatusCodeEnum.FAILED);
     }
 
     @Override

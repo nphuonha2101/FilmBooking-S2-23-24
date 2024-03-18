@@ -1,7 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -11,31 +10,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FilmBookingServicesImpl implements IFilmBookingServices {
-    private final IDAO<FilmBooking> filmBookingDAO;
+    private final DataAccessObjects<FilmBooking> filmBookingDataAccessObjects;
 
     public FilmBookingServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.filmBookingDAO = new GenericDAOImpl<>(FilmBooking.class);
+        this.filmBookingDataAccessObjects = new DataAccessObjects<>(FilmBooking.class);
         setSessionProvider(sessionProvider);
     }
 
     public FilmBookingServicesImpl() {
-        this.filmBookingDAO = new GenericDAOImpl<>(FilmBooking.class);
+        this.filmBookingDataAccessObjects = new DataAccessObjects<>(FilmBooking.class);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        filmBookingDAO.setSessionProvider(sessionProvider);
+        filmBookingDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public List<FilmBooking> getAll() {
-        return filmBookingDAO.getAll();
+        return filmBookingDataAccessObjects.getAll().getMultipleResults();
     }
 
     @Override
     public FilmBooking getByFilmBookingID(String id) {
-        return filmBookingDAO.getByID(id, true);
-
+        return filmBookingDataAccessObjects.getByID(id, true).getSingleResult();
     }
 
     @Override
@@ -45,17 +43,17 @@ public class FilmBookingServicesImpl implements IFilmBookingServices {
 
     @Override
     public boolean save(FilmBooking filmBooking) {
-        return filmBookingDAO.save(filmBooking);
+        return filmBookingDataAccessObjects.save(filmBooking);
     }
 
     @Override
     public boolean update(FilmBooking filmBooking) {
-        return filmBookingDAO.update(filmBooking);
+        return filmBookingDataAccessObjects.update(filmBooking);
     }
 
     @Override
     public boolean delete(FilmBooking filmBooking) {
-        return filmBookingDAO.delete(filmBooking);
+        return filmBookingDataAccessObjects.delete(filmBooking);
     }
 
 

@@ -1,14 +1,31 @@
+/**
+ * @author nphuo
+ * @ide IntelliJ IDEA
+ * @project_name FilmBooking-S2-23-24
+ */
+
 package com.filmbooking.model;
 
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+@Entity
 public class TokenModel {
+    @Id
+    @Column(name = "token")
     private String token;
+    @Column(name = "username")
     private String username;
-    private LocalDateTime expiryDate;
+    @Column(name = "expiry_date")
+    private LocalDateTime expiryAt;
+
+    public TokenModel() {
+    }
 
     private void tokenModelConstruct(String dataToGenerateToken, String username) {
         String SECRET_KEY = PropertiesUtils.getInstance()
@@ -23,11 +40,11 @@ public class TokenModel {
      *
      * @param dataToGenerateToken data to generate token
      * @param username            username has the token
-     * @param expiryDate          expiry date of token
+     * @param expiryAt          expiry date of token
      */
-    public TokenModel(String dataToGenerateToken, String username, LocalDateTime expiryDate) {
+    public TokenModel(String dataToGenerateToken, String username, LocalDateTime expiryAt) {
         tokenModelConstruct(dataToGenerateToken, username);
-        this.expiryDate = expiryDate;
+        this.expiryAt = expiryAt;
     }
 
     /**
@@ -40,7 +57,7 @@ public class TokenModel {
         int tokenExpiryTime = Integer.parseInt(PropertiesUtils.getInstance()
                 .getProperty("token.expiry_time"));
         tokenModelConstruct(dataToGenerateToken, username);
-        this.expiryDate = LocalDateTime.now().plusMinutes(tokenExpiryTime);
+        this.expiryAt = LocalDateTime.now().plusMinutes(tokenExpiryTime);
     }
 
     public String getToken() {
@@ -59,11 +76,11 @@ public class TokenModel {
         this.username = username;
     }
 
-    public LocalDateTime getExpiryDate() {
-        return expiryDate;
+    public LocalDateTime getExpiryAt() {
+        return expiryAt;
     }
 
-    public void setExpiryDate(LocalDateTime expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setExpiryAt(LocalDateTime expiryDate) {
+        this.expiryAt = expiryDate;
     }
 }

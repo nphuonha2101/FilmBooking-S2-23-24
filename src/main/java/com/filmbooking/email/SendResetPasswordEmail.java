@@ -1,22 +1,26 @@
+/**
+ * @author nphuo
+ * @ide IntelliJ IDEA
+ * @project_name FilmBooking-S2-23-24
+ */
+
 package com.filmbooking.email;
 
 import com.filmbooking.enumsAndConstant.enums.LanguageEnum;
 import com.filmbooking.utils.PropertiesUtils;
 
 import java.time.LocalDateTime;
-
-
+/**
+ * This class is to use create instance to send "Reset Password Email" using token
+ * <br>
+ * List of key in this email
+ * <ul>
+ *     <li>userFullName</li>
+ *     <li>username</li>
+ *     <li>token</li>
+ * </ul>
+ */
 public class SendResetPasswordEmail extends AbstractSendEmail {
-    /**
-     * This class is to use create instance to send "Reset Password Email" using token
-     * <br>
-     * List of key in this email
-     * <ul>
-     *     <li>userFullName</li>
-     *     <li>username</li>
-     *     <li>token</li>
-     * </ul>
-     */
     public SendResetPasswordEmail() {
         super();
     }

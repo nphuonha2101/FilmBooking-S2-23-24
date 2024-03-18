@@ -32,6 +32,7 @@ public enum StatusCodeEnum {
     IMG_UPLOAD_FAILED(410, "Tải ảnh lên thất bại"),
     IMG_UPLOAD_NOT_FOUND(411, "Không tìm thấy ảnh tải lên"),
     NO_DATA(412, "Không có dữ liệu"),
+    FAILED(500, "Thất bại"),
 
     INVALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
@@ -53,7 +54,7 @@ public enum StatusCodeEnum {
     private final int statusCode;
     private final String message;
 
-    private StatusCodeEnum(int statusCode, String message) {
+    StatusCodeEnum(int statusCode, String message) {
         this.statusCode = statusCode;
         this.message = message;
     }
