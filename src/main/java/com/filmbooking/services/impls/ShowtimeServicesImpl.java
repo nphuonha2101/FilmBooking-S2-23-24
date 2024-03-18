@@ -1,9 +1,8 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
+import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.IShowtimeServices;
 
@@ -11,30 +10,30 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShowtimeServicesImpl implements IShowtimeServices {
-    private final IDAO<Showtime> showtimeDAO;
+    private final DataAccessObjects<Showtime> showtimeDataAccessObjects;
 
     public ShowtimeServicesImpl() {
-        this.showtimeDAO = new GenericDAOImpl<>(Showtime.class);
+        this.showtimeDataAccessObjects = new DataAccessObjects<>(Showtime.class);
     }
 
     public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.showtimeDAO = new GenericDAOImpl<>(Showtime.class);
+        this.showtimeDataAccessObjects = new DataAccessObjects<>(Showtime.class);
         setSessionProvider(sessionProvider);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        showtimeDAO.setSessionProvider(sessionProvider);
+        showtimeDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public long getTotalRecords() {
-        return showtimeDAO.getTotalRecords();
+        return showtimeDataAccessObjects.getTotalRecordRows();
     }
 
     @Override
     public Showtime getBySlug(String slug) {
-        for (Showtime showtime : showtimeDAO.getAll()) {
+        for (Showtime showtime : showtimeDataAccessObjects.getAll().getMultipleResults()) {
             if (showtime.getSlug().equalsIgnoreCase(slug))
                 return showtime;
         }
@@ -43,32 +42,32 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
 
     @Override
     public List<Showtime> getByOffset(int offset, int limit) {
-        return showtimeDAO.getByOffset(offset, limit);
+        return new OffsetDAODecorator<Showtime>(showtimeDataAccessObjects, offset, limit).getAll().getMultipleResults();
     }
 
     @Override
     public List<Showtime> getAll() {
-        return showtimeDAO.getAll();
+        return showtimeDataAccessObjects.getAll().getMultipleResults();
     }
 
     @Override
     public Showtime getByID(String id) {
-        return showtimeDAO.getByID(id, true);
+        return showtimeDataAccessObjects.getByID(id, true).getSingleResult();
     }
 
     @Override
     public boolean save(Showtime showtime) {
-        return showtimeDAO.save(showtime);
+        return showtimeDataAccessObjects.save(showtime);
     }
 
     @Override
     public boolean update(Showtime showtime) {
-        return showtimeDAO.update(showtime);
+        return showtimeDataAccessObjects.update(showtime);
     }
 
     @Override
     public boolean delete(Showtime showtime) {
-        return showtimeDAO.delete(showtime);
+        return showtimeDataAccessObjects.delete(showtime);
     }
 
     @Override

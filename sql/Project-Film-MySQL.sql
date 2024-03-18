@@ -95,6 +95,13 @@ create table film_votes
     scores        decimal not null
 );
 
+create table user_tokens (
+    username varchar(50) references user_infos (username),
+    token    varchar(255) not null,
+    expired_at timestamp    not null,
+    primary key (username, token)
+);
+
 
 -- Genre
 insert into genres (genre_id, genre_name) values ('haikich', 'Hài kịch');

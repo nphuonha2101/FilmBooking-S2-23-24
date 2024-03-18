@@ -21,7 +21,7 @@ import java.util.List;
 public class FilmManagementController extends HttpServlet {
     private IFilmServices filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
-    private static final int LIMIT = 10;
+    private static final int LIMIT = 5;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

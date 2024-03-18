@@ -1,3 +1,9 @@
+/**
+ * @author nphuo
+ * @ide IntelliJ IDEA
+ * @project_name FilmBooking-S2-23-24
+ */
+
 package com.filmbooking.email;
 
 import com.filmbooking.enumsAndConstant.constants.PathConstant;
@@ -18,6 +24,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
+/**
+ * This class is used to send email to user
+ * <br>
+ * <ul>
+ *     <li>
+ *         This class is used to load HTML email file to {@link AbstractSendEmail#emailHtmls}
+ *     </li>
+ *     <li>
+ *         This class is used to replace all /key/ in the email content with value
+ *     </li>
+ *     <li>
+ *         This class is used to send email to user with content from emailHtmls
+ *     </li>
+ * </ul>
+ */
 public abstract class AbstractSendEmail {
     private final PropertiesUtils propertiesUtils;
     protected StringBuilder emailHtmls;
@@ -51,35 +72,7 @@ public abstract class AbstractSendEmail {
             }
         });
     }
-
-
-//    public String loadResetEmailFromHTML(User userInfo, String token, String language) {
-//        StringBuilder stringBuilder = new StringBuilder();
-//        BufferedReader reader = null;
-//
-//
-//        try {
-//            if (language == null || language.equals("default")) {
-//                reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream("/templates/emails/resetPasswordEmail.html"))));
-//            } else
-//                reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(this.getClass().getResourceAsStream("/templates/emails/resetPasswordEmail.html"))));
-//
-//            String line = null;
-//            while ((line = reader.readLine()) != null) {
-//                line = line.replaceAll("/userFullName/", userInfo.getUserFullName());
-//                line = line.replaceAll("/token/", token);
-//                line = line.replaceAll("/username/", userInfo.getUsername());
-//                stringBuilder.append(line).append("\n");
-//            }
-//
-//            reader.close();
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return stringBuilder.toString();
-//
-//    }
-
+    
     /**
      * <ul>
      *      <li>
