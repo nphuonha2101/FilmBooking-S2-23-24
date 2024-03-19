@@ -101,7 +101,7 @@
                                     <div class="wrapper justify-right-row">
                                         <div class="justify-right-row wrapper">
                                             <a class="primary-filled-button button rounded-button" target="_blank"
-                                               href="${pageContext.request.contextPath}/admin/invoice-info?booking-id=${filmBookingData.filmBookingID}">
+                                               href="<c:url value="${pageContext.request.contextPath}/admin/invoice-info?booking-id=${filmBookingData.filmBookingID}"/>">
                                                 <fmt:message bundle="${msg}" key="print"/>
                                             </a>
                                         </div>

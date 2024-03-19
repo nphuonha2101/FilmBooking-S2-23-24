@@ -31,7 +31,7 @@ public class LoginController extends HttpServlet {
 
 
         if (req.getSession().getAttribute("username") != null)
-            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/home"));
+            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
             req.setAttribute("pageTitle", "loginTitle");
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);

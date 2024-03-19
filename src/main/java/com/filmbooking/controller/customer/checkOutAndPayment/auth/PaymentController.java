@@ -58,43 +58,36 @@ public class PaymentController extends HttpServlet {
         switch (paymentStatus) {
             case SUCCESS -> {
                 filmBooking.setPaymentStatus("paid");
-                if (filmBookingServices.save(filmBooking)) {
-                    Showtime bookedShowtime = filmBooking.getShowtime();
-                    if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
-                        showtimeServices.update(bookedShowtime);
-                    }
-                }
+                handleSaveFilmBooking(req, filmBooking, showtimeServices, filmBookingServices);
 
-                filmBooking.resetFilmBooking();
-                filmBooking.createNewVNPayTxnRef();
-                req.getSession(false).setAttribute("filmBooking", filmBooking);
-
-                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=success"));
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/payment-status?status=success"));
             }
             case FAILED -> {
                 Showtime bookedShowtime = filmBooking.getShowtime();
-                if (bookedShowtime.releaseSeats(filmBooking.getSeats()))
+                if (bookedShowtime.releaseSeats(filmBooking.getBookedSeats()))
                     showtimeServices.update(bookedShowtime);
 
-                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=failed"));
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/payment-status?status=failed"));
             }
             case PENDING -> {
-                if (filmBookingServices.save(filmBooking)) {
-                    Showtime bookedShowtime = filmBooking.getShowtime();
-                    if (bookedShowtime.bookSeats(filmBooking.getSeats())) {
-                        showtimeServices.update(bookedShowtime);
-                    }
-                }
+                handleSaveFilmBooking(req, filmBooking, showtimeServices, filmBookingServices);
 
-                filmBooking.resetFilmBooking();
-                filmBooking.createNewVNPayTxnRef();
-                req.getSession(false).setAttribute("filmBooking", filmBooking);
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/payment-status?status=pending"));
+            }
+        }
+    }
 
-                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/payment-status?status=pending"));
+    private static void handleSaveFilmBooking(HttpServletRequest req, FilmBooking filmBooking, IShowtimeServices showtimeServices, IFilmBookingServices filmBookingServices) {
+        if (filmBookingServices.save(filmBooking)) {
+            Showtime bookedShowtime = filmBooking.getShowtime();
+            if (bookedShowtime.bookSeats(filmBooking.getBookedSeats())) {
+                showtimeServices.update(bookedShowtime);
             }
         }
 
-
+        filmBooking.resetFilmBooking();
+        filmBooking.createNewVNPayTxnRef();
+        req.getSession(false).setAttribute("filmBooking", filmBooking);
     }
 
 

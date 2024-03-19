@@ -31,7 +31,7 @@
 
         <h2><fmt:message bundle="${adminMsg}" key="editFilm"/></h2>
 
-        <form method="post" action="${pageContext.request.contextPath}/admin/edit/film" enctype="multipart/form-data">
+        <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/edit/film"/>" enctype="multipart/form-data">
 
 
             <div class="centered-vertical-content">

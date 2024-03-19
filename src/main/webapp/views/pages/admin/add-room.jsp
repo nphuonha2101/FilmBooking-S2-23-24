@@ -36,7 +36,7 @@
             <!-- text form in left -->
             <div class="wrapper centered-vertical-content">
                 <div>
-                    <form method="post" action="${pageContext.request.contextPath}/admin/add/room">
+                    <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/add/room"/>">
 
                         <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>:
                             <span class="warning-color"> *</span>

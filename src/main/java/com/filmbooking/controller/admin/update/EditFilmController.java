@@ -124,10 +124,9 @@ public class EditFilmController extends HttpServlet {
             }
         }
 
-        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/admin/management/film"));
+        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film"));
 
         hibernateSessionProvider.closeSession();
-
     }
 
     @Override

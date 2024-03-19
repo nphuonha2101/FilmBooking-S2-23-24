@@ -24,7 +24,7 @@
             </button>
         </div>
 
-        <form action="${pageContext.request.contextPath}/search" method="get" id="search-form">
+        <form action="<c:url value="${pageContext.request.contextPath}/search"/>" method="get" id="search-form">
             <div class="centered-horizontal-content wrapper">
                 <input type="text" name="q" id="search-input-form"
                        placeholder="<fmt:message key="seachPlaceholder" bundle="${msg}"/>"/>

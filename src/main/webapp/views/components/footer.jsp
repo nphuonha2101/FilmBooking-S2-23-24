@@ -31,9 +31,9 @@
     <div>
         <h2><fmt:message key="footerQuickLinks" bundle="${msg}"/></h2>
         <ul class="link-list">
-            <li><a href="${pageContext.request.contextPath}/home"><fmt:message key="home" bundle="${msg}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/auth/booking-history"><fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
-            <li><a href="${pageContext.request.contextPath}/auth/account-info"><fmt:message key="yourAccount" bundle="${msg}"/></a></li>
+            <li><a href="<c:url value="${pageContext.request.contextPath}/home"/>"><fmt:message key="home" bundle="${msg}"/></a></li>
+            <li><a href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>"><fmt:message key="bookingHistory" bundle="${msg}"/></a></li>
+            <li><a href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>"><fmt:message key="yourAccount" bundle="${msg}"/></a></li>
         </ul>
     </div>
     <div>

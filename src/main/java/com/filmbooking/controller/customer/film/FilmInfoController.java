@@ -91,8 +91,8 @@ public class FilmInfoController extends HttpServlet {
 
                 // release old showtime
                 Showtime oldShowtime = filmBooking.getShowtime();
-                if (oldShowtime != null && filmBooking.getSeats() != null) {
-                    oldShowtime.releaseSeats(filmBooking.getSeats());
+                if (oldShowtime != null && filmBooking.getBookedSeats() != null) {
+                    oldShowtime.releaseSeats(filmBooking.getBookedSeats());
                     showtimeServices.update(oldShowtime);
                 }
 
@@ -101,8 +101,8 @@ public class FilmInfoController extends HttpServlet {
                 filmBooking.setShowtime(bookedShowtime);
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
-
-                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/book-film"));
+                
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/book-film"));
                 return;
             }
         } else {
