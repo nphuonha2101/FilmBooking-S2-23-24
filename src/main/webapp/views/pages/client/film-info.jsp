@@ -46,7 +46,7 @@
                             <span> (${totalFilmVotes} <fmt:message key="votes" bundle="${msg}"/>)</span>
                         </div>
                         <c:forEach begin="1" end="5" step="1" varStatus="loop">
-                            <a href="${pageContext.request.contextPath}/vote-film?film=${param.film}&scores=${loop.index}"
+                            <a href="<c:url value="${pageContext.request.contextPath}/vote-film?film=${param.film}&scores=${loop.index}"/>"
                                class="film-vote-stars" id="${loop.index}">
                                 <span class="material-symbols-rounded">
                                     star
@@ -126,7 +126,7 @@
             <%--            </div>--%>
 
             <div class="wrapper centered-vertical-content">
-                <form action="${pageContext.request.contextPath}/film-info" method="post">
+                <form action="<c:url value="${pageContext.request.contextPath}/film-info"/>" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
                     <input class="primary-filled-button button" type="submit"
                            value="<fmt:message bundle="${msg}" key="continue"/>">

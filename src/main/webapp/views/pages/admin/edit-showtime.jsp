@@ -35,7 +35,7 @@
 
             <div>
                 <c:set var="editShowtime" value="${editShowtime}"/>
-                <form method="post" action="${pageContext.request.contextPath}/admin/edit/showtime">
+                <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/edit/showtime"/>">
                     <label for="showtime-id"><fmt:message bundle="${adminMsg}" key="showtimeID"/>:
                     </label>
                     <input class="readonly-input" type="text"

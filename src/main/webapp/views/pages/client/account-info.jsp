@@ -53,10 +53,10 @@
         </table>
 
         <div class="wrapper justify-right-row">
-            <a class="links" style="margin: 0 1rem;" href="${pageContext.request.contextPath}/auth/change-password"><fmt:message bundle="${msg}"
+            <a class="links" style="margin: 0 1rem;" href="<c:url value="${pageContext.request.contextPath}/auth/change-password"/>"><fmt:message bundle="${msg}"
                                                                                          key="changePasswd"/></a>
             <a class="primary-filled-button button rounded-button"
-               href="${pageContext.request.contextPath}/auth/change-info?username=${loginUser.username}"><fmt:message bundle="${msg}" key="changeInfo"/>
+               href="<c:url value="${pageContext.request.contextPath}/auth/change-info?username=${loginUser.username}"/>"><fmt:message bundle="${msg}" key="changeInfo"/>
             </a>
         </div>
     </div>

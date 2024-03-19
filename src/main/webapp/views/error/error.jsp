@@ -34,7 +34,7 @@
         <img alt="${httpErrorCode}" src="<c:url value="/resources/images/${errorImgName}"/>"
              style=" width: calc(60vw) !important;"
         />
-        <a href="${pageContext.request.contextPath}/home" class="button primary-filled-button rounded-button"><fmt:message key="home"
+        <a href="<c:url value="${pageContext.request.contextPath}/home"/>" class="button primary-filled-button rounded-button"><fmt:message key="home"
                                                                                         bundle="${msg}"/></a>
     </div>
 </div>

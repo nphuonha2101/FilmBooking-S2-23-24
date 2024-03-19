@@ -8,18 +8,20 @@ import java.io.IOException;
 
 public class RedirectPageUtils {
     /**
-     * Redirect to a page and save the current page to session for method {@link RedirectPageUtils#redirectPreviousPageIfExist(HttpServletRequest, HttpServletResponse)} 
+     * Redirect to a page and save the current page to session for method {@link RedirectPageUtils#redirectPreviousPageIfExist(HttpServletRequest, HttpServletResponse)}
      *
-     * @param toPage              page to redirect to
+     * @param toPage             page to redirect to
      * @param currentQueryString current query string
-     * @param req                 request used to get session
-     * @param resp                response used to redirect
+     * @param req                request used to get session
+     * @param resp               response used to redirect
      * @throws IOException if redirect fails
      */
     public static void redirectPage(String toPage, String currentQueryString, HttpServletRequest req,
                                     HttpServletResponse resp) throws IOException {
         HttpSession userSession = req.getSession(false);
-        String previousPageURI = WebAppPathUtils.getURLWithContextPath(req, req.getRequestURI());
+
+        String previousPageURI = WebAppPathUtils.getURLWithContextPath(req, resp, req.getRequestURI());
+
         if (currentQueryString != null)
             previousPageURI += "?" + currentQueryString;
         System.out.println("previous page: " + previousPageURI);
@@ -43,7 +45,8 @@ public class RedirectPageUtils {
             resp.sendRedirect(previousPage);
             return;
         }
-        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/home"));
+
+        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
     }
 }
 

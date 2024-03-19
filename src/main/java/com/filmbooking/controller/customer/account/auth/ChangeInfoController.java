@@ -65,7 +65,8 @@ public class ChangeInfoController extends HttpServlet {
                 loginUser.setUserFullName(userFullName);
                 loginUser.setUserEmail(email);
                 userServices.update(loginUser);
-                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, "/auth/account-info"));
+
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/account-info"));
             }
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());

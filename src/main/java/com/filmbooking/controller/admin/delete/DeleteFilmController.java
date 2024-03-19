@@ -39,11 +39,10 @@ public class DeleteFilmController extends HttpServlet {
             file.delete();
 
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_FILM_SUCCESSFUL.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, "/admin/management/film")).forward(req, resp);
-        }
-        else {
+            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film")).forward(req, resp);
+        } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_FILM_FAILED.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, "/admin/management/film")).forward(req, resp);
+            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film")).forward(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

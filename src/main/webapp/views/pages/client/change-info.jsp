@@ -29,7 +29,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-        <form action="${pageContext.request.contextPath}/auth/change-info" method="post">
+        <form action="<c:url value="${pageContext.request.contextPath}/auth/change-info"/>" method="post">
             <label for="username">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>
@@ -63,7 +63,7 @@
                    value="<fmt:message bundle="${msg}" key="change"/> ">
         </form>
         <p><fmt:message bundle="${msg}" key="return"/>
-            <span><a class="links" href="${pageContext.request.contextPath}/auth/account-info">
+            <span><a class="links" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
                 <fmt:message bundle="${msg}" key="info"/>
             </a></span>
         </p>
