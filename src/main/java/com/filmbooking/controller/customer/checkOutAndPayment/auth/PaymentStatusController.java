@@ -6,8 +6,8 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  *  @author nphuonha
  */
 
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -42,7 +42,7 @@ public class PaymentStatusController extends HttpServlet {
         }
 
         req.setAttribute("pageTitle", "paymentResultTitle");
-        RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getClientPagesPath("payment-status.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("payment-status.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 }

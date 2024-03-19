@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -34,8 +34,8 @@ public class BookingHistoryController extends HttpServlet {
                 req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getClientPagesPath("booking-history.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+                WebAppPathUtils.getClientPagesPath("booking-history.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }

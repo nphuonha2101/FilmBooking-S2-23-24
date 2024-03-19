@@ -9,7 +9,7 @@ import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -65,8 +65,8 @@ public class FilmInfoController extends HttpServlet {
         req.setAttribute("totalFilmVotes", bookedFilm.getFilmVoteList().size());
 
         RenderViewUtils.renderViewToLayout(req, resp,
-                PathUtils.getClientPagesPath("film-info.jsp"),
-                PathUtils.getLayoutPath("master.jsp"));
+                WebAppPathUtils.getClientPagesPath("film-info.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
 
         hibernateSessionProvider.closeSession();
     }
@@ -101,8 +101,8 @@ public class FilmInfoController extends HttpServlet {
                 filmBooking.setShowtime(bookedShowtime);
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
-
-                resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp,  "/auth/book-film"));
+                
+                resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/book-film"));
                 return;
             }
         } else {

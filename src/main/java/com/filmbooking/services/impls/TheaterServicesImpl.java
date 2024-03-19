@@ -1,7 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.model.Theater;
 import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.hibernate.HibernateSessionProvider;
@@ -9,44 +8,44 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import java.util.List;
 
 public class TheaterServicesImpl implements ITheaterServices {
-    private final IDAO<Theater> theaterDAO;
+    private final DataAccessObjects<Theater> theaterDataAccessObjects;
     public TheaterServicesImpl() {
-        theaterDAO = new GenericDAOImpl<>(Theater.class);
+        theaterDataAccessObjects = new DataAccessObjects<>(Theater.class);
     }
 
     public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
-        theaterDAO = new GenericDAOImpl<>(Theater.class);
+        theaterDataAccessObjects = new DataAccessObjects<>(Theater.class);
         setSessionProvider(sessionProvider);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        theaterDAO.setSessionProvider(sessionProvider);
+        theaterDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public List<Theater> getAll() {
-        return theaterDAO.getAll();
+        return theaterDataAccessObjects.getAll().getMultipleResults();
     }
 
     @Override
     public Theater getByID(String id) {
-        return theaterDAO.getByID(id, true);
+        return theaterDataAccessObjects.getByID(id, true).getSingleResult();
     }
 
     @Override
     public boolean save(Theater theater) {
-        return theaterDAO.save(theater);
+        return theaterDataAccessObjects.save(theater);
     }
 
     @Override
     public boolean update(Theater theater) {
-        return theaterDAO.update(theater);
+        return theaterDataAccessObjects.update(theater);
     }
 
     @Override
     public boolean delete(Theater theater) {
-        return theaterDAO.delete(theater);
+        return theaterDataAccessObjects.delete(theater);
     }
 
 

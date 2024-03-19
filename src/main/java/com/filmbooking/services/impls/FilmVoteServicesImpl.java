@@ -6,8 +6,7 @@ package com.filmbooking.services.impls;
  *  @author nphuonha
  */
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.IFilmVoteServices;
@@ -15,21 +14,21 @@ import com.filmbooking.services.IFilmVoteServices;
 import java.util.List;
 
 public class FilmVoteServicesImpl implements IFilmVoteServices {
-    private final IDAO<FilmVote> filmVoteDAO;
+    private final DataAccessObjects<FilmVote> filmVoteDataAccessObjects;
 
     public FilmVoteServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.filmVoteDAO = new GenericDAOImpl<>(FilmVote.class);
+        this.filmVoteDataAccessObjects = new DataAccessObjects<>(FilmVote.class);
         setSessionProvider(sessionProvider);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        filmVoteDAO.setSessionProvider(sessionProvider);
+        filmVoteDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public boolean save(FilmVote filmVote) {
-        return filmVoteDAO.save(filmVote);
+        return filmVoteDataAccessObjects.save(filmVote);
     }
 
     @Override

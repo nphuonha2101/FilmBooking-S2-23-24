@@ -1,6 +1,6 @@
 package com.filmbooking.utils.fileUtils;
 
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.Part;
@@ -11,7 +11,7 @@ public class FileUploadUtils {
 
     public static boolean uploadFile(HttpServletRequest req, String fileName, String uploadElementName) {
         try {
-            String realFilePath = FileUtils.getDeployedApplicationPath(req) + PathUtils.getFileUploadPath(fileName);
+            String realFilePath = FileUtils.getDeployedApplicationPath(req) + WebAppPathUtils.getFileUploadPath(fileName);
 
             System.out.println(realFilePath);
             Part filePart = req.getPart(uploadElementName);
