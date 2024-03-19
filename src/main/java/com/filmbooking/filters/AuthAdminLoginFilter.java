@@ -1,7 +1,7 @@
 package com.filmbooking.filters;
 
 import com.filmbooking.model.User;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
@@ -26,7 +26,8 @@ public class AuthAdminLoginFilter extends HttpFilter {
         HttpSession userSession = req.getSession();
         User loginUser = (User) userSession.getAttribute("loginUser");
         if (loginUser == null) {
-            RedirectPageUtils.redirectPage(PathUtils.getURLWithContextPath(req, resp,  "/login"), null, req, resp);
+
+            RedirectPageUtils.redirectPage(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"), null, req, resp);
             return;
         } else {
             String accountRole = loginUser.getAccountRole();

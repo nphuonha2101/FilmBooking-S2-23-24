@@ -1,7 +1,7 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
+import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
@@ -12,28 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilmServicesImpl implements IFilmServices {
-    private final IDAO<Film> filmDAO;
+    private final DataAccessObjects<Film> filmDataAccessObjects;
     private final IGenreServices genreServices;
 
     public FilmServicesImpl() {
-        filmDAO = new GenericDAOImpl<>(Film.class);
+        filmDataAccessObjects = new DataAccessObjects<>(Film.class);
         genreServices = new GenreServicesImpl();
     }
 
     public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
-        filmDAO = new GenericDAOImpl<>(Film.class);
+        filmDataAccessObjects = new DataAccessObjects<>(Film.class);
         genreServices = new GenreServicesImpl(sessionProvider);
-        filmDAO.setSessionProvider(sessionProvider);
+        filmDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        filmDAO.setSessionProvider(sessionProvider);
+        filmDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public long getTotalRecords() {
-        return filmDAO.getTotalRecords();
+        return filmDataAccessObjects.getTotalRecordRows();
     }
 
     /**
@@ -43,17 +43,17 @@ public class FilmServicesImpl implements IFilmServices {
      */
     @Override
     public List<Film> getAll() {
-        return filmDAO.getAll();
+        return filmDataAccessObjects.getAll().getMultipleResults();
     }
 
     @Override
     public Film getByFilmID(String id) {
-        return filmDAO.getByID(id, true);
+        return filmDataAccessObjects.getByID(id, true).getSingleResult();
     }
 
     @Override
     public Film getBySlug(String slug) {
-        for (Film film : filmDAO.getAll()) {
+        for (Film film : filmDataAccessObjects.getAll().getMultipleResults()) {
             if (film.getSlug().equalsIgnoreCase(slug))
                 return film;
         }
@@ -98,12 +98,12 @@ public class FilmServicesImpl implements IFilmServices {
 
     @Override
     public List<Film> getByOffset(int offset, int limit) {
-        return filmDAO.getByOffset(offset, limit);
+        return new OffsetDAODecorator<Film>(filmDataAccessObjects, offset, limit).getAll().getMultipleResults();
     }
 
     @Override
     public boolean save(Film film) {
-        return filmDAO.save(film);
+        return filmDataAccessObjects.save(film);
     }
 
     @Override
@@ -114,12 +114,12 @@ public class FilmServicesImpl implements IFilmServices {
             genreList.add(genreServices.getByID(genreID));
         }
         film.setGenreList(genreList);
-        return filmDAO.save(film);
+        return filmDataAccessObjects.save(film);
     }
 
     @Override
     public boolean update(Film film) {
-        return filmDAO.update(film);
+        return filmDataAccessObjects.update(film);
     }
 
     @Override
@@ -131,12 +131,12 @@ public class FilmServicesImpl implements IFilmServices {
         }
         film.setGenreList(genreList);
 
-        return filmDAO.update(film);
+        return filmDataAccessObjects.update(film);
     }
 
     @Override
     public boolean delete(Film film) {
-        return filmDAO.delete(film);
+        return filmDataAccessObjects.delete(film);
     }
 
 

@@ -1,7 +1,6 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.GenericDAOImpl;
-import com.filmbooking.dao.IDAO;
+import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.IGenreServices;
@@ -9,44 +8,44 @@ import com.filmbooking.services.IGenreServices;
 import java.util.List;
 
 public class GenreServicesImpl implements IGenreServices {
-    private final IDAO<Genre> genreDAO;
+    private final DataAccessObjects<Genre> genreDataAccessObjects;
 
     public GenreServicesImpl() {
-        genreDAO = new GenericDAOImpl<>(Genre.class);
+        genreDataAccessObjects = new DataAccessObjects<>(Genre.class);
     }
 
     public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
-        genreDAO = new GenericDAOImpl<>(Genre.class);
+        genreDataAccessObjects = new DataAccessObjects<>(Genre.class);
         setSessionProvider(sessionProvider);
     }
 
     @Override
     public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        genreDAO.setSessionProvider(sessionProvider);
+        genreDataAccessObjects.setSessionProvider(sessionProvider);
     }
 
     @Override
     public List<Genre> getAll() {
-        return genreDAO.getAll();
+        return genreDataAccessObjects.getAll().getMultipleResults();
     }
 
     @Override
     public Genre getByID(String id) {
-        return genreDAO.getByID(id, false);
+        return genreDataAccessObjects.getByID(id, false).getSingleResult();
     }
 
     @Override
     public boolean save(Genre genre) {
-        return genreDAO.save(genre);
+        return genreDataAccessObjects.save(genre);
     }
 
     @Override
     public boolean update(Genre genre) {
-        return genreDAO.update(genre);
+        return genreDataAccessObjects.update(genre);
     }
 
     @Override
     public boolean delete(Genre genre) {
-        return genreDAO.delete(genre);
+        return genreDataAccessObjects.delete(genre);
     }
 }

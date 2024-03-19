@@ -4,7 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
 import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,7 +34,7 @@ public class InvoiceInfoController extends HttpServlet {
         req.setAttribute("bookedFilmBooking", filmBooking);
 
         req.setAttribute("pageTitle", "invoiceInfoTitle");
-        req.getRequestDispatcher(PathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
+        req.getRequestDispatcher(WebAppPathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

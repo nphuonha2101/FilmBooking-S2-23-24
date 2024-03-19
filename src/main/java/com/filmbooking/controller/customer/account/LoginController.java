@@ -5,8 +5,8 @@ import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.statusEnums.StatusCodeEnum;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -23,15 +23,15 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
-    private final String VIEW_PATH = PathUtils.getClientPagesPath("login.jsp");
-    private final String LAYOUT_PATH = PathUtils.getLayoutPath("master.jsp");
+    private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
+    private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
         if (req.getSession().getAttribute("username") != null)
-            resp.sendRedirect(PathUtils.getURLWithContextPath(req, resp, "/home"));
+            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
             req.setAttribute("pageTitle", "loginTitle");
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);

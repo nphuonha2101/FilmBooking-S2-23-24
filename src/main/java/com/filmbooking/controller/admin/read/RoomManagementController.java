@@ -5,7 +5,7 @@ import com.filmbooking.model.Room;
 import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.utils.PaginationUtils;
-import com.filmbooking.utils.PathUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,7 +43,7 @@ public class RoomManagementController extends HttpServlet {
 
             }
             req.setAttribute("pageTitle", "roomManagementTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, PathUtils.getAdminPagesPath("room-management.jsp"), PathUtils.getLayoutPath("master.jsp"));
+            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("room-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
         }
 
         hibernateSessionProvider.closeSession();
