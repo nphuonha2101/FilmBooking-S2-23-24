@@ -70,7 +70,7 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
 
 
     @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
+    public T getByID(String id, boolean isLongID) {
         try {
             criteriaBuilder = this.session.getCriteriaBuilder();
             criteriaQueryResult = criteriaBuilder.createQuery(classOfData);
@@ -83,10 +83,12 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
                 criteriaQueryResult.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
             typedQuery = this.session.createQuery(criteriaQueryResult);
+
+            return typedQuery.getSingleResult();
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
+            return null;
         }
-        return this;
     }
 
     @Override
@@ -135,13 +137,6 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
     public List<T> getMultipleResults() {
         List<T> result;
         result = typedQuery.getResultList();
-        return result;
-    }
-
-    @Override
-    public T getSingleResult() {
-        T result;
-        result = typedQuery.getSingleResult();
         return result;
     }
 

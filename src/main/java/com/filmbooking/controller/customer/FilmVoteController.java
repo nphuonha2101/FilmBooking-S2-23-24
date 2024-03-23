@@ -9,8 +9,6 @@ package com.filmbooking.controller.customer;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmVote;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.services.IFilmVoteServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.FilmVoteServicesImpl;
 import jakarta.servlet.ServletException;
@@ -23,8 +21,8 @@ import java.io.IOException;
 
 @WebServlet("/vote-film")
 public class FilmVoteController extends HttpServlet {
-    private IFilmVoteServices filmVoteServices;
-    private IFilmServices filmServices;
+    private FilmVoteServicesImpl filmVoteServices;
+    private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

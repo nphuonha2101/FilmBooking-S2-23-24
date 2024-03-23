@@ -4,32 +4,32 @@ import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
-import com.filmbooking.services.ITokenServices;
+import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.IServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 
-public class TokenServicesImpl implements ITokenServices {
-    DataAccessObjects<TokenModel> tokenDataAccessObjects;
+public class TokenServicesImpl extends AbstractServices<TokenModel> {
 
     public TokenServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.tokenDataAccessObjects = new DataAccessObjects<>(TokenModel.class);
-        this.tokenDataAccessObjects.setSessionProvider(sessionProvider);
+        super.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
+        super.setSessionProvider(sessionProvider);
     }
 
     @Override
-    public ServiceResult saveToken(TokenModel tokenModel) {
-        if (tokenDataAccessObjects.save(tokenModel)) {
-            return new ServiceResult(StatusCodeEnum.SUCCESSFUL);
-        }
-        return new ServiceResult(StatusCodeEnum.FAILED);
+    public TokenModel getBySlug(String slug) {
+        throw new UnsupportedOperationException("This method is not supported for TokenModel");
     }
 
     @Override
-    public ServiceResult verifyToken(String token) {
+    public TokenModel getByID(String id) {
         return null;
     }
 
     @Override
-    public ServiceResult deleteToken(String token) {
-        return null;
+    public boolean update(TokenModel tokenModel) {
+        throw new UnsupportedOperationException("This method is not supported for TokenModel");
     }
+
+
 }
+

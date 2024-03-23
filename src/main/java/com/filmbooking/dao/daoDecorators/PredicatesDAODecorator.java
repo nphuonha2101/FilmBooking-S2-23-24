@@ -63,7 +63,7 @@ public class PredicatesDAODecorator<T> extends AbstractDAODecorator<T> {
     }
 
     @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
+    public T getByID(String id, boolean isLongID) {
         return this.decoratedDAO.getByID(id, isLongID);
     }
 
@@ -87,8 +87,4 @@ public class PredicatesDAODecorator<T> extends AbstractDAODecorator<T> {
         return this.decoratedDAO.getMultipleResults();
     }
 
-    @Override
-    public T getSingleResult() {
-        return this.decoratedDAO.getSingleResult();
-    }
 }

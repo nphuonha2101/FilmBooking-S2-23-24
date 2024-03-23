@@ -15,9 +15,12 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.model.Theater;
+import com.filmbooking.model.User;
 import com.filmbooking.payment.VNPay;
+import com.filmbooking.utils.GSONUtils;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
+import com.google.gson.Gson;
 import jakarta.persistence.criteria.Predicate;
 
 import java.io.UnsupportedEncodingException;
@@ -42,9 +45,15 @@ public class Test {
             return predicate;
         });
 
+        IDAO< User> userDAO = new DataAccessObjects<>(User.class);
+        userDAO.setSessionProvider(hibernateSessionProvider);
+
         System.out.println(filmDAOPredicate
                 .getAll()
                 .getMultipleResults().size());
+
+        User user = userDAO.getByID("nphuonha", false);
+        System.out.println(GSONUtils.getGson().toJson(user));
 
         hibernateSessionProvider.closeSession();
 

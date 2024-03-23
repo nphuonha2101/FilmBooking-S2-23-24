@@ -3,8 +3,6 @@ package com.filmbooking.controller.admin.update;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
@@ -28,9 +26,9 @@ import java.util.List;
 @WebServlet(name = "editFilm", value = "/admin/edit/film")
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
-    private IFilmServices filmServices;
+    private FilmServicesImpl filmServices;
     private Film editFilm;
-    private IGenreServices genreServices;
+    private GenreServicesImpl genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

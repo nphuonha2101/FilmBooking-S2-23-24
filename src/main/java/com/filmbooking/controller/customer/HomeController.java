@@ -2,7 +2,6 @@ package com.filmbooking.controller.customer;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.utils.PaginationUtils;
@@ -19,7 +18,7 @@ import java.util.List;
 
 @WebServlet(name = "home", value = "/home")
 public class HomeController extends HttpServlet {
-    private IFilmServices filmServices;
+    private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private static final int LIMIT = 8;
 
@@ -29,14 +28,14 @@ public class HomeController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
 
         int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecords() / LIMIT);
+        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
         // if offset == -2, it means that the current page is not valid
         if (offset != -2) {
             // if offset == -1, it means that no data is found
             if (offset != -1) {
-                List<Film> films = filmServices.getByOffset(offset, LIMIT);
+                List<Film> films = filmServices.getByOffset(offset, LIMIT).getMultipleResults();
 
                 req.setAttribute("filmsData", films);
                 req.setAttribute("pageUrl", "home");

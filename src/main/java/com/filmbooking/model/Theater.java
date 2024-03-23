@@ -1,9 +1,13 @@
 package com.filmbooking.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "theaters")
 public class Theater {
@@ -21,46 +25,6 @@ public class Theater {
     List<Room> roomList;
 
     public Theater() {}
-
-    public String getTheaterName() {
-        return theaterName;
-    }
-
-    public void setTheaterName(String theaterName) {
-        this.theaterName = theaterName;
-    }
-
-    public String getTaxCode() {
-        return taxCode;
-    }
-
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
-
-    public String getTheaterAddress() {
-        return theaterAddress;
-    }
-
-    public void setTheaterAddress(String theaterAddress) {
-        this.theaterAddress = theaterAddress;
-    }
-
-    public long getTheaterID() {
-        return theaterID;
-    }
-
-    public void setTheaterID(long theaterID) {
-        this.theaterID = theaterID;
-    }
-
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
-    }
 
     @Override
     public boolean equals(Object obj) {
