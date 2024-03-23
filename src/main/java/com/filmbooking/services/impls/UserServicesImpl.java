@@ -4,7 +4,7 @@ import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
-import com.filmbooking.services.IUserServices;
+import com.filmbooking.services.AbstractServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.utils.StringUtils;
@@ -12,60 +12,38 @@ import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
 import java.util.List;
+import java.util.Map;
 
-public class UserServicesImpl implements IUserServices {
-    private final DataAccessObjects<User> userDataAccessObjects;
-
-    public UserServicesImpl() {
-        userDataAccessObjects = new DataAccessObjects<>(User.class);
-    }
+public class UserServicesImpl extends AbstractServices<User> {
 
     public UserServicesImpl(HibernateSessionProvider sessionProvider) {
-        userDataAccessObjects = new DataAccessObjects<>(User.class);
-        setSessionProvider(sessionProvider);
+        super.decoratedDAO = new DataAccessObjects<>(User.class);
+        super.setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        userDataAccessObjects.setSessionProvider(sessionProvider);
+    public User getBySlug(String slug) {
+        throw new UnsupportedOperationException("This method is not supported for User");
     }
 
     @Override
-    public List<User> getAll() {
-        return userDataAccessObjects.getAll().getMultipleResults();
+    public User getByID(String id) {
+        return super.decoratedDAO.getByID(id, false);
     }
 
-    @Override
-    public User getByUsername(String id) {
-        return userDataAccessObjects.getByID(id, false).getSingleResult();
-    }
-
-    @Override
     public User getByEmail(String email) {
-        for (User user : getAll()
-        ) {
-            if (user.getUserEmail().equalsIgnoreCase(email))
-                return user;
-        }
-        return null;
+        Map<String, Object> map = Map.of("userEmail", email);
+        return this.getByPredicates(map).getMultipleResults().get(0);
     }
 
-    @Override
-    public boolean save(User user) {
-        return userDataAccessObjects.save(user);
-    }
-
-    @Override
-    public boolean update(User user) {
-        return userDataAccessObjects.update(user);
-    }
-
-    @Override
-    public boolean delete(User user) {
-        return userDataAccessObjects.delete(user);
-    }
-
-    @Override
+    /**
+     * Authenticate user by username or email
+     * <br>
+     * Used for login
+     * @param usernameOrEmail username or email
+     * @param password password
+     * @return ServiceResult with status code and user object
+     */
     public ServiceResult userAuthentication(String usernameOrEmail, String password) {
         ServiceResult serviceResult = null;
         // hash password
@@ -80,7 +58,7 @@ public class UserServicesImpl implements IUserServices {
             loginUser = getByEmail(usernameOrEmail);
         // login by username
         if (isUsername)
-            loginUser = getByUsername(usernameOrEmail);
+            loginUser = getByID(usernameOrEmail);
         // if input is not email or username
         if (!(isEmail || isUsername)) {
             serviceResult = new ServiceResult(StatusCodeEnum.INVALID_INPUT);
@@ -103,11 +81,10 @@ public class UserServicesImpl implements IUserServices {
         return serviceResult;
     }
 
-    @Override
     public ServiceResult userForgotPassword(String username, String email, String language) {
         ServiceResult result = null;
 
-        User forgotPassUser = getByUsername(username);
+        User forgotPassUser = getByID(username);
 
         // if user not exist
         if (forgotPassUser == null) {
@@ -135,7 +112,7 @@ public class UserServicesImpl implements IUserServices {
         }
     }
 
-    @Override
+
     public ServiceResult userResetPassword(String token, String newPassword) {
 
 
@@ -143,7 +120,7 @@ public class UserServicesImpl implements IUserServices {
         return null;
     }
 
-    @Override
+
     public ServiceResult userChangePassword(String username, String oldPassword, String newPassword) {
         return null;
     }

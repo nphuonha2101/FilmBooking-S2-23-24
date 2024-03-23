@@ -3,8 +3,6 @@ package com.filmbooking.controller.admin.create;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
-import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
@@ -21,8 +19,8 @@ import java.io.IOException;
 
 @WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
-    private IRoomServices roomServices;
-    private ITheaterServices theaterServices;
+    private RoomServicesImpl roomServices;
+    private TheaterServicesImpl theaterServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

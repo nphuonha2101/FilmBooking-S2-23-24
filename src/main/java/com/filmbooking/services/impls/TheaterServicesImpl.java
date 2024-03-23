@@ -2,51 +2,27 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.model.Theater;
-import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.IServices;
 
 import java.util.List;
 
-public class TheaterServicesImpl implements ITheaterServices {
-    private final DataAccessObjects<Theater> theaterDataAccessObjects;
-    public TheaterServicesImpl() {
-        theaterDataAccessObjects = new DataAccessObjects<>(Theater.class);
-    }
+public class TheaterServicesImpl extends AbstractServices<Theater> {
 
     public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
-        theaterDataAccessObjects = new DataAccessObjects<>(Theater.class);
-        setSessionProvider(sessionProvider);
+        super.decoratedDAO = new DataAccessObjects<>(Theater.class);
+        super.setSessionProvider(sessionProvider);
     }
 
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        theaterDataAccessObjects.setSessionProvider(sessionProvider);
-    }
 
     @Override
-    public List<Theater> getAll() {
-        return theaterDataAccessObjects.getAll().getMultipleResults();
+    public Theater getBySlug(String slug) {
+        throw new UnsupportedOperationException("This method is not supported for Theater");
     }
 
     @Override
     public Theater getByID(String id) {
-        return theaterDataAccessObjects.getByID(id, true).getSingleResult();
+        return this.decoratedDAO.getByID(id, true);
     }
-
-    @Override
-    public boolean save(Theater theater) {
-        return theaterDataAccessObjects.save(theater);
-    }
-
-    @Override
-    public boolean update(Theater theater) {
-        return theaterDataAccessObjects.update(theater);
-    }
-
-    @Override
-    public boolean delete(Theater theater) {
-        return theaterDataAccessObjects.delete(theater);
-    }
-
-
 }

@@ -2,7 +2,6 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.PaginationUtils;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @WebServlet(name="showtimeManagement", value="/admin/management/showtime")
 public class ShowtimeManagementController extends HttpServlet {
-    private IShowtimeServices showtimeServices;
+    private ShowtimeServicesImpl showtimeServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private static final int LIMIT = 10;
 
@@ -29,14 +28,14 @@ public class ShowtimeManagementController extends HttpServlet {
 
 
         int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) showtimeServices.getTotalRecords() / LIMIT);
+        int totalPages = (int) Math.ceil((double) showtimeServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
         // if page valid (offset != -2)
         if (offset != -2) {
             // if page has data (offset != -1)
             if (offset != -1) {
-                List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT);
+                List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT).getMultipleResults();
 
                 req.setAttribute("showtimeList", showtimeList);
                 // set page url for pagination

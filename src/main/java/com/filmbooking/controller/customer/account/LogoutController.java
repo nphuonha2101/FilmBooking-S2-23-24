@@ -3,7 +3,6 @@ package com.filmbooking.controller.customer.account;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
@@ -29,14 +28,15 @@ public class LogoutController extends HttpServlet {
             FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
             Showtime showtime = filmBooking.getShowtime();
 
-            if (filmBooking.getBookedSeats() != null && showtime != null) {
-                System.out.println(filmBooking.getBookedSeats());
-                HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-                IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-                showtime.releaseSeats(filmBooking.getBookedSeats());
-                showtimeServices.update(showtime);
-                hibernateSessionProvider.closeSession();
-            }
+            // TODO: release booked seats
+//            if (filmBooking.getBookedSeats() != null && showtime != null) {
+//                System.out.println(filmBooking.getBookedSeats());
+//                HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
+//                IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+//                showtime.releaseSeats(filmBooking.getBookedSeats());
+//                showtimeServices.update(showtime);
+//                hibernateSessionProvider.closeSession();
+//            }
             session.invalidate();
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         } else resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));

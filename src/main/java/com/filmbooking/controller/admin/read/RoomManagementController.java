@@ -2,7 +2,6 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
-import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.WebAppPathUtils;
@@ -18,7 +17,7 @@ import java.util.List;
 
 @WebServlet(name = "roomManagement", value = "/admin/management/room")
 public class RoomManagementController extends HttpServlet {
-    private IRoomServices roomServices;
+    private RoomServicesImpl roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private static final int LIMIT = 10;
 
@@ -28,14 +27,14 @@ public class RoomManagementController extends HttpServlet {
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
 
         int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) roomServices.getTotalRecords() / LIMIT);
+        int totalPages = (int) Math.ceil((double) roomServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
         // if page valid (offset != -2)
         if (offset != -2) {
             // if page has data (offset != -1)
             if (offset != -1) {
-                List<Room> rooms = roomServices.getByOffset(offset, LIMIT);
+                List<Room> rooms = roomServices.getByOffset(offset, LIMIT).getMultipleResults();
 
                 req.setAttribute("roomData", rooms);
                 // set page url for pagination

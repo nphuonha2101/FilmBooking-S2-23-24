@@ -8,12 +8,12 @@ package com.filmbooking.model;
 
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 public class TokenModel {
     @Id
@@ -60,27 +60,4 @@ public class TokenModel {
         this.expiryAt = LocalDateTime.now().plusMinutes(tokenExpiryTime);
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public LocalDateTime getExpiryAt() {
-        return expiryAt;
-    }
-
-    public void setExpiryAt(LocalDateTime expiryDate) {
-        this.expiryAt = expiryDate;
-    }
 }

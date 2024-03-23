@@ -2,7 +2,6 @@ package com.filmbooking.controller.customer.account.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
-import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
@@ -22,7 +21,7 @@ import java.io.IOException;
 @WebServlet(value = "/auth/change-info")
 
 public class ChangeInfoController extends HttpServlet {
-    private IUserServices userServices;
+    private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

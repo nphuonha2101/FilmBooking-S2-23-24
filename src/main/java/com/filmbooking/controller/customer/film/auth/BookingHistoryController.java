@@ -16,7 +16,7 @@ import java.io.IOException;
 
 @WebServlet("/auth/booking-history")
 public class BookingHistoryController extends HttpServlet {
-    private IFilmBookingServices filmBookingServices;
+    private FilmBookingServicesImpl filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

@@ -9,9 +9,8 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.payment.VNPay;
-import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -27,8 +26,8 @@ import java.io.IOException;
 @WebServlet("/auth/checkout")
 public class CheckoutController extends HttpServlet {
     private HibernateSessionProvider hibernateSessionProvider;
-    private IFilmBookingServices filmBookingServices;
-    private IShowtimeServices showtimeServices;
+    private FilmBookingServicesImpl filmBookingServices;
+    private ShowtimeServicesImpl showtimeServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

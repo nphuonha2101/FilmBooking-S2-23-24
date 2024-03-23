@@ -18,8 +18,8 @@ import java.util.List;
  * @param <T> the type of the object
  */
 public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
-    private int offset;
-    private int limit;
+    private final int offset;
+    private final int limit;
 
     public OffsetDAODecorator(IDAO<T> decoratedDataAccessObjects, int offset, int limit) {
         super(decoratedDataAccessObjects);
@@ -50,7 +50,7 @@ public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
     }
 
     @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
+    public T getByID(String id, boolean isLongID) {
         return this.decoratedDAO.getByID(id, isLongID);
     }
 
@@ -74,10 +74,6 @@ public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
         return this.decoratedDAO.getMultipleResults();
     }
 
-    @Override
-    public T getSingleResult() {
-        return this.decoratedDAO.getSingleResult();
-    }
 
 
 }
