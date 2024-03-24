@@ -1,4 +1,4 @@
-package com.filmbooking.enumsAndConstant.enums;
+package com.filmbooking.enumsAndConstants.enums;
 
 public enum StatusCodeEnum {
     PAYMENT_PENDING(100, "Đang chờ thanh toán"),
@@ -18,11 +18,13 @@ public enum StatusCodeEnum {
     DELETE_ROOM_SUCCESSFUL(213, "Xóa phòng chiếu thành công"),
     ADD_ROOM_SUCCESSFUL(214, "Thêm phòng chiếu thành công"),
     PAYMENT_SUCCESSFUL(215, "Thanh toán thành công"),
+    TOKEN_VERIFIED(216, "Token đã được xác minh"),
     REMOVE_OLD_IMG_FAILED(300, "Xóa ảnh cũ thất bại"),
+    TOKEN_EXPIRED(301, "Token đã hết hạn"),
     USERNAME_NOT_FOUND(400, "Tên người dùng không tồn tại"),
     EMAIL_NOT_FOUND(401, "Email người dùng không tồn tại"),
     USER_NOT_FOUND(402, "Người dùng không tồn tại"),
-    PASSWORD_NOT_MATCH(403, "Mật khẩu không đúng"),
+    PASSWORD_NOT_MATCH(403, "Mật khẩu không khớp"),
     EMAIL_NOT_MATCH(404, "Email không khớp với tên người dùng"),
     PASSWORD_CONFIRM_NOT_MATCH(405, "Mật khẩu xác nhận không khớp"),
     USERNAME_EXISTED(406, "Tên người dùng đã tồn tại"),
@@ -48,7 +50,9 @@ public enum StatusCodeEnum {
     DELETE_ROOM_FAILED(512, "Xóa phòng chiếu thất bại"),
     UPDATE_FILM_FAILED(513, "Cập nhật phim thất bại"),
     UPDATE_SHOWTIME_FAILED(514, "Cập nhật suất chiếu thất bại"),
-    UPDATE_ROOM_FAILED(515, "Cập nhật phòng chiếu thất bại");
+    UPDATE_ROOM_FAILED(515, "Cập nhật phòng chiếu thất bại"),
+    TOKEN_NOT_FOUND(516, "Không tìm thấy token"),
+    PASSWORD_RESET_FAILED(517, "Đặt lại mật khẩu thất bại");
 
 
     private final int statusCode;

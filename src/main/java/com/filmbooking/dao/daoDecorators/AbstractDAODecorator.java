@@ -7,6 +7,9 @@
 package com.filmbooking.dao.daoDecorators;
 
 import com.filmbooking.dao.IDAO;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+
+import java.util.List;
 
 /**
  * <ul>
@@ -21,6 +24,46 @@ public abstract class AbstractDAODecorator<T> implements IDAO<T> {
 
     public AbstractDAODecorator(IDAO<T> decoratedDAO) {
         this.decoratedDAO = decoratedDAO;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
+    }
+
+    @Override
+    public long getTotalRecordRows() {
+        return this.decoratedDAO.getTotalRecordRows();
+    }
+
+    @Override
+    public T getByID(String id, boolean isLongID) {
+        return this.decoratedDAO.getByID(id, isLongID);
+    }
+
+    @Override
+    public boolean save(T t) {
+        return this.decoratedDAO.save(t);
+    }
+
+    @Override
+    public boolean update(T t) {
+        return this.decoratedDAO.update(t);
+    }
+
+    @Override
+    public boolean delete(T t) {
+        return this.decoratedDAO.delete(t);
+    }
+
+    @Override
+    public List<T> getMultipleResults() {
+        return this.decoratedDAO.getMultipleResults();
+    }
+
+    @Override
+    public T getSingleResult() {
+        return this.decoratedDAO.getSingleResult();
     }
 
 }

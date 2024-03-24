@@ -28,16 +28,6 @@ public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
     }
 
     @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public long getTotalRecordRows() {
-        return this.decoratedDAO.getTotalRecordRows();
-    }
-
-    @Override
     public IDAO<T> getAll() {
         DataAccessObjects<T> dataAccessObjects = (DataAccessObjects<T>) this.decoratedDAO.getAll();
         TypedQuery<T> typedQuery = dataAccessObjects.getTypedQuery();
@@ -48,32 +38,4 @@ public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
 
         return dataAccessObjects;
     }
-
-    @Override
-    public T getByID(String id, boolean isLongID) {
-        return this.decoratedDAO.getByID(id, isLongID);
-    }
-
-    @Override
-    public boolean save(T t) {
-        return this.decoratedDAO.save(t);
-    }
-
-    @Override
-    public boolean update(T t) {
-        return this.decoratedDAO.update(t);
-    }
-
-    @Override
-    public boolean delete(T t) {
-        return this.decoratedDAO.delete(t);
-    }
-
-    @Override
-    public List<T> getMultipleResults() {
-        return this.decoratedDAO.getMultipleResults();
-    }
-
-
-
 }

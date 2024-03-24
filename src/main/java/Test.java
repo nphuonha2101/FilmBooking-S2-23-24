@@ -10,31 +10,22 @@ import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.dao.daoDecorators.PredicatesDAODecorator;
 import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
-import com.filmbooking.enumsAndConstant.enums.LanguageEnum;
+import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.model.Genre;
-import com.filmbooking.model.Theater;
 import com.filmbooking.model.User;
-import com.filmbooking.payment.VNPay;
 import com.filmbooking.utils.GSONUtils;
-import com.filmbooking.utils.PropertiesUtils;
-import com.filmbooking.utils.StringUtils;
-import com.google.gson.Gson;
 import jakarta.persistence.criteria.Predicate;
-
-import java.io.UnsupportedEncodingException;
 
 public class Test {
     public static void main(String[] args) {
-//        AbstractSendEmail resetEmail = new SendResetPasswordEmail();
-//        resetEmail
-//                .loadHTMLEmail(LanguageEnum.ENGLISH)
-//                .putEmailInfo("userFullName", "Nguyen Phuong Nha")
-//                .loadEmailContent();
-//
-//        String htmls = resetEmail.testToString();
-//
+        AbstractSendEmail resetEmail = new SendResetPasswordEmail();
+        resetEmail
+                .loadHTMLEmail(LanguageEnum.ENGLISH)
+                .putEmailInfo("userFullName", "Nguyen Phuong Nha")
+                .loadEmailContent();
+
+
 //        System.out.println(htmls);
         HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
 

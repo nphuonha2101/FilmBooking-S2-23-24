@@ -8,6 +8,7 @@ package com.filmbooking.dao;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -138,6 +139,16 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
         List<T> result;
         result = typedQuery.getResultList();
         return result;
+    }
+
+    @Override
+    public T getSingleResult() {
+        try {
+            return typedQuery.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            e.printStackTrace(System.out);
+            return null;
+        }
     }
 
     @Override
