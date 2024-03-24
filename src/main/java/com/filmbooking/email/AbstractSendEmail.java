@@ -6,9 +6,8 @@
 
 package com.filmbooking.email;
 
-import com.filmbooking.enumsAndConstant.constants.PathConstant;
-import com.filmbooking.enumsAndConstant.enums.LanguageEnum;
-import com.filmbooking.model.User;
+import com.filmbooking.enumsAndConstants.constants.PathConstant;
+import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.utils.PropertiesUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
@@ -43,6 +42,7 @@ public abstract class AbstractSendEmail {
     private final PropertiesUtils propertiesUtils;
     protected StringBuilder emailHtmls;
     protected Map<String, Object> emailInfo;
+    protected Properties emailProperties;
 
 
     protected AbstractSendEmail() {
@@ -50,6 +50,12 @@ public abstract class AbstractSendEmail {
         this.emailInfo = new HashMap<>();
         this.emailHtmls = new StringBuilder();
 
+        emailProperties = new Properties();
+        emailProperties.put("mail.smtp.auth", "true");
+        emailProperties.put("mail.smtp.host", propertiesUtils.getProperty("email.hostName"));
+        emailProperties.put("mail.smtp.socketFactory.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
+        emailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        emailProperties.put("mail.smtp.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
     }
 
     /**
@@ -58,14 +64,7 @@ public abstract class AbstractSendEmail {
      * @return a {@link Session}
      */
     private Session getSession() {
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.host", propertiesUtils.getProperty("email.hostName"));
-        properties.put("mail.smtp.socketFactory.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
-        properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
-
-        return Session.getDefaultInstance(properties, new Authenticator() {
+        return Session.getDefaultInstance(emailProperties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(propertiesUtils.getProperty("email.appName"), propertiesUtils.getProperty("email.appPassword"));
@@ -175,10 +174,6 @@ public abstract class AbstractSendEmail {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String testToString() {
-        return emailHtmls.toString();
     }
 
     public static void main(String[] args) throws IOException {

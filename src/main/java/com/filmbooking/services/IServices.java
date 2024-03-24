@@ -105,10 +105,21 @@ public interface IServices<T> {
     boolean delete(T t);
 
     /**
-     * Get multiple results
-     *
-     * @return List<T> multiple results
+     * Get the results from the database
+     * <br><br>
+     * If the result is not found, it returns an empty list
+     * @return the results from the database
      */
     List<T> getMultipleResults();
+
+    /**
+     * Get single result from the database
+     * <be><br>
+     *  If the result is not unique, it will throw an {@link jakarta.persistence.NonUniqueResultException}
+     *  <br><br>
+     *  If the result is not found, it will throw an {@link jakarta.persistence.NoResultException}
+     * @return the single result from the database
+     */
+    T getSingleResult();
 
 }

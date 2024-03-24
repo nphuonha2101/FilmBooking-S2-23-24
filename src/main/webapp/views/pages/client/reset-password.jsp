@@ -29,6 +29,8 @@
         <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
         <form action="${pageContext.request.contextPath}/reset-password" method="post">
+            <input type="hidden" name="status" value="${verifyStatus}">
+            <input type="hidden" name="username" value="${username}">
             <label for="new-password">
                 <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="newPassword"/>

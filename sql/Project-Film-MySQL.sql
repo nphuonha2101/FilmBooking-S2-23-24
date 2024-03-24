@@ -96,10 +96,11 @@ create table film_votes
 );
 
 create table user_tokens (
+    token    varchar(255) not null primary key,
     username varchar(50) references user_infos (username),
-    token    varchar(255) not null,
-    expired_at timestamp    not null,
-    primary key (username, token)
+    expiry_date timestamp    not null,
+    token_type varchar(20) not null,
+    token_state varchar(10) not null
 );
 
 
@@ -208,4 +209,4 @@ insert into theaters (theater_name, tax_code, theater_address) values ('FilmBook
 insert into theaters (theater_name, tax_code, theater_address) values ('FilmBooking Bến Thành', '000000238', 'Trương Định, Bến Thành, Q.1');
 insert into theaters (theater_name, tax_code, theater_address) values ('FilmBooking Bình Thạnh', '000000034', 'Điện Biên Phủ, P15, Q.Bình Thạnh');
 
-select * from user_infos;
+select * from user_tokens;

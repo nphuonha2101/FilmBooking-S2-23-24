@@ -31,7 +31,7 @@ public abstract class AbstractServices<T> implements IServices<T> {
     @Override
     public T getBySlug(String slug) {
         Map<String, Object> conditions = Map.of("slug_=", slug);
-        return getByPredicates(conditions).getMultipleResults().get(0);
+        return getByPredicates(conditions).getSingleResult();
     }
 
     @Override
@@ -87,5 +87,9 @@ public abstract class AbstractServices<T> implements IServices<T> {
     @Override
     public List<T> getMultipleResults() {
         return decoratedDAO.getMultipleResults();
+    }
+
+    public T getSingleResult() {
+        return decoratedDAO.getSingleResult();
     }
 }

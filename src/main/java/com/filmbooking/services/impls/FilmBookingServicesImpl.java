@@ -35,7 +35,7 @@ public class FilmBookingServicesImpl extends AbstractServices<FilmBooking> {
      * @return a list of film bookings
      */
     public List<FilmBooking> getAllByUser(User user) {
-        Map<String, Object> condition= Map.of("user", user);
+        Map<String, Object> condition= Map.of("user_=", user);
         return super.getByPredicates(condition).getMultipleResults();
     }
 
