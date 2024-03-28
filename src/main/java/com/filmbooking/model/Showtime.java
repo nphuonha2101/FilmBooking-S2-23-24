@@ -1,6 +1,7 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.StringUtils;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -10,27 +11,32 @@ import java.util.List;
 @Entity
 @Table(name = "showtimes")
 public class Showtime {
+    @Expose
     @Column(name = "showtime_id", updatable = false, insertable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long showtimeID;
-
+    @Expose
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;
 
+    @Expose
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
 
+    @Expose
     @Column(name = "showtime_date")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime showtimeDate;
+    @Expose
     @Column(name = "seats_data")
     private String seatsData;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
     private List<FilmBooking> filmBookingList;
+    @Expose
     @Column(name = "slug")
     private String slug;
 
@@ -121,6 +127,7 @@ public class Showtime {
      * <br>
      * seat = "2" means reserve seat
      * <br>
+     *
      * @param bookedSeats is the String array of seats name that user want to book. Example: ["1 2", "2 3", "3 4"]
      */
     public synchronized boolean bookSeats(String[] bookedSeats) {
@@ -149,6 +156,7 @@ public class Showtime {
      * <br>
      * seat = "2" means reserve seat
      * <br>
+     *
      * @param reverseSeats is the String array of seats name that user want to reserve. Example: ["1 2", "2 3", "3 4"]
      */
     public synchronized boolean reserveSeats(String[] reverseSeats) {
@@ -178,7 +186,8 @@ public class Showtime {
      * <br>
      * seat = "2" means reserve seat
      * <br>
-     *  @param releaseSeats is the String array of seats name that user want to release. Example: ["1 2", "2 3", "3 4"]
+     *
+     * @param releaseSeats is the String array of seats name that user want to release. Example: ["1 2", "2 3", "3 4"]
      */
     public synchronized boolean releaseSeats(String[] releaseSeats) {
         String[][] seatsMatrix = StringUtils.convertTo2DArr(this.seatsData);
@@ -194,7 +203,6 @@ public class Showtime {
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
         return true;
     }
-
 
 
     public int countAvailableSeats() {

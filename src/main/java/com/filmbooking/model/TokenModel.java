@@ -10,6 +10,7 @@ import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,16 +21,21 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user_tokens")
 public class TokenModel {
+    @Expose
     @Id
     @Column(name = "token")
     private String token;
+    @Expose
     @Column(name = "username")
     private String username;
+    @Expose
     @Column(name = "expiry_date")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime expiryDate;
+    @Expose
     @Column(name = "token_type")
     private String tokenType;
+    @Expose
     @Setter
     @Column(name="token_state")
     private String tokenState;

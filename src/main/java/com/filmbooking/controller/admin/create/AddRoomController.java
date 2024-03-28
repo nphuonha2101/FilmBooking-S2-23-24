@@ -31,7 +31,7 @@ public class AddRoomController extends HttpServlet {
 
         req.setAttribute("pageTitle", "addRoomTitle");
 
-        req.setAttribute("theaters", theaterServices.getAll());
+        req.setAttribute("theaters", theaterServices.getAll().getMultipleResults());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 WebAppPathUtils.getAdminPagesPath("add-room.jsp"),
