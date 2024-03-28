@@ -1,10 +1,10 @@
 package com.filmbooking.controller.customer.account;
 
+import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
-import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @WebServlet(name = "signup", value = "/signup")
 public class SignupController extends HttpServlet {
-    private IUserServices userServices;
+    private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -61,15 +61,15 @@ public class SignupController extends HttpServlet {
 
 
         // username existed!
-        if (userServices.getByUsername(username) != null) {
+        if (userServices.getByID(username) != null) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
             // username not existed but email existed!
         } else if (userServices.getByEmail(userEmail) != null) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
             // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
-            userPassword = StringUtils.generateSHA256String(userPassword);
-            User newUser = new User(username, userFullName, userEmail, userPassword, "customer");
+            userPassword = userServices.hashPassword(userPassword);
+            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER);
             userServices.save(newUser);
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
             // confirm password not match!

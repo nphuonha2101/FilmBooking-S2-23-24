@@ -29,16 +29,6 @@ public class PredicatesDAODecorator<T> extends AbstractDAODecorator<T> {
     }
 
     @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public long getTotalRecordRows() {
-        return this.decoratedDAO.getTotalRecordRows();
-    }
-
-    @Override
     public IDAO<T> getAll() {
         DataAccessObjects<T> dataAccessObjects = (DataAccessObjects<T>) this.decoratedDAO.getAll();
         // clone dataAccessObjects to avoid changing the original dataAccessObjects
@@ -60,35 +50,5 @@ public class PredicatesDAODecorator<T> extends AbstractDAODecorator<T> {
         dataAccessObjectsWithPredicate.setTypedQuery(typedQuery);
 
         return dataAccessObjectsWithPredicate;
-    }
-
-    @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
-        return this.decoratedDAO.getByID(id, isLongID);
-    }
-
-    @Override
-    public boolean save(T t) {
-        return this.decoratedDAO.save(t);
-    }
-
-    @Override
-    public boolean update(T t) {
-        return this.decoratedDAO.update(t);
-    }
-
-    @Override
-    public boolean delete(T t) {
-        return this.decoratedDAO.delete(t);
-    }
-
-    @Override
-    public List<T> getMultipleResults() {
-        return this.decoratedDAO.getMultipleResults();
-    }
-
-    @Override
-    public T getSingleResult() {
-        return this.decoratedDAO.getSingleResult();
     }
 }

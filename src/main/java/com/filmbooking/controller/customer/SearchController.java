@@ -2,9 +2,8 @@ package com.filmbooking.controller.customer;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -14,11 +13,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/search")
 public class SearchController extends HttpServlet {
-    private IFilmServices filmServices;
+    private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -30,7 +30,9 @@ public class SearchController extends HttpServlet {
         double beginPriceNumber = Double.parseDouble(req.getParameter("begin-price"));
         double endPriceNumber = Double.parseDouble(req.getParameter("end-price"));
 
-        List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
+//        List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
+        // TODO: Implement searchFilms method in FilmServicesImpl
+        List<Film> searchFilmList = new ArrayList<>();
 
         if (searchFilmList.isEmpty()) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.FILM_NOT_FOUND.getStatusCode());

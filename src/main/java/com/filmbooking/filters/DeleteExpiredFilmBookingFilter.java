@@ -3,7 +3,6 @@ package com.filmbooking.filters;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,7 +25,7 @@ public class DeleteExpiredFilmBookingFilter extends HttpFilter {
         if (showtime != null && filmBooking.getBookedSeats() != null && filmBooking.isExpired()) {
             System.out.println("Expired: " + filmBooking.isExpired());
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-            IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+            ShowtimeServicesImpl showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
             showtime.releaseSeats(filmBooking.getBookedSeats());
             showtimeServices.update(showtime);

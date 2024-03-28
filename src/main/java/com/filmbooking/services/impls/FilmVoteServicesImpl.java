@@ -9,34 +9,38 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
-import com.filmbooking.services.IFilmVoteServices;
+import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.IServices;
 
 import java.util.List;
+import java.util.Map;
 
-public class FilmVoteServicesImpl implements IFilmVoteServices {
+public class FilmVoteServicesImpl extends AbstractServices<FilmVote> {
     private final DataAccessObjects<FilmVote> filmVoteDataAccessObjects;
 
     public FilmVoteServicesImpl(HibernateSessionProvider sessionProvider) {
         this.filmVoteDataAccessObjects = new DataAccessObjects<>(FilmVote.class);
-        setSessionProvider(sessionProvider);
+        super.setSessionProvider(sessionProvider);
     }
 
     @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        filmVoteDataAccessObjects.setSessionProvider(sessionProvider);
+    public FilmVote getBySlug(String slug) {
+        throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
 
     @Override
-    public boolean save(FilmVote filmVote) {
-        return filmVoteDataAccessObjects.save(filmVote);
+    public FilmVote getByID(String id) {
+        return this.filmVoteDataAccessObjects.getByID(id, true);
     }
 
     @Override
-    public boolean checkIfFilmVoted(List<FilmVote> filmVotedList, FilmVote filmVote) {
-        for (FilmVote filmVoteInList: filmVotedList) {
-            if (filmVoteInList.getFilm().getFilmID() == filmVote.getId())
-                return true;
-        }
-        return false;
+    public boolean update(FilmVote filmVote) {
+     throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
+
+    @Override
+    public boolean delete(FilmVote filmVote) {
+     throw new UnsupportedOperationException("This method is not supported for FilmVote");
+    }
+
 }

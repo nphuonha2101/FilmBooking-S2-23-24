@@ -6,7 +6,7 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  *  @author nphuonha
  */
 
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;

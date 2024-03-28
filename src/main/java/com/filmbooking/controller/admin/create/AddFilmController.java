@@ -2,11 +2,9 @@ package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.services.IGenreServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -24,8 +22,8 @@ import java.io.IOException;
 @WebServlet(name = "addFilm", value = "/admin/add/film")
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
-    private IFilmServices filmServices;
-    private IGenreServices genreServices;
+    private FilmServicesImpl filmServices;
+    private GenreServicesImpl genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

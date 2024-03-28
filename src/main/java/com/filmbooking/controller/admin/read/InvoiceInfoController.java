@@ -15,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
-    private IFilmBookingServices filmBookingServices;
+    private FilmBookingServicesImpl filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -27,7 +27,7 @@ public class InvoiceInfoController extends HttpServlet {
 
         System.out.println("Booking ID: " + bookingID);
 
-        FilmBooking filmBooking = filmBookingServices.getByFilmBookingID(bookingID);
+        FilmBooking filmBooking = filmBookingServices.getByID(bookingID);
 
         System.out.println(filmBooking);
 
