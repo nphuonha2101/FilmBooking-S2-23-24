@@ -28,7 +28,6 @@ public class GSONUtils {
                         Instant instant = Instant.ofEpochMilli(jsonElement.getAsJsonPrimitive().getAsLong());
                         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                     }
-                }).create();
+                }).excludeFieldsWithoutExposeAnnotation().create();
     }
-
 }

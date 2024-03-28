@@ -1,5 +1,6 @@
 package com.filmbooking.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,18 +12,22 @@ import java.util.List;
 @Entity
 @Table(name = "theaters")
 public class Theater {
+    @Expose
     @Column(name = "theater_id", insertable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long theaterID;
+    @Expose
     @Column(name = "theater_name")
     private String theaterName;
+    @Expose
     @Column(name = "tax_code")
     private String taxCode;
+    @Expose
     @Column(name = "theater_address")
     private String theaterAddress;
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-    List<Room> roomList;
+    private List<Room> roomList;
 
     public Theater() {}
 

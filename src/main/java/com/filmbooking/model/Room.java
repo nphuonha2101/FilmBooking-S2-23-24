@@ -1,32 +1,56 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.StringUtils;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
 @Table(name = "rooms")
 public class Room {
+    @Setter
+    @Getter
+    @Expose
     @Column(name = "room_id", updatable = false, insertable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomID;
+    @Getter
     @Column(name = "room_name")
+    @Expose
     private String roomName;
+    @Getter
+    @Expose
     @Column(name = "seat_rows")
     private int seatRows;
+    @Getter
+    @Expose
     @Column(name = "seat_cols")
     private int seatCols;
+    @Setter
     @Transient
     private String[][] seatMatrix;
+    @Setter
+    @Getter
+    @Expose
     @Column(name = "seats_data")
     private String seatData;
+    @Expose
+    @Setter
+    @Getter
     @ManyToOne
     @JoinColumn(name = "theater_id")
     private Theater theater;
+    @Setter
+    @Getter
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;
+    @Setter
+    @Getter
+    @Expose
     @Column(name = "slug")
     private String slug;
 
@@ -62,34 +86,14 @@ public class Room {
     }
 
 
-    public long getRoomID() {
-        return roomID;
-    }
-
-    public void setRoomID(long roomID) {
-        this.roomID = roomID;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
     public void setRoomName(String roomName) {
         this.roomName = roomName;
         this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
     }
 
-    public int getSeatRows() {
-        return seatRows;
-    }
-
     public void setSeatRows(int seatRows) {
         this.seatRows = seatRows;
         generateSeatsData();
-    }
-
-    public int getSeatCols() {
-        return seatCols;
     }
 
     public void setSeatCols(int seatCols) {
@@ -99,42 +103,6 @@ public class Room {
 
     public String[][] getSeatMatrix() {
         return StringUtils.convertTo2DArr(this.seatData);
-    }
-
-    public void setSeatMatrix(String[][] seatMatrix) {
-        this.seatMatrix = seatMatrix;
-    }
-
-    public Theater getTheater() {
-        return theater;
-    }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-    }
-
-    public List<Showtime> getShowtimeList() {
-        return showtimeList;
-    }
-
-    public void setShowtimeList(List<Showtime> showtimeList) {
-        this.showtimeList = showtimeList;
-    }
-
-    public String getSeatData() {
-        return seatData;
-    }
-
-    public void setSeatData(String seatData) {
-        this.seatData = seatData;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
     }
 
     @Override
