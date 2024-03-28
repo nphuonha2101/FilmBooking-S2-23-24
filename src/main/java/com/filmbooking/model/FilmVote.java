@@ -6,18 +6,22 @@ package com.filmbooking.model;
  *  @author nphuonha
  */
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "film_votes")
 public class FilmVote {
     @Id
+    @Expose
     @Column(name = "film_vote_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Expose
     @ManyToOne
     @JoinColumn(name = "film_id")
     private Film film;
+    @Expose
     @Column(name = "scores")
     private int scores;
 

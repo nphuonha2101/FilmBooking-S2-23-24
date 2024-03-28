@@ -8,6 +8,7 @@ package com.filmbooking.dao;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.NonUniqueResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -70,7 +71,7 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
 
 
     @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
+    public T getByID(String id, boolean isLongID) {
         try {
             criteriaBuilder = this.session.getCriteriaBuilder();
             criteriaQueryResult = criteriaBuilder.createQuery(classOfData);
@@ -83,10 +84,12 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
                 criteriaQueryResult.select(rootEntry).where(criteriaBuilder.equal(rootEntry.get("id"), id));
 
             typedQuery = this.session.createQuery(criteriaQueryResult);
+
+            return typedQuery.getSingleResult();
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
+            return null;
         }
-        return this;
     }
 
     @Override
@@ -140,9 +143,12 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
 
     @Override
     public T getSingleResult() {
-        T result;
-        result = typedQuery.getSingleResult();
-        return result;
+        try {
+            return typedQuery.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            e.printStackTrace(System.out);
+            return null;
+        }
     }
 
     @Override

@@ -4,77 +4,33 @@ import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IShowtimeServices;
+import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.IServices;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ShowtimeServicesImpl implements IShowtimeServices {
-    private final DataAccessObjects<Showtime> showtimeDataAccessObjects;
-
-    public ShowtimeServicesImpl() {
-        this.showtimeDataAccessObjects = new DataAccessObjects<>(Showtime.class);
-    }
+public class ShowtimeServicesImpl extends AbstractServices<Showtime> {
 
     public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.showtimeDataAccessObjects = new DataAccessObjects<>(Showtime.class);
-        setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        showtimeDataAccessObjects.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public long getTotalRecords() {
-        return showtimeDataAccessObjects.getTotalRecordRows();
-    }
-
-    @Override
-    public Showtime getBySlug(String slug) {
-        for (Showtime showtime : showtimeDataAccessObjects.getAll().getMultipleResults()) {
-            if (showtime.getSlug().equalsIgnoreCase(slug))
-                return showtime;
-        }
-        return null;
-    }
-
-    @Override
-    public List<Showtime> getByOffset(int offset, int limit) {
-        return new OffsetDAODecorator<Showtime>(showtimeDataAccessObjects, offset, limit).getAll().getMultipleResults();
-    }
-
-    @Override
-    public List<Showtime> getAll() {
-        return showtimeDataAccessObjects.getAll().getMultipleResults();
+        super.decoratedDAO = new DataAccessObjects<>(Showtime.class);
+        super.setSessionProvider(sessionProvider);
     }
 
     @Override
     public Showtime getByID(String id) {
-        return showtimeDataAccessObjects.getByID(id, true).getSingleResult();
+        return this.decoratedDAO.getByID(id, true);
     }
 
-    @Override
-    public boolean save(Showtime showtime) {
-        return showtimeDataAccessObjects.save(showtime);
-    }
-
-    @Override
-    public boolean update(Showtime showtime) {
-        return showtimeDataAccessObjects.update(showtime);
-    }
-
-    @Override
-    public boolean delete(Showtime showtime) {
-        return showtimeDataAccessObjects.delete(showtime);
-    }
-
-    @Override
+    /**
+     * Get a map storing showtimeID and its available seats
+     * @return HashMap<Long, Integer> showtimeID and its available seats
+     */
     public HashMap<Long, Integer> countAvailableSeats() {
         HashMap<Long, Integer> result = new HashMap<>();
 
-        for (Showtime showtime : getAll()
+        for (Showtime showtime : getAll().getMultipleResults()
         ) {
             int availableSeats = showtime.countAvailableSeats();
             result.put(showtime.getShowtimeID(), availableSeats);
@@ -82,16 +38,20 @@ public class ShowtimeServicesImpl implements IShowtimeServices {
         return result;
     }
 
-    @Override
+    /**
+     * Get a map storing showtimeID and its seat matrix
+     * @return HashMap<Long, String[][]> showtimeID and its seat matrix
+     */
     public HashMap<Long, String[][]> getShowtimeIDAndSeatMatrix() {
         HashMap<Long, String[][]> result = new HashMap<>();
 
-        for (Showtime showtime : getAll()
+        for (Showtime showtime : getAll().getMultipleResults()
         ) {
             String[][] seatsMatrix = showtime.getSeatsMatrix();
             result.put(showtime.getShowtimeID(), seatsMatrix);
         }
         return result;
     }
+
 
 }

@@ -37,9 +37,8 @@ public interface IDAO<T> {
      * Get a record by its ID
      * @param id the ID of the record
      * @param isLongID whether the ID is a long or String id
-     * @return {@link IDAO<T>} for chaining and for decorating
      */
-    DataAccessObjects<T> getByID(String id, boolean isLongID);
+    T getByID(String id, boolean isLongID);
 
     /**
      * Save an object to the database
@@ -64,13 +63,19 @@ public interface IDAO<T> {
 
     /**
      * Get the results from the database
+     * <br><br>
+     * If the result is not found, it returns an empty list
      * @return the results from the database
      */
     List<T> getMultipleResults();
 
     /**
-     * Get a single result from the database
-     * @return a single result from the database
+     * Get single result from the database
+     * <be><br>
+     *  If the result is not unique, it will throw an {@link jakarta.persistence.NonUniqueResultException}
+     *  <br><br>
+     *  If the result is not found, it will throw an {@link jakarta.persistence.NoResultException}
+     * @return the single result from the database
      */
     T getSingleResult();
 

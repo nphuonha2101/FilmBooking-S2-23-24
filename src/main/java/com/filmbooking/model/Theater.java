@@ -1,66 +1,35 @@
 package com.filmbooking.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "theaters")
 public class Theater {
+    @Expose
     @Column(name = "theater_id", insertable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long theaterID;
+    @Expose
     @Column(name = "theater_name")
     private String theaterName;
+    @Expose
     @Column(name = "tax_code")
     private String taxCode;
+    @Expose
     @Column(name = "theater_address")
     private String theaterAddress;
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
-    List<Room> roomList;
+    private List<Room> roomList;
 
     public Theater() {}
-
-    public String getTheaterName() {
-        return theaterName;
-    }
-
-    public void setTheaterName(String theaterName) {
-        this.theaterName = theaterName;
-    }
-
-    public String getTaxCode() {
-        return taxCode;
-    }
-
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
-
-    public String getTheaterAddress() {
-        return theaterAddress;
-    }
-
-    public void setTheaterAddress(String theaterAddress) {
-        this.theaterAddress = theaterAddress;
-    }
-
-    public long getTheaterID() {
-        return theaterID;
-    }
-
-    public void setTheaterID(long theaterID) {
-        this.theaterID = theaterID;
-    }
-
-    public List<Room> getRoomList() {
-        return roomList;
-    }
-
-    public void setRoomList(List<Room> roomList) {
-        this.roomList = roomList;
-    }
 
     @Override
     public boolean equals(Object obj) {

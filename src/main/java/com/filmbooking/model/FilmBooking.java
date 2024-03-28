@@ -1,6 +1,9 @@
 package com.filmbooking.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
@@ -9,29 +12,50 @@ import java.time.LocalDateTime;
 public class FilmBooking implements Cloneable {
     private static final int EXPIRE_TIME = 15;
 
+    @Getter
+    @Setter
+    @Expose
     @Column(name = "film_booking_id", insertable = false, updatable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmBookingID;
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "showtime_id")
     private Showtime showtime;
+    @Getter
+    @Setter
+    @Expose
     @ManyToOne
     @JoinColumn(name = "username")
     private User user;
+    @Getter
+    @Expose
     @Column(name = "booking_date")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime bookingDate;
+    @Expose
     @Transient
     private String[] bookedSeats;
+    @Getter
+    @Expose
     @Column(name = "seats")
     private String seatsData;
+    @Setter
+    @Getter
+    @Expose
     @Column(name = "total_fee")
     private double totalFee;
+    @Getter
+    @Setter
+    @Expose
     @Column(name = "payment_status")
     private String paymentStatus;
+
     @Transient
     private LocalDateTime expireDate;
+    @Getter
     @Transient
     private String vnpayTxnRef;
 
@@ -53,34 +77,6 @@ public class FilmBooking implements Cloneable {
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
-    public long getFilmBookingID() {
-        return filmBookingID;
-    }
-
-    public void setFilmBookingID(long filmBookingID) {
-        this.filmBookingID = filmBookingID;
-    }
-
-    public Showtime getShowtime() {
-        return showtime;
-    }
-
-    public void setShowtime(Showtime showtime) {
-        this.showtime = showtime;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public LocalDateTime getBookingDate() {
-        return bookingDate;
-    }
-
     public void setBookingDate(LocalDateTime bookingDate) {
         this.bookingDate = bookingDate;
         this.expireDate = bookingDate.plusMinutes(EXPIRE_TIME);
@@ -98,30 +94,10 @@ public class FilmBooking implements Cloneable {
         this.seatsData = String.join(", ", bookedSeats);
     }
 
-    public String getSeatsData() {
-        return seatsData;
-    }
-
     public void setSeatsData(String seatsData) {
         this.seatsData = seatsData;
         if (seatsData != null)
             this.bookedSeats = seatsData.split(", ");
-    }
-
-    public double getTotalFee() {
-        return totalFee;
-    }
-
-    public void setTotalFee(double totalFee) {
-        this.totalFee = totalFee;
-    }
-
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
     }
 
     public void resetFilmBooking() {
@@ -173,10 +149,6 @@ public class FilmBooking implements Cloneable {
      */
     public boolean isExpired() {
         return this.expireDate.isBefore(LocalDateTime.now());
-    }
-
-    public String getVnpayTxnRef() {
-        return vnpayTxnRef;
     }
 
     /**

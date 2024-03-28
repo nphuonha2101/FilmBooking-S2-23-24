@@ -1,4 +1,4 @@
-package com.filmbooking.enumsAndConstant.enums;
+package com.filmbooking.enumsAndConstants.enums;
 
 public enum LanguageEnum {
     DEFAULT,

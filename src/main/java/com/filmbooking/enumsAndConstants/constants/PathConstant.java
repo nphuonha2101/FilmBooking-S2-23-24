@@ -1,4 +1,4 @@
-package com.filmbooking.enumsAndConstant.constants;
+package com.filmbooking.enumsAndConstants.constants;
 
 public class PathConstant {
     public static final String HTML_EMAILS_VI_PATH = "/templates/emails/vi/";

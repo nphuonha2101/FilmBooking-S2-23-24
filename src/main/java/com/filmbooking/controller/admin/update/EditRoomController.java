@@ -2,11 +2,9 @@ package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
-import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.ITheaterServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -20,8 +18,8 @@ import java.io.IOException;
 
 @WebServlet(name = "editRoom", value = "/admin/edit/room")
 public class EditRoomController extends HttpServlet {
-    private IRoomServices roomServices;
-    private ITheaterServices theaterServices;
+    private RoomServicesImpl roomServices;
+    private TheaterServicesImpl theaterServices;
     private Room editRoom;
     private HibernateSessionProvider hibernateSessionProvider;
 

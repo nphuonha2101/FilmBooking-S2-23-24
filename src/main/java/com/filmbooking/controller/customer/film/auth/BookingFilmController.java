@@ -4,11 +4,9 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -24,8 +22,8 @@ import java.util.HashMap;
 
 @WebServlet(name = "bookFilm", value = "/auth/book-film")
 public class BookingFilmController extends HttpServlet {
-    private IFilmBookingServices filmBookingServices;
-    private IShowtimeServices showtimeServices;
+    private FilmBookingServicesImpl filmBookingServices;
+    private ShowtimeServicesImpl showtimeServices;
     private FilmBooking filmBooking;
     private Film bookedFilm;
     private HibernateSessionProvider hibernateSessionProvider;

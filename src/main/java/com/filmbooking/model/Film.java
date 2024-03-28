@@ -1,6 +1,7 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.StringUtils;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 import java.text.DecimalFormat;
@@ -9,26 +10,36 @@ import java.util.List;
 @Entity
 @Table(name = "films")
 public class Film {
+    @Expose
     @Column(name = "film_id", updatable = false, insertable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmID;
+    @Expose
     @Column(name = "film_name")
     private String filmName;
+    @Expose
     @Column(name = "film_price")
     private double filmPrice;
+    @Expose
     @Column(name = "film_director")
     private String director;
+    @Expose
     @Column(name = "film_cast")
     private String cast;
+    @Expose
     @Column(name = "film_length")
     private int filmLength;
+    @Expose
     @Column(name = "film_description")
     private String filmDescription;
+    @Expose
     @Column(name = "film_trailer_link")
     private String filmTrailerLink;
+    @Expose
     @Column(name = "img_path")
     private String imgPath;
+    @Expose
     @Column(name = "slug")
     private String slug;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -37,6 +48,7 @@ public class Film {
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
+    @Expose
     private List<Genre> genreList;
     @OneToMany(mappedBy = "film", cascade = CascadeType.ALL)
     private List<Showtime> showtimeList;

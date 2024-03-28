@@ -4,13 +4,10 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IFilmServices;
-import com.filmbooking.services.IRoomServices;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -26,9 +23,9 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/admin/add/showtime")
 public class AddShowtimeController extends HttpServlet {
-    private IFilmServices filmServices;
-    private IShowtimeServices showtimeServices;
-    private IRoomServices roomServices;
+    private FilmServicesImpl filmServices;
+    private ShowtimeServicesImpl showtimeServices;
+    private RoomServicesImpl roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
 
@@ -62,11 +59,11 @@ public class AddShowtimeController extends HttpServlet {
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
-        Room showtimeRoom = roomServices.getByRoomID(roomID);
+        Room showtimeRoom = roomServices.getByID(roomID);
         String showtimeDate = req.getParameter("showtime-datetime");
         LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
 
-        Film film = filmServices.getByFilmID(filmID);
+        Film film = filmServices.getByID(filmID);
 
         Showtime newShowtime = new Showtime(film, showtimeRoom, showtimeLDT);
 

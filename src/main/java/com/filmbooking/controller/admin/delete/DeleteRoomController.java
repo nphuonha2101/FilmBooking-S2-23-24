@@ -2,9 +2,8 @@ package com.filmbooking.controller.admin.delete;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
-import com.filmbooking.services.IRoomServices;
 import com.filmbooking.services.impls.RoomServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +15,7 @@ import java.io.IOException;
 
 @WebServlet(name = "deleteRoom", value = "/admin/delete/room")
 public class DeleteRoomController extends HttpServlet {
-    private IRoomServices roomServices;
+    private RoomServicesImpl roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override

@@ -18,23 +18,13 @@ import java.util.List;
  * @param <T> the type of the object
  */
 public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
-    private int offset;
-    private int limit;
+    private final int offset;
+    private final int limit;
 
     public OffsetDAODecorator(IDAO<T> decoratedDataAccessObjects, int offset, int limit) {
         super(decoratedDataAccessObjects);
         this.offset = offset;
         this.limit = limit;
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public long getTotalRecordRows() {
-        return this.decoratedDAO.getTotalRecordRows();
     }
 
     @Override
@@ -48,36 +38,4 @@ public class OffsetDAODecorator<T> extends AbstractDAODecorator<T> {
 
         return dataAccessObjects;
     }
-
-    @Override
-    public DataAccessObjects<T> getByID(String id, boolean isLongID) {
-        return this.decoratedDAO.getByID(id, isLongID);
-    }
-
-    @Override
-    public boolean save(T t) {
-        return this.decoratedDAO.save(t);
-    }
-
-    @Override
-    public boolean update(T t) {
-        return this.decoratedDAO.update(t);
-    }
-
-    @Override
-    public boolean delete(T t) {
-        return this.decoratedDAO.delete(t);
-    }
-
-    @Override
-    public List<T> getMultipleResults() {
-        return this.decoratedDAO.getMultipleResults();
-    }
-
-    @Override
-    public T getSingleResult() {
-        return this.decoratedDAO.getSingleResult();
-    }
-
-
 }

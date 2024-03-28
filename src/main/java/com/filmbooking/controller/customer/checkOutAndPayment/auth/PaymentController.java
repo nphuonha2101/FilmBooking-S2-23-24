@@ -9,9 +9,8 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.IFilmBookingServices;
-import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
@@ -26,8 +25,8 @@ import java.io.IOException;
 @WebServlet("/auth/payment")
 public class PaymentController extends HttpServlet {
     private HibernateSessionProvider hibernateSessionProvider;
-    private IFilmBookingServices filmBookingServices;
-    private IShowtimeServices showtimeServices;
+    private FilmBookingServicesImpl filmBookingServices;
+    private ShowtimeServicesImpl showtimeServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -52,8 +51,8 @@ public class PaymentController extends HttpServlet {
     }
 
     static void handlePayment(HttpServletRequest req, HttpServletResponse resp, FilmBooking filmBooking,
-                              IShowtimeServices showtimeServices,
-                              IFilmBookingServices filmBookingServices, PaymentStatus paymentStatus) throws ServletException, IOException {
+                              ShowtimeServicesImpl showtimeServices,
+                              FilmBookingServicesImpl filmBookingServices, PaymentStatus paymentStatus) throws ServletException, IOException {
 
         switch (paymentStatus) {
             case SUCCESS -> {
@@ -77,7 +76,7 @@ public class PaymentController extends HttpServlet {
         }
     }
 
-    private static void handleSaveFilmBooking(HttpServletRequest req, FilmBooking filmBooking, IShowtimeServices showtimeServices, IFilmBookingServices filmBookingServices) {
+    private static void handleSaveFilmBooking(HttpServletRequest req, FilmBooking filmBooking, ShowtimeServicesImpl showtimeServices, FilmBookingServicesImpl filmBookingServices) {
         if (filmBookingServices.save(filmBooking)) {
             Showtime bookedShowtime = filmBooking.getShowtime();
             if (bookedShowtime.bookSeats(filmBooking.getBookedSeats())) {

@@ -1,5 +1,6 @@
 package com.filmbooking.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,9 +8,11 @@ import java.util.List;
 @Entity
 @Table(name = "genres")
 public class Genre {
+    @Expose
     @Column(name = "genre_id")
     @Id
     private String genreID;
+    @Expose
     @Column(name = "genre_name")
     private String genreName;
    @ManyToMany(mappedBy = "genreList", cascade = CascadeType.ALL)

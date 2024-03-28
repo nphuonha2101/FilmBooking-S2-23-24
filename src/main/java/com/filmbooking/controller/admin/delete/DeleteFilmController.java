@@ -3,9 +3,8 @@ package com.filmbooking.controller.admin.delete;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
-import com.filmbooking.services.IFilmServices;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.enumsAndConstant.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
 import jakarta.servlet.ServletException;
@@ -19,7 +18,7 @@ import java.io.IOException;
 
 @WebServlet(name = "deleteFilm", value = "/admin/delete/film")
 public class DeleteFilmController extends HttpServlet {
-    private IFilmServices filmServices;
+    private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
