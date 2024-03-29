@@ -1,8 +1,9 @@
 package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Theater;
-import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.utils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -14,34 +15,26 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/api/v1/theaters/*", "/api/v1/theaters"})
-public class TheaterAPI extends HttpServlet {
-    private TheaterServicesImpl theaterServices;
+@WebServlet(urlPatterns = {"/api/v1/films/*", "/api/v1/films"})
+public class FilmAPI extends HttpServlet {
+    private FilmServicesImpl filmServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        theaterServices = new TheaterServicesImpl(sessionProvider);
+        filmServices = new FilmServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
+        List<Film> filmList = filmServices.getAll().getMultipleResults();
+        jsonResp = "[";
 
-        String id = req.getParameter("theater-id");
-        if (id != null) {
-            Theater theater = theaterServices.getByID(id);
-            jsonResp = gson.toJson(theater);
-        } else {
-            List<Theater> theaterList = theaterServices.getAll().getMultipleResults();
-
-            jsonResp = "[";
-
-            for (Theater theater : theaterList) {
-                jsonResp += gson.toJson(theater);
-                if (theaterList.indexOf(theater) != theaterList.size() - 1) {
-                    jsonResp += ",";
+        for (Film film : filmList) {
+            jsonResp += gson.toJson(film);
+            if (filmList.indexOf(film) != filmList.size() - 1) {
+                jsonResp += ",";
                 }
             }
             jsonResp += "]";
-        }
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
