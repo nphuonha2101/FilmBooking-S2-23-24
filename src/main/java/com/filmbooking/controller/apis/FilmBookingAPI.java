@@ -1,9 +1,10 @@
 package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Theater;
-import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.FilmBookingServicesImpl;
+import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.utils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -15,28 +16,29 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/api/v1/films/*", "/api/v1/films"})
-public class FilmAPI extends HttpServlet {
-    private FilmServicesImpl filmServices;
+@WebServlet(urlPatterns = {"/api/v1/filmbookings/*", "/api/v1/filmbookings"})
+public class FilmBookingAPI extends HttpServlet {
+private FilmBookingServicesImpl filmBookingServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(sessionProvider);
+        filmBookingServices = new FilmBookingServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
-        String id = req.getParameter("film-id");
+
+        String id = req.getParameter("film-booking-id");
         if (id != null) {
-            Film film = filmServices.getByID(id);
-            jsonResp = gson.toJson(film);
+            FilmBooking filmBooking = filmBookingServices.getByID(id);
+            jsonResp = gson.toJson(filmBooking);
         } else {
-            List<Film> filmList = filmServices.getAll().getMultipleResults();
+            List<FilmBooking> filmBookingList = filmBookingServices.getAll().getMultipleResults();
 
             jsonResp = "[";
 
-            for (Film film : filmList) {
-                jsonResp += gson.toJson(film);
-                if (filmList.indexOf(film) != filmList.size() - 1) {
+            for (FilmBooking filmBooking : filmBookingList) {
+                jsonResp += gson.toJson(filmBooking);
+                if (filmBookingList.indexOf(filmBooking) != filmBookingList.size() - 1) {
                     jsonResp += ",";
                 }
             }
