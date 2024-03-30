@@ -25,6 +25,7 @@ public class FilmVoteController extends HttpServlet {
     private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
+    // TODO: handle film vote log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();

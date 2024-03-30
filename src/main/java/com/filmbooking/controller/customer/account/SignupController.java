@@ -5,6 +5,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -20,6 +21,7 @@ import java.io.IOException;
 
 @WebServlet(name = "signup", value = "/signup")
 public class SignupController extends HttpServlet {
+    private CRUDServicesLogProxy<User> userServicesLog;
     private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
@@ -41,6 +43,7 @@ public class SignupController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         userServices = new UserServicesImpl(hibernateSessionProvider);
+        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
@@ -61,7 +64,7 @@ public class SignupController extends HttpServlet {
 
 
         // username existed!
-        if (userServices.getByID(username) != null) {
+        if (userServicesLog.getByID(username) != null) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
             // username not existed but email existed!
         } else if (userServices.getByEmail(userEmail) != null) {
@@ -70,7 +73,7 @@ public class SignupController extends HttpServlet {
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER);
-            userServices.save(newUser);
+            userServicesLog.save(newUser);
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
             // confirm password not match!
         } else {
@@ -87,6 +90,7 @@ public class SignupController extends HttpServlet {
 
     @Override
     public void destroy() {
+        userServicesLog = null;
         userServices = null;
         hibernateSessionProvider = null;
     }

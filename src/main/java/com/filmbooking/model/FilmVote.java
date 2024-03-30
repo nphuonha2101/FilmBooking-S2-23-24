@@ -8,15 +8,25 @@ package com.filmbooking.model;
 
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Table(name = "film_votes")
-public class FilmVote {
+@Getter
+@Setter
+@Table(name = FilmVote.TABLE_NAME)
+public class FilmVote implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "films_votes";
+
+    @Getter
+    @Setter
     @Id
     @Expose
     @Column(name = "film_vote_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Expose
     @ManyToOne
     @JoinColumn(name = "film_id")
@@ -33,27 +43,10 @@ public class FilmVote {
         this.scores = scores;
     }
 
-    public Film getFilm() {
-        return film;
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.id);
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
-    }
 
-    public int getScores() {
-        return scores;
-    }
-
-    public void setScore(int scores) {
-        this.scores = scores;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
 }

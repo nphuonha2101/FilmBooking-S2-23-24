@@ -2,9 +2,13 @@ package com.filmbooking.controller.admin.create;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.Genre;
+import com.filmbooking.model.User;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
+import com.filmbooking.services.logProxy.FilmServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -22,17 +26,19 @@ import java.io.IOException;
 @WebServlet(name = "addFilm", value = "/admin/add/film")
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
-    private FilmServicesImpl filmServices;
-    private GenreServicesImpl genreServices;
+    private FilmServicesLogProxy<Film> filmServices;
+    private CRUDServicesLogProxy<Genre> genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        genreServices = new GenreServicesImpl(hibernateSessionProvider);
+
+        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "addFilmTitle");
-        req.setAttribute("genres", genreServices.getAll());
+        req.setAttribute("genres", genreServices.getAll().getMultipleResults());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 WebAppPathUtils.getAdminPagesPath("add-film.jsp"),
@@ -45,9 +51,8 @@ public class AddFilmController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        genreServices = new GenreServicesImpl(hibernateSessionProvider);
-
+        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, hibernateSessionProvider);
         String fileName = req.getParameter("film-img-name");
 
         // generate uuid from filename

@@ -8,6 +8,7 @@ import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -26,6 +27,7 @@ public class EditShowtimeController extends HttpServlet {
     private FilmServicesImpl filmServices;
     private ShowtimeServicesImpl showtimeServices;
     private RoomServicesImpl roomServices;
+    private CRUDServicesLogProxy<Showtime> showtimeServicesLog;
     private Showtime editShowtime;
     private HibernateSessionProvider hibernateSessionProvider;
 
@@ -42,8 +44,8 @@ public class EditShowtimeController extends HttpServlet {
         req.setAttribute("pageTitle", "editShowtimeTitle");
 
         req.setAttribute("editShowtime", editShowtime);
-        req.setAttribute("filmData", filmServices.getAll());
-        req.setAttribute("roomData", roomServices.getAll());
+        req.setAttribute("filmData", filmServices.getAll().getMultipleResults());
+        req.setAttribute("roomData", roomServices.getAll().getMultipleResults());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 WebAppPathUtils.getAdminPagesPath("edit-showtime.jsp"),
@@ -58,6 +60,7 @@ public class EditShowtimeController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
         roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
@@ -71,7 +74,7 @@ public class EditShowtimeController extends HttpServlet {
         editShowtime.setRoom(room);
         editShowtime.setShowtimeDate(showtimeDate);
 
-        showtimeServices.update(editShowtime);
+        showtimeServicesLog.update(editShowtime);
 
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_SHOWTIME_SUCCESSFUL.getStatusCode());
         doGet(req, resp);

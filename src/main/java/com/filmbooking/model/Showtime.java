@@ -3,14 +3,18 @@ package com.filmbooking.model;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "showtimes")
-public class Showtime {
+@Table(name = Showtime.TABLE_NAME)
+public class Showtime implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "showtimes";
+
     @Expose
     @Column(name = "showtime_id", updatable = false, insertable = false)
     @Id
@@ -234,4 +238,10 @@ public class Showtime {
         }
         return false;
     }
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.showtimeID);
+    }
+
 }
