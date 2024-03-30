@@ -2,9 +2,10 @@ package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
-import com.filmbooking.model.Theater;
+import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
-import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.impls.FilmVoteServicesImpl;
 import com.filmbooking.utils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -16,29 +17,29 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/api/v1/film-bookings/*", "/api/v1/film-bookings"})
-public class FilmBookingAPI extends HttpServlet {
-private FilmBookingServicesImpl filmBookingServices;
+@WebServlet(urlPatterns = {"/api/v1/film-vote/*", "/api/v1/film-vote"})
+public class FilmVoteAPI extends HttpServlet {
+    private FilmVoteServicesImpl filmVoteServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new FilmBookingServicesImpl(sessionProvider);
+        filmVoteServices = new FilmVoteServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
 
-        String id = req.getParameter("film-booking-id");
+        String id = req.getParameter("film-vote-id");
         if (id != null) {
-            FilmBooking filmBooking = filmBookingServices.getByID(id);
-            jsonResp = gson.toJson(filmBooking);
+            FilmVote filmVote = filmVoteServices.getByID(id);
+            jsonResp = gson.toJson(filmVote);
         } else {
-            List<FilmBooking> filmBookingList = filmBookingServices.getAll().getMultipleResults();
+            List<FilmVote> filmVoteList = filmVoteServices.getAll().getMultipleResults();
 
             jsonResp = "[";
 
-            for (FilmBooking filmBooking : filmBookingList) {
-                jsonResp += gson.toJson(filmBooking);
-                if (filmBookingList.indexOf(filmBooking) != filmBookingList.size() - 1) {
+            for (FilmVote filmVote : filmVoteList) {
+                jsonResp += gson.toJson(filmVote);
+                if (filmVoteList.indexOf(filmVote) != filmVoteList.size() - 1) {
                     jsonResp += ",";
                 }
             }
