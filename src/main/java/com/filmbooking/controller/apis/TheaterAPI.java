@@ -5,7 +5,6 @@ import com.filmbooking.model.Theater;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.utils.GSONUtils;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,20 +23,25 @@ public class TheaterAPI extends HttpServlet {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         theaterServices = new TheaterServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
+        String jsonResp = "";
 
-        List<Theater> theaterList = theaterServices.getAll().getMultipleResults();
+        String id = req.getParameter("theater-id");
+        if (id != null) {
+            Theater theater = theaterServices.getByID(id);
+            jsonResp = gson.toJson(theater);
+        } else {
+            List<Theater> theaterList = theaterServices.getAll().getMultipleResults();
 
-        String jsonResp = "[";
+            jsonResp = "[";
 
-        for (Theater theater: theaterList) {
-            jsonResp += gson.toJson(theater);
-
-            if (theaterList.indexOf(theater) != theaterList.size() - 1) {
-                jsonResp += ",";
+            for (Theater theater : theaterList) {
+                jsonResp += gson.toJson(theater);
+                if (theaterList.indexOf(theater) != theaterList.size() - 1) {
+                    jsonResp += ",";
+                }
             }
+            jsonResp += "]";
         }
-
-        jsonResp += "]";
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");

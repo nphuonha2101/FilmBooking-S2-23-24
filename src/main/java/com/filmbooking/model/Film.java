@@ -3,13 +3,20 @@ package com.filmbooking.model;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "films")
-public class Film {
+@Table(name = Film.TABLE_NAME)
+public class Film implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "films";
+
     @Expose
     @Column(name = "film_id", updatable = false, insertable = false)
     @Id
@@ -76,111 +83,6 @@ public class Film {
         this.slug = StringUtils.createSlug(this.filmName, 50);
     }
 
-    public long getFilmID() {
-        return filmID;
-    }
-
-    public void setFilmID(long filmID) {
-        this.filmID = filmID;
-    }
-
-    public String getFilmName() {
-        return filmName;
-    }
-
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
-        this.slug = StringUtils.createSlug(filmName, 50);
-    }
-
-    public double getFilmPrice() {
-        return filmPrice;
-    }
-
-    public void setFilmPrice(double filmPrice) {
-        this.filmPrice = filmPrice;
-    }
-
-    public String getDirector() {
-        return director;
-    }
-
-    public void setDirector(String director) {
-        this.director = director;
-    }
-
-    public String getCast() {
-        return cast;
-    }
-
-    public void setCast(String cast) {
-        this.cast = cast;
-    }
-
-    public int getFilmLength() {
-        return filmLength;
-    }
-
-    public void setFilmLength(int filmLength) {
-        this.filmLength = filmLength;
-    }
-
-    public String getFilmDescription() {
-        return filmDescription;
-    }
-
-    public void setFilmDescription(String filmDescription) {
-        this.filmDescription = filmDescription;
-    }
-
-    public String getImgPath() {
-        return imgPath;
-    }
-
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
-    }
-
-    public String getFilmTrailerLink() {
-        return filmTrailerLink;
-    }
-
-    public void setFilmTrailerLink(String filmTrailerLink) {
-        this.filmTrailerLink = filmTrailerLink;
-    }
-
-    public List<Genre> getGenreList() {
-        return genreList;
-    }
-
-    public void setGenreList(List<Genre> genreList) {
-        this.genreList = genreList;
-    }
-
-    public List<Showtime> getShowtimeList() {
-        return showtimeList;
-    }
-
-    public void setShowtimeList(List<Showtime> showtimeList) {
-        this.showtimeList = showtimeList;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public List<FilmVote> getFilmVoteList() {
-        return filmVoteList;
-    }
-
-    public void setFilmVoteList(List<FilmVote> filmVoteList) {
-        this.filmVoteList = filmVoteList;
-    }
-
     public String getFilmVoteScoresStr() {
         DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         double totalScores = 0;
@@ -234,4 +136,11 @@ public class Film {
 
     public static void main(String[] args) {
     }
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.filmID);
+    }
+
+
 }

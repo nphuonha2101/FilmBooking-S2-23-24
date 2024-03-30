@@ -8,7 +8,8 @@ import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.PropertiesUtils;
@@ -18,14 +19,30 @@ import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
 import java.util.Map;
 
-public class UserServicesImpl extends AbstractServices<User> {
+public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
     private final TokenServicesImpl tokenServices;
 
     public UserServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(User.class);
-        super.setSessionProvider(sessionProvider);
-        this.tokenServices = new TokenServicesImpl(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(User.class);
+        this.tokenServices = new TokenServicesImpl();
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public UserServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(User.class);
+        this.tokenServices = new TokenServicesImpl();
+    }
+
+    @Override
+    public String getTableName() {
+        return User.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
+        this.tokenServices.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -35,7 +52,7 @@ public class UserServicesImpl extends AbstractServices<User> {
 
     @Override
     public User getByID(String id) {
-        return super.decoratedDAO.getByID(id, false);
+        return this.decoratedDAO.getByID(id, false);
     }
 
     public User getByEmail(String email) {
@@ -132,8 +149,7 @@ public class UserServicesImpl extends AbstractServices<User> {
                         .loadEmailContent()
                         .sendEmailToUser(forgotPassUser.getUserEmail(), emailSubject);
 
-                result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
-
+                result = new ServiceResult(StatusCodeEnum.SUCCESSFUL, forgotPassUser);
             }
             return result;
         }
@@ -164,7 +180,7 @@ public class UserServicesImpl extends AbstractServices<User> {
                 // update password
                 user.setUserPassword(StringUtils.generateSHA256String(newPassword));
                 super.decoratedDAO.update(user);
-                result = new ServiceResult(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL);
+                result = new ServiceResult(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL, user);
             }
             return result;
         }

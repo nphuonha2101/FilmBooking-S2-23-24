@@ -31,6 +31,7 @@ public class FilmInfoController extends HttpServlet {
         super.init();
     }
 
+    // TODO: handle showtime log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         queryString = req.getQueryString();

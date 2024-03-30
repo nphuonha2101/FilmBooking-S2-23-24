@@ -5,6 +5,7 @@ import com.filmbooking.model.Room;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -19,6 +20,7 @@ import java.io.IOException;
 @WebServlet(name = "editRoom", value = "/admin/edit/room")
 public class EditRoomController extends HttpServlet {
     private RoomServicesImpl roomServices;
+    private CRUDServicesLogProxy<Room> roomServicesLog;
     private TheaterServicesImpl theaterServices;
     private Room editRoom;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -30,13 +32,14 @@ public class EditRoomController extends HttpServlet {
         theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
 
         String roomSlug = req.getParameter("room");
-        editRoom = roomServices.getBySlug(roomSlug);
+        if (roomSlug != null)
+            editRoom = roomServices.getBySlug(roomSlug);
 
         req.setAttribute("pageTitle", "editRoomTitle");
 
         req.setAttribute("editRoom", editRoom);
 
-        req.setAttribute("theaters", theaterServices.getAll());
+        req.setAttribute("theaters", theaterServices.getAll().getMultipleResults());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 WebAppPathUtils.getAdminPagesPath("edit-room.jsp"),
@@ -48,7 +51,7 @@ public class EditRoomController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        roomServicesLog = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         int seatRows = Integer.parseInt(req.getParameter("seat-rows"));
@@ -58,7 +61,7 @@ public class EditRoomController extends HttpServlet {
         editRoom.setSeatRows(seatRows);
         editRoom.setSeatCols(seatCols);
 
-        roomServices.update(editRoom);
+        roomServicesLog.update(editRoom);
 
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_ROOM_SUCCESSFUL.getStatusCode());
         doGet(req, resp);

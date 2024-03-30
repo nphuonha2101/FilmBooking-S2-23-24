@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
-    private UserServicesImpl userServices;
+    private UserServicesLogProxy<User> userServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesImpl(hibernateSessionProvider);
+        userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String password = StringUtils.handlesInputString(req.getParameter("password"));

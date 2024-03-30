@@ -2,21 +2,32 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-public class FilmBookingServicesImpl extends AbstractServices<FilmBooking> {
+public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
 
     public FilmBookingServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(FilmBooking.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(FilmBooking.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public FilmBookingServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(FilmBooking.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return FilmBooking.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -26,7 +37,7 @@ public class FilmBookingServicesImpl extends AbstractServices<FilmBooking> {
 
     @Override
     public FilmBooking getByID(String id) {
-        return super.decoratedDAO.getByID(id, true);
+        return this.decoratedDAO.getByID(id, true);
     }
 
     /**
@@ -36,7 +47,7 @@ public class FilmBookingServicesImpl extends AbstractServices<FilmBooking> {
      */
     public List<FilmBooking> getAllByUser(User user) {
         Map<String, Object> condition= Map.of("user_=", user);
-        return super.getByPredicates(condition).getMultipleResults();
+        return this.getByPredicates(condition).getMultipleResults();
     }
 
 

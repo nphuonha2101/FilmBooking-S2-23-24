@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @WebServlet(value = "/auth/change-password")
 
 public class ChangePasswordController extends HttpServlet {
-    private UserServicesImpl userServices;
+    private CRUDServicesLogProxy<User> userServicesLog;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -33,7 +34,9 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesImpl(hibernateSessionProvider);
+
+        UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
+        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
         String currentPassword = req.getParameter("current-password");
         String newPassword = StringUtils.handlesInputString(req.getParameter("new-password"));
@@ -45,7 +48,7 @@ public class ChangePasswordController extends HttpServlet {
 
         if (loginUser.getUserPassword().equals(StringUtils.generateSHA256String(currentPassword))) {
             if (newPassword.equals(confirmNewPassword)) {
-                newPassword = StringUtils.generateSHA256String(newPassword);
+                newPassword = userServices.hashPassword(newPassword);
                 loginUser.setUserPassword(newPassword);
                 session.setAttribute("loginUser", loginUser);
 
@@ -69,7 +72,7 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     public void destroy() {
-        userServices = null;
+        userServicesLog = null;
         hibernateSessionProvider = null;
     }
 

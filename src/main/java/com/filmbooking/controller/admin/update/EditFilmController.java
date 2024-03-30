@@ -6,6 +6,7 @@ import com.filmbooking.model.Genre;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.FilmServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -27,6 +28,7 @@ import java.util.List;
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
+    private FilmServicesLogProxy<Film> filmServicesLog;
     private Film editFilm;
     private GenreServicesImpl genreServices;
     private HibernateSessionProvider hibernateSessionProvider;
@@ -68,7 +70,7 @@ public class EditFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, hibernateSessionProvider);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
@@ -97,7 +99,7 @@ public class EditFilmController extends HttpServlet {
 
         // if not change image
         if (filmImgName.isEmpty())
-            filmServices.update(editFilm, filmGenreIDs);
+            filmServicesLog.update(editFilm, filmGenreIDs);
         else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = WebAppPathUtils.getUploadFileRelativePath(uuidFileName);
@@ -112,7 +114,7 @@ public class EditFilmController extends HttpServlet {
                 System.out.println(oldFile.getAbsolutePath());
 
                 editFilm.setImgPath(filmImgPath);
-                filmServices.update(editFilm, filmGenreIDs);
+                filmServicesLog.update(editFilm, filmGenreIDs);
 
                 req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
                 doGet(req, resp);
