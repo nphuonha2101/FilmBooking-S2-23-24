@@ -35,6 +35,8 @@ public class LoginController extends HttpServlet {
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
             req.setAttribute("pageTitle", "loginTitle");
+            String google = "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/google/login&response_type=code%20&client_id=210754753492-b46ra32i4pknv4a2qlo7acra656k7quo.apps.googleusercontent.com&approval_prompt=force";
+            req.setAttribute("google", google);
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         }
     }
