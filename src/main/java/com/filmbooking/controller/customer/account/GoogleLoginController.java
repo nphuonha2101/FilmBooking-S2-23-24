@@ -1,5 +1,6 @@
 package com.filmbooking.controller.customer.account;
 
+import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -49,7 +50,7 @@ public class GoogleLoginController extends HttpServlet {
             String userFullName = googleUserInfo.getName();
             System.out.println(userEmail);
             if (userServices.getByEmail(userEmail) == null) {
-                User newUser = new User(id, userFullName, userEmail, id, "customer");
+                User newUser = new User(id, userFullName, userEmail, id, AccountRoleEnum.CUSTOMER);
                 userServices.save(newUser);
                 HttpSession session = req.getSession();
                 User loginUser = userServices.getByEmail(userEmail);
