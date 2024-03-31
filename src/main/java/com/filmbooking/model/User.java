@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "user_infos")
 public class User {
-    @Expose
     @Column(name = "username")
     @Id
     private String username;
@@ -23,7 +22,6 @@ public class User {
     @Expose
     @Column(name = "user_email")
     private String userEmail;
-    @Expose
     @Column(name = "user_password")
     private String userPassword;
     @Column(name = "account_role")
