@@ -11,6 +11,7 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.FilmVoteServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,16 +22,15 @@ import java.io.IOException;
 
 @WebServlet("/vote-film")
 public class FilmVoteController extends HttpServlet {
-    private FilmVoteServicesImpl filmVoteServices;
+    private CRUDServicesLogProxy<FilmVote> filmVoteServices;
     private FilmServicesImpl filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
-    // TODO: handle film vote log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        filmVoteServices = new FilmVoteServicesImpl(hibernateSessionProvider);
+        filmVoteServices = new CRUDServicesLogProxy<>(new FilmVoteServicesImpl(), req, hibernateSessionProvider);
 
         String filmSlug = req.getParameter("film");
         int filmScores = Integer.parseInt(req.getParameter("scores"));

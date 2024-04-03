@@ -1,5 +1,6 @@
 package com.filmbooking.controller.customer.account;
 
+import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -30,13 +31,14 @@ public class GoogleLoginController extends HttpServlet {
     private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
-    private PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
+    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String error = req.getParameter("error");
         String code = req.getParameter("code");
         if (error != null && error.equals("access_denied")) {
+            // TODO: handle error when login failed
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
             hibernateSessionProvider = new HibernateSessionProvider();
@@ -49,7 +51,7 @@ public class GoogleLoginController extends HttpServlet {
             String userFullName = googleUserInfo.getName();
             System.out.println(userEmail);
             if (userServices.getByEmail(userEmail) == null) {
-                User newUser = new User(id, userFullName, userEmail, id, "customer");
+                User newUser = new User(id, userFullName, userEmail, id, AccountRoleEnum.CUSTOMER);
                 userServices.save(newUser);
                 HttpSession session = req.getSession();
                 User loginUser = userServices.getByEmail(userEmail);
@@ -70,7 +72,7 @@ public class GoogleLoginController extends HttpServlet {
 
     }
 
-    private String getToken(final String code) throws ClientProtocolException, IOException {
+    private String getToken(final String code) throws IOException {
         String response = Request.Post(propertiesUtils.getProperty("link_get_token")).bodyForm(Form.form().add("client_id", propertiesUtils.getProperty("client_id"))
                         .add("client_secret", propertiesUtils.getProperty("client_secret"))
                         .add("redirect_uri",propertiesUtils.getProperty("redirect_uri")).add("code", code)

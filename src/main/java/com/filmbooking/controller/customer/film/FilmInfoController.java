@@ -7,6 +7,8 @@ import com.filmbooking.model.Genre;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
+import com.filmbooking.services.logProxy.ShowtimeServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -22,7 +24,6 @@ import java.io.IOException;
 @WebServlet(name = "filmInfo", value = "/film-info")
 public class FilmInfoController extends HttpServlet {
     private FilmServicesImpl filmServices;
-    private ShowtimeServicesImpl showtimeServices;
     private String queryString;
     private HibernateSessionProvider hibernateSessionProvider;
 
@@ -38,7 +39,6 @@ public class FilmInfoController extends HttpServlet {
 
         hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
 
         String filmSlug = StringUtils.handlesInputString(req.getParameter("film"));
 
@@ -73,7 +73,7 @@ public class FilmInfoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+        CRUDServicesLogProxy<Showtime> showtimeServicesLogCRUD = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
 
         if (req.getSession().getAttribute("loginUser") == null) {
             RedirectPageUtils.redirectPage("login", queryString, req, resp);
@@ -84,7 +84,7 @@ public class FilmInfoController extends HttpServlet {
         System.out.println("bookedShowtimeID = " + bookedShowtimeID);
 
         if (!(bookedShowtimeID.isEmpty() || bookedShowtimeID.isBlank())) {
-            Showtime bookedShowtime = showtimeServices.getByID(bookedShowtimeID);
+            Showtime bookedShowtime = showtimeServicesLogCRUD.getByID(bookedShowtimeID);
             if (bookedShowtime != null) {
                 FilmBooking filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
 
@@ -92,7 +92,7 @@ public class FilmInfoController extends HttpServlet {
                 Showtime oldShowtime = filmBooking.getShowtime();
                 if (oldShowtime != null && filmBooking.getBookedSeats() != null) {
                     oldShowtime.releaseSeats(filmBooking.getBookedSeats());
-                    showtimeServices.update(oldShowtime);
+                    showtimeServicesLogCRUD.update(oldShowtime);
                 }
 
                 // reset filmbooking and add new showtime
@@ -113,7 +113,6 @@ public class FilmInfoController extends HttpServlet {
     @Override
     public void destroy() {
         filmServices = null;
-        showtimeServices = null;
         hibernateSessionProvider = null;
     }
 }
