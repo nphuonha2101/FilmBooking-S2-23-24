@@ -18,7 +18,6 @@ public class BookingHistoryController extends HttpServlet {
     private FilmBookingServicesImpl filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
-    // TODO: handle booking log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();

@@ -9,10 +9,11 @@ import com.filmbooking.services.IFilmServices;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFilmServices {
-
     private final GenreServicesImpl genreServices;
 
     public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
@@ -62,5 +63,21 @@ public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFil
         film.setGenreList(genreList);
 
         return this.decoratedDAO.update(film);
+    }
+
+    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
+        Map<String, Object> conditions = new HashMap<>();
+
+        if (!searchQuery.isBlank()) {
+            conditions.put("filmName_like", searchQuery);
+        }
+        // if searchQuery is blank then find with price
+        if (endPriceNumber > 0) {
+            conditions.put("filmPrice_<=", endPriceNumber);
+        }
+        conditions.put("filmPrice_>=", beginPriceNumber);
+
+
+        return this.getByPredicates(conditions).getMultipleResults();
     }
 }

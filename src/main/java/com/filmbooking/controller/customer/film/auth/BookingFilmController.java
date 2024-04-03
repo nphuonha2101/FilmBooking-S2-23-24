@@ -7,6 +7,7 @@ import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
@@ -22,13 +23,11 @@ import java.util.HashMap;
 
 @WebServlet(name = "bookFilm", value = "/auth/book-film")
 public class BookingFilmController extends HttpServlet {
-    private FilmBookingServicesImpl filmBookingServices;
     private ShowtimeServicesImpl showtimeServices;
     private FilmBooking filmBooking;
     private Film bookedFilm;
     private HibernateSessionProvider hibernateSessionProvider;
 
-    // TODO: handle booking log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
@@ -55,9 +54,8 @@ public class BookingFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
         showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-
+        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
 
         String seats = req.getParameter("seats");
 
@@ -75,7 +73,7 @@ public class BookingFilmController extends HttpServlet {
             Showtime showtime = filmBooking.getShowtime();
             showtime.reserveSeats(seats.split(", "));
 
-            showtimeServices.update(showtime);
+            showtimeServicesLog.update(showtime);
 
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/checkout"));
 
@@ -102,7 +100,6 @@ public class BookingFilmController extends HttpServlet {
 
     @Override
     public void destroy() {
-        filmBookingServices = null;
         showtimeServices = null;
         filmBooking = null;
         bookedFilm = null;
