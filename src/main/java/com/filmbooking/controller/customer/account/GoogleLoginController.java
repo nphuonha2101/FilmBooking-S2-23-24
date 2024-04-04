@@ -28,9 +28,6 @@ import java.io.IOException;
 @WebServlet("/google/login")
 public class GoogleLoginController extends HttpServlet {
 
-    private UserServicesImpl userServices;
-    private HibernateSessionProvider hibernateSessionProvider;
-
     private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
 
     @Override
@@ -41,8 +38,8 @@ public class GoogleLoginController extends HttpServlet {
             // TODO: handle error when login failed
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
-            hibernateSessionProvider = new HibernateSessionProvider();
-            userServices = new UserServicesImpl(hibernateSessionProvider);
+            HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
+            UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
             String accessToken = getToken(code);
             GoogleUserInfo googleUserInfo = getUserInfo(accessToken);
             String id = googleUserInfo.getId();
