@@ -50,6 +50,10 @@
         <p><fmt:message key="Or" bundle="${msg}"/> <span>
             <a class="links" href="<c:url value="${pageContext.request.contextPath}/forgot-password"/>"><fmt:message
                 key="youForgotPassword" bundle="${msg}"/></a> </span></p>
+       <div>
+           <fmt:message key="loginWith" bundle="${msg}"/>
+       </div>
+
         <p>
             <a href=${google}><button class="gsi-material-button">
                 <div class="gsi-material-button-state"></div>
