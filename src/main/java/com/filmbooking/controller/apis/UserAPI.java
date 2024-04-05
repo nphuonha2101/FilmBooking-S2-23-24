@@ -1,50 +1,48 @@
 package com.filmbooking.controller.apis;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Theater;
-import com.filmbooking.services.impls.TheaterServicesImpl;
+import com.filmbooking.model.Room;
+import com.filmbooking.model.User;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.GSONUtils;
 import com.google.gson.Gson;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.util.List;
-
-@WebServlet(urlPatterns = {"/api/v1/theaters/*", "/api/v1/theaters"})
-public class TheaterAPI extends HttpServlet {
-    private TheaterServicesImpl theaterServices;
+@WebServlet(urlPatterns = { "/api/v1/users/*", "/api/v1/users" })
+public class UserAPI extends HttpServlet {
+    UserServicesImpl userServicesImpl;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        theaterServices = new TheaterServicesImpl(sessionProvider);
+        userServicesImpl = new UserServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
-
-        String id = req.getParameter("theater-id");
+        String id = req.getParameter("user-id");
         if (id != null) {
-            Theater theater = theaterServices.getByID(id);
-            jsonResp = gson.toJson(theater);
+            User user = userServicesImpl.getByID(id);
+            jsonResp += gson.toJson(user);
         } else {
-            List<Theater> theaterList = theaterServices.getAll().getMultipleResults();
-
-            jsonResp = "[";
-
-            for (Theater theater : theaterList) {
-                jsonResp += gson.toJson(theater);
-                if (theaterList.indexOf(theater) != theaterList.size() - 1) {
+            List<User> userList = userServicesImpl.getAll().getMultipleResults();
+            jsonResp += "[";
+            for (User user : userList) {
+                jsonResp += gson.toJson(user);
+                if (userList.indexOf(user) != userList.size() - 1) {
                     jsonResp += ",";
                 }
             }
             jsonResp += "]";
         }
-
         resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("utf-8");
         resp.getWriter().write(jsonResp);
     }
 }

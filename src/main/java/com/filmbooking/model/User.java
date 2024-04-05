@@ -11,12 +11,15 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+
 @Table(name = User.TABLE_NAME)
 public class User implements IModel{
     @Transient
     public static final String TABLE_NAME = "user_infos";
 
     @Expose
+
+public class User {
     @Column(name = "username")
     @Id
     private String username;
@@ -26,7 +29,6 @@ public class User implements IModel{
     @Expose
     @Column(name = "user_email")
     private String userEmail;
-    @Expose
     @Column(name = "user_password")
     private String userPassword;
     @Column(name = "account_role")
