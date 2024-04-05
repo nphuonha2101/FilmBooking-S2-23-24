@@ -8,8 +8,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "film_bookings")
-public class FilmBooking implements Cloneable {
+@Table(name = FilmBooking.TABLE_NAME)
+public class FilmBooking implements Cloneable, IModel {
+    @Transient
+    public static final String TABLE_NAME = "film_bookings";
     private static final int EXPIRE_TIME = 15;
 
     @Getter
@@ -158,5 +160,10 @@ public class FilmBooking implements Cloneable {
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.filmBookingID);
+    }
 
 }

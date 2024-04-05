@@ -10,8 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "theaters")
-public class Theater {
+@Table(name = Theater.TABLE_NAME)
+public class Theater implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "theaters";
+
     @Expose
     @Column(name = "theater_id", insertable = false, updatable = false)
     @Id
@@ -41,5 +44,10 @@ public class Theater {
                     && this.roomList.equals(theater.getRoomList());
         }
         return false;
+    }
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.theaterID);
     }
 }

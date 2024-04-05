@@ -1,9 +1,7 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

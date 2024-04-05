@@ -1,21 +1,30 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
 
-import java.util.List;
-import java.util.Map;
-
-public class RoomServicesImpl extends AbstractServices<Room> {
+public class RoomServicesImpl extends AbstractCRUDServices<Room> {
 
 
     public RoomServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(Room.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(Room.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public RoomServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(Room.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return Room.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override

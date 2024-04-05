@@ -3,9 +3,11 @@ package com.filmbooking.controller.admin.create;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
+import com.filmbooking.model.User;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -19,15 +21,15 @@ import java.io.IOException;
 
 @WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
-    private RoomServicesImpl roomServices;
-    private TheaterServicesImpl theaterServices;
+    private CRUDServicesLogProxy<Room> roomServices;
+    private CRUDServicesLogProxy<Theater> theaterServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
+        theaterServices = new CRUDServicesLogProxy<>(new TheaterServicesImpl(), req, hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "addRoomTitle");
 
@@ -47,8 +49,9 @@ public class AddRoomController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
-        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
+
+        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
+        theaterServices = new CRUDServicesLogProxy<>(new TheaterServicesImpl(), req, hibernateSessionProvider);
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         String theaterID = StringUtils.handlesInputString(req.getParameter("theater-id"));

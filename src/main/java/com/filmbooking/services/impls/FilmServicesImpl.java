@@ -1,39 +1,49 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.IFilmServices;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FilmServicesImpl extends AbstractServices<Film> {
-
+public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFilmServices {
     private final GenreServicesImpl genreServices;
 
     public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(Film.class);
+        this.decoratedDAO = new DataAccessObjects<>(Film.class);
         this.genreServices = new GenreServicesImpl(sessionProvider);
-        super.setSessionProvider(sessionProvider);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public FilmServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(Film.class);
+        this.genreServices = new GenreServicesImpl();
+    }
+
+    @Override
+    public String getTableName() {
+        return Film.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
+        this.genreServices.setSessionProvider(sessionProvider);
     }
 
     @Override
     public Film getByID(String id) {
-        return super.decoratedDAO.getByID(id, true);
+        return this.decoratedDAO.getByID(id, true);
     }
 
-    /**
-     * Save a film with its genreIDs
-     *
-     * @param film     film to save
-     * @param genreIDs genreIDs of the film
-     * @return true if save successfully, false otherwise
-     */
+    @Override
     public boolean save(Film film, String... genreIDs) {
         List<Genre> genreList = new ArrayList<>();
         for (String genreID : genreIDs) {
@@ -41,16 +51,10 @@ public class FilmServicesImpl extends AbstractServices<Film> {
         }
         film.setGenreList(genreList);
 
-        return super.decoratedDAO.save(film);
+        return this.decoratedDAO.save(film);
     }
 
-    /**
-     * Update a film with its genreIDs
-     *
-     * @param film     film to update
-     * @param genreIDs genreIDs of the film
-     * @return true if update successfully, false otherwise
-     */
+    @Override
     public boolean update(Film film, String... genreIDs) {
         List<Genre> genreList = new ArrayList<>();
         for (String genreID : genreIDs) {
@@ -58,8 +62,22 @@ public class FilmServicesImpl extends AbstractServices<Film> {
         }
         film.setGenreList(genreList);
 
-        return super.decoratedDAO.update(film);
+        return this.decoratedDAO.update(film);
     }
 
+    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
+        Map<String, Object> conditions = new HashMap<>();
 
+        if (!searchQuery.isBlank()) {
+            conditions.put("filmName_like", searchQuery);
+        }
+        // if searchQuery is blank then find with price
+        if (endPriceNumber > 0) {
+            conditions.put("filmPrice_<=", endPriceNumber);
+        }
+        conditions.put("filmPrice_>=", beginPriceNumber);
+
+
+        return this.getByPredicates(conditions).getMultipleResults();
+    }
 }

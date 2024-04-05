@@ -11,7 +11,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "user_infos")
+
+@Table(name = User.TABLE_NAME)
+public class User implements IModel{
+    @Transient
+    public static final String TABLE_NAME = "user_infos";
+
+    @Expose
+
 public class User {
     @Column(name = "username")
     @Id
@@ -52,5 +59,10 @@ public class User {
                     && this.filmBookingList.equals(user.getFilmBookingList());
         }
         return false;
+    }
+
+    @Override
+    public String getStringID() {
+        return this.username;
     }
 }

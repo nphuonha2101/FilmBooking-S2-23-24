@@ -1,21 +1,33 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.dao.daoDecorators.OffsetDAODecorator;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.IShowtimeServices;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class ShowtimeServicesImpl extends AbstractServices<Showtime> {
+public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> implements IShowtimeServices {
 
     public ShowtimeServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(Showtime.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(Showtime.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public ShowtimeServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(Showtime.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return Showtime.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -27,7 +39,7 @@ public class ShowtimeServicesImpl extends AbstractServices<Showtime> {
      * Get a map storing showtimeID and its available seats
      * @return HashMap<Long, Integer> showtimeID and its available seats
      */
-    public HashMap<Long, Integer> countAvailableSeats() {
+    public Map<Long, Integer> getAvailableSeatsByShowtimeId() {
         HashMap<Long, Integer> result = new HashMap<>();
 
         for (Showtime showtime : getAll().getMultipleResults()

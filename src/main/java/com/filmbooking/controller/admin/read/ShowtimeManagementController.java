@@ -3,6 +3,8 @@ package com.filmbooking.controller.admin.read;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
+import com.filmbooking.services.logProxy.ShowtimeServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -17,31 +19,32 @@ import java.util.List;
 
 @WebServlet(name="showtimeManagement", value="/admin/management/showtime")
 public class ShowtimeManagementController extends HttpServlet {
-    private ShowtimeServicesImpl showtimeServices;
+    private ShowtimeServicesLogProxy<Showtime> showtimeServices;
+    private CRUDServicesLogProxy<Showtime> showtimeServicesCRUD;
     private HibernateSessionProvider hibernateSessionProvider;
     private static final int LIMIT = 10;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-
+        showtimeServices = new ShowtimeServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+        showtimeServicesCRUD = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
 
         int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) showtimeServices.getTotalRecordRows() / LIMIT);
+        int totalPages = (int) Math.ceil((double) showtimeServicesCRUD.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
         // if page valid (offset != -2)
         if (offset != -2) {
             // if page has data (offset != -1)
             if (offset != -1) {
-                List<Showtime> showtimeList = showtimeServices.getByOffset(offset, LIMIT).getMultipleResults();
+                List<Showtime> showtimeList = showtimeServicesCRUD.getByOffset(offset, LIMIT).getMultipleResults();
 
                 req.setAttribute("showtimeList", showtimeList);
                 // set page url for pagination
                 req.setAttribute("pageUrl", "admin/management/showtime");
 
-                req.setAttribute("availableSeats", showtimeServices.countAvailableSeats());
+                req.setAttribute("availableSeats", showtimeServices.getAvailableSeatsByShowtimeId());
             }
 
             req.setAttribute("pageTitle", "showtimeManagementTitle");

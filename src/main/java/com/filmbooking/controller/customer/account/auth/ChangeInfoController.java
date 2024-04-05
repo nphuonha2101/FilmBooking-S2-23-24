@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -22,6 +23,7 @@ import java.io.IOException;
 
 public class ChangeInfoController extends HttpServlet {
     private UserServicesImpl userServices;
+    private CRUDServicesLogProxy<User> userServicesLog;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -36,10 +38,11 @@ public class ChangeInfoController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         userServices = new UserServicesImpl(hibernateSessionProvider);
+        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String email = StringUtils.handlesInputString(req.getParameter("email"));
-        String password = StringUtils.generateSHA256String(StringUtils.handlesInputString(req.getParameter("password")));
+        String password = userServices.hashPassword(StringUtils.handlesInputString(req.getParameter("password")));
 
         // validate input
         if (!Regex.validate(UserRegexEnum.USER_EMAIL, email) || !Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
@@ -63,7 +66,7 @@ public class ChangeInfoController extends HttpServlet {
             } else {
                 loginUser.setUserFullName(userFullName);
                 loginUser.setUserEmail(email);
-                userServices.update(loginUser);
+                userServicesLog.update(loginUser);
 
                 resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/account-info"));
             }
