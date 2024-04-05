@@ -6,11 +6,11 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  *  @author nphuonha
  */
 
+import com.filmbooking.enumsAndConstants.enums.PaymentStatus;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
-import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
@@ -50,6 +50,7 @@ public class PaymentController extends HttpServlet {
         hibernateSessionProvider.closeSession();
     }
 
+    // TODO: handle payment log
     static void handlePayment(HttpServletRequest req, HttpServletResponse resp, FilmBooking filmBooking,
                               ShowtimeServicesImpl showtimeServices,
                               FilmBookingServicesImpl filmBookingServices, PaymentStatus paymentStatus) throws ServletException, IOException {

@@ -4,6 +4,7 @@ package com.filmbooking.controller.admin.read;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -18,14 +19,14 @@ import java.util.List;
 
 @WebServlet(name = "filmManagement", value = "/admin/management/film")
 public class FilmManagementController extends HttpServlet {
-    private FilmServicesImpl filmServices;
+    private CRUDServicesLogProxy<Film> filmServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private static final int LIMIT = 5;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
 
         int currentPage = 1;
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);

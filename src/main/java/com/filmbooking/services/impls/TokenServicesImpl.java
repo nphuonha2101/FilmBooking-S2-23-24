@@ -2,20 +2,33 @@ package com.filmbooking.services.impls;
 
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
-import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class TokenServicesImpl extends AbstractServices<TokenModel> {
+public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
 
     public TokenServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public TokenServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return TokenModel.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -37,7 +50,7 @@ public class TokenServicesImpl extends AbstractServices<TokenModel> {
      */
     public TokenModel getToken(String token, String username, String type) {
         Map<String, Object> conditions = Map.of("token_=", token, "username_=", username, "tokenType_=", type);
-        return super.getByPredicates(conditions).getSingleResult();
+        return this.getByPredicates(conditions).getSingleResult();
     }
 
     /**

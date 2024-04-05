@@ -2,7 +2,6 @@ package com.filmbooking.controller.customer.film.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
-import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -29,7 +28,7 @@ public class BookingHistoryController extends HttpServlet {
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser != null)
             if (loginUser.getAccountRole().equalsIgnoreCase("admin"))
-                req.setAttribute("filmBookings", filmBookingServices.getAll());
+                req.setAttribute("filmBookings", filmBookingServices.getAll().getMultipleResults());
             else
                 req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 

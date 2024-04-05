@@ -31,13 +31,14 @@ public class GoogleLoginController extends HttpServlet {
     private UserServicesImpl userServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
-    private PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
+    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String error = req.getParameter("error");
         String code = req.getParameter("code");
         if (error != null && error.equals("access_denied")) {
+            // TODO: handle error when login failed
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
             hibernateSessionProvider = new HibernateSessionProvider();
@@ -71,7 +72,7 @@ public class GoogleLoginController extends HttpServlet {
 
     }
 
-    private String getToken(final String code) throws ClientProtocolException, IOException {
+    private String getToken(final String code) throws IOException {
         String response = Request.Post(propertiesUtils.getProperty("link_get_token")).bodyForm(Form.form().add("client_id", propertiesUtils.getProperty("client_id"))
                         .add("client_secret", propertiesUtils.getProperty("client_secret"))
                         .add("redirect_uri",propertiesUtils.getProperty("redirect_uri")).add("code", code)

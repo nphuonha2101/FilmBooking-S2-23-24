@@ -9,18 +9,28 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
 
-import java.util.List;
-import java.util.Map;
+public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
 
-public class FilmVoteServicesImpl extends AbstractServices<FilmVote> {
-    private final DataAccessObjects<FilmVote> filmVoteDataAccessObjects;
 
     public FilmVoteServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.filmVoteDataAccessObjects = new DataAccessObjects<>(FilmVote.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(FilmVote.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public FilmVoteServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(FilmVote.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return FilmVote.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -30,7 +40,7 @@ public class FilmVoteServicesImpl extends AbstractServices<FilmVote> {
 
     @Override
     public FilmVote getByID(String id) {
-        return this.filmVoteDataAccessObjects.getByID(id, true);
+        return this.decoratedDAO.getByID(id, true);
     }
 
     @Override

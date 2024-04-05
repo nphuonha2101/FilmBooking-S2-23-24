@@ -2,8 +2,8 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
-import com.filmbooking.services.*;
 import com.filmbooking.services.impls.*;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,13 +15,13 @@ import java.io.IOException;
 
 @WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
-    private FilmBookingServicesImpl filmBookingServices;
+    private CRUDServicesLogProxy<FilmBooking> filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
+        filmBookingServices = new CRUDServicesLogProxy<>(new FilmBookingServicesImpl(), req, hibernateSessionProvider);
 
         String bookingID = req.getParameter("booking-id");
 

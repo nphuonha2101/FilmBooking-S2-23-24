@@ -19,8 +19,11 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "user_tokens")
-public class TokenModel {
+@Table(name = TokenModel.TABLE_NAME)
+public class TokenModel implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "user_tokens";
+
     @Expose
     @Id
     @Column(name = "token")
@@ -78,4 +81,8 @@ public class TokenModel {
         this.expiryDate = LocalDateTime.now().plusSeconds(tokenExpiryTime);
     }
 
+    @Override
+    public String getStringID() {
+        return this.token;
+    }
 }

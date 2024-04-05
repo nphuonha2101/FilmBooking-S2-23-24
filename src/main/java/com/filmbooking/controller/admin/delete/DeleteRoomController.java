@@ -4,6 +4,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,13 +16,13 @@ import java.io.IOException;
 
 @WebServlet(name = "deleteRoom", value = "/admin/delete/room")
 public class DeleteRoomController extends HttpServlet {
-    private RoomServicesImpl roomServices;
+    private CRUDServicesLogProxy<Room> roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
 
         String roomSlug = req.getParameter("room");
         System.out.println("DeleteFilmController Test: " + roomSlug);
