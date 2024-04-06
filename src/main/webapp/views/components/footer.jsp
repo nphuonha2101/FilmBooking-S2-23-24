@@ -66,5 +66,5 @@ expand_less</span>
 <script type="module" src="<c:url value="/resources/js/handlesSubmitHiddenForm.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>
 <script type="module" src="<c:url value="/resources/js/handlesAccordions.js"/>"></script>
-<script type="module" src="<c:url value="/resources/js/handlesSearchModal.js"/>"></script>
+<%--<script type="module" src="<c:url value="/resources/js/handlesSearchModal.js"/>"></script>--%>
 <script type="module" src="<c:url value="/resources/js/handlesDisplaySelectedGenres.js"/>"></script>
