@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "api/v1/showtimes/*", "api/v1/showtimes" })
+@WebServlet(urlPatterns = { "/api/v1/showtimes/*", "/api/v1/showtimes" })
 public class ShowtimeAPI extends HttpServlet {
     ShowtimeServicesImpl showtimeServicesImpl;
 
