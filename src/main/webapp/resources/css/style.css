@@ -143,7 +143,7 @@ button {
     top: 0;
     left: 0;
     width: 100%;
-    height: 3rem;
+    height: 4rem;
     z-index: 9;
     background-color: #fff;
     -moz-animation-name: fade;
@@ -151,7 +151,7 @@ button {
     animation-name: fade;
     animation-duration: 0.4s;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr 1fr;
     column-gap: 2rem;
     justify-content: center;
     align-items: center;
@@ -1351,6 +1351,9 @@ thead > tr > th {
 
 .mg-0 {
     margin: 0 !important;
+}
+#search-input{
+    width: 500px !important;
 }
 
 #search-form {
