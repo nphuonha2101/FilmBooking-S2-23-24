@@ -44,7 +44,12 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
         T oldT = null;
         if (t != null) {
             id = t.getStringID();
-            oldT = decoratedCRUDServices.getByID(id);
+            System.out.println("String FilmVote ID: " + id);
+            try {
+                oldT = decoratedCRUDServices.getByID(id);
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+            }
         }
         String ip = request.getRemoteAddr();
         String targetTable = decoratedCRUDServices.getTableName();

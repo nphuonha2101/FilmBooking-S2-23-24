@@ -13,13 +13,11 @@ import java.util.List;
 @Entity
 
 @Table(name = User.TABLE_NAME)
-public class User implements IModel{
+public class User implements IModel {
     @Transient
     public static final String TABLE_NAME = "user_infos";
 
     @Expose
-
-public class User {
     @Column(name = "username")
     @Id
     private String username;

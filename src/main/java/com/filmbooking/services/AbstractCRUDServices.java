@@ -9,6 +9,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public abstract class AbstractCRUDServices<T> implements ICRUDServices<T> {
     }
 
     @Override
-    public abstract T getByID(String id);
+    public abstract T getByID(@NotNull String id);
 
     @Override
     public ICRUDServices<T> getAll() {

@@ -18,6 +18,7 @@ import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
@@ -52,7 +53,10 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
 
     @Override
     public User getByID(String id) {
-        return this.decoratedDAO.getByID(id, false);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, false);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     public User getByEmail(String email) {
@@ -111,8 +115,9 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
      * Handle forgot password of user
      * <br>
      * When user forgot password, create a token and send email to user
+     *
      * @param username username
-     * @param email user's email in system
+     * @param email    user's email in system
      * @param language language of email
      * @return ServiceResult with status code
      */
@@ -157,7 +162,8 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
 
     /**
      * Handle change password for user
-     * @param username username to find user
+     *
+     * @param username    username to find user
      * @param oldPassword old password
      * @param newPassword new password
      * @return ServiceResult with status code
@@ -188,6 +194,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
 
     /**
      * Hashing password with SHA-256 algorithm and secret key
+     *
      * @param password password to hash
      * @return hashed password
      */

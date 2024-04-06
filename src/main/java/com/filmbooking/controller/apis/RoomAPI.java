@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "api/v1/rooms/*", "api/v1/rooms" })
+@WebServlet(urlPatterns = { "/api/v1/rooms/*", "/api/v1/rooms" })
 public class RoomAPI extends HttpServlet {
     RoomServicesImpl roomServicesImpl;
 
