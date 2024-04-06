@@ -33,6 +33,10 @@
 
     <ul id="right-nav-link">
 
+
+
+        <li>
+
             <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>" id="home">
                 <div class="tooltip ">
                     <span class="material-symbols-rounded">
