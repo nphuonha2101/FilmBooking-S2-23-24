@@ -1355,7 +1355,16 @@ thead > tr > th {
 #search-input{
     width: 500px !important;
 }
-
+#result {
+    position: absolute;
+    width: 50% !important;
+    cursor: pointer;
+    overflow-y: auto;
+    max-height: 400px;
+    box-sizing: border-box;
+    z-index: 1001;
+    background-color: #f30000;
+}
 #search-form {
     width: calc(60vw) !important;
 }

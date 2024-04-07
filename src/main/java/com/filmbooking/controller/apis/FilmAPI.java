@@ -25,7 +25,7 @@ public class FilmAPI extends HttpServlet {
         filmServices = new FilmServicesImpl(sessionProvider);
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
-        String id = req.getParameter("film-id");
+        String id = req.getParameter("film-name");
         if (id != null) {
             Film film = filmServices.getByID(id);
             jsonResp = gson.toJson(film);

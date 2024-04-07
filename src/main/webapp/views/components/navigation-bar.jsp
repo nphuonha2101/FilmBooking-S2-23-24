@@ -28,6 +28,7 @@
 
         <div class="search-box">
             <input type="text" id="search-input" placeholder="<fmt:message key="search" bundle="${msg}"/>">
+            <ul class="list-group" id="result"></ul>
         </div>
 
 
