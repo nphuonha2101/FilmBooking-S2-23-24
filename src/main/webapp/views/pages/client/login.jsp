@@ -42,6 +42,7 @@
                    autocomplete="true" required>
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message key="login" bundle="${msg}"/>">
+
         </form>
         <p><fmt:message key="dontHaveAccount" bundle="${msg}"/> <span>
             <a class="links" href="<c:url value="${pageContext.request.contextPath}/signup"/>"><fmt:message
@@ -53,7 +54,11 @@
        <div>
            <fmt:message key="loginWith" bundle="${msg}"/>
        </div>
-
+<%--        facebook login--%>
+        <form action="FacebookLoginServlet" method="GET">
+            <input type="submit" value="Login with Facebook">
+        </form>
+<%--        google login--%>
         <p>
             <a href=${google}><button class="gsi-material-button">
                 <div class="gsi-material-button-state"></div>
@@ -71,4 +76,30 @@
             </button></a>
         </p>
     </div>
+<%--    <script>--%>
+
+<%--        function checkLoginState() {               // Called when a person is finished with the Login Button.--%>
+<%--            FB.getLoginStatus(function(response) {   // See the onlogin handler--%>
+<%--                statusChangeCallback(response);--%>
+<%--            });--%>
+<%--        }--%>
+
+
+<%--        window.fbAsyncInit = function() {--%>
+<%--            FB.init({--%>
+<%--                appId      : '2705451709613164',--%>
+<%--                cookie     : true,                     // Enable cookies to allow the server to access the session.--%>
+<%--                xfbml      : true,                     // Parse social plugins on this webpage.--%>
+<%--                version    : 'v19.0'           // Use this Graph API version for this call.--%>
+<%--            });--%>
+
+
+<%--            FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.--%>
+<%--                statusChangeCallback(response);        // Returns the login status.--%>
+<%--            });--%>
+<%--        };--%>
+
+<%--    </script>--%>
+    <!-- Load the JS SDK asynchronously -->
+<%--    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>--%>
 </section>

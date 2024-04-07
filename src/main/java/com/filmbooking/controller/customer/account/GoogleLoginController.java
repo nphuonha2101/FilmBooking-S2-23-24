@@ -5,10 +5,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.WebAppPathUtils;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,6 +19,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+
 
 import java.io.IOException;
 
