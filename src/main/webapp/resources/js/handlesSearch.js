@@ -16,10 +16,11 @@ $(document).ready(function(){
                 $.each(data, function(key, value){
                     if (value.filmName.search(expression) != -1)
                     {
-                        $('#result').append('<li class="list-group-item link-class"><a href="http://localhost:8080/film-info?film=' + value.slug + '"><img src="'+value.imgPath+'" height="40" width="40" class="img-thumbnail" /> '+value.filmName+'</a></li>');
+                        $('#result').append('<a href="http://localhost:8080/film-info?film=' + value.slug + '" style="text-decoration: none"><li class="list-group-item link-class"><img src="'+value.imgPath+'"/> '+value.filmName+'</li></a>');
                     }
                 });
             });
         }
     });
 });
+
