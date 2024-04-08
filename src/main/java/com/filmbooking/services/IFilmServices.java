@@ -25,4 +25,5 @@ public interface IFilmServices {
      * @return true if save successfully, false otherwise
      */
     boolean save(Film film, String... genreIDs);
+
 }

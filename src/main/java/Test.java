@@ -12,10 +12,8 @@ import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.User;
-import com.filmbooking.utils.GSONUtils;
 import jakarta.persistence.criteria.Predicate;
 
 public class Test {

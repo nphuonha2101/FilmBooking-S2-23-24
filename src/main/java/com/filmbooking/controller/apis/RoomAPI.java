@@ -6,7 +6,7 @@ import java.util.List;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.impls.RoomServicesImpl;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "api/v1/rooms/*", "api/v1/rooms" })
+@WebServlet(urlPatterns = { "/api/v1/rooms/*", "/api/v1/rooms" })
 public class RoomAPI extends HttpServlet {
     RoomServicesImpl roomServicesImpl;
 

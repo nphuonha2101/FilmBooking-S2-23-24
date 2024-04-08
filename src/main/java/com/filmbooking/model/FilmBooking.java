@@ -23,6 +23,7 @@ public class FilmBooking implements Cloneable, IModel {
     private long filmBookingID;
     @Getter
     @Setter
+    @Expose
     @ManyToOne
     @JoinColumn(name = "showtime_id")
     private Showtime showtime;
