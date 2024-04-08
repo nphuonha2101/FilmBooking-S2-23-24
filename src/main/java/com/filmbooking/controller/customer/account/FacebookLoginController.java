@@ -28,8 +28,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static sun.rmi.transport.TransportConstants.Version;
-
 @WebServlet("/facebook/login")
 public class FacebookLoginController extends HttpServlet {
     private UserServicesImpl userServices;
