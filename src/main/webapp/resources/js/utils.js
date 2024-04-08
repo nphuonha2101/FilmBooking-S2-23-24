@@ -17,26 +17,30 @@ let handlesCloseButton = (containerElement) => {
 
 let handlesActiveButton = {
     start: () => {
-        const navLinks = $$(".nav-links");
+        try {
+            const navLinks = $$(".nav-links");
 
-        for (const navLink of navLinks) {
-            if (navLink.id !== null) {
-                navLink.addEventListener("click", () => {
-                    localStorage.setItem("navElementActive", navLink.id);
-                });
-            }
-        }
-
-        window.onload = () => {
             for (const navLink of navLinks) {
-                navLink.classList.remove("nav-active");
-
-                let navLinkActiveElement = $("#"+ navLink.id);
-                let url = window.location.href;
-
-                if (url.includes(navLink.id))
-                    navLinkActiveElement.classList.add("nav-active");
+                if (navLink.id !== null) {
+                    navLink.addEventListener("click", () => {
+                        localStorage.setItem("navElementActive", navLink.id);
+                    });
+                }
             }
+
+            window.onload = () => {
+                for (const navLink of navLinks) {
+                    navLink.classList.remove("nav-active");
+
+                    let navLinkActiveElement = $(`#${navLink.id}`);
+                    let url = window.location.href;
+
+                    if (url.includes(navLink.id))
+                        navLinkActiveElement.classList.add("nav-active");
+                }
+            }
+        } catch (e) {
+            console.error(e);
         }
     }
 }

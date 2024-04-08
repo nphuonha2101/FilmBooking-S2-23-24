@@ -6,7 +6,7 @@ import java.util.List;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 
 import jakarta.servlet.ServletException;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = { "api/v1/showtimes/*", "api/v1/showtimes" })
+@WebServlet(urlPatterns = { "/api/v1/showtimes/*", "/api/v1/showtimes" })
 public class ShowtimeAPI extends HttpServlet {
     ShowtimeServicesImpl showtimeServicesImpl;
 

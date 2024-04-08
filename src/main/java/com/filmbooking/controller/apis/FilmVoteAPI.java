@@ -1,12 +1,9 @@
 package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.FilmVote;
-import com.filmbooking.services.impls.FilmBookingServicesImpl;
-import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.FilmVoteServicesImpl;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

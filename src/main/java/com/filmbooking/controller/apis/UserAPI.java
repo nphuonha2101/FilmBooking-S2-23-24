@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.List;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Room;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 
 import jakarta.servlet.ServletException;
