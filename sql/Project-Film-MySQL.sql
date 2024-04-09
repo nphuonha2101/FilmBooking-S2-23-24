@@ -108,6 +108,7 @@ create table logs
     log_id            bigint auto_increment primary key,
     username          varchar(50) references user_infos (username),
     req_ip            varchar(50) not null,
+    ip_country        varchar(50),
     log_level         varchar(20) not null,
     target_table      varchar(50) not null,
     actions           varchar(20) not null,

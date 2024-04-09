@@ -66,8 +66,14 @@
                             <fmt:message key="bookingHistory" bundle="${msg}"/>
                         </span>
 
-                    <div class="drop-down-contents" id="film-booking_menu-content">
+                    <div class="drop-down-contents">
+                        <div id="film-booking_menu-content">
+                        </div>
 
+                        <a class="drop-down-links"
+                           href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
+                                <fmt:message key="bookingHistory" bundle="${msg}"/>
+                        </a>
                     </div>
                 </div>
 

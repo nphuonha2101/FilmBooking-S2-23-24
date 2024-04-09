@@ -1548,11 +1548,32 @@ input[type='radio'] + label {
     opacity: 8%;
 }
 
-#menu-items_row {
+.menu-items_row {
+    width: calc(35vw);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
     box-sizing: border-box;
+    padding: 0.5rem;
+    border-radius: 10px;
+    margin: 0.5rem 0;
+}
+
+.menu-items_table {
+    border: none;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.menu-items_table tr {
+    border: none;
+}
+
+.menu-items_table td {
+    text-align: left;
+}
+
+#film-booking_menu-content {
+    left: -10rem;
 }
