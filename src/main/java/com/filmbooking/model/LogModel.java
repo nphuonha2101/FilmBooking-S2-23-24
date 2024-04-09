@@ -1,5 +1,6 @@
 package com.filmbooking.model;
 
+import com.filmbooking.utils.GeoLite2IPUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,8 @@ public class LogModel {
     private User user;
     @Column(name = "req_ip")
     private String reqIP;
+    @Column(name = "ip_country")
+    private String ipCountry;
     @Column(name = "log_level")
     private String level;
     @Column(name = "target_table")
@@ -60,6 +63,7 @@ public class LogModel {
     public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
         this.user = user;
         this.reqIP = reqIP;
+        this.ipCountry = String.valueOf(GeoLite2IPUtils.getInstance().getCountry(reqIP));
         this.level = level;
         this.targetTable = targetTable;
         this.action = action;
