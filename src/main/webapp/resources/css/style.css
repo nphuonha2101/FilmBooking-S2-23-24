@@ -196,6 +196,7 @@ button {
     display: flex;
     align-items: center;
     width: 100%;
+    margin-top: 10px !important;
     background-color: #f5f5f5;
 }
 
@@ -1572,4 +1573,10 @@ input[type='radio'] + label {
 .gsi-material-button:not(:disabled):hover .gsi-material-button-state {
     background-color: #303030;
     opacity: 8%;
+}
+#result {
+    padding: 0 !important;
+}
+#result > li {
+    margin: 10px;
 }
