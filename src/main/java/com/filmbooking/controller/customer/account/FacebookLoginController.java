@@ -63,9 +63,9 @@ public class FacebookLoginController extends HttpServlet {
                 filmBooking.setUser(loginUser);
                 session.setAttribute("filmBooking", filmBooking);
             }
-
+            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         }
-        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
+
     }
     public static String getToken(final String code) throws ClientProtocolException, IOException {
         String link = String.format(PathConstant.FACEBOOK_LINK_GET_TOKEN, PathConstant.FACEBOOK_APP_ID, PathConstant.FACEBOOK_APP_SECRET, PathConstant.FACEBOOK_REDIRECT_URL, code);

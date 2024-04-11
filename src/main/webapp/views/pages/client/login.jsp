@@ -56,7 +56,7 @@
        </div>
 <%--        facebook login--%>
         <button>
-            <a href="https://www.facebook.com/dialog/oauth?client_id=2705451709613164&redirect_uri=https://localhost:8080/AccessFacebook/login-facebook">
+            <a href="https://www.facebook.com/dialog/oauth?client_id=2705451709613164&redirect_uri=http://localhost:8080/facebook/login">
                 Login Facebook</a>
         </button>
 <%--        google login--%>
