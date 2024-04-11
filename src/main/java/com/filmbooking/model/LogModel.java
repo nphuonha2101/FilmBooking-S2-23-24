@@ -1,5 +1,6 @@
 package com.filmbooking.model;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = LogModel.TABLE_NAME)
-public class LogModel implements IModel{
+public class LogModel{
     // log actions
     public static final String TABLE_NAME = "logs";
     public static final String INSERT = "INSERT";
@@ -34,27 +35,38 @@ public class LogModel implements IModel{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     @Column(name="log_id", updatable = false, insertable = false)
     private long logID;
     @ManyToOne
+    @Expose
     @JoinColumn(name= "username")
     private User user;
+    @Expose
     @Column(name = "req_ip")
     private String reqIP;
+    @Expose
     @Column(name = "log_level")
     private String level;
+    @Expose
     @Column(name = "target_table")
     private String targetTable;
+    @Expose
     @Column(name = "actions")
     private String action;
+    @Expose
     @Column(name = "is_action_success")
     private boolean isActionSuccess;
+    @Expose
     @Column(name = "before_data")
     private String beforeValueJSON;
+    @Expose
     @Column(name = "after_data")
     private String afterValueJSON;
+    @Expose
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Expose
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
@@ -84,9 +96,4 @@ public class LogModel implements IModel{
         return logID == logModel.logID && isActionSuccess == logModel.isActionSuccess && Objects.equals(user, logModel.user) && Objects.equals(reqIP, logModel.reqIP) && Objects.equals(level, logModel.level) && Objects.equals(targetTable, logModel.targetTable) && Objects.equals(action, logModel.action) && Objects.equals(beforeValueJSON, logModel.beforeValueJSON) && Objects.equals(afterValueJSON, logModel.afterValueJSON) && Objects.equals(createdAt, logModel.createdAt) && Objects.equals(updatedAt, logModel.updatedAt);
     }
 
-
-    @Override
-    public String getStringID() {
-        return String.valueOf(this.logID);
-    }
 }

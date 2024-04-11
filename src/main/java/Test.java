@@ -54,10 +54,7 @@ public class Test {
 //        User user = userDAO.getByID("nphuonha", false);
 //        System.out.println(GSONUtils.getGson().toJson(user));
         LogModelServicesImpl logModelServices = new LogModelServicesImpl(hibernateSessionProvider);
-        HttpServletRequest request = null;
-
-        CRUDServicesLogProxy crudServicesLogProxy = new CRUDServicesLogProxy<>(logModelServices,request,hibernateSessionProvider);
-        List<LogModel> logModelList = crudServicesLogProxy.getAll().getMultipleResults();
+        List<LogModel> logModelList = logModelServices.getAll().getMultipleResults();
         Gson gson = GSONUtils.getGson();
         String jsonResp = "";
         jsonResp = "[";
