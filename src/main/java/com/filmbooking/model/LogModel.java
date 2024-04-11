@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author nphuo
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = LogModel.TABLE_NAME)
-public class LogModel {
+public class LogModel implements IModel{
     // log actions
     public static final String TABLE_NAME = "logs";
     public static final String INSERT = "INSERT";
@@ -74,4 +75,18 @@ public class LogModel {
     }
 
     public LogModel() {}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LogModel logModel = (LogModel) o;
+        return logID == logModel.logID && isActionSuccess == logModel.isActionSuccess && Objects.equals(user, logModel.user) && Objects.equals(reqIP, logModel.reqIP) && Objects.equals(level, logModel.level) && Objects.equals(targetTable, logModel.targetTable) && Objects.equals(action, logModel.action) && Objects.equals(beforeValueJSON, logModel.beforeValueJSON) && Objects.equals(afterValueJSON, logModel.afterValueJSON) && Objects.equals(createdAt, logModel.createdAt) && Objects.equals(updatedAt, logModel.updatedAt);
+    }
+
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.logID);
+    }
 }
