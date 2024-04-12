@@ -35,8 +35,7 @@ public class FilmVote implements IModel {
     @Column(name = "scores")
     private int scores;
 
-    public FilmVote() {
-    }
+    public FilmVote() {}
 
     public FilmVote(Film film, int scores) {
         this.film = film;

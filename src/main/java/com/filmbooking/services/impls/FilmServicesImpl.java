@@ -8,10 +8,7 @@ import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.IFilmServices;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFilmServices {
     private final GenreServicesImpl genreServices;
@@ -40,7 +37,10 @@ public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFil
 
     @Override
     public Film getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     @Override
