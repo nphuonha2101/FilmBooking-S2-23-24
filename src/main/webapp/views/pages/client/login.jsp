@@ -42,6 +42,7 @@
                    autocomplete="true" required>
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message key="login" bundle="${msg}"/>">
+
         </form>
         <p><fmt:message key="dontHaveAccount" bundle="${msg}"/> <span>
             <a class="links" href="<c:url value="${pageContext.request.contextPath}/signup"/>"><fmt:message
@@ -53,7 +54,12 @@
        <div>
            <fmt:message key="loginWith" bundle="${msg}"/>
        </div>
-
+<%--        facebook login--%>
+        <button>
+            <a href="https://www.facebook.com/dialog/oauth?client_id=2705451709613164&redirect_uri=http://localhost:8080/facebook/login">
+                Login Facebook</a>
+        </button>
+<%--        google login--%>
         <p>
             <a href=${google}><button class="gsi-material-button">
                 <div class="gsi-material-button-state"></div>
