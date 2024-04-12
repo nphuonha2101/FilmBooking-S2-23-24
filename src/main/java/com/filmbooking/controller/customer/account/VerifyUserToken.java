@@ -1,8 +1,6 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
-import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.services.impls.TokenServicesImpl;

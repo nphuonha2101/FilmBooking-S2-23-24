@@ -4,10 +4,12 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.model.User;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
@@ -23,9 +25,9 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/admin/add/showtime")
 public class AddShowtimeController extends HttpServlet {
-    private FilmServicesImpl filmServices;
-    private ShowtimeServicesImpl showtimeServices;
-    private RoomServicesImpl roomServices;
+    private CRUDServicesLogProxy<Film> filmServices;
+    private CRUDServicesLogProxy<Showtime> showtimeServices;
+    private CRUDServicesLogProxy<Room> roomServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
 
@@ -33,13 +35,13 @@ public class AddShowtimeController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
+        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
 
         req.setAttribute("pageTitle", "addShowtimeTitle");
 
-        req.setAttribute("filmData", filmServices.getAll());
-        req.setAttribute("roomData", roomServices.getAll());
+        req.setAttribute("filmData", filmServices.getAll().getMultipleResults());
+        req.setAttribute("roomData", roomServices.getAll().getMultipleResults());
 
         RenderViewUtils.renderViewToLayout(req, resp,
                 WebAppPathUtils.getAdminPagesPath("add-showtime.jsp"),
@@ -53,9 +55,9 @@ public class AddShowtimeController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
+        showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
+        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));

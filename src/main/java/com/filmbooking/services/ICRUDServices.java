@@ -10,7 +10,7 @@ import java.util.Map;
  * @ide IntelliJ IDEA
  * @project_name FilmBooking-S2-23-24
  */
-public interface IServices<T> {
+public interface ICRUDServices<T> {
     /**
      * Set session provider for DAO
      *
@@ -23,29 +23,29 @@ public interface IServices<T> {
     /**
      * Get all records
      *
-     * @return IServices<T> instance for chaining or reuse
-     * @see IServices#getMultipleResults()
+     * @return ICRUDServices<T> instance for chaining or reuse
+     * @see ICRUDServices#getMultipleResults()
      */
-    IServices<T> getAll();
+    ICRUDServices<T> getAll();
 
     /**
      * Get records by offset and limit
      *
      * @param offset is the number of records to skip (start from 0)
      * @param limit  is the number of records to get
-     * @return IServices<T> instance for chaining or reuse
-     * @see IServices#getMultipleResults()
+     * @return ICRUDServices<T> instance for chaining or reuse
+     * @see ICRUDServices#getMultipleResults()
      */
-    IServices<T> getByOffset(int offset, int limit);
+    ICRUDServices<T> getByOffset(int offset, int limit);
 
     /**
      * Get records by conditions
      *
      * @param conditions is a map storing conditions. For example: Map.of("name_=", "Phuong Nha") or more entry in Map;
-     * @return IServices<T> instance for chaining or reuse
-     * @see IServices#getMultipleResults()
+     * @return ICRUDServices<T> instance for chaining or reuse
+     * @see ICRUDServices#getMultipleResults()
      */
-    IServices<T> getByPredicates(Map<String, Object> conditions);
+    ICRUDServices<T> getByPredicates(Map<String, Object> conditions);
 
     /**
      * Get record by slug
@@ -122,4 +122,9 @@ public interface IServices<T> {
      */
     T getSingleResult();
 
+    /**
+     * Get the table name of the entity
+     * @return table name
+     */
+    String getTableName();
 }

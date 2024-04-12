@@ -1,6 +1,5 @@
 package com.filmbooking.services;
 
-import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.dao.IDAO;
 import com.filmbooking.dao.IPredicateQuery;
 import com.filmbooking.dao.PredicateFactory;
@@ -10,6 +9,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -19,14 +19,15 @@ import java.util.Map;
  * @ide IntelliJ IDEA
  * @project_name FilmBooking-S2-23-24
  */
-public abstract class AbstractServices<T> implements IServices<T> {
+public abstract class AbstractCRUDServices<T> implements ICRUDServices<T> {
     protected IDAO<T> decoratedDAO;
 
 
     @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
+    public abstract String getTableName();
+
+    @Override
+    public abstract void setSessionProvider(HibernateSessionProvider sessionProvider);
 
     @Override
     public T getBySlug(String slug) {
@@ -35,23 +36,23 @@ public abstract class AbstractServices<T> implements IServices<T> {
     }
 
     @Override
-    public abstract T getByID(String id);
+    public abstract T getByID(@NotNull String id);
 
     @Override
-    public IServices<T> getAll() {
+    public ICRUDServices<T> getAll() {
         this.decoratedDAO = decoratedDAO.getAll();
         return this;
     }
 
     @Override
-    public IServices<T> getByOffset(int offset, int limit) {
+    public ICRUDServices<T> getByOffset(int offset, int limit) {
         this.decoratedDAO = new OffsetDAODecorator<>(decoratedDAO, offset, limit).getAll();
         return this;
     }
 
 
     @Override
-    public IServices<T> getByPredicates(Map<String, Object> conditions) {
+    public ICRUDServices<T> getByPredicates(Map<String, Object> conditions) {
         this.decoratedDAO = new PredicatesDAODecorator<>(decoratedDAO, new IPredicateQuery() {
             @Override
             public Predicate createPredicate(CriteriaBuilder criteriaBuilder, Root root) {

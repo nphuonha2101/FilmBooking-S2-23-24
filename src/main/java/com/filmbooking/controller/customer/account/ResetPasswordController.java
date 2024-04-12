@@ -22,7 +22,6 @@ import java.io.IOException;
 @WebServlet(name = "resetPassword", value = "/reset-password")
 public class ResetPasswordController extends HttpServlet {
     private String status;
-    private String username;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,7 +55,7 @@ public class ResetPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        username = req.getParameter("username");
+        String username = req.getParameter("username");
 
         String newPassword = req.getParameter("new-password");
         String confirmPassword = req.getParameter("confirm-new-password");

@@ -13,9 +13,19 @@ import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.LogModel;
+import com.filmbooking.model.Room;
 import com.filmbooking.model.User;
+import com.filmbooking.services.impls.LogModelServicesImpl;
+import com.filmbooking.services.logProxy.AbstractServicesLogProxy;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.GSONUtils;
+import com.google.gson.Gson;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) {
@@ -29,22 +39,32 @@ public class Test {
 //        System.out.println(htmls);
         HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
 
-        IDAO<Film> filmDAO = new DataAccessObjects<>(Film.class);
-        filmDAO.setSessionProvider(hibernateSessionProvider);
-        IDAO<Film> filmDAOPredicate = new PredicatesDAODecorator<>(new OffsetDAODecorator<>(filmDAO, 0, 5), (criteriaBuilder, rootEntry) -> {
-            Predicate predicate = criteriaBuilder.greaterThan(rootEntry.get("filmPrice"), 100000);
-            return predicate;
-        });
+//        IDAO<Room> roomIDAO = new DataAccessObjects<>(Room.class);
+//        roomIDAO.setSessionProvider(hibernateSessionProvider);
+//        IDAO<Room> roomDAOPredicate = new PredicatesDAODecorator<>(new OffsetDAODecorator<>(roomIDAO, 0, 5), (criteriaBuilder, rootEntry) -> {
+//            Predicate predicate = criteriaBuilder.equal(rootEntry.get("slug"), "vip001-filmbooking-ben-thanh");
+//            return predicate;
+//        });
+//
+//        IDAO< User> userDAO = new DataAccessObjects<>(User.class);
+//        userDAO.setSessionProvider(hibernateSessionProvider);
+//
+//        System.out.println(roomDAOPredicate.getAll().getSingleResult());
 
-        IDAO< User> userDAO = new DataAccessObjects<>(User.class);
-        userDAO.setSessionProvider(hibernateSessionProvider);
+//        User user = userDAO.getByID("nphuonha", false);
+//        System.out.println(GSONUtils.getGson().toJson(user));
+        LogModelServicesImpl logModelServices = new LogModelServicesImpl(hibernateSessionProvider);
+        List<LogModel> logModelList = logModelServices.getAll().getMultipleResults();
+        Gson gson = GSONUtils.getGson();
+        String jsonResp = "";
+        jsonResp = "[";
 
-        System.out.println(filmDAOPredicate
-                .getAll()
-                .getMultipleResults().size());
+        for (LogModel logModel : logModelList) {
+            System.out.println(gson.toJson(logModel));
+        }
+        jsonResp += "]";
 
-        User user = userDAO.getByID("nphuonha", false);
-        System.out.println(GSONUtils.getGson().toJson(user));
+
 
         hibernateSessionProvider.closeSession();
 

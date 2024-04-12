@@ -8,7 +8,8 @@ import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractServices;
+import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.PropertiesUtils;
@@ -17,15 +18,32 @@ import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 
 import java.util.Map;
+import java.util.Objects;
 
-public class UserServicesImpl extends AbstractServices<User> {
+public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
     private final TokenServicesImpl tokenServices;
 
     public UserServicesImpl(HibernateSessionProvider sessionProvider) {
-        super.decoratedDAO = new DataAccessObjects<>(User.class);
-        super.setSessionProvider(sessionProvider);
-        this.tokenServices = new TokenServicesImpl(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(User.class);
+        this.tokenServices = new TokenServicesImpl();
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public UserServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(User.class);
+        this.tokenServices = new TokenServicesImpl();
+    }
+
+    @Override
+    public String getTableName() {
+        return User.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
+        this.tokenServices.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -35,7 +53,10 @@ public class UserServicesImpl extends AbstractServices<User> {
 
     @Override
     public User getByID(String id) {
-        return super.decoratedDAO.getByID(id, false);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, false);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     public User getByEmail(String email) {
@@ -94,8 +115,9 @@ public class UserServicesImpl extends AbstractServices<User> {
      * Handle forgot password of user
      * <br>
      * When user forgot password, create a token and send email to user
+     *
      * @param username username
-     * @param email user's email in system
+     * @param email    user's email in system
      * @param language language of email
      * @return ServiceResult with status code
      */
@@ -132,8 +154,7 @@ public class UserServicesImpl extends AbstractServices<User> {
                         .loadEmailContent()
                         .sendEmailToUser(forgotPassUser.getUserEmail(), emailSubject);
 
-                result = new ServiceResult(StatusCodeEnum.SUCCESSFUL);
-
+                result = new ServiceResult(StatusCodeEnum.SUCCESSFUL, forgotPassUser);
             }
             return result;
         }
@@ -141,7 +162,8 @@ public class UserServicesImpl extends AbstractServices<User> {
 
     /**
      * Handle change password for user
-     * @param username username to find user
+     *
+     * @param username    username to find user
      * @param oldPassword old password
      * @param newPassword new password
      * @return ServiceResult with status code
@@ -164,7 +186,7 @@ public class UserServicesImpl extends AbstractServices<User> {
                 // update password
                 user.setUserPassword(StringUtils.generateSHA256String(newPassword));
                 super.decoratedDAO.update(user);
-                result = new ServiceResult(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL);
+                result = new ServiceResult(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL, user);
             }
             return result;
         }
@@ -172,6 +194,7 @@ public class UserServicesImpl extends AbstractServices<User> {
 
     /**
      * Hashing password with SHA-256 algorithm and secret key
+     *
      * @param password password to hash
      * @return hashed password
      */

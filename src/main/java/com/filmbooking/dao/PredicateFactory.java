@@ -105,13 +105,13 @@ public class PredicateFactory {
             case "<":
                 predicate = criteriaBuilder.lessThan(root.get(field), (Comparable) value);
                 break;
-            case "le":
+            case "<=":
                 predicate = criteriaBuilder.lessThanOrEqualTo(root.get(field), (Comparable) value);
                 break;
-            case "gt":
+            case ">":
                 predicate = criteriaBuilder.greaterThan(root.get(field), (Comparable) value);
                 break;
-            case "ge":
+            case ">=":
                 predicate = criteriaBuilder.greaterThanOrEqualTo(root.get(field), (Comparable) value);
                 break;
             case "like":
