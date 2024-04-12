@@ -1,7 +1,9 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
@@ -18,7 +20,7 @@ import java.io.IOException;
 
 @WebServlet(name = "forgotPassword", value = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
-    private UserServicesImpl userServices;
+    private UserServicesLogProxy<User> userServicesLog;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
@@ -38,7 +40,7 @@ public class ForgotPasswordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesImpl(hibernateSessionProvider);
+        userServicesLog = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
         String username = req.getParameter("username");
         String userEmail = req.getParameter("email");
@@ -56,7 +58,7 @@ public class ForgotPasswordController extends HttpServlet {
         // get result from userServices
         String currentLanguage = (String) req.getSession().getAttribute("lang");
 
-        ServiceResult forgotPassResult = userServices.userForgotPassword(username, userEmail, currentLanguage);
+        ServiceResult forgotPassResult = userServicesLog.userForgotPassword(username, userEmail, currentLanguage);
 
         if (forgotPassResult.getStatus().equals(StatusCodeEnum.SUCCESSFUL))
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());
@@ -74,7 +76,7 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     public void destroy() {
-        userServices = null;
+        userServicesLog = null;
         hibernateSessionProvider = null;
     }
 }

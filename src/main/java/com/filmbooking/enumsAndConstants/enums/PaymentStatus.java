@@ -1,4 +1,4 @@
-package com.filmbooking.controller.customer.checkOutAndPayment.auth;
+package com.filmbooking.enumsAndConstants.enums;
 
 /*
  *  @created 20/01/2024 - 10:04 PM

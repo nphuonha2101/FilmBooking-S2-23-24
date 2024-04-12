@@ -30,9 +30,7 @@ public class SearchController extends HttpServlet {
         double beginPriceNumber = Double.parseDouble(req.getParameter("begin-price"));
         double endPriceNumber = Double.parseDouble(req.getParameter("end-price"));
 
-//        List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
-        // TODO: Implement searchFilms method in FilmServicesImpl
-        List<Film> searchFilmList = new ArrayList<>();
+        List<Film> searchFilmList = filmServices.searchFilms(searchQuery, beginPriceNumber, endPriceNumber);
 
         if (searchFilmList.isEmpty()) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.FILM_NOT_FOUND.getStatusCode());

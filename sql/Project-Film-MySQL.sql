@@ -103,6 +103,21 @@ create table user_tokens (
     token_state varchar(10) not null
 );
 
+create table logs
+(
+    log_id            bigint auto_increment primary key,
+    username          varchar(50) references user_infos (username),
+    req_ip            varchar(50) not null,
+    log_level         varchar(20) not null,
+    target_table      varchar(50) not null,
+    actions           varchar(20) not null,
+    is_action_success boolean     not null,
+    before_data       varchar(5000),
+    after_data        varchar(5000),
+    created_at        timestamp,
+    updated_at        timestamp
+);
+
 
 -- Genre
 insert into genres (genre_id, genre_name) values ('haikich', 'Hài kịch');

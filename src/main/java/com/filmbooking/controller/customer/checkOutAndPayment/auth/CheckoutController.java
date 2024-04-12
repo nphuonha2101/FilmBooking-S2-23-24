@@ -6,11 +6,11 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  *  @author nphuonha
  */
 
+import com.filmbooking.enumsAndConstants.enums.PaymentStatus;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.payment.VNPay;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
-import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RenderViewUtils;

@@ -9,18 +9,30 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
-import com.filmbooking.services.AbstractServices;
-import com.filmbooking.services.IServices;
+import com.filmbooking.services.AbstractCRUDServices;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
-public class FilmVoteServicesImpl extends AbstractServices<FilmVote> {
-    private final DataAccessObjects<FilmVote> filmVoteDataAccessObjects;
+public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
+
 
     public FilmVoteServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.filmVoteDataAccessObjects = new DataAccessObjects<>(FilmVote.class);
-        super.setSessionProvider(sessionProvider);
+        this.decoratedDAO = new DataAccessObjects<>(FilmVote.class);
+        this.setSessionProvider(sessionProvider);
+    }
+
+    public FilmVoteServicesImpl() {
+        this.decoratedDAO = new DataAccessObjects<>(FilmVote.class);
+    }
+
+    @Override
+    public String getTableName() {
+        return FilmVote.TABLE_NAME;
+    }
+
+    @Override
+    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+        this.decoratedDAO.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -30,17 +42,20 @@ public class FilmVoteServicesImpl extends AbstractServices<FilmVote> {
 
     @Override
     public FilmVote getByID(String id) {
-        return this.filmVoteDataAccessObjects.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     @Override
     public boolean update(FilmVote filmVote) {
-     throw new UnsupportedOperationException("This method is not supported for FilmVote");
+        throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
 
     @Override
     public boolean delete(FilmVote filmVote) {
-     throw new UnsupportedOperationException("This method is not supported for FilmVote");
+        throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
 
 }

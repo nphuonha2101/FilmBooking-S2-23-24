@@ -9,8 +9,11 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = Room.TABLE_NAME)
+public class Room implements IModel {
+    @Transient
+    public static final String TABLE_NAME = "rooms";
+
     @Setter
     @Getter
     @Expose
@@ -117,4 +120,10 @@ public class Room {
         }
         return false;
     }
+
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.roomID);
+    }
+
 }
