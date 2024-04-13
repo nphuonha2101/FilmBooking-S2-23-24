@@ -5,9 +5,8 @@ import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.impls.LogModelServicesImpl;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
-import com.sun.istack.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 

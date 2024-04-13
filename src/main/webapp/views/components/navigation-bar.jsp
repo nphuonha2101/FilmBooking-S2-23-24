@@ -37,7 +37,6 @@
 
 
         <li>
-
             <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>" id="home">
                 <div class="tooltip ">
                     <span class="material-symbols-rounded">
@@ -65,9 +64,28 @@
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
+                <div class="tooltip click-menu" id="film-booking_menu">
+                        <span class="material-symbols-rounded">
+                            history
+                        </span>
+                    <span class="tooltip-text">
+                            <fmt:message key="bookingHistory" bundle="${msg}"/>
+                        </span>
+
+                    <div class="drop-down-contents" id="film-booking_menu-content">
+
+                    </div>
+                </div>
+
+            </li>
+        </c:if>
+
+        <c:if test="${not empty sessionScope.loginUser.username}">
+            <li>
                 <div class="drop-down-menu">
 
-                    <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>" id="account-info">
+                    <a class="nav-links small-icon-button"
+                       href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>" id="account-info">
                         <span class="material-symbols-rounded">
                             person
                         </span>
@@ -76,17 +94,20 @@
                     <div class="drop-down-contents">
                         <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
 
-                        <a class="drop-down-links" href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
+                        <a class="drop-down-links"
+                           href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
                             <fmt:message key="bookingHistory" bundle="${msg}"/>
                         </a>
                         <c:choose>
                             <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                <a class="drop-down-links" href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>">
+                                <a class="drop-down-links"
+                                   href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>">
                                     <fmt:message key="adminPage" bundle="${msg}"/>
                                 </a>
                             </c:when>
                         </c:choose>
-                        <a class="drop-down-links" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
+                        <a class="drop-down-links"
+                           href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
                             <fmt:message key="yourAccount" bundle="${msg}"/>
                         </a>
                     </div>
@@ -97,7 +118,8 @@
         <c:choose>
             <c:when test="${not empty sessionScope.loginUser.username}">
                 <li>
-                    <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/logout"/>">
+                    <a class="nav-links small-icon-button"
+                       href="<c:url value="${pageContext.request.contextPath}/logout"/>">
                         <div class="tooltip">
                             <span class="material-symbols-rounded">
                                 logout
@@ -111,7 +133,8 @@
             </c:when>
             <c:when test="${empty sessionScope.loginUser.username}">
                 <li>
-                    <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/signup"/>" id="signup">
+                    <a class="nav-links small-icon-button"
+                       href="<c:url value="${pageContext.request.contextPath}/signup"/>" id="signup">
                         <div class="tooltip">
                             <span class="material-symbols-rounded">
                                 person_add
@@ -123,7 +146,8 @@
                     </a>
                 </li>
                 <li>
-                    <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/login"/>" id="login">
+                    <a class="nav-links small-icon-button"
+                       href="<c:url value="${pageContext.request.contextPath}/login"/>" id="login">
                         <div class="tooltip">
                         <span class="material-symbols-rounded">
                             login
@@ -161,13 +185,17 @@
 
 
                 <div class="drop-down-contents">
-                    <a class="drop-down-links" href="<c:url value="${pageContext.request.contextPath}/lang?name=default"/>"> <img class="img-language"
-                                                                              src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                                                                              alt="default Vietnamese"> <span> &ensp; Tiếng Việt</span>
+                    <a class="drop-down-links"
+                       href="<c:url value="${pageContext.request.contextPath}/lang?name=default"/>"> <img
+                            class="img-language"
+                            src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                            alt="default Vietnamese"> <span> &ensp; Tiếng Việt</span>
                     </a>
-                    <a class="drop-down-links" href="<c:url value="${pageContext.request.contextPath}/lang?name=en_US"/>"> <img class="img-language"
-                                                                            src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
-                                                                            alt="default Vietnamese">
+                    <a class="drop-down-links"
+                       href="<c:url value="${pageContext.request.contextPath}/lang?name=en_US"/>"> <img
+                            class="img-language"
+                            src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
+                            alt="default Vietnamese">
                         <span> &ensp; English</span>
                     </a>
 
@@ -176,3 +204,5 @@
         </li>
     </ul>
 </nav>
+
+<script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>

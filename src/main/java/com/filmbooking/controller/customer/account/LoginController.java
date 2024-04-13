@@ -7,10 +7,7 @@ import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RedirectPageUtils;
-import com.filmbooking.utils.RenderViewUtils;
-import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,6 +21,7 @@ import java.io.IOException;
 public class LoginController extends HttpServlet {
     private UserServicesLogProxy<User> userServices;
     private HibernateSessionProvider hibernateSessionProvider;
+    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
 
@@ -35,7 +33,15 @@ public class LoginController extends HttpServlet {
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
             req.setAttribute("pageTitle", "loginTitle");
-            String google = "https://accounts.google.com/o/oauth2/auth?scope=email%20profile&redirect_uri=http://localhost:8080/google/login&response_type=code%20&client_id=210754753492-b46ra32i4pknv4a2qlo7acra656k7quo.apps.googleusercontent.com&approval_prompt=force";
+            String clientID = propertiesUtils.getProperty("client_id");
+            String redirectURI = propertiesUtils.getProperty("redirect_uri");
+            System.out.println(redirectURI);
+            String google =
+                    "https://accounts.google.com/o/oauth2/auth?scope=email%20profile" +
+                    "&redirect_uri=" + redirectURI +
+                    "&response_type=code" +
+                    "&client_id=" + clientID +
+                    "&approval_prompt=force";
             req.setAttribute("google", google);
             RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
         }

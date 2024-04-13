@@ -26,7 +26,7 @@ public class Showtime implements IModel {
     private Film film;
 
     @Expose
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private Room room;
 
@@ -38,7 +38,7 @@ public class Showtime implements IModel {
     @Column(name = "seats_data")
     private String seatsData;
 
-    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FilmBooking> filmBookingList;
     @Expose
     @Column(name = "slug")
