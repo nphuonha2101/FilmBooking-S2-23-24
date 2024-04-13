@@ -5,6 +5,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.services.AbstractCRUDServices;
 
+import java.util.Objects;
+
 /**
  * @author nphuo
  * @ide IntelliJ IDEA
@@ -23,7 +25,7 @@ public class LogModelServicesImpl extends AbstractCRUDServices<LogModel> {
 
     @Override
     public String getTableName() {
-        return null;
+        return LogModel.TABLE_NAME;
     }
 
     @Override
@@ -33,7 +35,10 @@ public class LogModelServicesImpl extends AbstractCRUDServices<LogModel> {
 
     @Override
     public LogModel getByID(String id) {
-        throw new UnsupportedOperationException("This method is not supported for LogModel");
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     @Override

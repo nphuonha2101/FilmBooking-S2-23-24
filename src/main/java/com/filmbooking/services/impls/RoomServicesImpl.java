@@ -5,6 +5,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.AbstractCRUDServices;
 
+import java.util.Objects;
+
 public class RoomServicesImpl extends AbstractCRUDServices<Room> {
 
 
@@ -29,6 +31,9 @@ public class RoomServicesImpl extends AbstractCRUDServices<Room> {
 
     @Override
     public Room getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 }

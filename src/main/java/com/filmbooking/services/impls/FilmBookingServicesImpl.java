@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+
 public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
 
     public FilmBookingServicesImpl(HibernateSessionProvider sessionProvider) {
@@ -32,21 +34,26 @@ public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
 
     @Override
     public FilmBooking getBySlug(String slug) {
-        throw  new UnsupportedOperationException("This method is not supported for FilmBooking");
+        throw new UnsupportedOperationException("This method is not supported for FilmBooking");
     }
 
     @Override
     public FilmBooking getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else {
+            throw new RuntimeException("ID must not be null");
+        }
     }
 
     /**
      * Get all film bookings from the database by user
+     *
      * @param user the user to get film bookings
      * @return a list of film bookings
      */
     public List<FilmBooking> getAllByUser(User user) {
-        Map<String, Object> condition= Map.of("user_=", user);
+        Map<String, Object> condition = Map.of("user_=", user);
         return this.getByPredicates(condition).getMultipleResults();
     }
 

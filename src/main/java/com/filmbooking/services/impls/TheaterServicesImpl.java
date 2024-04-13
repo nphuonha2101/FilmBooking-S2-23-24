@@ -5,6 +5,8 @@ import com.filmbooking.model.Theater;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.services.AbstractCRUDServices;
 
+import java.util.Objects;
+
 public class TheaterServicesImpl extends AbstractCRUDServices<Theater> {
 
     public TheaterServicesImpl(HibernateSessionProvider sessionProvider) {
@@ -33,6 +35,9 @@ public class TheaterServicesImpl extends AbstractCRUDServices<Theater> {
 
     @Override
     public Theater getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 }
