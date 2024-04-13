@@ -135,3 +135,7 @@
         </div>
     </div>
 </section>
+
+<%--JavaScript--%>
+<script type="module" src="<c:url value="/resources/js/handlesFilmVoteStars.js"/>"></script>
+<script type="module" src="<c:url value="/resources/js/handlesSelectShowtime.js"/>"></script>

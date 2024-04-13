@@ -22,8 +22,10 @@ public class HideFileExtensionFilter extends HttpFilter {
 
         String uri = req.getRequestURI();
         System.out.println(" Test filter URI: " +uri);
-        if (uri.endsWith(".jsp") || uri.endsWith(".htm") || uri.endsWith(".html"))
+        if (uri.endsWith(".jsp") || uri.endsWith(".htm") || uri.endsWith(".html")) {
             res.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
         chain.doFilter(req, res);
     }
 

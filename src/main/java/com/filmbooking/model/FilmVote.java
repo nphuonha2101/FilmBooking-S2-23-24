@@ -28,7 +28,7 @@ public class FilmVote implements IModel {
     private Long id;
 
     @Expose
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "film_id")
     private Film film;
     @Expose

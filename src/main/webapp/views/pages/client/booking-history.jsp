@@ -115,3 +115,6 @@
         </div>
     </div>
 </section>
+
+<%--JavaScript--%>
+<script type="module" src="<c:url value="/resources/js/handlesAccordions.js"/>"></script>

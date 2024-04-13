@@ -70,7 +70,7 @@
             </div>
 
             <div class="wrapper centered-vertical-content">
-                <h3><fmt:message bundle="${msg}" key="chooseYourSeat"/></h3>
+                <h3><fmt:message bundle="${msg}" key="infoBooking"/></h3>
 
                 <div class="wrapper">
                     <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
@@ -107,3 +107,6 @@
         </div>
     </div>
 </section>
+
+<%--JavaScript--%>
+<script type="module" src="<c:url value="/resources/js/handlesChooseSeats.js"/>"></script>

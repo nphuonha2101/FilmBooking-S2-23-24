@@ -171,3 +171,6 @@
 
     </div>
 </section>
+
+<%--JavaScript--%>
+<script type="module" src="<c:url value="/resources/js/handlesUploadFilmImg.js"/>"></script>

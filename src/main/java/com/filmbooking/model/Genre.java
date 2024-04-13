@@ -22,7 +22,7 @@ public class Genre implements IModel {
     @Expose
     @Column(name = "genre_name")
     private String genreName;
-    @ManyToMany(mappedBy = "genreList", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "genreList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Film> filmList;
 
     public Genre() {
