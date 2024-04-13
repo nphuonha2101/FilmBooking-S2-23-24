@@ -1,7 +1,11 @@
 package com.filmbooking.controller.customer.account;
 
+import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
+import com.filmbooking.services.logProxy.ShowtimeServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @WebServlet(name = "logout", value = "/logout")
 public class LogoutController extends HttpServlet {
@@ -26,15 +31,14 @@ public class LogoutController extends HttpServlet {
             FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
             Showtime showtime = filmBooking.getShowtime();
 
-            // TODO: release booked seats
-//            if (filmBooking.getBookedSeats() != null && showtime != null) {
-//                System.out.println(filmBooking.getBookedSeats());
-//                HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-//                IShowtimeServices showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-//                showtime.releaseSeats(filmBooking.getBookedSeats());
-//                showtimeServices.update(showtime);
-//                hibernateSessionProvider.closeSession();
-//            }
+            if (filmBooking.getBookedSeats() != null && showtime != null) {
+                System.out.println(Arrays.toString(filmBooking.getBookedSeats()));
+                HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
+                CRUDServicesLogProxy<Showtime> showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+                showtime.releaseSeats(filmBooking.getBookedSeats());
+                showtimeServices.update(showtime);
+                hibernateSessionProvider.closeSession();
+            }
             session.invalidate();
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         } else resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));

@@ -21,7 +21,7 @@ import java.util.List;
  * @param <T> the type of the object
  */
 public class PredicatesDAODecorator<T> extends AbstractDAODecorator<T> {
-    private IPredicateQuery predicateQuery;
+    private final IPredicateQuery predicateQuery;
 
     public PredicatesDAODecorator(IDAO<T> decoratedDAO, IPredicateQuery predicateQuery) {
         super(decoratedDAO);

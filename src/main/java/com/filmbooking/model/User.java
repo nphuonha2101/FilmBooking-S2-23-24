@@ -32,7 +32,7 @@ public class User implements IModel {
     @Column(name = "account_role")
     @Expose
     private String accountRole;
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     List<FilmBooking> filmBookingList;
 
     public User() {
