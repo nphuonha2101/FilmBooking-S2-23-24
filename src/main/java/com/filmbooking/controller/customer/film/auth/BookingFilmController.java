@@ -77,20 +77,6 @@ public class BookingFilmController extends HttpServlet {
 
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/checkout"));
 
-//            if (filmBookingServices.save(filmBookingClone)) {
-//                Showtime bookedShowtime = filmBookingClone.getShowtime();
-//                // if seats have not booked!
-//                if (bookedShowtime.bookSeats(filmBookingClone.getSeats())) {
-//                    showtimeServices.update(bookedShowtime);
-//                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.BOOKING_FILM_SUCCESSFUL.getStatusCode());
-//                } else {
-//                    req.setAttribute("statusCodeErr", StatusCodeEnum.SEATS_HAVE_ALREADY_BOOKED.getStatusCode());
-//                }
-//            } else {
-//                req.setAttribute("statusCodeErr", StatusCodeEnum.BOOKING_FILM_FAILED.getStatusCode());
-//            }
-//            doGet(req, resp);
-
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
             doGet(req, resp);

@@ -1,6 +1,7 @@
 package com.filmbooking.model;
 
 import com.filmbooking.utils.GeoLite2IPUtils;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -63,7 +64,7 @@ public class LogModel {
     public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
         this.user = user;
         this.reqIP = reqIP;
-        this.ipCountry = String.valueOf(GeoLite2IPUtils.getInstance().getCountry(reqIP));
+//        this.ipCountry = String.valueOf(GeoLite2IPUtils.getInstance().getCountry(reqIP));
         this.level = level;
         this.targetTable = targetTable;
         this.action = action;

@@ -44,27 +44,26 @@ public class VerifyUserToken extends HttpServlet {
         }
 
 
-        switch (tokenType) {
-            // case token type is password reset
-            case "PASSWORD_RESET":
-                if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_VERIFIED)) {
-                    req.setAttribute("verifyStatus","token-verified" );
-                    req.setAttribute("username", username);
-                    // send token to session
-                    req.getSession(false).setAttribute("token", tokenModel);
-                    req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
-                            .forward(req, resp);
-                    return;
-                }
-                if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_EXPIRED)) {
-                    req.setAttribute("verifyStatus","token-expired" );
-                    req.setAttribute("statusCodeErr", StatusCodeEnum.TOKEN_EXPIRED.getStatusCode());
-                    req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
-                            .forward(req, resp);
-                    // remove token from session if token is expired
-                    req.getSession(false).removeAttribute("token");
-                    return;
-                }
+        // case token type is password reset
+        if (tokenType.equals("PASSWORD_RESET")) {
+            if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_VERIFIED)) {
+                req.setAttribute("verifyStatus", "token-verified");
+                req.setAttribute("username", username);
+                // send token to session
+                req.getSession(false).setAttribute("token", tokenModel);
+                req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
+                        .forward(req, resp);
+                return;
+            }
+            if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_EXPIRED)) {
+                req.setAttribute("verifyStatus", "token-expired");
+                req.setAttribute("statusCodeErr", StatusCodeEnum.TOKEN_EXPIRED.getStatusCode());
+                req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
+                        .forward(req, resp);
+                // remove token from session if token is expired
+                req.getSession(false).removeAttribute("token");
+                return;
+            }
         }
         hibernateSessionProvider.closeSession();
     }

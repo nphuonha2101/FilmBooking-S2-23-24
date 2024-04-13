@@ -1548,32 +1548,31 @@ input[type='radio'] + label {
     opacity: 8%;
 }
 
-.menu-items_row {
-    width: calc(35vw);
+
+
+
+#film-booking_menu-content {
+    left: -10rem;
+    width: max-content;
+}
+
+.film-item_contents {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    box-sizing: border-box;
-    padding: 0.5rem;
-    border-radius: 10px;
-    margin: 0.5rem 0;
-}
-
-.menu-items_table {
-    border: none;
     width: 100%;
-    border-collapse: collapse;
-}
+    box-sizing: border-box;
 
-.menu-items_table tr {
-    border: none;
-}
+    div, p, a {
+        margin: 0.5rem;
+    }
 
-.menu-items_table td {
-    text-align: left;
-}
-
-#film-booking_menu-content {
-    left: -10rem;
+    .film-item_contents {
+        .film-info-contents {
+            .two-col__wrapper {
+                justify-content: left;
+            }
+        }
+    }
 }

@@ -1,48 +1,53 @@
 $(function () {
     const filmBookingMenu = $('#film-booking_menu');
     const filmBookingMenuContent = $('#film-booking_menu-content');
+    let html = '';
+
+    const getCurrentFilmBooking = $.ajax({
+        url: '/api/v1/film-bookings?current=true',
+        type: 'GET',
+        cache: true,
+        dataType: 'json'
+    });
+
+    const getFilmBookingByOffset = $.ajax({
+        url: '/api/v1/film-bookings?offset=0&limit=5',
+        type: 'GET',
+        cache: true,
+        dataType: 'json'
+    });
+
 
     filmBookingMenu.on('click', function () {
-        $.ajax({
-            url: '/api/v1/film-bookings',
-            type: 'GET',
-            cache: true,
-            success: function (result) {
-                filmBookingMenuContent.empty();
-                if (result.length > 0) {
-                    result.forEach(filmBooking => {
-                        let itemHref = filmBooking.paymentStatus === 'pending' ? `/film-booking/${filmBooking.id}` : '#';
-                        filmBookingMenuContent.append(`
-                            <a class="menu-items_row" href=${itemHref}>
-                                <div class="menu-items_img-container">
-                                    <div><img style="width: 3.5rem; height: 3.5rem" src="${filmBooking.showtime.film.imgPath}" alt="film-img"></div>
-                                </div>
-                                <table class="menu-items_table">
-                                    <tr>
-                                        <td>
-                                            ${filmBooking.showtime.film.filmName}
-                                        </td>
-                                         <td><span class="film-booking__label">Trang thai: </span> ${filmBooking.paymentStatus}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="film-booking__label">Ngay chieu: </span> ${filmBooking.showtime.showtimeDate}</td>
-                                        <td><span class="film-booking__label">Tong gia </span> ${filmBooking.showtime.showtimeTime}</td>   
-                                    </tr>               
-                                </table>
-                            </a>
-                        `);
-                    });
+        $.when(getCurrentFilmBooking, getFilmBookingByOffset)
+            .done(function (currentFilmBookingResponse, filmBookingByOffsetResponse) {
+                if (currentFilmBookingResponse.length > 0) {
+                    console.log('currentFilmBookingResponse: ', currentFilmBookingResponse)
+                    let filmBooking = currentFilmBookingResponse[0].data;
+                    let showtime = filmBooking.showtime;
+                    let film = showtime.film;
+                    html = `<div class="film-item_contents"> 
+                              <div class="film-img-contents_container" style="width: 4rem; height: 5rem; overflow: hidden;">
+                                    <img src="${film.imgPath}" style="width: 4rem; height: 5rem; object-fit: cover;"  alt="poster" class="film-img-contents">
+                               </div>
+                                 <div class="film-info-contents">
+                                        <p class="film-title font-bold">${film.filmName}</p>
+                                        <div class="two-col__wrapper">
+                                            <div class="two-col__left">
+                                                <p>${filmBooking.bookingDate}</p>
+                                            </div>
+                                            
+                                            <div class="two-col__right">
+                                                <a href="http://localhost/auth/checkout">Cho thanh toan</a>
+                                            </div>
+                                        </div>
+                                 </div>      
+                            </div>`
 
-                    console.log(result);
-                } else {
-                    filmBookingMenuContent.append('<p>No film booking history</p>');
+                    filmBookingMenuContent.html(html);
                 }
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-
+            });
         filmBookingMenuContent.toggle();
+
     });
-})
+});
