@@ -12,18 +12,17 @@ import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
-import com.filmbooking.model.LogModel;
-import com.filmbooking.model.Room;
-import com.filmbooking.model.User;
+import com.filmbooking.model.*;
+import com.filmbooking.services.impls.FilmBookingServicesImpl;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.LogModelServicesImpl;
-import com.filmbooking.services.logProxy.AbstractServicesLogProxy;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.GSONUtils;
-import com.google.gson.Gson;
+import com.filmbooking.utils.APIUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -50,20 +49,6 @@ public class Test {
 //        userDAO.setSessionProvider(hibernateSessionProvider);
 //
 //        System.out.println(roomDAOPredicate.getAll().getSingleResult());
-
-//        User user = userDAO.getByID("nphuonha", false);
-//        System.out.println(GSONUtils.getGson().toJson(user));
-        LogModelServicesImpl logModelServices = new LogModelServicesImpl(hibernateSessionProvider);
-        List<LogModel> logModelList = logModelServices.getAll().getMultipleResults();
-        Gson gson = GSONUtils.getGson();
-        String jsonResp = "";
-        jsonResp = "[";
-
-        for (LogModel logModel : logModelList) {
-            System.out.println(gson.toJson(logModel));
-        }
-        jsonResp += "]";
-
 
 
         hibernateSessionProvider.closeSession();

@@ -29,7 +29,7 @@ public class Theater implements IModel {
     @Expose
     @Column(name = "theater_address")
     private String theaterAddress;
-    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Room> roomList;
 
     public Theater() {}

@@ -62,6 +62,9 @@ public class DataAccessObjects<T> implements IDAO<T>, Cloneable {
 
             criteriaQueryResult.select(rootEntry);
 
+            // descending order by id
+            criteriaQueryResult.orderBy(criteriaBuilder.desc(rootEntry.get("id")));
+
             typedQuery = this.session.createQuery(criteriaQueryResult);
         } catch (Exception e) {
             e.printStackTrace(System.out);

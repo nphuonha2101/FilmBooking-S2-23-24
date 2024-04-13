@@ -12,6 +12,7 @@ import com.maxmind.geoip2.record.Postal;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 
 public class GeoLite2IPUtils {
@@ -19,9 +20,10 @@ public class GeoLite2IPUtils {
     private final DatabaseReader databaseReader;
 
     private GeoLite2IPUtils() throws IOException {
-        File geoLite2CityDB = new File(PathConstant.GEOLITE2_CITY_DB_PATH);
-        if (!geoLite2CityDB.exists()) {
-            throw new RuntimeException(new FileNotFoundException("GeoLite2-City.mmdb not found"));
+        InputStream geoLite2CityDB = this.getClass().getResourceAsStream(PathConstant.GEOLITE2_CITY_DB_PATH_DEPLOYMENT);
+        assert geoLite2CityDB != null;
+        if (geoLite2CityDB.available() == 0) {
+            throw new RuntimeException(new FileNotFoundException("GeoLite2-City.mmdb not available"));
         }
 
         databaseReader = new DatabaseReader.Builder(geoLite2CityDB).build();
