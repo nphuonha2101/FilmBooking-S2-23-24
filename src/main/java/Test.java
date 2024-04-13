@@ -19,6 +19,10 @@ import com.filmbooking.services.impls.LogModelServicesImpl;
 import com.filmbooking.utils.APIUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import jakarta.persistence.criteria.Predicate;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -45,20 +49,6 @@ public class Test {
 //        userDAO.setSessionProvider(hibernateSessionProvider);
 //
 //        System.out.println(roomDAOPredicate.getAll().getSingleResult());
-//
-////        User user = userDAO.getByID("nphuonha", false);
-////        System.out.println(GSONUtils.getGson().toJson(user));
-
-
-        FilmBookingServicesImpl filmServices = new FilmBookingServicesImpl();
-        filmServices.setSessionProvider(hibernateSessionProvider);
-        List<FilmBooking> filmList = filmServices.getAll().getMultipleResults();
-//
-//        System.out.println(logModels.size());
-        System.out.println(GSONUtils.getGson().toJson(filmList));
-
-
-//
 
 
         hibernateSessionProvider.closeSession();

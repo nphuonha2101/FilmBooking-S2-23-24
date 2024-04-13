@@ -8,6 +8,7 @@ import com.filmbooking.services.IShowtimeServices;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> implements IShowtimeServices {
 
@@ -32,11 +33,15 @@ public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> impleme
 
     @Override
     public Showtime getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     /**
      * Get a map storing showtimeID and its available seats
+     *
      * @return HashMap<Long, Integer> showtimeID and its available seats
      */
     public Map<Long, Integer> getAvailableSeatsByShowtimeId() {
@@ -52,7 +57,8 @@ public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> impleme
 
     /**
      * Get a map storing showtimeID and its seat matrix
-     * @return HashMap<Long, String[][]> showtimeID and its seat matrix
+     *
+     * @return HashMap<Long, String [ ] [ ]> showtimeID and its seat matrix
      */
     public HashMap<Long, String[][]> getShowtimeIDAndSeatMatrix() {
         HashMap<Long, String[][]> result = new HashMap<>();

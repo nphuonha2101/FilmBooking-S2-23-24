@@ -11,6 +11,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.AbstractCRUDServices;
 
+import java.util.Objects;
+
 public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
 
 
@@ -40,17 +42,20 @@ public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
 
     @Override
     public FilmVote getByID(String id) {
-        return this.decoratedDAO.getByID(id, true);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, true);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
     @Override
     public boolean update(FilmVote filmVote) {
-     throw new UnsupportedOperationException("This method is not supported for FilmVote");
+        throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
 
     @Override
     public boolean delete(FilmVote filmVote) {
-     throw new UnsupportedOperationException("This method is not supported for FilmVote");
+        throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
 
 }

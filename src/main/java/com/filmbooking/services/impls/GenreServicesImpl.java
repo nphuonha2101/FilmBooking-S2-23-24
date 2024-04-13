@@ -5,6 +5,8 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.AbstractCRUDServices;
 
+import java.util.Objects;
+
 public class GenreServicesImpl extends AbstractCRUDServices<Genre> {
 
     public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
@@ -34,7 +36,10 @@ public class GenreServicesImpl extends AbstractCRUDServices<Genre> {
 
     @Override
     public Genre getByID(String id) {
-        return this.decoratedDAO.getByID(id, false);
+        if (!Objects.equals(id, "null"))
+            return this.decoratedDAO.getByID(id, false);
+        else
+            throw new RuntimeException("ID must not be null");
     }
 
 

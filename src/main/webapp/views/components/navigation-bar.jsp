@@ -22,16 +22,22 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 
 <nav class="top-nav" id="navigation-bar">
-    <div class="centered-horizontal-content wrapper" id="left-nav-elements">
+    <div class="centered-horizontal-content" id="left-nav-elements">
         <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
     </div>
+
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="<fmt:message key="search" bundle="${msg}"/>">
+            <ul class="list-group" id="result"></ul>
+        </div>
 
 
     <ul id="right-nav-link">
 
+
+
         <li>
-            <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>"
-               id="home">
+            <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>" id="home">
                 <div class="tooltip ">
                     <span class="material-symbols-rounded">
                         home
