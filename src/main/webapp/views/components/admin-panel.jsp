@@ -27,6 +27,10 @@
         value="${pageContext.request.contextPath}/admin/management/showtime"/>"><fmt:message key="showtimeManagement"
                                                                                              bundle="${adminMsg}"/></a>
     <a class="links button rounded-button"
-       href="<c:url value="${pageContext.request.contextPath}/admin/management/room"/>"><fmt:message key="roomManagement" bundle="${adminMsg}"/></a>
+       href="<c:url value="${pageContext.request.contextPath}/admin/management/room"/>"><fmt:message key="roomManagement"
+                                                                                                     bundle="${adminMsg}"/></a>
+    <a class="links button rounded-button"
+       href="<c:url value="${pageContext.request.contextPath}/admin/management/log"/>"><fmt:message key="logManagement"
+                                                                                                    bundle="${adminMsg}"/></a>
     </div>
 
