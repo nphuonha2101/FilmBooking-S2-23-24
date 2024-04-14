@@ -52,7 +52,11 @@ public enum StatusCodeEnum {
     UPDATE_SHOWTIME_FAILED(514, "Cập nhật suất chiếu thất bại"),
     UPDATE_ROOM_FAILED(515, "Cập nhật phòng chiếu thất bại"),
     TOKEN_NOT_FOUND(516, "Không tìm thấy token"),
-    PASSWORD_RESET_FAILED(517, "Đặt lại mật khẩu thất bại");
+    PASSWORD_RESET_FAILED(517, "Đặt lại mật khẩu thất bại"),
+    USERNAME_ERROR(518, "Tên người dùng không hợp lệ"),
+    USER_EMAIL_ERROR(519, "Email không hợp lệ"),
+    USER_FULL_NAME_ERROR(520, "Tên đầy đủ không hợp lệ");
+
 
 
     private final int statusCode;

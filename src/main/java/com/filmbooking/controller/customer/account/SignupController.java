@@ -52,15 +52,7 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
         // validate input
-        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) || !Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName) || !Regex.validate(UserRegexEnum.USERNAME, username)) {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
-
-            req.setAttribute("pageTitle", "signupTitle");
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    WebAppPathUtils.getClientPagesPath("signup.jsp"),
-                    WebAppPathUtils.getLayoutPath("master.jsp"));
-            return;
-        }
+       validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword);
 
 
         // username existed!
@@ -93,5 +85,30 @@ public class SignupController extends HttpServlet {
         userServicesLog = null;
         userServices = null;
         hibernateSessionProvider = null;
+    }
+
+    private void validateInput(HttpServletRequest req, HttpServletResponse resp,String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
+            handleInput(req, resp,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+
+            return;
+        }
+        if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
+            handleInput(req, resp,  StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
+            return;
+        }
+        if (!Regex.validate(UserRegexEnum.USERNAME, username)) {
+            handleInput(req, resp,  StatusCodeEnum.USERNAME_ERROR.getStatusCode());
+            return;
+        }
+    }
+
+    private void handleInput(HttpServletRequest req, HttpServletResponse resp,int status) {
+        req.setAttribute("statusCodeErr", status);
+
+        req.setAttribute("pageTitle", "signupTitle");
+        RenderViewUtils.renderViewToLayout(req, resp,
+                WebAppPathUtils.getClientPagesPath("signup.jsp"),
+                WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 }
