@@ -55,7 +55,8 @@ public enum StatusCodeEnum {
     PASSWORD_RESET_FAILED(517, "Đặt lại mật khẩu thất bại"),
     USERNAME_ERROR(518, "Tên người dùng không hợp lệ"),
     USER_EMAIL_ERROR(519, "Email không hợp lệ"),
-    USER_FULL_NAME_ERROR(520, "Tên đầy đủ không hợp lệ");
+    USER_FULL_NAME_ERROR(520, "Tên đầy đủ không hợp lệ"),
+    USER_PASSWORD_ERROR(521, "Mật khẩu không hợp lệ");
 
 
 
