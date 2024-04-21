@@ -101,6 +101,10 @@ public class SignupController extends HttpServlet {
             handleInput(req, resp,  StatusCodeEnum.USERNAME_ERROR.getStatusCode());
             return;
         }
+        if (!Regex.validate(UserRegexEnum.USER_PASS_WORD, userPassword)) {
+            handleInput(req, resp,  StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+            return;
+        }
     }
 
     private void handleInput(HttpServletRequest req, HttpServletResponse resp,int status) {
