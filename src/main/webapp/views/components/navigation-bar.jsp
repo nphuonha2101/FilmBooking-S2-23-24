@@ -49,19 +49,6 @@
             </a>
         </li>
 
-        <li>
-            <a class="nav-links small-icon-button" id="search">
-                <div class="tooltip">
-                     <span class="material-symbols-rounded">
-                        search
-                        </span>
-                    <span class="tooltip-text">
-                        <fmt:message key="search" bundle="${msg}"/>
-                </span>
-                </div>
-            </a>
-        </li>
-
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
                 <div class="tooltip click-menu" id="film-booking_menu">
