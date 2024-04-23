@@ -31,11 +31,10 @@
     </div>
 
 
-
-
     <ul id="right-nav-link">
         <li>
-            <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>" id="home">
+            <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>"
+               id="home">
                 <div class="tooltip ">
                     <span class="material-symbols-rounded">
                         home
@@ -49,18 +48,20 @@
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
-                <div class="tooltip click-menu" id="film-booking_menu">
+                <a class="nav-links small-icon-button" href="">
+                    <div class="tooltip click-menu" id="film-booking_menu">
                         <span class="material-symbols-rounded">
                             history
                         </span>
-                    <span class="tooltip-text">
+                        <span class="tooltip-text">
                             <fmt:message key="bookingHistory" bundle="${msg}"/>
                         </span>
 
-                    <div class="drop-down-contents" id="film-booking_menu-content">
-                        <%--content here--%>
+                        <div class="drop-down-contents" id="film-booking_menu-content">
+                                <%--content here--%>
+                        </div>
                     </div>
-                </div>
+                </a>
             </li>
         </c:if>
 

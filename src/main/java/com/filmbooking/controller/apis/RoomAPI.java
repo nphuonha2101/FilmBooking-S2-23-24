@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.List;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.impls.RoomServicesImpl;
+import com.filmbooking.utils.APIUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 
@@ -23,25 +25,11 @@ public class RoomAPI extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         roomServicesImpl = new RoomServicesImpl(sessionProvider);
-        Gson gson = GSONUtils.getGson();
-        String jsonResp = "";
-        String id = req.getParameter("room-id");
-        if (id != null) {
-            Room room = roomServicesImpl.getByID(id);
-            jsonResp += gson.toJson(room);
-        } else {
-            List<Room> roomList = roomServicesImpl.getAll().getMultipleResults();
-            jsonResp += "[";
-            for (Room room : roomList) {
-                jsonResp += gson.toJson(room);
-                if (roomList.indexOf(room) != roomList.size() - 1) {
-                    jsonResp += ",";
-                }
-            }
-            jsonResp += "]";
-        }
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("utf-8");
-        resp.getWriter().write(jsonResp);
+
+        APIUtils<Room> apiUtils = new APIUtils<>(roomServicesImpl, req, resp);
+        String command = req.getParameter("command");
+
+        apiUtils.processRequest(command);
+        apiUtils.writeResponse(null, 0);
     }
 }
