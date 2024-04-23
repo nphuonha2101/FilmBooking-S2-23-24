@@ -1,8 +1,10 @@
 package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.impls.FilmVoteServicesImpl;
+import com.filmbooking.utils.APIUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -22,29 +24,11 @@ public class FilmVoteAPI extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         filmVoteServices = new FilmVoteServicesImpl(sessionProvider);
-        Gson gson = GSONUtils.getGson();
-        String jsonResp = "";
 
-        String id = req.getParameter("film-vote-id");
-        if (id != null) {
-            FilmVote filmVote = filmVoteServices.getByID(id);
-            jsonResp = gson.toJson(filmVote);
-        } else {
-            List<FilmVote> filmVoteList = filmVoteServices.getAll().getMultipleResults();
+        APIUtils<FilmVote> apiUtils = new APIUtils<>(filmVoteServices, req, resp);
+        String command = req.getParameter("command");
 
-            jsonResp = "[";
-
-            for (FilmVote filmVote : filmVoteList) {
-                jsonResp += gson.toJson(filmVote);
-                if (filmVoteList.indexOf(filmVote) != filmVoteList.size() - 1) {
-                    jsonResp += ",";
-                }
-            }
-            jsonResp += "]";
-        }
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonResp);
+        apiUtils.processRequest(command);
+        apiUtils.writeResponse(null, 0);
     }
 }

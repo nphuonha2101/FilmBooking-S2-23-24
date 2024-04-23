@@ -109,10 +109,10 @@ public class APIUtils<T extends IModel> {
      *
      * @param command Command to execute. Use:
      *                <ul>
-     *                      <li><code>id</code> to get model by ID. Request parameter <b>id</b></li>
-     *                      <li><code>all</code> to get all models</li>
-     *                      <li> <code>offset</code></code></code> to get models by offset. Request parameter <b>offset</b> and <b>limit</b></li>
-     *                      <li><code>slug</code> to get model by slug. Request parameter <b>slug</b></li>
+     *                      <li><b><code>id</code></b> to get model by ID. Request parameter <b>id</b></li>
+     *                      <li><b><code>all</code></b> to get all models</li>
+     *                      <li><b><code>offset</code></b> to get models by offset. Request parameter <b>offset</b> and <b>limit</b></li>
+     *                      <li><b><code>slug</code></b> to get model by slug. Request parameter <b>slug</b></li>
      *                </ul>
      */
     public void processRequest(String command) {

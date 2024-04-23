@@ -1616,14 +1616,14 @@ input[type='radio'] + label {
 
 /* FilmBooking history */
 #film-booking_menu-content {
-    left: -10rem;
+    left: -12rem;
     width: max-content;
     max-height: calc(60vh);
     overflow-y: auto;
 }
 
 .fb-item_horizontal-card div {
-    margin: 0 0.5rem;
+    margin: 0.25rem 0.5rem;
 }
 
 .fb-item_horizontal-card div {

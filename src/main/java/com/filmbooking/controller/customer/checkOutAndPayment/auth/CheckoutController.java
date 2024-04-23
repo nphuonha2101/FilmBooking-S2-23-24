@@ -31,8 +31,6 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("Film Booking Session Test (Checkout): " + (FilmBooking) req.getSession().getAttribute("filmBooking"));
-
         req.setAttribute("pageTitle", "checkoutTitle");
         RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("checkout.jsp"),
                 WebAppPathUtils.getLayoutPath("master.jsp"));
