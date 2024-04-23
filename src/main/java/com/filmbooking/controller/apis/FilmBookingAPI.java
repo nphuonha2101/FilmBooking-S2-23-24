@@ -28,45 +28,28 @@ public class FilmBookingAPI extends HttpServlet {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         FilmBookingServicesImpl filmBookingServices = new FilmBookingServicesImpl(sessionProvider);
 
-        String id = req.getParameter("film-booking-id");
-        boolean isCurrentFilmBooking = req.getParameter("current") != null;
-        int offset = 0;
-        int limit = 0;
-        offset = req.getParameter("offset") != null ? Integer.parseInt(req.getParameter("offset")) : 0;
-        limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 0;
+        String command = req.getParameter("command");
+        String language = (String) req.getSession().getAttribute("lang");
 
-        String jsonResp = "";
-        String currentLanguage = (String) req.getSession(false).getAttribute("lang");
-            APIUtils<FilmBooking> apiUtils = new APIUtils<>(filmBookingServices, req);
+        APIUtils<FilmBooking> apiUtils = new APIUtils<>(filmBookingServices, req, resp);
 
-        if (id == null && !isCurrentFilmBooking) {
-            jsonResp = apiUtils.getAll();
-        }
-
-        if (id != null) {
-            FilmBooking filmBooking = filmBookingServices.getByID(id);
-            Gson gson = GSONUtils.getGson();
-            jsonResp = gson.toJson(filmBooking);
-        }
-
-        if (isCurrentFilmBooking) {
+        if (command.equals("current")) {
             FilmBooking currentFilmBooking = (FilmBooking) req.getSession().getAttribute("filmBooking");
             System.out.println("currentFilmBooking: " + currentFilmBooking);
             APIJSONResponse apijsonResponse;
 
             if (currentFilmBooking == null)
-                apijsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
+                apijsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), language, null);
             else
-                apijsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, currentFilmBooking);
+                apijsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), language, currentFilmBooking);
 
-            jsonResp = apijsonResponse.getResponse();
+            apiUtils.setJsonResponse(apijsonResponse);
+            apiUtils.writeResponse(null, 0);
+            return;
         }
 
-        if (offset >= 0 && limit != 0) {
-            jsonResp = apiUtils.getByOffset(offset, limit);
-        }
-
-        APIUtils.writeResponse(resp, jsonResp, null, 0);
+        apiUtils.processRequest(command);
+        apiUtils.writeResponse(null, 0);
 
         sessionProvider.closeSession();
     }
