@@ -151,7 +151,7 @@ button {
     animation-name: fade;
     animation-duration: 0.4s;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     column-gap: 2rem;
     justify-content: center;
     align-items: center;
@@ -169,6 +169,17 @@ button {
 
 .top-nav > ul > li {
     margin: 0 1rem;
+}
+
+#left-nav-elements {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    * {
+        margin: 0 0.5rem;
+    }
 }
 
 .top-nav > ul > li > a {
@@ -195,7 +206,8 @@ button {
 .list-group-item {
     display: flex;
     align-items: center;
-    width: 100%;
+    box-sizing: border-box;
+    padding: 1rem;
     margin-top: 10px !important;
     background-color: #f5f5f5;
 }
@@ -1377,7 +1389,8 @@ thead > tr > th {
     margin: 0 !important;
 }
 #search-input{
-    width: 500px !important;
+    width: 18rem !important;
+    height: 2.4rem;
 }
 
 #search-form {
@@ -1575,35 +1588,60 @@ input[type='radio'] + label {
     opacity: 8%;
 }
 
+#search-result {
+    display: none;
+    position: absolute;
+    width: auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    max-height: calc(50vh);
+    max-width: calc(50vw);
+    overflow-y: auto;
 
+}
+#search-result > li {
+    margin: 10px;
+    border-radius: 5px;
+}
+
+.fb-item_horizontal-card {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* FilmBooking history */
 #film-booking_menu-content {
     left: -10rem;
     width: max-content;
+    max-height: calc(60vh);
+    overflow-y: auto;
 }
 
-.film-item_contents {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-
-    div, p, a {
-        margin: 0.5rem;
-    }
-
-    .film-item_contents {
-        .film-info-contents {
-            .two-col__wrapper {
-                justify-content: left;
-            }
-        }
-    }
+.fb-item_horizontal-card div {
+    margin: 0 0.5rem;
 }
-#result {
-    padding: 0 !important;
+
+.fb-item_horizontal-card div {
+    width: fit-content;
 }
-#result > li {
-    margin: 10px;
+
+.fb-item_horizontal-card__img {
+    width: 4rem;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.fb-item_horizontal-card__img img {
+    width: 8rem;
+    transition: 0.2s ease-in;
+}
+
+.fb-item_horizontal-card__img:hover img {
+    transform: scale(1.05);
+    transition: 0.2s ease-out;
 }

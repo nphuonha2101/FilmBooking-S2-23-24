@@ -1,8 +1,12 @@
 package com.filmbooking.controller.apis;
 
+import com.filmbooking.controller.apis.apiResponse.APIJSONResponse;
+import com.filmbooking.controller.apis.apiResponse.RespCodeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.model.FilmBooking;
 import com.filmbooking.services.impls.FilmServicesImpl;
+import com.filmbooking.utils.APIUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -22,28 +26,12 @@ public class FilmAPI extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl(sessionProvider);
-        Gson gson = GSONUtils.getGson();
-        String jsonResp = "";
-        String id = req.getParameter("film-name");
-        if (id != null) {
-            Film film = filmServices.getByID(id);
-            jsonResp = gson.toJson(film);
-        } else {
-            List<Film> filmList = filmServices.getAll().getMultipleResults();
+        APIUtils<Film> apiUtils = new APIUtils<>(filmServices, req, resp);
+        String command = req.getParameter("command");
 
-            jsonResp = "[";
+        apiUtils.processRequest(command);
+        apiUtils.writeResponse(null, 0);
 
-            for (Film film : filmList) {
-                jsonResp += gson.toJson(film);
-                if (filmList.indexOf(film) != filmList.size() - 1) {
-                    jsonResp += ",";
-                }
-            }
-            jsonResp += "]";
-        }
-
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonResp);
+        sessionProvider.closeSession();
     }
 }

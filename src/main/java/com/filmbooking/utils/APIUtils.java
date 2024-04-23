@@ -7,10 +7,11 @@ import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.ICRUDServices;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author nphuo
@@ -19,79 +20,140 @@ import java.util.Objects;
  */
 public class APIUtils<T extends IModel> {
     private final AbstractCRUDServices<T> services;
-    private String currentLanguage;
+    private final String currentLanguage;
+    private final HttpServletRequest req;
+    private final HttpServletResponse resp;
+    @Getter
+    @Setter
+    private APIJSONResponse jsonResponse;
 
-    public APIUtils(AbstractCRUDServices<T> services, HttpServletRequest req) {
+
+    public APIUtils(AbstractCRUDServices<T> services, HttpServletRequest req, HttpServletResponse resp) {
         this.services = services;
+        this.req = req;
+        this.resp = resp;
         this.currentLanguage = (String) req.getSession().getAttribute("lang");
+
     }
 
-    public String getByID(String id) {
+    /**
+     * Get model by ID and return as JSON response
+     */
+    private void getByID() {
+        String id = req.getParameter("id");
+
+        if (id == null)
+            throw new RuntimeException("ID must not be null");
+
         T model = services.getByID(id);
-        APIJSONResponse response;
-        if (model == null)
-            response = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
-        else
-            response = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, model);
 
-        return response.getResponse();
+        if (model == null)
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
+        else
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, model);
+
     }
 
-    public String getAll() {
+    /**
+     * Get all models and return as JSON response
+     */
+    private void getAll() {
         List<T> allModels = services.getAll().getMultipleResults();
-        APIJSONResponse response;
+
         if (allModels == null)
-            response = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
         else
-            response = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, allModels);
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, allModels);
 
-        return response.getResponse();
     }
 
-    public String getByOffset(int offset, int limit) {
-        ICRUDServices<T> models = services.getByOffset(offset, limit);
-        APIJSONResponse response;
-        if (models == null)
-            response = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
-        else
-            response = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, models);
+    /*
+     * Get response by offset and limit and return as JSON response
+     */
+    private void getByOffset() {
+        int offset = req.getParameter("offset") != null ? Integer.parseInt(req.getParameter("offset")) : 0;
+        int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 5;
 
-        return response.getResponse();
+        if (offset >= 0) {
+            List<T> models = services.getByOffset(offset, limit).getMultipleResults();
+
+            if (models == null)
+                this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
+            else
+                this.jsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, models);
+
+        } else {
+            throw new RuntimeException("Offset must be greater than or equal to 0");
+        }
     }
 
-    public String getBySlug(String slug) {
+    /**
+     * Get response by slug and return as JSON response
+     */
+    private void getBySlug() {
+        String slug = req.getParameter("slug");
+
+        if (slug == null)
+            throw new RuntimeException("Slug must not be null");
+
         T model = services.getBySlug(slug);
-        APIJSONResponse response;
-        if (model == null)
-            response = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
-        else
-            response = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, model);
 
-        return response.getResponse();
+        if (model == null)
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
+        else
+            this.jsonResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), RespCodeEnum.SUCCESS.getMessage(), currentLanguage, model);
+    }
+
+    /**
+     * Process request from client and call appropriate method to handle request
+     *
+     * @param command Command to execute. Use:
+     *                <ul>
+     *                      <li><code>id</code> to get model by ID. Request parameter <b>id</b></li>
+     *                      <li><code>all</code> to get all models</li>
+     *                      <li> <code>offset</code></code></code> to get models by offset. Request parameter <b>offset</b> and <b>limit</b></li>
+     *                      <li><code>slug</code> to get model by slug. Request parameter <b>slug</b></li>
+     *                </ul>
+     */
+    public void processRequest(String command) {
+        command = command.toLowerCase();
+        switch (command) {
+            case "id":
+                this.getByID();
+                break;
+            case "all":
+                this.getAll();
+                break;
+            case "offset":
+                this.getByOffset();
+                break;
+            case "slug":
+                this.getBySlug();
+                break;
+            default:
+                throw new RuntimeException("Invalid command");
+        }
     }
 
     /**
      * Write response to client
      *
-     * @param resp        HttpServletResponse used to write response
-     * @param jsonResp    JSON response to write
      * @param corsDomains List of domain to allow CORS. Use can use <code>List.of("domain_name1", "domain_name2") to allow specified domain</code>
      *                    or <code>null</code> to allow all domain
      * @param cacheTime   Cache time in seconds
      * @throws IOException if an I/O error occurs when getting the writer
      */
-    public static void writeResponse(HttpServletResponse resp, String jsonResp, List<String> corsDomains, int cacheTime) throws IOException {
+    public void writeResponse(List<String> corsDomains, int cacheTime) throws IOException {
         if (corsDomains != null) {
-            resp.setHeader("Access-Control-Allow-Origin", String.join(",", corsDomains));
-            resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            this.resp.setHeader("Access-Control-Allow-Origin", String.join(",", corsDomains));
+            this.resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         } else
             resp.setHeader("Access-Control-Allow-Origin", "*");
-
 
         resp.setHeader("Cache-Control", "max-age=" + cacheTime);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonResp);
+        resp.getWriter().write(jsonResponse.getResponse());
     }
 }
 

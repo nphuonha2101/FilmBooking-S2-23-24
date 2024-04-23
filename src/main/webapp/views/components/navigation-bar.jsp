@@ -24,18 +24,16 @@
 <nav class="top-nav" id="navigation-bar">
     <div class="centered-horizontal-content" id="left-nav-elements">
         <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
-    </div>
-
         <div class="search-box">
             <input type="text" id="search-input" placeholder="<fmt:message key="search" bundle="${msg}"/>">
-            <ul class="list-group" id="result"></ul>
+            <ul class="list-group" id="search-result"></ul>
         </div>
+    </div>
+
+
 
 
     <ul id="right-nav-link">
-
-
-
         <li>
             <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>" id="home">
                 <div class="tooltip ">
@@ -44,19 +42,6 @@
                     </span>
                     <span class="tooltip-text">
                     <fmt:message key="home" bundle="${msg}"/>
-                </span>
-                </div>
-            </a>
-        </li>
-
-        <li>
-            <a class="nav-links small-icon-button" id="search">
-                <div class="tooltip">
-                     <span class="material-symbols-rounded">
-                        search
-                        </span>
-                    <span class="tooltip-text">
-                        <fmt:message key="search" bundle="${msg}"/>
                 </span>
                 </div>
             </a>
@@ -73,10 +58,9 @@
                         </span>
 
                     <div class="drop-down-contents" id="film-booking_menu-content">
-
+                        <%--content here--%>
                     </div>
                 </div>
-
             </li>
         </c:if>
 

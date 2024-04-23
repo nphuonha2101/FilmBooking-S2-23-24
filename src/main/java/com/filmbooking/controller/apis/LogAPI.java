@@ -5,7 +5,7 @@ import com.filmbooking.model.Genre;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.services.impls.LogModelServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.GSONUtils;
+import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
