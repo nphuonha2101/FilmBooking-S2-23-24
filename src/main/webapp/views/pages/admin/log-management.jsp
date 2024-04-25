@@ -9,6 +9,9 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
+
+
+
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
         <fmt:setLocale value="default"/>
@@ -32,22 +35,26 @@
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-            <table id="logTable">
+            <table id="data">
                 <thead>
                 <tr>
-                    <th><fmt:message bundle="${adminMsg}" key="logID"/></th>
-                    <th><fmt:message bundle="${adminMsg}" key="logActions"/></th>
-<%--                    <th><fmt:message bundle="${adminMsg}" key="afterData"/></th>--%>
-<%--                    <th><fmt:message bundle="${adminMsg}" key="beforeData"/></th>--%>
-                    <th><fmt:message bundle="${adminMsg}" key="logLevel"/></th>
-                    <th><fmt:message bundle="${adminMsg}" key="logTable"/></th>
-                    <th><fmt:message bundle="${adminMsg}" key="logTime"/></th>
-<%--                    <th><fmt:message bundle="${adminMsg}" key="logIP"/></th>--%>
+<%--                    <th><fmt:message bundle="${adminMsg}" key="logID"/></th>--%>
+<%--                    <th><fmt:message bundle="${adminMsg}" key="logActions"/></th>--%>
+<%--&lt;%&ndash;                    <th><fmt:message bundle="${adminMsg}" key="afterData"/></th>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                    <th><fmt:message bundle="${adminMsg}" key="beforeData"/></th>&ndash;%&gt;--%>
+<%--                    <th><fmt:message bundle="${adminMsg}" key="logLevel"/></th>--%>
+<%--                    <th><fmt:message bundle="${adminMsg}" key="logTable"/></th>--%>
+<%--                    <th><fmt:message bundle="${adminMsg}" key="logTime"/></th>--%>
+<%--&lt;%&ndash;                    <th><fmt:message bundle="${adminMsg}" key="logIP"/></th>&ndash;%&gt;--%>
+    <th>ID</th>
+    <th>Action</th>
+    <th>Level</th>
+    <th>Target</th>
+    <th>Update</th>
+
                 </tr>
                 </thead>
-                <tbody>
 
-                </tbody>
             </table>
         </div>
 
@@ -55,37 +62,46 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
-    <script>
-        $(document).ready(function (){
-            $.ajax({
-                        url: "./admin/management/log",
-                        type: "GET",
-                        dataType: "json",
-                        success: function (data){
-                            $('$logTable').DataTable({
-                                data : data.data,
-
-                                columns:[
-                                    {
-                                        data: null,
-                                        render: function (data,type,row){
-                                            var checkboxId = data.logID;
-                                            var checkboxClass = "checkbox";
-                                            return '<input type="checkbox" id="' + checkboxId + '" class="'+checkboxClass+'">';
-                                        }
-                                    },
-                                            {data:'logID'},
-                                            {data:'action'},
-                                            {data:'level'},
-                                            {data:'targetTable'},
-                                            {data:'updatedAt'}
-                                ]
-                            });
-                        },
-                        error: function (jqXHR, textStatus, errThrown){
-                            console.log("error: "+ errThrown)
-                        }
-            })
-        });
-    </script>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<link href="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.5/af-2.7.0/b-3.0.2/datatables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/v/dt/jq-3.7.0/dt-2.0.5/af-2.7.0/b-3.0.2/datatables.min.js"></script>
+<script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>
+<script>
+    $(document).ready(function (){
+        $.ajax({
+            url: "/api/v1/logs",
+            type: "get",
+            dataType: "json",
+            success: function (data){
+                $("#data").dataTable({
+                    data : data.data,
+
+                    columns:[
+                        {
+                            data: null,
+                            render: function (data,type,row){
+                                var checkboxId = data.logID;
+                                var checkboxClass = "checkbox";
+                                return '<input type="checkbox" id="' + checkboxId + '" class="'+checkboxClass+'">';
+                            }
+                        },
+                        {data:'logID'},
+                        {data:'action'},
+                        {data:'level'},
+                        {data:'targetTable'},
+                        {data:'updatedAt'}
+                    ]
+                });
+            },
+            error: function (jqXHR, textStatus, errThrown){
+                console.log("error: "+ errThrown)
+            }
+        })
+    });
+</script>

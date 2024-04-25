@@ -204,5 +204,3 @@
         </li>
     </ul>
 </nav>
-
-<script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>

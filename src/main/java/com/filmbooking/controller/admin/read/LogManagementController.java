@@ -4,6 +4,8 @@ import com.filmbooking.controller.apis.LogAPI;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.services.impls.LogModelServicesImpl;
+import com.filmbooking.utils.RenderViewUtils;
+import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
@@ -34,9 +36,11 @@ public class LogManagementController extends HttpServlet {
         }
         jsonResp += "]}";
 
+
+        req.setAttribute("pageTitle", "log management");
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("log-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(jsonResp);
-
     }
 }

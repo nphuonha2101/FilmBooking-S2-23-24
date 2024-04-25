@@ -1,9 +1,13 @@
 package com.filmbooking.services.impls;
 
+import java.util.Map;
+import java.util.Objects;
+
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
@@ -11,14 +15,10 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
-
-import java.util.Map;
-import java.util.Objects;
 
 public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
@@ -61,6 +61,11 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
 
     public User getByEmail(String email) {
         Map<String, Object> map = Map.of("userEmail_=", email);
+        return this.getByPredicates(map).getSingleResult();
+    }
+
+    public User getByUsername(String usename){
+        Map<String,Object> map = Map.of("username=",usename);
         return this.getByPredicates(map).getSingleResult();
     }
 
@@ -136,14 +141,17 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
                 result = new ServiceResult(StatusCodeEnum.EMAIL_NOT_MATCH);
             } else {
                 // prepare Token
-                TokenModel tokenModel = new TokenModel(forgotPassUser.getUserEmail(), forgotPassUser.getUsername(), TokenTypeEnum.PASSWORD_RESET);
+                TokenModel tokenModel = new TokenModel(forgotPassUser.getUserEmail(), forgotPassUser.getUsername(),
+                        TokenTypeEnum.PASSWORD_RESET);
                 // save token to database
                 tokenServices.save(tokenModel);
 
                 // send Email
-                String emailSubject = language == null || language.equals("default") ? "Bạn quên mật khẩu?" : "You forgot your password?";
-//
-                LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE : LanguageEnum.ENGLISH;
+                String emailSubject = language == null || language.equals("default") ? "Bạn quên mật khẩu?"
+                        : "You forgot your password?";
+                //
+                LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE
+                        : LanguageEnum.ENGLISH;
 
                 AbstractSendEmail sendResetPasswordEmail = new SendResetPasswordEmail();
                 sendResetPasswordEmail
@@ -201,5 +209,25 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     public String hashPassword(String password) {
         String passwordSecretKey = PropertiesUtils.getInstance().getProperty("password.hash_secret_key");
         return StringUtils.generateSHA256String(password + passwordSecretKey);
+    }
+
+    /**
+     * Hashing password with SHA-256 algorithm and secret key
+     *
+     * @param username
+     * @param email
+     * @return
+     */
+    @Override
+    public User newUser(String username, String email) {
+        User userInfo = null;
+        boolean isEmail = Regex.validate(UserRegexEnum.USER_EMAIL, email);
+        boolean isUsername = Regex.validate(UserRegexEnum.USERNAME, username);
+        if (isEmail)
+            userInfo = getByEmail(email);
+        // login by username
+        if (isUsername)
+            userInfo = getByID(username);
+        return userInfo;
     }
 }

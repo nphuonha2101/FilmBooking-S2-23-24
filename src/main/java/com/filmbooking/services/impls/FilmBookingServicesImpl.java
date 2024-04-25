@@ -1,15 +1,14 @@
 package com.filmbooking.services.impls;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
 
@@ -55,6 +54,12 @@ public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
     public List<FilmBooking> getAllByUser(User user) {
         Map<String, Object> condition = Map.of("user_=", user);
         return this.getByPredicates(condition).getMultipleResults();
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 
 

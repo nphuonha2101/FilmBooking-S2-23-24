@@ -38,7 +38,7 @@ public class LogAPI extends HttpServlet {
             for (LogModel logModel : logModelList) {
                 jsonResp += gson.toJson(logModel);
                 if (logModelList.indexOf(logModel) != logModelList.size() - 1) {
-                    jsonResp += ",";
+                    jsonResp += ", \n";
                 }
             }
             jsonResp += "]";

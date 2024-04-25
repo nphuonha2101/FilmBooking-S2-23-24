@@ -1,14 +1,15 @@
 package com.filmbooking.services.impls;
 
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
+import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
-
-import java.time.LocalDateTime;
-import java.util.Map;
 
 public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
 
@@ -58,11 +59,11 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
      *
      * @param tokenModel token
      * @return ServiceResult with status
-     * <ul>
-     *     <li>{@link StatusCodeEnum#TOKEN_EXPIRED}</li>
-     *     <li>{@link StatusCodeEnum#TOKEN_NOT_FOUND}</li>
-     *     <li>{@link StatusCodeEnum#TOKEN_VERIFIED}</li>
-     * </ul>
+     *         <ul>
+     *         <li>{@link StatusCodeEnum#TOKEN_EXPIRED}</li>
+     *         <li>{@link StatusCodeEnum#TOKEN_NOT_FOUND}</li>
+     *         <li>{@link StatusCodeEnum#TOKEN_VERIFIED}</li>
+     *         </ul>
      */
     public ServiceResult verifyToken(TokenModel tokenModel) {
 
@@ -75,5 +76,10 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
         }
         return new ServiceResult(StatusCodeEnum.TOKEN_VERIFIED, tokenModel);
     }
-}
 
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
+    }
+}
