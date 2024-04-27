@@ -19,28 +19,11 @@ import java.util.List;
 
 @WebServlet(name = "logManagement", value = "/admin/management/log")
 public class LogManagementController extends HttpServlet {
-    LogModelServicesImpl logModelServices;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        logModelServices = new LogModelServicesImpl(sessionProvider);
-        Gson gson = GSONUtils.getGson();
-        String jsonResp = "{\"data\": [";
-        List<LogModel> list = logModelServices.getAll().getMultipleResults();
+        req.setAttribute("pageTitle", "Quản lý Log");
+        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("log-management.jsp"),WebAppPathUtils.getLayoutPath("master.jsp"));
 
-        for(LogModel logModel : list){
-            jsonResp += gson.toJson(logModel);
-            if (list.indexOf(logModel) != list.size() - 1) {
-                jsonResp += ",";
-            }
-        }
-        jsonResp += "]}";
-
-
-        req.setAttribute("pageTitle", "log management");
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("log-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
-        resp.setContentType("application/json");
-        resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonResp);
     }
 }

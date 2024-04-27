@@ -30,11 +30,6 @@ public class FacebookLoginController extends HttpServlet {
 	private String id= null;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doPost(req, resp);
-	}
-
-	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
 		userServices = new UserServicesImpl(sessionProvider);
@@ -62,24 +57,21 @@ public class FacebookLoginController extends HttpServlet {
 		System.out.println("Tên người dùng: " + name);
 		System.out.println("Email người dùng: " + email);
 		System.out.println("Id người dùng: " + id);
-		if (userServices.getByUsername(id) == null) {
-			User newUser = new User(id, name, email,null, AccountRoleEnum.CUSTOMER);
-			userServices.save(newUser);
-			HttpSession session = req.getSession();
-			User loginUser = userServices.getByUsername(id);
-			session.setAttribute("loginUser", loginUser);
-			FilmBooking filmBooking = new FilmBooking();
-			filmBooking.setUser(loginUser);
-			session.setAttribute("filmBooking", filmBooking);
-		}else{
-			HttpSession session = req.getSession();
-                User loginUser = userServices.getByUsername(id);
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
+		User loginUser = userServices.getByUsername(id);
+		if (loginUser == null) {
+			System.out.println("Không tìm thấy người dùng, tạo mới...");
+			loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER);
+			userServices.save(loginUser);
 		}
 
+		// Thiết lập session và thông tin đặt phim
+		HttpSession session = req.getSession();
+		session.setAttribute("loginUser", loginUser);
+		FilmBooking filmBooking = new FilmBooking();
+		filmBooking.setUser(loginUser);
+		session.setAttribute("filmBooking", filmBooking);
+
+		// Chuyển hướng người dùng về trang chủ
 		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
 	}
 
