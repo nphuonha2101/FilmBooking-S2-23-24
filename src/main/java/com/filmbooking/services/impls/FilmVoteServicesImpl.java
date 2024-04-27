@@ -1,5 +1,7 @@
 package com.filmbooking.services.impls;
 
+import java.util.Objects;
+
 /*
  *  @created 05/01/2024 - 10:33 AM
  *  @project FilmBooking-WebProgramming
@@ -9,9 +11,8 @@ package com.filmbooking.services.impls;
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmVote;
+import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
-
-import java.util.Objects;
 
 public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
 
@@ -56,6 +57,12 @@ public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
     @Override
     public boolean delete(FilmVote filmVote) {
         throw new UnsupportedOperationException("This method is not supported for FilmVote");
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 
 }
