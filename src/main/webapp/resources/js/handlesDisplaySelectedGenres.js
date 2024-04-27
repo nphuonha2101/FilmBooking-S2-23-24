@@ -17,7 +17,8 @@ let handlesDisplaySelectedGenres = {
                 genresSelectedSpan.innerHTML = result.trim();
             });
         } catch (e) {
-            console.error(e);
+            // console.error(e);
+            console.log('error');
         }
     }
 }

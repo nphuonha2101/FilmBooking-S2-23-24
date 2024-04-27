@@ -19,18 +19,20 @@ import java.util.Map;
 
 /**
  * <uL>
- *      <li>This class is a proxy class for CRUD services</li>
- *      <li>It is used to log CRUD actions</li>
- *      <li>It extends {@link AbstractServicesLogProxy} and implements {@link ICRUDServices}</li>
- *      <li>For more please see <b> Proxy design pattern </b></li>
+ * <li>This class is a proxy class for CRUD services</li>
+ * <li>It is used to log CRUD actions</li>
+ * <li>It extends {@link AbstractServicesLogProxy} and implements
+ * {@link ICRUDServices}</li>
+ * <li>For more please see <b> Proxy design pattern </b></li>
  * </uL>
+ * 
  * @param <T>
  */
-public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T>  implements ICRUDServices<T> {
+public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements ICRUDServices<T> {
     private final ICRUDServices<T> crudServices;
 
-
-    public CRUDServicesLogProxy(ICRUDServices<T> crudServices, HttpServletRequest req,  HibernateSessionProvider sessionProvider) {
+    public CRUDServicesLogProxy(ICRUDServices<T> crudServices, HttpServletRequest req,
+            HibernateSessionProvider sessionProvider) {
         super(req);
         this.crudServices = crudServices;
         this.logModelServices.setSessionProvider(sessionProvider);
@@ -84,7 +86,7 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
     }
 
     @Override
-    public boolean update(T t){
+    public boolean update(T t) {
         LogModel logModel = this.buildLogModel(LogModel.UPDATE, t, (AbstractCRUDServices<T>) this.crudServices, true);
         boolean updateState = this.crudServices.update(t);
 
@@ -118,5 +120,11 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
     @Override
     public String getTableName() {
         return this.crudServices.getTableName();
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 }

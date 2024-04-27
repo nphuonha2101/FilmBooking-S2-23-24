@@ -1,13 +1,15 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.enumsAndConstants.constants.PathConstant;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.FacebookUserInfo;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.utils.PropertiesUtils;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -18,74 +20,59 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-@WebServlet("/facebook/login")
+@WebServlet("/login/facebook")
 public class FacebookLoginController extends HttpServlet {
-    private UserServicesImpl userServices;
-    private HibernateSessionProvider sessionProvider;
-    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String error = req.getParameter("error");
-        String code = req.getParameter("code");
-        if (error != null && error.equals("access_denied")) {
-            // TODO: handle error when login failed
-            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
-        }else{
-            sessionProvider = new HibernateSessionProvider();
-            userServices = new UserServicesImpl(sessionProvider);
-            String accessToken = getToken(code);
-            FacebookUserInfo userInfo = getUserInfo(accessToken);
-            String username = userInfo.getUsername();
-            String email = userInfo.getEmail();
-            if(userServices.getByEmail(email) == null){
-                User newUser = new User(email,username,email,null, AccountRoleEnum.CUSTOMER);
-                userServices.save(newUser);
-                HttpSession session = req.getSession();
-                User loginUser = userServices.getByEmail(email);
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                session.setAttribute("filmBooking", filmBooking);
-            }else{
-                HttpSession session = req.getSession();
-                User loginUser = userServices.getByEmail(email);
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
-            }
-            resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
-        }
+	private CRUDServicesLogProxy<User> userServicesLog;
+	private UserServicesImpl userServices;
+	private String name = null;
+	private String email = null;
+	private String id= null;
 
-    }
-    public static String getToken(final String code) throws ClientProtocolException, IOException {
-        String link = String.format(PathConstant.FACEBOOK_LINK_GET_TOKEN, PathConstant.FACEBOOK_APP_ID, PathConstant.FACEBOOK_APP_SECRET, PathConstant.FACEBOOK_REDIRECT_URL, code);
-        String response = Request.Get(link).execute().returnContent().asString();
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
-        String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
-        return accessToken;
-    }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
+		userServices = new UserServicesImpl(sessionProvider);
 
-    public static FacebookUserInfo getUserInfo(String accessToken) throws ClientProtocolException, IOException{
-        String url = "https://graph.facebook.com/me?fields=name,email&access_token=" + accessToken;
-        String response = Request.Get(url).execute().returnContent().asString();
-        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-        FacebookUserInfo userInfo = new FacebookUserInfo();
-        userInfo.setUsername(jsonObject.get("name").getAsString());
-        if (jsonObject.has("email")) {
-            userInfo.setEmail(jsonObject.get("email").getAsString());
-        } else {
-            userInfo.setEmail(null);
-        }
-        return userInfo;
-    }
+		// Đọc dữ liệu được gửi từ client-side
+		StringBuilder requestData = new StringBuilder();
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				requestData.append(line);
+			}
+		}
+
+		// Xử lý dữ liệu JSON
+		Gson gson = new Gson();
+		JsonObject jsonObject = JsonParser.parseString(requestData.toString()).getAsJsonObject();
+
+		// Lấy tên từ dữ liệu JSON
+		name = jsonObject.get("name").getAsString();
+		email = jsonObject.has("email") ? jsonObject.get("email").getAsString() : "Email không có sẵn";
+		id = jsonObject.get("id").getAsString();
+		
+
+		// In ra thông tin nhận được
+		System.out.println("Tên người dùng: " + name);
+		System.out.println("Email người dùng: " + email);
+		System.out.println("Id người dùng: " + id);
+		User loginUser = userServices.getByUsername(id);
+		if (loginUser == null) {
+			System.out.println("Không tìm thấy người dùng, tạo mới...");
+			loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER);
+			userServices.save(loginUser);
+		}
+
+		// Thiết lập session và thông tin đặt phim
+		HttpSession session = req.getSession();
+		session.setAttribute("loginUser", loginUser);
+		FilmBooking filmBooking = new FilmBooking();
+		filmBooking.setUser(loginUser);
+		session.setAttribute("filmBooking", filmBooking);
+
+		// Chuyển hướng người dùng về trang chủ
+		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
+	}
+
 }
