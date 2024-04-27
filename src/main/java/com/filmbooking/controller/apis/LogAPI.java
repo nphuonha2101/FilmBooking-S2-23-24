@@ -1,14 +1,9 @@
 package com.filmbooking.controller.apis;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Film;
-import com.filmbooking.model.Genre;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.services.impls.LogModelServicesImpl;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.APIUtils;
-import com.filmbooking.utils.gsonUtils.GSONUtils;
-import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,10 +11,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
-
 @WebServlet(urlPatterns = { "/api/v1/logs/*", "/api/v1/logs" })
-public class LogAPI extends HttpServlet{
+public class LogAPI extends HttpServlet {
     LogModelServicesImpl logModelServices;
 
     @Override
