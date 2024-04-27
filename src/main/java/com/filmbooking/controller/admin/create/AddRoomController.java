@@ -3,7 +3,6 @@ package com.filmbooking.controller.admin.create;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
-import com.filmbooking.model.User;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
