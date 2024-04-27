@@ -1,11 +1,12 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.model.Theater;
-import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.services.AbstractCRUDServices;
-
 import java.util.Objects;
+
+import com.filmbooking.dao.DataAccessObjects;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Theater;
+import com.filmbooking.model.User;
+import com.filmbooking.services.AbstractCRUDServices;
 
 public class TheaterServicesImpl extends AbstractCRUDServices<Theater> {
 
@@ -39,5 +40,11 @@ public class TheaterServicesImpl extends AbstractCRUDServices<Theater> {
             return this.decoratedDAO.getByID(id, true);
         else
             throw new RuntimeException("ID must not be null");
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 }
