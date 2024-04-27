@@ -8,7 +8,6 @@ import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.services.logProxy.ShowtimeServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
 import com.filmbooking.utils.RenderViewUtils;
@@ -31,8 +30,6 @@ public class FilmInfoController extends HttpServlet {
     public void init() throws ServletException {
         super.init();
     }
-
-    // TODO: handle showtime log
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         queryString = req.getQueryString();

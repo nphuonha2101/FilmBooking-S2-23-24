@@ -174,3 +174,4 @@
 
 <%--JavaScript--%>
 <script type="module" src="<c:url value="/resources/js/handlesUploadFilmImg.js"/>"></script>
+<script type="module" src="<c:url value="/resources/js/handlesDisplaySelectedGenres.js"/>"></script>
