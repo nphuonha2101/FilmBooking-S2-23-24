@@ -12,7 +12,7 @@ let handlesDisplaySelectedGenres = {
 
                 for (const genreOption of this.options) {
                     if (genreOption.selected)
-                        result += genreOption.text + '';
+                        result += genreOption.text + ' ';
                 }
                 genresSelectedSpan.innerHTML = result.trim();
             });
