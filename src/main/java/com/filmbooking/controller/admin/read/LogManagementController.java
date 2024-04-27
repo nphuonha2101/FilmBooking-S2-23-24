@@ -22,8 +22,7 @@ public class LogManagementController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "Quản lý Log");
+        req.setAttribute("pageTitle", "logManagementTitle");
         RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("log-management.jsp"),WebAppPathUtils.getLayoutPath("master.jsp"));
-
     }
 }

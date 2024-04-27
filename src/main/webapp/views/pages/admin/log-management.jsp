@@ -36,6 +36,7 @@
                 <table id="myTable" class="display">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>LogID</th>
                         <th>Username</th>
                         <th>Action</th>
@@ -61,12 +62,18 @@
                     dataSrc: '' // Sử dụng nếu dữ liệu trả về là một mảng được gói trong một đối tượng
                 },
                 columns: [
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<input type="checkbox" name="select[]" value="' + data.logID + '">';
+                        }
+                    },
                     { data: 'logID' },
                     { data: 'user.username',
                         defaultContent: 'Unknown User'},
                     { data: 'action' },
                     { data: 'level' },
-                    { data: 'targetTable' },
+                    { data: 'targetTable' }
                 ]
             });
         });
