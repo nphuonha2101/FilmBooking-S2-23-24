@@ -1,7 +1,8 @@
 package com.filmbooking.controller.httpStatus;
 
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,14 +17,16 @@ public class HttpStatusController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int httpStatusCode = resp.getStatus();
 
-        req.setAttribute("errorImgName", "httpStatusImg.svg");
+        Page httpStatusPage = new ClientPage(
+                "http" + httpStatusCode + "Title",
+                "http-status",
+                "master"
+        );
 
-        req.setAttribute("httpErrorCode", httpStatusCode);
-        req.setAttribute("httpErrorMessage", "http" + httpStatusCode);
-        req.setAttribute("pageTitle", "http" + httpStatusCode + "Title");
+        httpStatusPage.putAttribute("httpErrorCode", httpStatusCode);
+        httpStatusPage.putAttribute("httpErrorMessage", "http" + httpStatusCode);
+        httpStatusPage.putAttribute("errorImgName", "httpStatusImg.svg");
 
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getErrorPagesPath("error.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        httpStatusPage.render(req, resp);
     }
 }

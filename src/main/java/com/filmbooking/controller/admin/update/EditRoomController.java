@@ -2,12 +2,13 @@ package com.filmbooking.controller.admin.update;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,15 +36,14 @@ public class EditRoomController extends HttpServlet {
         if (roomSlug != null)
             editRoom = roomServices.getBySlug(roomSlug);
 
-        req.setAttribute("pageTitle", "editRoomTitle");
+        Page editRoomPage = new AdminPage(
+                "editRoomTitle",
+                "edit-room",
+                "master");
+        editRoomPage.putAttribute("editRoom", editRoom);
+        editRoomPage.putAttribute("theaters", theaterServices.getAll().getMultipleResults());
 
-        req.setAttribute("editRoom", editRoom);
-
-        req.setAttribute("theaters", theaterServices.getAll().getMultipleResults());
-
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getAdminPagesPath("edit-room.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        editRoomPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

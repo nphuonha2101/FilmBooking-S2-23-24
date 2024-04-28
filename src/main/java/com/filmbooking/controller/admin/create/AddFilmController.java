@@ -3,13 +3,14 @@ package com.filmbooking.controller.admin.create;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.services.logProxy.FilmServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.UUIDUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
@@ -21,6 +22,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "addFilm", value = "/admin/add/film")
 @MultipartConfig
@@ -32,16 +34,15 @@ public class AddFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-
         filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
         genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, hibernateSessionProvider);
 
-        req.setAttribute("pageTitle", "addFilmTitle");
-        req.setAttribute("genres", genreServices.getAll().getMultipleResults());
-
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getAdminPagesPath("add-film.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page addFilmPage = new AdminPage(
+                "addFilmTitle",
+                "add-film",
+                "master",
+                Map.of("genres", genreServices.getAll().getMultipleResults()));
+        addFilmPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }
@@ -87,7 +88,6 @@ public class AddFilmController extends HttpServlet {
             req.setAttribute("statusCodeErr", StatusCodeEnum.ADD_FILM_FAILED.getStatusCode());
             doGet(req, resp);
         }
-
 
         hibernateSessionProvider.closeSession();
     }

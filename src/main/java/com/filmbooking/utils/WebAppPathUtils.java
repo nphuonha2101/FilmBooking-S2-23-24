@@ -11,7 +11,7 @@ public class WebAppPathUtils {
     private static final String ERROR_PAGES_BASE_PATH = "/views/error/";
     private static final String UPLOAD_FOLDER_PATH = "src/main/webapp/resources/images/upload/";
     private static final String UPLOAD_FOLDER_RELATIVE_PATH = "/resources/images/upload/";
-
+    private static final String STYLE_SHEETS_PATH = "/resources/css/";
 
     /**
      * Get path to components' jsp such as: navigation-bar.jsp, footer.jsp, ...
@@ -86,6 +86,15 @@ public class WebAppPathUtils {
      */
     public static String getErrorPagesPath(String page) {
         return ERROR_PAGES_BASE_PATH + page;
+    }
+
+    /**
+     * Get path to style sheets
+     * @param styleSheet style sheet name
+     * @return path to style sheet
+     */
+    public static String getStyleSheetsPath(String styleSheet) {
+        return STYLE_SHEETS_PATH + styleSheet;
     }
 
     /**
