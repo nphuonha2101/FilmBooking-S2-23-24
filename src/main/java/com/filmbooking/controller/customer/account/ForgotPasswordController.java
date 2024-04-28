@@ -2,12 +2,13 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
@@ -30,11 +31,12 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "forgotPassTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("forgot.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
 
+        Page forgotPassPage = new ClientPage(
+                "forgotPassTitle",
+                "forgot",
+                "master"
+        );
     }
 
     @Override
@@ -45,13 +47,16 @@ public class ForgotPasswordController extends HttpServlet {
         String username = req.getParameter("username");
         String userEmail = req.getParameter("email");
 
+        Page forgotPassPage = new ClientPage(
+                "forgotPassTitle",
+                "forgot",
+                "master"
+        );
+
         // validate input
         if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) || !Regex.validate(UserRegexEnum.USERNAME, username)) {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
-            req.setAttribute("pageTitle", "forgotPassTitle");
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    WebAppPathUtils.getClientPagesPath("forgot.jsp"),
-                    WebAppPathUtils.getLayoutPath("master.jsp"));
+            forgotPassPage.putError(StatusCodeEnum.INVALID_INPUT.getStatusCode());
+            forgotPassPage.render(req, resp);
             return;
         }
 
@@ -61,15 +66,11 @@ public class ForgotPasswordController extends HttpServlet {
         ServiceResult forgotPassResult = userServicesLog.userForgotPassword(username, userEmail, currentLanguage);
 
         if (forgotPassResult.getStatus().equals(StatusCodeEnum.SUCCESSFUL))
-            req.setAttribute("statusCodeSuccess", StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());
+            forgotPassPage.putSuccess(StatusCodeEnum.SENT_RESET_PASSWD_EMAIL.getStatusCode());
         else
-            req.setAttribute("statusCodeErr", forgotPassResult.getStatus().getStatusCode());
+            forgotPassPage.putError(forgotPassResult.getStatus().getStatusCode());
 
-
-        req.setAttribute("pageTitle", "forgotPassTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("forgot.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        forgotPassPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

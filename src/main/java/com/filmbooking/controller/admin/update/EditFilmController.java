@@ -3,12 +3,13 @@ package com.filmbooking.controller.admin.update;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.FilmServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.UUIDUtils;
 import com.filmbooking.utils.fileUtils.FileUploadUtils;
@@ -39,13 +40,8 @@ public class EditFilmController extends HttpServlet {
         filmServices = new FilmServicesImpl(hibernateSessionProvider);
         genreServices = new GenreServicesImpl(hibernateSessionProvider);
 
-
         String filmSlug = req.getParameter("film");
         editFilm = filmServices.getBySlug(filmSlug);
-
-        req.setAttribute("editFilm", editFilm);
-        req.setAttribute("genres", genreServices.getAll());
-        req.setAttribute("filmGenresStr", editFilm.getFilmGenresStr());
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
@@ -56,13 +52,17 @@ public class EditFilmController extends HttpServlet {
             filmGenreIDs.append(" ");
         });
 
-        req.setAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
+        Page editFilmPage = new AdminPage(
+                "editFilmTitle",
+                "edit-film",
+                "master");
 
-        req.setAttribute("pageTitle", "editFilmTitle");
+        editFilmPage.putAttribute("editFilm", editFilm);
+        editFilmPage.putAttribute("genres", genreServices.getAll());
+        editFilmPage.putAttribute("filmGenresStr", editFilm.getFilmGenresStr());
+        editFilmPage.putAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
 
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getAdminPagesPath("edit-film.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        editFilmPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

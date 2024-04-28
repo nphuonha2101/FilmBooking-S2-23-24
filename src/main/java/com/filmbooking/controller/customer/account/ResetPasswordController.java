@@ -5,13 +5,13 @@ import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.TokenServicesImpl;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,10 +27,12 @@ public class ResetPasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("pageTitle", "Reset Password");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("reset-password.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page resetPasswordPage = new ClientPage(
+                "resetPasswordTitle",
+                "reset-password",
+                "master"
+        );
+        resetPasswordPage.render(req, resp);
     }
 
     @Override

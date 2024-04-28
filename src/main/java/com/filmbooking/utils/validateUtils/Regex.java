@@ -23,5 +23,6 @@ public class Regex {
         System.out.println(validate(UserRegexEnum.USER_EMAIL, "nphuonha" ));
         System.out.println(validate(UserRegexEnum.USER_EMAIL, "21130122@st.hcmuaf.edu.vn" ));
         System.out.println(validate(UserRegexEnum.USER_FULL_NAME, "Nguyễn Phương Nhã"));
+        System.out.println(validate(UserRegexEnum.USER_PASSWORD, "12345" ));
     }
 }

@@ -3,6 +3,8 @@ package com.filmbooking.controller.customer.account;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -16,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet {
@@ -32,7 +35,6 @@ public class LoginController extends HttpServlet {
         if (req.getSession().getAttribute("username") != null)
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
-            req.setAttribute("pageTitle", "loginTitle");
             String clientID = propertiesUtils.getProperty("client_id");
             String redirectURI = propertiesUtils.getProperty("redirect_uri");
             System.out.println(redirectURI);
@@ -42,8 +44,14 @@ public class LoginController extends HttpServlet {
                     "&response_type=code" +
                     "&client_id=" + clientID +
                     "&approval_prompt=force";
-            req.setAttribute("google", google);
-            RenderViewUtils.renderViewToLayout(req, resp, VIEW_PATH, LAYOUT_PATH);
+
+            Page loginPage = new ClientPage(
+                    "loginTitle",
+                    "login",
+                    "master",
+                    Map.of("google", google)
+            );
+            loginPage.render(req, resp);
         }
     }
 

@@ -38,6 +38,7 @@ public class GoogleLoginController extends HttpServlet {
         }else {
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
             UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
+
             String accessToken = getToken(code);
             GoogleUserInfo googleUserInfo = getUserInfo(accessToken);
             String id = googleUserInfo.getId();
@@ -45,6 +46,7 @@ public class GoogleLoginController extends HttpServlet {
             String userEmail = googleUserInfo.getEmail();
             String userFullName = googleUserInfo.getName();
             System.out.println(userEmail);
+
             if (userServices.getByEmail(userEmail) == null) {
                 User newUser = new User(id, userFullName, userEmail, id, AccountRoleEnum.CUSTOMER);
                 userServices.save(newUser);

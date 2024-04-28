@@ -2,9 +2,10 @@ package com.filmbooking.controller.customer.film.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.*;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,18 +24,20 @@ public class BookingHistoryController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
 
-        req.setAttribute("pageTitle", "bookingHistoryTitle");
+        Page bookingHistoryPage = new ClientPage(
+                "bookingHistoryTitle",
+                "booking-history",
+                "master"
+        );
 
         User loginUser = (User) req.getSession().getAttribute("loginUser");
         if (loginUser != null)
             if (loginUser.getAccountRole().equalsIgnoreCase("admin"))
-                req.setAttribute("filmBookings", filmBookingServices.getAll().getMultipleResults());
+                bookingHistoryPage.putAttribute("filmBookings", filmBookingServices.getAll().getMultipleResults());
             else
-                req.setAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
+                bookingHistoryPage.putAttribute("filmBookings", filmBookingServices.getAllByUser(loginUser));
 
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("booking-history.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        bookingHistoryPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }
