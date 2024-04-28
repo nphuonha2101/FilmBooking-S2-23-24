@@ -24,7 +24,7 @@ public class FilmBooking implements Cloneable, IModel {
     @Getter
     @Setter
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "showtime_id")
     private Showtime showtime;
     @Getter

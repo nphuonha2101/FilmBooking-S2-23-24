@@ -1,14 +1,15 @@
 package com.filmbooking.services.impls;
 
-import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.hibernate.HibernateSessionProvider;
-import com.filmbooking.model.Showtime;
-import com.filmbooking.services.AbstractCRUDServices;
-import com.filmbooking.services.IShowtimeServices;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
+import com.filmbooking.dao.DataAccessObjects;
+import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.Showtime;
+import com.filmbooking.model.User;
+import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.IShowtimeServices;
 
 public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> implements IShowtimeServices {
 
@@ -69,6 +70,12 @@ public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> impleme
             result.put(showtime.getShowtimeID(), seatsMatrix);
         }
         return result;
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 
 

@@ -1,6 +1,7 @@
 package com.filmbooking.services;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -14,9 +15,12 @@ public interface ICRUDServices<T> {
     /**
      * Set session provider for DAO
      *
-     * @param sessionProvider session provider provides {@link org.hibernate.Session} for DAO
+     * @param sessionProvider session provider provides
+     *                        {@link org.hibernate.Session} for DAO
      *                        <br>
-     * <b>You can only use this method after creating a new instance {@link com.filmbooking.dao.IDAO} in constructor</b>
+     *                        <b>You can only use this method after creating a new
+     *                        instance {@link com.filmbooking.dao.IDAO} in
+     *                        constructor</b>
      */
     void setSessionProvider(HibernateSessionProvider sessionProvider);
 
@@ -41,7 +45,8 @@ public interface ICRUDServices<T> {
     /**
      * Get records by conditions
      *
-     * @param conditions is a map storing conditions. For example: Map.of("name_=", "Phuong Nha") or more entry in Map;
+     * @param conditions is a map storing conditions. For example: Map.of("name_=",
+     *                   "Phuong Nha") or more entry in Map;
      * @return ICRUDServices<T> instance for chaining or reuse
      * @see ICRUDServices#getMultipleResults()
      */
@@ -52,8 +57,8 @@ public interface ICRUDServices<T> {
      *
      * @param slug is the slug of record
      * @return T instance
-     * <br>
-     * <b>If object has not slug, you must override this method</b>
+     *         <br>
+     *         <b>If object has not slug, you must override this method</b>
      */
     T getBySlug(String slug);
 
@@ -62,8 +67,9 @@ public interface ICRUDServices<T> {
      *
      * @param id is the ID of record
      * @return T instance
-     * <br>
-     * <b>You must override this method for each class because of long ID and String ID</b>
+     *         <br>
+     *         <b>You must override this method for each class because of long ID
+     *         and String ID</b>
      */
     T getByID(String id);
 
@@ -79,18 +85,28 @@ public interface ICRUDServices<T> {
      *
      * @param t is the record to save
      * @return boolean true if success, false if fail
-     * <br>
-     * <b>If object cannot save, you must override this method</b>
+     *         <br>
+     *         <b>If object cannot save, you must override this method</b>
      */
     boolean save(T t);
+
+    /**
+     * Save a record
+     *
+     * @param t is the record to save
+     * @return boolean true if success, false if fail
+     *         <br>
+     *         <b>If object cannot save, you must override this method</b>
+     */
+    User newUser(String username, String email);
 
     /**
      * Update a record
      *
      * @param t is the record to update
      * @return boolean true if success, false if fail
-     * <br>
-     * <b>If object cannot update, you must override this method</b>
+     *         <br>
+     *         <b>If object cannot update, you must override this method</b>
      */
     boolean update(T t);
 
@@ -99,15 +115,17 @@ public interface ICRUDServices<T> {
      *
      * @param t is the record to delete
      * @return boolean true if success, false if fail
-     * <br>
-     * <b>If object cannot delete, you must override this method</b>
+     *         <br>
+     *         <b>If object cannot delete, you must override this method</b>
      */
     boolean delete(T t);
 
     /**
      * Get the results from the database
-     * <br><br>
+     * <br>
+     * <br>
      * If the result is not found, it returns an empty list
+     * 
      * @return the results from the database
      */
     List<T> getMultipleResults();
@@ -115,15 +133,20 @@ public interface ICRUDServices<T> {
     /**
      * Get single result from the database
      * <be><br>
-     *  If the result is not unique, it will throw an {@link jakarta.persistence.NonUniqueResultException}
-     *  <br><br>
-     *  If the result is not found, it will throw an {@link jakarta.persistence.NoResultException}
+     * If the result is not unique, it will throw an
+     * {@link jakarta.persistence.NonUniqueResultException}
+     * <br>
+     * <br>
+     * If the result is not found, it will throw an
+     * {@link jakarta.persistence.NoResultException}
+     * 
      * @return the single result from the database
      */
     T getSingleResult();
 
     /**
      * Get the table name of the entity
+     * 
      * @return table name
      */
     String getTableName();
