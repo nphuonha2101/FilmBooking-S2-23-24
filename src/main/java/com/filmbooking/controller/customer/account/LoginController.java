@@ -51,7 +51,6 @@ public class LoginController extends HttpServlet {
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
-
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String password = StringUtils.handlesInputString(req.getParameter("password"));
 
@@ -60,7 +59,6 @@ public class LoginController extends HttpServlet {
         ServiceResult serviceResult = userServices.userAuthentication(username, password);
         if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
             req.setAttribute("statusCodeErr", serviceResult.getStatus().getStatusCode());
-
             doGet(req, resp);
         } else {
             HttpSession session = req.getSession();
