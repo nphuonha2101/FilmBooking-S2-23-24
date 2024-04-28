@@ -31,17 +31,22 @@ public class BookingFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+        showtimeServices = new ShowtimeServicesImpl();
+        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(showtimeServices, req, hibernateSessionProvider);
 
         // get film booking from session
         filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
 
         Showtime bookedShowtime = filmBooking.getShowtime();
+        // update showtime from Database
+        bookedShowtime = showtimeServicesLog.getByID(bookedShowtime.getStringID());
+
         HashMap<Long, String[][]> showtimeIDAndSeatMatrix = showtimeServices.getShowtimeIDAndSeatMatrix();
 
         System.out.println("showtimeIDAndSeatMatrix = " + showtimeIDAndSeatMatrix);
 
         req.setAttribute("bookedShowtime", bookedShowtime);
+
         req.setAttribute("showtimeIDAndSeatMatrix", showtimeIDAndSeatMatrix);
 
         req.setAttribute("pageTitle", "bookingFilmTitle");
@@ -71,6 +76,9 @@ public class BookingFilmController extends HttpServlet {
             session.setAttribute("filmBooking", filmBooking);
 
             Showtime showtime = filmBooking.getShowtime();
+            // update showtime from database
+            showtime = showtimeServicesLog.getByID(showtime.getStringID());
+
             showtime.reserveSeats(seats.split(", "));
 
             showtimeServicesLog.update(showtime);

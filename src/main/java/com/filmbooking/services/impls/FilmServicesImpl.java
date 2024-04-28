@@ -1,14 +1,18 @@
 package com.filmbooking.services.impls;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
 import com.filmbooking.services.IFilmServices;
-import lombok.NoArgsConstructor;
-
-import java.util.*;
 
 public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFilmServices {
     private final GenreServicesImpl genreServices;
@@ -79,5 +83,11 @@ public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFil
 
 
         return this.getByPredicates(conditions).getMultipleResults();
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 }

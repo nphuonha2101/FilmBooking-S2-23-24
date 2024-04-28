@@ -1,11 +1,12 @@
 package com.filmbooking.services.impls;
 
+import java.util.Objects;
+
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.LogModel;
+import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
-
-import java.util.Objects;
 
 /**
  * @author nphuo
@@ -44,5 +45,11 @@ public class LogModelServicesImpl extends AbstractCRUDServices<LogModel> {
     @Override
     public boolean update(LogModel logModel) {
         throw new UnsupportedOperationException("This method is not supported for LogModel");
+    }
+
+    @Override
+    public User newUser(String username, String email) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
     }
 }

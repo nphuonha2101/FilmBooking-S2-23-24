@@ -16,6 +16,7 @@ import com.filmbooking.model.*;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.LogModelServicesImpl;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.APIUtils;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import jakarta.persistence.criteria.Predicate;
@@ -51,6 +52,12 @@ public class Test {
 //        System.out.println(roomDAOPredicate.getAll().getSingleResult());
 
 
+        UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
+        if(userServices.getByUsername("1102776627425583") != null){
+            System.out.println("khac null");
+        }else {
+            System.out.println("null");
+        }
         hibernateSessionProvider.closeSession();
 
 

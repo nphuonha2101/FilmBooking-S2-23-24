@@ -18,7 +18,7 @@ import java.util.Objects;
 @Setter
 @Entity
 @Table(name = LogModel.TABLE_NAME)
-public class LogModel{
+public class LogModel implements IModel {
     // log actions
     public static final String TABLE_NAME = "logs";
     public static final String INSERT = "INSERT";
@@ -101,4 +101,8 @@ public class LogModel{
         return logID == logModel.logID && isActionSuccess == logModel.isActionSuccess && Objects.equals(user, logModel.user) && Objects.equals(reqIP, logModel.reqIP) && Objects.equals(level, logModel.level) && Objects.equals(targetTable, logModel.targetTable) && Objects.equals(action, logModel.action) && Objects.equals(beforeValueJSON, logModel.beforeValueJSON) && Objects.equals(afterValueJSON, logModel.afterValueJSON) && Objects.equals(createdAt, logModel.createdAt) && Objects.equals(updatedAt, logModel.updatedAt);
     }
 
+    @Override
+    public String getStringID() {
+        return String.valueOf(this.logID);
+    }
 }
