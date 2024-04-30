@@ -33,9 +33,11 @@ public class FilmManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        Page filmManagementPage = new AdminPage();
-        filmManagementPage.setLayout("master");
-        filmManagementPage.setPageTitle("filmManagementTitle");
+        Page filmManagementPage = new AdminPage(
+                "filmManagementTitle",
+                "film-management",
+                "master"
+        );
 
 
         // if page valid (offset != -2)
@@ -47,11 +49,9 @@ public class FilmManagementController extends HttpServlet {
                 filmManagementPage.putAttribute("filmsData", films);
                 // set page url for pagination
                 filmManagementPage.putAttribute("pageUrl", "admin/management/film");
-
             }
-
-           filmManagementPage.render(req, resp);
         }
+        filmManagementPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
 

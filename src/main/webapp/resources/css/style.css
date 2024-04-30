@@ -703,7 +703,7 @@ select {
     padding: 1rem;
     background-color: #fff;
     border-radius: 10px;
-    z-index: 99999;
+    z-index: 99;
     position: absolute;
     box-shadow: 3px 3px 6px -3px rgba(77, 77, 77, 0.71);
     animation-name: fade;
@@ -1272,7 +1272,8 @@ thead {
     background-color: #0556f3;
     padding: 0.5rem;
     position: sticky;
-    top: 3rem;
+    top: 4rem;
+    z-index: 9;
 }
 
 td {

@@ -21,5 +21,7 @@ public class LogManagementController extends HttpServlet {
                 "log-management",
                 "master"
         );
+
+        logManagementPage.render(req, resp);
     }
 }

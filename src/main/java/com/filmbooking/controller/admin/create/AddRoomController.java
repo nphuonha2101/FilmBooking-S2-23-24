@@ -34,8 +34,9 @@ public class AddRoomController extends HttpServlet {
         Page addRoomPage = new AdminPage(
                 "addRoomTitle",
                 "add-room",
-                "master",
-                Map.of("theaters", theaterServices.getAll().getMultipleResults()));
+                "master"
+        );
+        addRoomPage.putAttribute("theaters", theaterServices.getAll().getMultipleResults());
         addRoomPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();

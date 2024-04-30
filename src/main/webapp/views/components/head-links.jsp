@@ -10,7 +10,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Author: D.Q.Dang and N.P.Nha, Illustrator: Film Thumbnails, Category: Film">
+<meta name="description" content="Author: Nguyen Binh, D.Q.Dang and N.P.Nha, Illustrator: Film Thumbnails, Category: Film">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
@@ -36,5 +36,7 @@
 
 <!-- DataTables -->
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js?render=6LdDfMspAAAAAPEeao2SrUavtknu5jxAi1E4d_Wr"></script>
 
 
