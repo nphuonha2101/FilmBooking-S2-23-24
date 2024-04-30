@@ -16,12 +16,20 @@ import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
-
-
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.NameValuePair;
+import org.apache.hc.core5.http.ParseException;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.apache.hc.core5.http.message.BasicNameValuePair;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/google/login")
 public class GoogleLoginController extends HttpServlet {
@@ -39,8 +47,18 @@ public class GoogleLoginController extends HttpServlet {
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
             UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
 
-            String accessToken = getToken(code);
-            GoogleUserInfo googleUserInfo = getUserInfo(accessToken);
+            String accessToken = null;
+            try {
+                accessToken = getToken(code);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            GoogleUserInfo googleUserInfo = null;
+            try {
+                googleUserInfo = getUserInfo(accessToken);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
             String id = googleUserInfo.getId();
             System.out.println(id);
             String userEmail = googleUserInfo.getEmail();
@@ -69,18 +87,32 @@ public class GoogleLoginController extends HttpServlet {
 
     }
 
-    private String getToken(final String code) throws IOException {
-        String response = Request.Post(propertiesUtils.getProperty("link_get_token")).bodyForm(Form.form().add("client_id", propertiesUtils.getProperty("client_id"))
-                        .add("client_secret", propertiesUtils.getProperty("client_secret"))
-                        .add("redirect_uri",propertiesUtils.getProperty("redirect_uri")).add("code", code)
-                        .add("grant_type", propertiesUtils.getProperty("grant_type")).build())
-                .execute().returnContent().asString();
-        JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
+    private String getToken(final String code) throws IOException, ParseException {
+        HttpPost httpPost = new HttpPost(propertiesUtils.getProperty("link_get_token"));
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("client_id", propertiesUtils.getProperty("client_id")));
+        params.add(new BasicNameValuePair("client_secret", propertiesUtils.getProperty("client_secret")));
+        params.add(new BasicNameValuePair("redirect_uri", propertiesUtils.getProperty("redirect_uri")));
+        params.add(new BasicNameValuePair("code", code));
+        params.add(new BasicNameValuePair("grant_type", propertiesUtils.getProperty("grant_type")));
+        httpPost.setEntity(new UrlEncodedFormEntity(params, Charset.forName("UTF-8")));
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = httpClient.execute(httpPost);
+
+        String responseString = EntityUtils.toString(response.getEntity());
+        JsonObject jobj = new Gson().fromJson(responseString, JsonObject.class);
         return jobj.get("access_token").toString().replaceAll("\"", "");
     }
-    private GoogleUserInfo getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
-        String link = propertiesUtils.getProperty("link_get_user_info") + accessToken;
-        String response = Request.Get(link).execute().returnContent().asString();
-        return new Gson().fromJson(response, GoogleUserInfo.class);
+
+    private GoogleUserInfo getUserInfo(final String accessToken) throws IOException, ParseException {
+        HttpGet httpGet = new HttpGet(propertiesUtils.getProperty("link_get_user_info") + accessToken);
+
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        CloseableHttpResponse response = httpClient.execute(httpGet);
+
+        String responseString = EntityUtils.toString(response.getEntity());
+        return new Gson().fromJson(responseString, GoogleUserInfo.class);
     }
+
 }

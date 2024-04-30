@@ -35,10 +35,11 @@ public class ShowtimeManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) showtimeServicesCRUD.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        Page showtimeManagementPage = new AdminPage();
-        showtimeManagementPage.setPageTitle("showtimeManagementTitle");
-        showtimeManagementPage.setPage("showtime-management");
-        showtimeManagementPage.setLayout("master");
+        Page showtimeManagementPage = new AdminPage(
+                "showtimeManagementTitle",
+                "showtime-management",
+                "master"
+        );
 
         // if page valid (offset != -2)
         if (offset != -2) {

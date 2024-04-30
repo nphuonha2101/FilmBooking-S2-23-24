@@ -12,6 +12,7 @@ import java.util.Map;
  */
 @NoArgsConstructor
 public class AdminPage extends Page {
+
     public AdminPage(String pageTitle, String pageName, String layout) {
         super(pageTitle, layout);
         this.page = WebAppPathUtils.getAdminPagesPath(pageName + ".jsp");
@@ -20,5 +21,10 @@ public class AdminPage extends Page {
     public AdminPage(String pageTitle, String pageName, String layout, Map<String, Object> pageAttributes) {
         super(pageTitle, layout, pageAttributes);
         this.page = WebAppPathUtils.getAdminPagesPath(pageName + ".jsp");
+    }
+
+    @Override
+    public void setPage(String page) {
+        this.page = WebAppPathUtils.getAdminPagesPath(page + ".jsp");
     }
 }

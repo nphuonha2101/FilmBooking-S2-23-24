@@ -20,7 +20,6 @@ import java.util.Map;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public abstract class Page {
     public static final String DEFAULT_LAYOUT = "master";
 
@@ -29,6 +28,10 @@ public abstract class Page {
     protected String layout;
     protected Map<String, Object> pageAttributes;
     protected String customStyleSheet;
+
+    public Page() {
+        this.pageAttributes = new HashMap<>();
+    }
 
     public Page(String pageTitle, String layout, Map<String, Object> pageAttributes) {
         this.pageTitle = pageTitle;
@@ -72,10 +75,18 @@ public abstract class Page {
         this.renderViewToLayout(req, resp, this.page, this.layout);
     }
 
+    /**
+     * Put an error status code to the page
+     * @param statusCodeErr error status code in {@link com.filmbooking.enumsAndConstants.enums.StatusCodeEnum}
+     */
     public void putError(int statusCodeErr) {
         this.putAttribute("statusCodeErr", statusCodeErr);
     }
 
+    /**
+     * Put a success status code to the page
+     * @param statusCodeSuccess success status code in {@link com.filmbooking.enumsAndConstants.enums.StatusCodeEnum}
+     */
     public void putSuccess(int statusCodeSuccess) {
         this.putAttribute("statusCodeSuccess", statusCodeSuccess);
     }

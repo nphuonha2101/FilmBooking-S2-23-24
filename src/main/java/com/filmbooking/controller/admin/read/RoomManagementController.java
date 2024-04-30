@@ -31,10 +31,11 @@ public class RoomManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) roomServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
-        Page roomManagementPage = new AdminPage();
-        roomManagementPage.setPageTitle("roomManagementTitle");
-        roomManagementPage.setPage("room-management");
-        roomManagementPage.setLayout("master");
+        Page roomManagementPage = new AdminPage(
+                "roomManagementTitle",
+                "room-management",
+                "master"
+        );
 
 
         // if page valid (offset != -2)

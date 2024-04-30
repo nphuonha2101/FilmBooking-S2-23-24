@@ -16,8 +16,8 @@
         <fmt:setLocale value="${sessionScope.lang}"/>
     </c:otherwise>
 </c:choose>
-<fmt:setBundle basename="properties.message" var="msg"/>
-<fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
+
+<fmt:setBundle basename="properties.pageTitle" var="pageTitleMsg"/>
 
 <!DOCTYPE html>
 <c:choose>

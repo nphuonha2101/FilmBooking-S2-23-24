@@ -40,8 +40,8 @@ public class AddFilmController extends HttpServlet {
         Page addFilmPage = new AdminPage(
                 "addFilmTitle",
                 "add-film",
-                "master",
-                Map.of("genres", genreServices.getAll().getMultipleResults()));
+                "master");
+        addFilmPage.putAttribute("genres", genreServices.getAll().getMultipleResults());
         addFilmPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();

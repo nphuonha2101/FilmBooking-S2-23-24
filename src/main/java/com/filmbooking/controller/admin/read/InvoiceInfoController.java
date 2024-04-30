@@ -3,6 +3,7 @@ package com.filmbooking.controller.admin.read;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
 import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.*;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
@@ -29,18 +30,16 @@ public class InvoiceInfoController extends HttpServlet {
         String bookingID = req.getParameter("booking-id");
         FilmBooking filmBooking = filmBookingServices.getByID(bookingID);
 
-        Page invoiceInfoPage = new AdminPage(
+        Page invoiceInfoPage = new ClientPage(
                 "invoiceInfoTitle",
                 "invoice-info",
-                "empty-layout",
-                Map.of("bookedFilmBooking", filmBooking)
-                );
+                "empty-layout"
+        );
+        invoiceInfoPage.putAttribute("bookedFilmBooking", filmBooking);
         invoiceInfoPage.setCustomStyleSheet("invoice-info.css");
 
-        req.setAttribute("bookedFilmBooking", filmBooking);
-
-        req.setAttribute("pageTitle", "invoiceInfoTitle");
-        req.getRequestDispatcher(WebAppPathUtils.getClientPagesPath("invoice-info.jsp")).forward(req, resp);
+        invoiceInfoPage.putAttribute("bookedFilmBooking", filmBooking);
+        invoiceInfoPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

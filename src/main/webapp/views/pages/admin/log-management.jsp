@@ -42,11 +42,13 @@
                         <th>Action</th>
                         <th>Level</th>
                         <th>Target table</th>
+                        <th>Before Value</th>
+                        <th>After Value</th>
+                        <th>Created At</th>
+                        <th>Update At</th>
                     </tr>
                     </thead>
-
                 </table>
-
         </div>
 
         <%--        Pagination--%>
@@ -59,7 +61,7 @@
             $('#myTable').DataTable({
                 ajax: {
                     url: '/api/v1/logs?command=all', // Thay thế 'API_URL' bằng URL của API của bạn
-                    dataSrc: '' // Sử dụng nếu dữ liệu trả về là một mảng được gói trong một đối tượng
+                    dataSrc: 'data' // Sử dụng nếu dữ liệu trả về là một mảng được gói trong một đối tượng
                 },
                 columns: [
                     {
@@ -73,7 +75,11 @@
                         defaultContent: 'Unknown User'},
                     { data: 'action' },
                     { data: 'level' },
-                    { data: 'targetTable' }
+                    { data: 'targetTable' },
+                    // { data: 'beforeValueJSON' },
+                    // { data: 'afterValueJSON' },
+                    // { data: 'createdAt' },
+                    // { data: 'updatedAt' }
                 ]
             });
         });

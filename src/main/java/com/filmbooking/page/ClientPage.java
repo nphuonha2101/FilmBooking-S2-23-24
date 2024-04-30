@@ -21,4 +21,9 @@ public class ClientPage extends Page {
         super(pageTitle, layout);
         this.page = WebAppPathUtils.getClientPagesPath(pageName + ".jsp");
     }
+
+    @Override
+    public void setPage(String page) {
+        this.page = WebAppPathUtils.getClientPagesPath(page + ".jsp");
+    }
 }
