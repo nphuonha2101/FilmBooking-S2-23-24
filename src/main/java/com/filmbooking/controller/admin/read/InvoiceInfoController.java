@@ -2,12 +2,10 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
-import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.*;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.ArrayList;
 
 @WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
@@ -36,7 +34,9 @@ public class InvoiceInfoController extends HttpServlet {
                 "empty-layout"
         );
         invoiceInfoPage.putAttribute("bookedFilmBooking", filmBooking);
-        invoiceInfoPage.setCustomStyleSheet("invoice-info.css");
+        ArrayList<String> customStyleSheets = new ArrayList<>();
+        customStyleSheets.add("invoice-info");
+        invoiceInfoPage.setCustomStyleSheets(customStyleSheets);
 
         invoiceInfoPage.putAttribute("bookedFilmBooking", filmBooking);
         invoiceInfoPage.render(req, resp);

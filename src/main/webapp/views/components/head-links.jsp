@@ -23,20 +23,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
-<%--<link rel="preconnect" href="https://fonts.googleapis.com">--%>
-<%--<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--%>
-<%--<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;0,6..12,800;1,6..12,400;1,6..12,500;1,6..12,600;1,6..12,700;1,6..12,800&display=swap" rel="stylesheet">--%>
-
-<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/style_out.css'/>"/>
 <link rel="icon" href="<c:url value='/resources/images/site-logo.png'/>"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<!-- DataTables CSS -->
+<%-- DataTables CSS --%>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
-<!-- DataTables -->
+<%-- DataTables --%>
 <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
+<%--Recaptcha v3--%>
 <script src="https://www.google.com/recaptcha/api.js?render=6LdDfMspAAAAAPEeao2SrUavtknu5jxAi1E4d_Wr"></script>
 
 

@@ -6,6 +6,10 @@
 /*    font-display: swap;*/
 /*}*/
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .material-symbols-rounded {
     margin: 0 0.5rem;
 }

@@ -2,7 +2,6 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.Page;
-import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "logManagement", value = "/admin/management/log")
 public class LogManagementController extends HttpServlet {
@@ -21,6 +21,10 @@ public class LogManagementController extends HttpServlet {
                 "log-management",
                 "master"
         );
+
+        ArrayList<String> customStyleSheets = new ArrayList<>();
+        customStyleSheets.add("datatable_tailwind.css");
+        logManagementPage.setCustomStyleSheets(customStyleSheets);
 
         logManagementPage.render(req, resp);
     }

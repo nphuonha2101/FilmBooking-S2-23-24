@@ -90,7 +90,7 @@ public class WebAppPathUtils {
 
     /**
      * Get path to style sheets
-     * @param styleSheet style sheet name
+     * @param styleSheet style sheet name such as: stylesheet.css, ...
      * @return path to style sheet
      */
     public static String getStyleSheetsPath(String styleSheet) {

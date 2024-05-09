@@ -32,12 +32,13 @@
     <title><fmt:message key="${pageTitle}" bundle="${pageTitleMsg}"/></title>
     <jsp:include page="/views/components/head-links.jsp"/>
 
-    <c:if test="${!empty customsStyleSheet}">
+    <c:forEach var="customsStyleSheet" items="${customStyleSheets}">
         <link rel="stylesheet" href="${customsStyleSheet}">
-    </c:if>
+    </c:forEach>
+
 </head>
 <body>
-    <jsp:include page="${dynamicContents}"/>
+<jsp:include page="${dynamicContents}"/>
 </body>
 
 </html>
