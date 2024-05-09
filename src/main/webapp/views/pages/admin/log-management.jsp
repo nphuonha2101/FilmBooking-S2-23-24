@@ -33,7 +33,7 @@
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/statusCodeMessage.jsp"/>
 
-                <table id="myTable" class="display">
+                <table id="myTable" class="display dataTable">
                     <thead>
                     <tr>
                         <th></th>

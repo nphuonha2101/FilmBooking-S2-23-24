@@ -5,11 +5,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,7 +28,7 @@ public abstract class Page {
     protected String page;
     protected String layout;
     protected Map<String, Object> pageAttributes;
-    protected String customStyleSheet;
+    protected List<String> customStyleSheets;
 
     public Page() {
         this.pageAttributes = new HashMap<>();
@@ -37,10 +38,12 @@ public abstract class Page {
         this.pageTitle = pageTitle;
         this.layout = WebAppPathUtils.getLayoutPath(layout + ".jsp");
         this.pageAttributes = pageAttributes;
+        this.customStyleSheets = new ArrayList<>();
     }
 
     public Page(String pageTitle, String layout) {
         this(pageTitle, layout, new HashMap<>());
+        this.customStyleSheets = new ArrayList<>();
     }
 
     /**
@@ -56,11 +59,15 @@ public abstract class Page {
     /**
      * Set custom style sheet for the page
      *
-     * @param customStyleSheet custom style sheet
+     * @param customStyleSheets custom style sheets
      */
 
-    public void setCustomStyleSheet(String customStyleSheet) {
-        this.customStyleSheet = WebAppPathUtils.getStyleSheetsPath(customStyleSheet);
+    public void setCustomStyleSheets(List<String> customStyleSheets ) {
+        for (String customStyleSheet : customStyleSheets) {
+            this.customStyleSheets.add(WebAppPathUtils.getStyleSheetsPath(customStyleSheet));
+        }
+
+        putAttribute("customStyleSheets", this.customStyleSheets);
     }
 
     /**
