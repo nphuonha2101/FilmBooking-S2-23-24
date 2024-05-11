@@ -67,8 +67,6 @@
                             </fb:login-button>
                             <div id="status">
                             </div>
-                            <%-- <div id="status">--%>
-                                <%-- </div>--%>
                                     <%-- google login--%>
                                         <p>
                                             <a href=${google}><button class="gsi-material-button">
@@ -141,6 +139,7 @@
                             console.log("email" + response.email);
                             document.getElementById('status').innerHTML =
                                  'Thanks for logging in, ' + response.name + '!';
+                            window.location.href = "<c:url value='/home'/>";
                             // Lấy dữ liệu của người dùng và gửi nó đến servlet
                             sendDataToServlet(response);
                         });
