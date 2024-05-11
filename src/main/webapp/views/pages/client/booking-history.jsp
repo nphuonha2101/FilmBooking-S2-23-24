@@ -61,7 +61,7 @@
                                <span class="font-bold"><fmt:message bundle="${msg}"
                                                                             key="theaterAgency"/>: </span> ${theater.theaterName}
                             </button>
-                            <div class="accordion-panel">
+                            <div class="accordion-panel" id="${filmBookingData.filmBookingID}">
                                 <div class="two-col__wrapper wrapper">
                                     <div class="wrapper">
                                         <p class="font-bold"><fmt:message bundle="${msg}" key="username"/>:
