@@ -1,6 +1,7 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -33,7 +34,6 @@ public class GoogleLoginController extends HttpServlet {
         String error = req.getParameter("error");
         String code = req.getParameter("code");
         if (error != null && error.equals("access_denied")) {
-            // TODO: handle error when login failed
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
@@ -45,23 +45,17 @@ public class GoogleLoginController extends HttpServlet {
             String userEmail = googleUserInfo.getEmail();
             String userFullName = googleUserInfo.getName();
             System.out.println(userEmail);
-            if (userServices.getByEmail(userEmail) == null) {
-                User newUser = new User(id, userFullName, userEmail, id, AccountRoleEnum.CUSTOMER);
-                userServices.save(newUser);
-                HttpSession session = req.getSession();
-                User loginUser = userServices.getByEmail(userEmail);
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
-            } else {
-                HttpSession session = req.getSession();
-                User loginUser = userServices.getByEmail(userEmail);
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
+            User loginUser = userServices.getByEmail(userEmail);
+            if (loginUser == null) {
+                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType());
+                userServices.save(loginUser);
             }
+            HttpSession session = req.getSession();
+            session.setAttribute("loginUser", loginUser);
+            FilmBooking filmBooking = new FilmBooking();
+            filmBooking.setUser(loginUser);
+            session.setAttribute("filmBooking", filmBooking);
+
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         }
 
