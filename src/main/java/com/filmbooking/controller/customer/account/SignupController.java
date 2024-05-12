@@ -1,6 +1,7 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -64,7 +65,7 @@ public class SignupController extends HttpServlet {
             // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
-            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER);
+            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType());
             userServicesLog.save(newUser);
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
             // confirm password not match!

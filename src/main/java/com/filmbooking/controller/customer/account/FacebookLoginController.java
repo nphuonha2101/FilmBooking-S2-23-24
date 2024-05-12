@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -57,7 +58,7 @@ public class FacebookLoginController extends HttpServlet {
 		System.out.println("Email người dùng: " + email);
 		System.out.println("Id người dùng: " + id);
 		if (userServices.getByUsername(id) == null) {
-			User loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER);
+			User loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType());
 			userServices.save(loginUser);
 			HttpSession session = req.getSession();
 			session.setAttribute("loginUser", loginUser);
