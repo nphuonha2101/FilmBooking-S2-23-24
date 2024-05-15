@@ -88,11 +88,6 @@ public class LoginController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
-//        String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
-//        String password = StringUtils.handlesInputString(req.getParameter("password"));
-
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
 
         User loginUser = null;
 
@@ -103,6 +98,7 @@ public class LoginController extends HttpServlet {
             loginPage.putError(serviceResult.getStatus().getStatusCode());
 
             getHtmlRespFromPage(req, resp, loginPage);
+
         } else {
             HttpSession session = req.getSession();
             loginUser = (User) serviceResult.getData();

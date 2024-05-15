@@ -56,6 +56,7 @@
 
     </div>
 
+<!-- 
     <script>
         $(function() {
             $('#myTable').DataTable({
@@ -83,5 +84,6 @@
                 ]
             });
         });
-    </script>
+    </script> -->
+
 </section>
