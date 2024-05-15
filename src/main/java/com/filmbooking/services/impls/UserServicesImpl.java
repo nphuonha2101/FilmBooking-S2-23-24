@@ -1,5 +1,7 @@
 package com.filmbooking.services.impls;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -13,12 +15,14 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
 import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.ICRUDServices;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
+import jakarta.persistence.NoResultException;
 
 public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
@@ -60,8 +64,12 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     }
 
     public User getByEmail(String email) {
-        Map<String, Object> map = Map.of("userEmail_=", email);
-        return this.getByPredicates(map).getSingleResult();
+        try {
+            Map<String, Object> map = Map.of("userEmail_=", email);
+            return this.getByPredicates(map).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public User getByUsername(String username){
@@ -230,4 +238,6 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
             userInfo = getByID(username);
         return userInfo;
     }
+
+
 }

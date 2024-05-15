@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -44,7 +45,6 @@ public class FacebookLoginController extends HttpServlet {
 		}
 
 		// Xử lý dữ liệu JSON
-		Gson gson = new Gson();
 		JsonObject jsonObject = JsonParser.parseString(requestData.toString()).getAsJsonObject();
 
 		// Lấy tên từ dữ liệu JSON
@@ -57,19 +57,26 @@ public class FacebookLoginController extends HttpServlet {
 		System.out.println("Tên người dùng: " + name);
 		System.out.println("Email người dùng: " + email);
 		System.out.println("Id người dùng: " + id);
-		User loginUser = userServices.getByUsername(id);
-		if (loginUser == null) {
-			System.out.println("Không tìm thấy người dùng, tạo mới...");
-			loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER);
+		if (userServices.getByUsername(id) == null) {
+			User loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType());
 			userServices.save(loginUser);
-		}
+			HttpSession session = req.getSession();
+			session.setAttribute("loginUser", loginUser);
+			FilmBooking filmBooking = new FilmBooking();
+			filmBooking.setUser(loginUser);
+			session.setAttribute("filmBooking", filmBooking);
+			System.out.println("Không tìm thấy người dùng, tạo mới...");
 
-		// Thiết lập session và thông tin đặt phim
-		HttpSession session = req.getSession();
-		session.setAttribute("loginUser", loginUser);
-		FilmBooking filmBooking = new FilmBooking();
-		filmBooking.setUser(loginUser);
-		session.setAttribute("filmBooking", filmBooking);
+		}else{
+
+			HttpSession session = req.getSession();
+			User loginUser = userServices.getByUsername(id);
+			session.setAttribute("loginUser", loginUser);
+			FilmBooking filmBooking = new FilmBooking();
+			filmBooking.setUser(loginUser);
+			session.setAttribute("filmBooking", filmBooking);
+			System.out.println("người dùng đã tồn tại");
+		}
 
 		// Chuyển hướng người dùng về trang chủ
 		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
