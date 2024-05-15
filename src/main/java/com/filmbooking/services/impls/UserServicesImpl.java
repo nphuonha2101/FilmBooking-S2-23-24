@@ -65,7 +65,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     }
 
     public User getByUsername(String username){
-        Map<String,Object> map = Map.of("username_=",username);
+        Map<String,Object> map = Map.of("username_=", username);
         return this.getByPredicates(map).getSingleResult();
     }
 

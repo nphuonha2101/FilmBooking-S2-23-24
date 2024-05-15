@@ -52,6 +52,7 @@ public class RecaptchaVerification {
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             StringBuilder responseStringBuilder = new StringBuilder();
             String line;
+            
             while ((line = reader.readLine()) != null) {
                 responseStringBuilder.append(line);
             }

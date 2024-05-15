@@ -11,17 +11,16 @@ import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.*;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,80 +37,112 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 
-        if (req.getSession().getAttribute("username") != null)
+        if (req.getSession().getAttribute("loginUser") != null)
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
             String clientID = propertiesUtils.getProperty("client_id");
             String redirectURI = propertiesUtils.getProperty("redirect_uri");
             System.out.println(redirectURI);
-            String google =
-                    "https://accounts.google.com/o/oauth2/auth?scope=email%20profile" +
-                    "&redirect_uri=" + redirectURI +
-                    "&response_type=code" +
-                    "&client_id=" + clientID +
-                    "&approval_prompt=force";
-
-            Page loginPage = new ClientPage(
-                    "loginTitle",
-                    "login",
-                    "master",
-                    Map.of("google", google)
-            );
+            Page loginPage = getPage(redirectURI, clientID);
             loginPage.render(req, resp);
         }
     }
 
+    private Page getPage(String redirectURI, String clientID) {
+        String google =
+                "https://accounts.google.com/o/oauth2/auth?scope=email%20profile" +
+                        "&redirect_uri=" + redirectURI +
+                        "&response_type=code" +
+                        "&client_id=" + clientID +
+                        "&approval_prompt=force";
+
+        return new ClientPage(
+                "loginTitle",
+                "login",
+                "master",
+                Map.of("google", google)
+        );
+    }
+
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<String> requestParams = new ArrayList<>();
-        requestParams.add("username");
-        requestParams.add("password");
+        Page loginPage = new ClientPage(
+                "loginTitle",
+                "login",
+                "master"
+        );
+        boolean isCaptchaVerified = req.getSession().getAttribute("captchaVerified") != null && (boolean) req.getSession().getAttribute("captchaVerified");
 
-        Map<String, String> paramsMap = new MultipartsFormUtils(req).getFormFields(requestParams);
+        String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
+        String password = StringUtils.handlesInputString(req.getParameter("password"));
 
-        boolean captchaVerified = new RecaptchaVerification().verify(req, resp);
-        System.out.println("Captcha verified: " + captchaVerified);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
 
-        if (captchaVerified) {
-
-            hibernateSessionProvider = new HibernateSessionProvider();
-            userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
-
-            String username = StringUtils.handlesInputString(paramsMap.get("username"));
-            String password = StringUtils.handlesInputString(paramsMap.get("password"));
-
-            User loginUser = null;
-
-
-            ServiceResult serviceResult = userServices.userAuthentication(username, password);
-            if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
-                req.setAttribute("statusCodeErr", serviceResult.getStatus().getStatusCode());
-
-                doGet(req, resp);
-            } else {
-                HttpSession session = req.getSession();
-                loginUser = (User) serviceResult.getData();
-
-                System.out.println(loginUser.getUserEmail() + " logged in");
-
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
-
-                /* return to previous page that was visited before login
-                 * if it has no previous page, return to home page
-                 */
-                RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
-
-
-            }
-        } else {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
-            doGet(req, resp);
+        if (!isCaptchaVerified) {
+            loginPage.putError(StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
+            getHtmlRespFromPage(req, resp, loginPage);
+            return;
         }
+
+        hibernateSessionProvider = new HibernateSessionProvider();
+        userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+
+//        String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
+//        String password = StringUtils.handlesInputString(req.getParameter("password"));
+
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+
+        User loginUser = null;
+
+        // user authentication
+        ServiceResult serviceResult = userServices.userAuthentication(username, password);
+        // case user not found then send error to login page
+        if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
+            loginPage.putError(serviceResult.getStatus().getStatusCode());
+
+            getHtmlRespFromPage(req, resp, loginPage);
+        } else {
+            HttpSession session = req.getSession();
+            loginUser = (User) serviceResult.getData();
+
+            System.out.println(loginUser.getUserEmail() + " logged in");
+
+            session.setAttribute("loginUser", loginUser);
+            FilmBooking filmBooking = new FilmBooking();
+            filmBooking.setUser(loginUser);
+            session.setAttribute("filmBooking", filmBooking);
+
+            System.out.println("Test login found user");
+
+            /* return to previous page that was visited before login
+             * if it has no previous page, return to home page
+             */
+//            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
+
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("text/plain");
+            out.println("/home");
+
+        }
+
+
         hibernateSessionProvider.closeSession();
 
+    }
+
+    private void getHtmlRespFromPage(HttpServletRequest req, HttpServletResponse resp, Page page) throws ServletException, IOException {
+        RequestDispatcher requestDispatcher = page.render(req, resp);
+        StringWriter stringWriter = new StringWriter();
+        requestDispatcher.include(req, new HttpServletResponseWrapper(resp) {
+            @Override
+            public PrintWriter getWriter() {
+                return new PrintWriter(stringWriter);
+            }
+        });
+        resp.setContentType("text/html");
+        resp.getWriter().write(stringWriter.toString());
     }
 
     @Override

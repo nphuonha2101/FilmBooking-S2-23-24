@@ -37,6 +37,8 @@ public class ForgotPasswordController extends HttpServlet {
                 "forgot",
                 "master"
         );
+
+        forgotPassPage.render(req, resp);
     }
 
     @Override

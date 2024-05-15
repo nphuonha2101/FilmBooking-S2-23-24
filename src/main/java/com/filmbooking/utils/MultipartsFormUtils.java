@@ -30,8 +30,6 @@ public class MultipartsFormUtils {
     public Map<String, String> getFormFields(List<String> fields) {
         Map<String, String> result = new HashMap<>();
 
-        // Get all parts from request and put them into parts list
-        // Ex: parts.add(request.getPart("name"));
         for (String field: fields) {
             try {
               Part part = request.getPart(field);
@@ -46,6 +44,7 @@ public class MultipartsFormUtils {
     public boolean uploadFile(String filePartName) {
         return true;
     }
+
 
     private String getPartStringContent(Part part) throws IOException {
         InputStream partInputStream = part.getInputStream();
