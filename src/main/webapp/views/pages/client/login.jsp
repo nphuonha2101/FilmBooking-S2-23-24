@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
@@ -21,16 +21,16 @@
             <fmt:message key="loginSectionTitle" bundle="${pageTitle}"/>
         </h2>
 
-        <%-- Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <%--        Status Code Messages--%>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <form action="<c:url value="${pageContext.request.contextPath}/login" />" method="post" id="login-form">
-            <label for="username">
+            <label for="usernameOrEmail">
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message key="usernameOrEmail" bundle="${msg}"/>:
                 <span class="warning-color"> *</span>
             </label>
-            <input type="text" name="username" id="username"
+            <input type="text" name="usernameOrEmail" id="usernameOrEmail"
                    placeholder=" <fmt:message key="usernameOrEmail" bundle="${msg}" />"
                    autocomplete="true" required>
 
@@ -42,8 +42,8 @@
             <input type="password" name="password" id="password" placeholder="<fmt:message key="password"
                             bundle="${msg}" />"
                    autocomplete="true" required>
-            <button type="submit" class="primary-filled-button button"><fmt:message key="login"
-                                                                                    bundle="${msg}" /></button>
+            <input type="submit" class="primary-filled-button button mt-4" value="<fmt:message key="login"
+                                                                                    bundle="${msg}"/>" />
 
         </form>
         <p>
@@ -110,7 +110,7 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/handlesRecaptchaV3.js"></script>
     <script type="text/javascript">
-        handleRecaptchaV3('login-form', 'login', '${pageContext.request.contextPath}/login')
+        handleRecaptchaV3('login-form', 'login')
     </script>
 
 </section>

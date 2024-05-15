@@ -28,6 +28,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class GoogleLoginController extends HttpServlet {
         params.add(new BasicNameValuePair("redirect_uri", propertiesUtils.getProperty("redirect_uri")));
         params.add(new BasicNameValuePair("code", code));
         params.add(new BasicNameValuePair("grant_type", propertiesUtils.getProperty("grant_type")));
-        httpPost.setEntity(new UrlEncodedFormEntity(params, Charset.forName("UTF-8")));
+        httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = httpClient.execute(httpPost);

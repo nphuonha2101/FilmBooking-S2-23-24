@@ -82,7 +82,6 @@ public class SignupController extends HttpServlet {
         }
 
         signupPage.render(req, resp);
-
         hibernateSessionProvider.closeSession();
     }
 

@@ -8,9 +8,9 @@
  * Handles reCAPTCHA v3 form submission.
  * @param formId The ID of the form element. E.g., 'contact-form'
  * @param action The reCAPTCHA action to execute. E.g., 'submit'
- * @param endpoint The endpoint of form. E.g., '/login'
  */
-function handleRecaptchaV3(formId, action, endpoint) {
+function handleRecaptchaV3(formId, action) {
+    const SERVER_VERIFY_ENDPOINT = '/verify-recaptcha-v3';
     const SITE_KEY = '6LdDfMspAAAAAPEeao2SrUavtknu5jxAi1E4d_Wr';
     const formElement = document.getElementById(formId);
     formElement.addEventListener('submit', function (event) {
@@ -26,15 +26,33 @@ function handleRecaptchaV3(formId, action, endpoint) {
 
         grecaptcha.execute(SITE_KEY, {action: action})
             .then(function (token) {
-
-                console.log(token)
                 // Send the token to the server for verification
                 const formData = new FormData(formElement);
                 formData.append('g-recaptcha-response', token);
+                formData.append('action', action);
 
-                fetch(endpoint, {
+
+                console.log(SERVER_VERIFY_ENDPOINT)
+                fetch(SERVER_VERIFY_ENDPOINT, {
                     method: 'POST', body: formData
-                });
+                })
+                    .then(async function (response) {
+                        const responseText = await response.text()
+
+                        // response send redirect url
+                        if (response.headers.get('Content-Type').includes('text/plain')) {
+                            window.location.href = responseText;
+                            return;
+                        }
+
+                        console.log("response", response.headers.get('Content-Type'))
+                        // response send html
+                        const mainElement = document.querySelector('main');
+                        mainElement.innerHTML = responseText;
+                        console.log("html", responseText)
+                        // }
+
+                    })
             });
     });
 }

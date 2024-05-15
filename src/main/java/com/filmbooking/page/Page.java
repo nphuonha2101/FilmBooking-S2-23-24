@@ -1,6 +1,7 @@
 package com.filmbooking.page;
 
 import com.filmbooking.utils.WebAppPathUtils;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -62,7 +63,7 @@ public abstract class Page {
      * @param customStyleSheets custom style sheets
      */
 
-    public void setCustomStyleSheets(List<String> customStyleSheets ) {
+    public void setCustomStyleSheets(List<String> customStyleSheets) {
         for (String customStyleSheet : customStyleSheets) {
             this.customStyleSheets.add(WebAppPathUtils.getStyleSheetsPath(customStyleSheet));
         }
@@ -72,18 +73,21 @@ public abstract class Page {
 
     /**
      * Set page's attributes and render the page to the layout
-     * @param req request to set attribute to the page
+     *
+     * @param req  request to set attribute to the page
      * @param resp response to forward request
+     *             return {@link RequestDispatcher} to handle other task
      */
-    public void render(HttpServletRequest req, HttpServletResponse resp) {
+    public RequestDispatcher render(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute("pageTitle", this.pageTitle);
         this.pageAttributes.forEach(req::setAttribute);
 
-        this.renderViewToLayout(req, resp, this.page, this.layout);
+        return this.renderViewToLayout(req, resp, this.page, this.layout);
     }
 
     /**
      * Put an error status code to the page
+     *
      * @param statusCodeErr error status code in {@link com.filmbooking.enumsAndConstants.enums.StatusCodeEnum}
      */
     public void putError(int statusCodeErr) {
@@ -92,6 +96,7 @@ public abstract class Page {
 
     /**
      * Put a success status code to the page
+     *
      * @param statusCodeSuccess success status code in {@link com.filmbooking.enumsAndConstants.enums.StatusCodeEnum}
      */
     public void putSuccess(int statusCodeSuccess) {
@@ -105,11 +110,16 @@ public abstract class Page {
      * @param response   used to forward request
      * @param viewPath   a view path
      * @param layoutPath a layout path
+     * return {@link RequestDispatcher} to handle other task
      */
-    private void renderViewToLayout(HttpServletRequest request, HttpServletResponse response, String viewPath, String layoutPath) {
+    private RequestDispatcher renderViewToLayout(HttpServletRequest request, HttpServletResponse response, String viewPath, String layoutPath) {
         request.setAttribute("dynamicContents", viewPath);
         try {
-            request.getRequestDispatcher(layoutPath).forward(request, response);
+            RequestDispatcher requestDispatcher =
+                    request.getRequestDispatcher(layoutPath);
+            requestDispatcher.forward(request, response);
+
+            return requestDispatcher;
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
