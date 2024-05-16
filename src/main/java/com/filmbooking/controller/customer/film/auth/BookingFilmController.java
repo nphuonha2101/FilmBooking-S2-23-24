@@ -4,12 +4,12 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.services.impls.FilmBookingServicesImpl;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,15 +43,16 @@ public class BookingFilmController extends HttpServlet {
 
         HashMap<Long, String[][]> showtimeIDAndSeatMatrix = showtimeServices.getShowtimeIDAndSeatMatrix();
 
-        System.out.println("showtimeIDAndSeatMatrix = " + showtimeIDAndSeatMatrix);
+        Page bookFilmPage = new ClientPage(
+                "bookFilmTitle",
+                "book-film",
+                "master"
+        );
 
-        req.setAttribute("bookedShowtime", bookedShowtime);
+        bookFilmPage.putAttribute("bookedShowtime", bookedShowtime);
+        bookFilmPage.putAttribute("showtimeIDAndSeatMatrix", showtimeIDAndSeatMatrix);
 
-        req.setAttribute("showtimeIDAndSeatMatrix", showtimeIDAndSeatMatrix);
-
-        req.setAttribute("pageTitle", "bookingFilmTitle");
-
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("book-film.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
+        bookFilmPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

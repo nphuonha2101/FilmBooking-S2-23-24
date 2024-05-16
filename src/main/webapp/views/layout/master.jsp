@@ -33,6 +33,11 @@
 <head>
     <title><fmt:message key="${pageTitle}" bundle="${pageTitleMsg}"/></title>
     <jsp:include page="/views/components/head-links.jsp"/>
+
+    <c:forEach var="customsStyleSheet" items="${customStyleSheets}">
+        <link rel="stylesheet" href="${customsStyleSheet}">
+    </c:forEach>
+
 </head>
 <body>
 <header>
@@ -40,13 +45,12 @@
 </header>
 <main>
     <jsp:include page="${dynamicContents}"/>
-    <jsp:include page="/views/pages/client/search-modal.jsp"/>
 </main>
 
 <footer>
     <jsp:include page="/views/components/footer.jsp"/>
 </footer>
 
-</body>
 <script type="text/javascript">${additionScript}</script>
+</body>
 </html>

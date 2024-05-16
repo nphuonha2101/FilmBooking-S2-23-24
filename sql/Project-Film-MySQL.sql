@@ -3,8 +3,10 @@ create table user_infos
     username      varchar(50)  not null primary key,
     user_fullname varchar(255) not null,
     user_email    varchar(50)  not null,
-    user_password varchar(64) not null,
-    account_role  varchar(10)  not null
+    user_password varchar(64) ,
+    account_role  varchar(10)  not null,
+		account_type varchar(10) not null,
+		account_status int not null
 );
 
 create table films
@@ -115,8 +117,8 @@ create table logs
     is_action_success boolean     not null,
     before_data       varchar(5000),
     after_data        varchar(5000),
-    created_at        timestamp,
-    updated_at        timestamp
+    created_at        timestamp null,
+    updated_at        timestamp null
 );
 
 
@@ -225,4 +227,6 @@ insert into theaters (theater_name, tax_code, theater_address) values ('FilmBook
 insert into theaters (theater_name, tax_code, theater_address) values ('FilmBooking Bến Thành', '000000238', 'Trương Định, Bến Thành, Q.1');
 insert into theaters (theater_name, tax_code, theater_address) values ('FilmBooking Bình Thạnh', '000000034', 'Điện Biên Phủ, P15, Q.Bình Thạnh');
 
-select * from user_tokens;
+select * from user_infos;
+
+DELETE FROM user_infos where account_type = 'google';

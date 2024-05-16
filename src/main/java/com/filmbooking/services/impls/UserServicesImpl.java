@@ -22,6 +22,7 @@ import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
+import jakarta.persistence.NoResultException;
 
 public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
 
@@ -63,12 +64,16 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     }
 
     public User getByEmail(String email) {
-        Map<String, Object> map = Map.of("userEmail_=", email);
-        return this.getByPredicates(map).getSingleResult();
+        try {
+            Map<String, Object> map = Map.of("userEmail_=", email);
+            return this.getByPredicates(map).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public User getByUsername(String username){
-        Map<String,Object> map = Map.of("username_=",username);
+        Map<String,Object> map = Map.of("username_=", username);
         return this.getByPredicates(map).getSingleResult();
     }
 
