@@ -26,7 +26,7 @@
         <h2 class="title"><fmt:message key="changePasswordSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <form action="${pageContext.request.contextPath}/reset-password" method="post">
             <input type="hidden" name="status" value="${verifyStatus}">

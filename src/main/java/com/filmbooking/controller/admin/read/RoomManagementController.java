@@ -2,11 +2,11 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.RoomServicesImpl;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,19 +31,24 @@ public class RoomManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) roomServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
+        Page roomManagementPage = new AdminPage(
+                "roomManagementTitle",
+                "room-management",
+                "master"
+        );
+
+
         // if page valid (offset != -2)
         if (offset != -2) {
             // if page has data (offset != -1)
             if (offset != -1) {
                 List<Room> rooms = roomServices.getByOffset(offset, LIMIT).getMultipleResults();
-
-                req.setAttribute("roomData", rooms);
+                roomManagementPage.putAttribute("roomData", rooms);
                 // set page url for pagination
-                req.setAttribute("pageUrl", "admin/management/room");
+                roomManagementPage.putAttribute("pageUrl", "admin/management/room");
 
             }
-            req.setAttribute("pageTitle", "roomManagementTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("room-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
+           roomManagementPage.render(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

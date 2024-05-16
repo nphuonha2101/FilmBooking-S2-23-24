@@ -4,11 +4,16 @@ import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = Showtime.TABLE_NAME)
 public class Showtime implements IModel {
@@ -39,7 +44,7 @@ public class Showtime implements IModel {
     private String seatsData;
 
     @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FilmBooking> filmBookingList;
+    private List<FilmBooking> filmBookingSet;
     @Expose
     @Column(name = "slug")
     private String slug;
@@ -52,29 +57,14 @@ public class Showtime implements IModel {
         this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
-        this.filmBookingList = new ArrayList<>();
+        this.filmBookingSet = new ArrayList<>();
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
-    public long getShowtimeID() {
-        return showtimeID;
-    }
-
-    public void setShowtimeID(long showtimeID) {
-        this.showtimeID = showtimeID;
-    }
-
-    public Film getFilm() {
-        return film;
-    }
 
     public void setFilm(Film film) {
         this.film = film;
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
-    }
-
-    public Room getRoom() {
-        return room;
     }
 
     public void setRoom(Room room) {
@@ -82,21 +72,9 @@ public class Showtime implements IModel {
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
-    public LocalDateTime getShowtimeDate() {
-        return showtimeDate;
-    }
-
     public void setShowtimeDate(LocalDateTime showtimeDate) {
         this.showtimeDate = showtimeDate;
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
-    }
-
-    public String getSeatsData() {
-        return seatsData;
-    }
-
-    public void setSeatsData(String seatsData) {
-        this.seatsData = seatsData;
     }
 
 
@@ -104,21 +82,6 @@ public class Showtime implements IModel {
         this.seatsData = StringUtils.arr2DToString(seatsMatrix);
     }
 
-    public List<FilmBooking> getFilmBookingList() {
-        return filmBookingList;
-    }
-
-    public void setFilmBookingList(List<FilmBooking> filmBookingList) {
-        this.filmBookingList = filmBookingList;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
 
     /**
      * Book seats

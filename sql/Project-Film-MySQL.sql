@@ -116,8 +116,8 @@ create table logs
     is_action_success boolean     not null,
     before_data       varchar(5000),
     after_data        varchar(5000),
-    created_at        timestamp,
-    updated_at        timestamp
+    created_at        timestamp null,
+    updated_at        timestamp null
 );
 
 

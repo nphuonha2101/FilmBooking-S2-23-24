@@ -5,12 +5,13 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Genre;
 import com.filmbooking.model.Showtime;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.RedirectPageUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,6 +31,7 @@ public class FilmInfoController extends HttpServlet {
     public void init() throws ServletException {
         super.init();
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         queryString = req.getQueryString();
@@ -52,17 +54,20 @@ public class FilmInfoController extends HttpServlet {
                 filmGenreNames.append(genre.getGenreName());
         }
 
-        req.setAttribute("sectionTitle", "Thông tin đặt phim");
-        req.setAttribute("pageTitle", "filmInfoTitle");
 
-        req.setAttribute("filmData", bookedFilm);
-        req.setAttribute("filmGenreNames", filmGenreNames.toString());
-        req.setAttribute("filmScores", bookedFilm.getFilmVoteScoresStr());
-        req.setAttribute("totalFilmVotes", bookedFilm.getFilmVoteList().size());
+        Page filmInfoPage = new ClientPage(
+                "filmInfoTitle",
+                "film-info",
+                "master"
+        );
+        filmInfoPage.putAttribute("sectionTitle", "Thông tin đặt phim");
 
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("film-info.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        filmInfoPage.putAttribute("filmData", bookedFilm);
+        filmInfoPage.putAttribute("filmGenreNames", filmGenreNames.toString());
+        filmInfoPage.putAttribute("filmScores", bookedFilm.getFilmVoteScoresStr());
+        filmInfoPage.putAttribute("totalFilmVotes", bookedFilm.getFilmVoteList().size());
+
+        filmInfoPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }
@@ -97,7 +102,7 @@ public class FilmInfoController extends HttpServlet {
                 filmBooking.setShowtime(bookedShowtime);
 
                 req.getSession(false).setAttribute("filmBooking", filmBooking);
-                
+
                 resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/book-film"));
                 return;
             }

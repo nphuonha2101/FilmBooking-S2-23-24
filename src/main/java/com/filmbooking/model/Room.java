@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = Room.TABLE_NAME)
@@ -50,7 +51,7 @@ public class Room implements IModel {
     @Setter
     @Getter
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Showtime> showtimeList;
+    private List<Showtime> showtimeSet;
     @Setter
     @Getter
     @Expose

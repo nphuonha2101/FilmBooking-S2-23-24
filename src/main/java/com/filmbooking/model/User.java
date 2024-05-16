@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -73,5 +74,12 @@ public class User implements IModel {
     @Override
     public String getStringID() {
         return this.username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "username='" + username + '\'' + ", userFullName='" + userFullName + '\'' + ", userEmail='"
+                + userEmail + '\'' + ", userPassword='" + userPassword + '\'' + ", accountRole='" + accountRole + '\''
+                + '}';
     }
 }
