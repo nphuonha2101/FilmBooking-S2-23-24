@@ -54,7 +54,7 @@ public class FacebookLoginController extends HttpServlet {
 
 		User loginUser = userServices.getByUsername(id);
 		if (loginUser == null) {
-			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType());
+			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType(),1);
 			userServices.save(loginUser);
 		}
 		HttpSession session = req.getSession();

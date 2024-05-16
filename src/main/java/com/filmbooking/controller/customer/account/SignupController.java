@@ -65,7 +65,7 @@ public class SignupController extends HttpServlet {
             // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
-            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType());
+            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType(), 1);
             userServicesLog.save(newUser);
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
             // confirm password not match!
