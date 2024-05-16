@@ -63,6 +63,7 @@ public class FacebookLoginController extends HttpServlet {
 		filmBooking.setUser(loginUser);
 		session.setAttribute("filmBooking", filmBooking);
 
+
 		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
 	}
 

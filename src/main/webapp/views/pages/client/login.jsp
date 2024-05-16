@@ -177,11 +177,10 @@
                     function testAPI() {
                         console.log("Welcome! Đang lấy thông tin của bạn từ Facebook....");
                         FB.api("/me", function (response) {
-                            console.log("Successful login for: " + response.name);
-                            console.log("email" + response.email);
-                            document.getElementById('status').innerHTML =
-                                 'Thanks for logging in, ' + response.name + '!';
-                            window.location.href = "<c:url value='/home'/>";
+                            // console.log("Successful login for: " + response.name);
+                            // console.log("email" + response.email);
+                            // document.getElementById('status').innerHTML =
+                            //      'Thanks for logging in, ' + response.name + '!';
                             // Lấy dữ liệu của người dùng và gửi nó đến servlet
                             sendDataToServlet(response);
                         });
@@ -193,10 +192,17 @@
                         // Thiết lập phương thức và URL của yêu cầu
                         xhr.open("POST", "/login/facebook", true);
 
-
+                        // Xử lý sự kiện khi yêu cầu hoàn thành
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                window.location.href = "<c:url value='/home'/>";
+                                console.log("Dữ liệu đã được gửi thành công đến servlet");
+                            }
+                        };
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/handlesFBLogin.js"></script>
     <!-- Load the JS SDK asynchronously -->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/handlesRecaptchaV3.js"></script>
     <script type="text/javascript">

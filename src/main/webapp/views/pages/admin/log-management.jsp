@@ -36,7 +36,6 @@
                 <table id="myTable" class="display dataTable">
                     <thead>
                     <tr>
-                        <th></th>
                         <th>LogID</th>
                         <th>Username</th>
                         <th>Action</th>
@@ -55,35 +54,6 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
-
-<!-- 
-    <script>
-        $(function() {
-            $('#myTable').DataTable({
-                ajax: {
-                    url: '/api/v1/logs?command=all',
-                    dataSrc: 'data'
-                },
-                columns: [
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<input type="checkbox" name="select[]" value="' + data.logID + '">';
-                        }
-                    },
-                    { data: 'logID' },
-                    { data: 'user.username',
-                        defaultContent: 'Unknown User'},
-                    { data: 'action' },
-                    { data: 'level' },
-                    { data: 'targetTable' },
-                    // { data: 'beforeValueJSON' },
-                    // { data: 'afterValueJSON' },
-                    // { data: 'createdAt' },
-                    // { data: 'updatedAt' }
-                ]
-            });
-        });
-    </script> -->
+    <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
 
 </section>
