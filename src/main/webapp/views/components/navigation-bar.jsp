@@ -48,7 +48,7 @@
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
-                <a class="nav-links small-icon-button" href="">
+                <div class="nav-links small-icon-button">
                     <div class="tooltip click-menu" id="film-booking_menu">
                         <span class="material-symbols-rounded">
                             history
@@ -61,7 +61,7 @@
                                 <%--content here--%>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         </c:if>
 
