@@ -32,8 +32,7 @@ public class APIUtils<T extends IModel> {
         this.services = services;
         this.req = req;
         this.resp = resp;
-        this.currentLanguage = (String) req.getSession().getAttribute("lang");
-
+        this.currentLanguage = req.getSession().getAttribute("lang") == null ? "default" : (String) req.getSession().getAttribute("lang");
     }
 
     /**
@@ -108,12 +107,12 @@ public class APIUtils<T extends IModel> {
      * Process request from client and call appropriate method to handle request
      *
      * @param command Command to execute. Use:
-     *                <ul>
-     *                      <li><b><code>id</code></b> to get model by ID. Request parameter <b>id</b></li>
-     *                      <li><b><code>all</code></b> to get all models</li>
-     *                      <li><b><code>offset</code></b> to get models by offset. Request parameter <b>offset</b> and <b>limit</b></li>
-     *                      <li><b><code>slug</code></b> to get model by slug. Request parameter <b>slug</b></li>
-     *                </ul>
+     * <ul>
+     *  <li><b><code>id</code></b> to get model by ID. Request parameter <b>id</b></li>
+     *  <li><b><code>all</code></b> to get all models</li>
+     *  <li><b><code>offset</code></b> to get models by offset. Request parameter <b>offset</b> and <b>limit</b></li>
+     *  <li><b><code>slug</code></b> to get model by slug. Request parameter <b>slug</b></li>
+     * </ul>
      */
     public void processRequest(String command) {
         command = command.toLowerCase();

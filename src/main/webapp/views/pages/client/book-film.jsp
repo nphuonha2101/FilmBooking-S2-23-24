@@ -32,7 +32,7 @@
         <h2 class="title"><fmt:message key="bookingFilmSectionTitle" bundle="${pageTitle}"/> </h2>
 
         <%--        Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <div class="wrapper two-col__wrapper align-top">
             <div class="wrapper centered-vertical-content">

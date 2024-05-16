@@ -1,14 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
-  User: QDang
-  Date: 21-09-2023
-  Time: 15:41
+  User: nphuo
+  Date: 4/28/2024
+  Time: 9:53 AM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
         <fmt:setLocale value="default"/>
@@ -29,7 +28,6 @@
         <html lang="en">
     </c:otherwise>
 </c:choose>
-
 <head>
     <title><fmt:message key="${pageTitle}" bundle="${pageTitleMsg}"/></title>
     <jsp:include page="/views/components/head-links.jsp"/>
@@ -40,17 +38,7 @@
 
 </head>
 <body>
-<header>
-    <jsp:include page="/views/components/navigation-bar.jsp"/>
-</header>
-<main>
-    <jsp:include page="${dynamicContents}"/>
-</main>
-
-<footer>
-    <jsp:include page="/views/components/footer.jsp"/>
-</footer>
-
-<script type="text/javascript">${additionScript}</script>
+<jsp:include page="${dynamicContents}"/>
 </body>
+
 </html>

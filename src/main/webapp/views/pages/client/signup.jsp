@@ -8,15 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
 
 <c:choose>
     <c:when test="${empty sessionScope.lang || sessionScope.lang eq 'default'}">
@@ -26,6 +17,7 @@
         <fmt:setLocale value="${sessionScope.lang}"/>
     </c:otherwise>
 </c:choose>
+
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
@@ -35,7 +27,7 @@
         <h2 class="title"><fmt:message key="signupSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
         
         <form action="<c:url value="${pageContext.request.contextPath}/signup"/>" method="post">
             <label for="username">
@@ -87,7 +79,3 @@
 
     </div>
 </section>
-
-
-</body>
-</html>

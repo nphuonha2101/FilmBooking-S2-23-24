@@ -4,11 +4,12 @@ import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
@@ -33,11 +34,12 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "signupTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("signup.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
-
+        Page signupPage = new ClientPage(
+                "signupTitle",
+                "signup",
+                "master"
+        );
+        signupPage.render(req, resp);
     }
 
     @Override
@@ -45,6 +47,12 @@ public class SignupController extends HttpServlet {
         hibernateSessionProvider = new HibernateSessionProvider();
         userServices = new UserServicesImpl(hibernateSessionProvider);
         userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+
+        Page signupPage = new ClientPage(
+                "signupTitle",
+                "signup",
+                "master"
+        );
 
         String username = StringUtils.handlesInputString(req.getParameter("username"));
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
@@ -55,29 +63,25 @@ public class SignupController extends HttpServlet {
         // validate input
        if(!validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword)) return;
 
-
         // username existed!
         if (userServicesLog.getByID(username) != null) {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
+            signupPage.putError(StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
             // username not existed but email existed!
         } else if (userServices.getByEmail(userEmail) != null) {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
+            signupPage.putError(StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
             // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType(), 1);
             userServicesLog.save(newUser);
-            req.setAttribute("statusCodeSuccess", StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
+
+            signupPage.putSuccess(StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
             // confirm password not match!
         } else {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
+            signupPage.putError(StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
         }
 
-        req.setAttribute("pageTitle", "signupTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("signup.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
-
+        signupPage.render(req, resp);
         hibernateSessionProvider.closeSession();
     }
 
@@ -108,12 +112,8 @@ public class SignupController extends HttpServlet {
         return true;
     }
 
-    private void handleInput(HttpServletRequest req, HttpServletResponse resp,int status) {
-        req.setAttribute("statusCodeErr", status);
-
-        req.setAttribute("pageTitle", "signupTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("signup.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+    private void handleInput(HttpServletRequest req, HttpServletResponse resp, Page page, int statusError) {
+        page.putError(statusError);
+        page.render(req, resp);
     }
 }
