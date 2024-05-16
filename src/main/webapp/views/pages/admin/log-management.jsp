@@ -36,7 +36,6 @@
                 <table id="myTable" class="display">
                     <thead>
                     <tr>
-                        <th></th>
                         <th>LogID</th>
                         <th>Username</th>
                         <th>Action</th>
@@ -53,4 +52,5 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
+    <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
 </section>
