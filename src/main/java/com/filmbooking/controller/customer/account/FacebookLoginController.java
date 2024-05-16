@@ -78,7 +78,8 @@ public class FacebookLoginController extends HttpServlet {
 		}
 
 		// Chuyển hướng người dùng về trang chủ
-		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
+//		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
+		resp.sendRedirect(req.getContextPath()+"/home");
 	}
 
 }
