@@ -1,11 +1,11 @@
 package com.filmbooking.model;
 
+
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
 
 import java.text.DecimalFormat;
 import java.util.List;
