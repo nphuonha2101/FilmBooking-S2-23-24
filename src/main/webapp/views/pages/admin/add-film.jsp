@@ -32,7 +32,7 @@
         <div class="centered-vertical-content wrapper">
 
             <%-- Status Code Messages--%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+            <jsp:include page="/views/components/status-code-message.jsp"/>
 
             <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/add/film"/>" enctype="multipart/form-data">
                 <div class="two-col__wrapper centered-vertical-content wrapper">
