@@ -42,8 +42,4 @@ public class PropertiesUtils {
     public Properties getProperties() {
         return this.properties;
     }
-    public static void main(String[] args) {
-        PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
-        System.out.println(propertiesUtils.getProperty("db.userPassword"));
-    }
 }

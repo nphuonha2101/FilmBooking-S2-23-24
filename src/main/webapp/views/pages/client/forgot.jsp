@@ -26,7 +26,7 @@
         <h2 class="title"><fmt:message key="forgotPassSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <form action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>" method="post">
             <label for="username">

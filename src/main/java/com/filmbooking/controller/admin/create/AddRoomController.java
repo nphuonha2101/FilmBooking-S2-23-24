@@ -3,12 +3,13 @@ package com.filmbooking.controller.admin.create;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "addRoom", value = "/admin/add/room")
 public class AddRoomController extends HttpServlet {
@@ -27,19 +29,15 @@ public class AddRoomController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-
         theaterServices = new CRUDServicesLogProxy<>(new TheaterServicesImpl(), req, hibernateSessionProvider);
 
-        req.setAttribute("pageTitle", "addRoomTitle");
-
-        req.setAttribute("theaters", theaterServices.getAll().getMultipleResults());
-
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getAdminPagesPath("add-room.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
-
-//        RenderViewUtils.updateView(req, resp,
-//                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page addRoomPage = new AdminPage(
+                "addRoomTitle",
+                "add-room",
+                "master"
+        );
+        addRoomPage.putAttribute("theaters", theaterServices.getAll().getMultipleResults());
+        addRoomPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

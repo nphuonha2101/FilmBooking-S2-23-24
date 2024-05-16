@@ -7,8 +7,9 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  */
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,26 +24,30 @@ public class PaymentStatusController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String paymentStatus = req.getParameter("status");
 
+        Page paymentStatusPage = new ClientPage(
+                "paymentStatusTitle",
+                "payment-status",
+                "master"
+        );
+
         switch (paymentStatus) {
             case "success" -> {
-                req.setAttribute("statusCode", StatusCodeEnum.PAYMENT_SUCCESSFUL.getStatusCode());
-                req.setAttribute("paymentStatusImg", "success.png");
-                req.setAttribute("paymentMessage", "paymentSuccessMessage");
+                paymentStatusPage.putAttribute("statusCode", StatusCodeEnum.PAYMENT_SUCCESSFUL.getStatusCode());
+                paymentStatusPage.putAttribute("paymentStatusImg", "success.png");
+                paymentStatusPage.putAttribute("paymentMessage", "paymentSuccessMessage");
             }
             case "pending" -> {
-                req.setAttribute("statusCode", StatusCodeEnum.PAYMENT_PENDING.getStatusCode());
-                req.setAttribute("paymentStatusImg", "process.png");
-                req.setAttribute("paymentMessage", "paymentPendingMessage");
+                paymentStatusPage.putAttribute("statusCode", StatusCodeEnum.PAYMENT_PENDING.getStatusCode());
+                paymentStatusPage.putAttribute("paymentStatusImg", "process.png");
+                paymentStatusPage.putAttribute("paymentMessage", "paymentPendingMessage");
             }
             case "failed" -> {
-                req.setAttribute("statusCode", StatusCodeEnum.PAYMENT_FAILED.getStatusCode());
-                req.setAttribute("paymentStatusImg", "failed.png");
-                req.setAttribute("paymentMessage", "paymentFailedMessage");
+                paymentStatusPage.putAttribute("statusCode", StatusCodeEnum.PAYMENT_FAILED.getStatusCode());
+                paymentStatusPage.putAttribute("paymentStatusImg", "failed.png");
+                paymentStatusPage.putAttribute("paymentMessage", "paymentFailedMessage");
             }
         }
 
-        req.setAttribute("pageTitle", "paymentResultTitle");
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("payment-status.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        paymentStatusPage.render(req, resp);
     }
 }

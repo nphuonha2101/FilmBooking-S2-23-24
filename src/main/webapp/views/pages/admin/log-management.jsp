@@ -1,4 +1,4 @@
-<%--
+    <%--
   Created by IntelliJ IDEA.
   User: Moc Lan
   Date: 4/14/2024
@@ -31,9 +31,9 @@
         <div class="centered-vertical-content wrapper">
 
             <%--        Status Code Messages--%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+            <jsp:include page="/views/components/status-code-message.jsp"/>
 
-                <table id="myTable" class="display">
+                <table id="myTable" class="display dataTable">
                     <thead>
                     <tr>
                         <th></th>
@@ -42,15 +42,48 @@
                         <th>Action</th>
                         <th>Level</th>
                         <th>Target table</th>
+                        <th>Before Value</th>
+                        <th>After Value</th>
+                        <th>Created At</th>
+                        <th>Update At</th>
                     </tr>
                     </thead>
-
                 </table>
-
         </div>
 
         <%--        Pagination--%>
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
+
+<!-- 
+    <script>
+        $(function() {
+            $('#myTable').DataTable({
+                ajax: {
+                    url: '/api/v1/logs?command=all',
+                    dataSrc: 'data'
+                },
+                columns: [
+                    {
+                        data: null,
+                        render: function(data, type, row) {
+                            return '<input type="checkbox" name="select[]" value="' + data.logID + '">';
+                        }
+                    },
+                    { data: 'logID' },
+                    { data: 'user.username',
+                        defaultContent: 'Unknown User'},
+                    { data: 'action' },
+                    { data: 'level' },
+                    { data: 'targetTable' },
+                    // { data: 'beforeValueJSON' },
+                    // { data: 'afterValueJSON' },
+                    // { data: 'createdAt' },
+                    // { data: 'updatedAt' }
+                ]
+            });
+        });
+    </script> -->
+
 </section>

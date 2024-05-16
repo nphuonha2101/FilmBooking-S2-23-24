@@ -27,7 +27,7 @@
         <h2 class="title"><fmt:message key="changeInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
-        <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+        <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <form action="<c:url value="${pageContext.request.contextPath}/auth/change-info"/>" method="post">
             <label for="username">
