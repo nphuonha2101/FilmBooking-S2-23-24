@@ -135,11 +135,10 @@
                     function testAPI() {
                         console.log("Welcome! Đang lấy thông tin của bạn từ Facebook....");
                         FB.api("/me", function (response) {
-                            console.log("Successful login for: " + response.name);
-                            console.log("email" + response.email);
-                            document.getElementById('status').innerHTML =
-                                 'Thanks for logging in, ' + response.name + '!';
-                            window.location.href = "<c:url value='/home'/>";
+                            // console.log("Successful login for: " + response.name);
+                            // console.log("email" + response.email);
+                            // document.getElementById('status').innerHTML =
+                            //      'Thanks for logging in, ' + response.name + '!';
                             // Lấy dữ liệu của người dùng và gửi nó đến servlet
                             sendDataToServlet(response);
                         });
@@ -157,6 +156,7 @@
                         // Xử lý sự kiện khi yêu cầu hoàn thành
                         xhr.onreadystatechange = function () {
                             if (xhr.readyState === 4 && xhr.status === 200) {
+                                window.location.href = "<c:url value='/home'/>";
                                 console.log("Dữ liệu đã được gửi thành công đến servlet");
                             }
                         };
