@@ -2,11 +2,12 @@ package com.filmbooking.controller.customer;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,24 +32,27 @@ public class HomeController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
+        Page homePage = new ClientPage(
+                "homeTitle",
+                "home",
+                "master"
+        );
+
         // if offset == -2, it means that the current page is not valid
         if (offset != -2) {
             // if offset == -1, it means that no data is found
             if (offset != -1) {
                 List<Film> films = filmServices.getByOffset(offset, LIMIT).getMultipleResults();
 
-                req.setAttribute("filmsData", films);
-                req.setAttribute("pageUrl", "home");
+                homePage.putAttribute("filmsData", films);
+                homePage.putAttribute("pageUrl", "home");
             } else {
-                req.setAttribute("statusCodeErr", StatusCodeEnum.NO_DATA.getStatusCode());
-                req.setAttribute("messageDescription", "noData");
+                homePage.putAttribute("statusCodeErr", StatusCodeEnum.NO_DATA.getStatusCode());
+                homePage.putAttribute("messageDescription", "noData");
             }
 
-            req.setAttribute("sectionTitle", "newFilmArriveSectionTitle");
-            req.setAttribute("pageTitle", "homeTitle");
-            RenderViewUtils.renderViewToLayout(req, resp,
-                    WebAppPathUtils.getClientPagesPath("home.jsp"),
-                    WebAppPathUtils.getLayoutPath("master.jsp"));
+            homePage.putAttribute("sectionTitle", "newFilmArriveSectionTitle");
+            homePage.render(req, resp);
         }
         hibernateSessionProvider.closeSession();
     }

@@ -35,7 +35,6 @@ public enum StatusCodeEnum {
     IMG_UPLOAD_NOT_FOUND(411, "Không tìm thấy ảnh tải lên"),
     NO_DATA(412, "Không có dữ liệu"),
     FAILED(500, "Thất bại"),
-
     INVALID_INPUT(501, "Dữ liệu không hợp lệ"),
     PLS_CHOOSE_SEAT(502, "Vui lòng chọn ghế"),
     PLS_FILL_ALL_REQUIRED_FIELDS(503, "Vui lòng điền đầy đủ thông tin bắt buộc"),
@@ -56,7 +55,8 @@ public enum StatusCodeEnum {
     USERNAME_ERROR(518, "Tên người dùng không hợp lệ"),
     USER_EMAIL_ERROR(519, "Email không hợp lệ"),
     USER_FULL_NAME_ERROR(520, "Tên đầy đủ không hợp lệ"),
-    USER_PASSWORD_ERROR(521, "Mật khẩu không hợp lệ");
+    USER_PASSWORD_ERROR(521, "Mật khẩu không hợp lệ"),
+    RECAPTCHA_VERIFICATION_ERROR(522, "Lỗi xác thực reCAPTCHA");
 
 
 

@@ -2,11 +2,12 @@ package com.filmbooking.controller.customer.account.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
@@ -30,8 +31,12 @@ public class ChangeInfoController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("pageTitle", "changeInfoTitle");
 
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-info.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page changeInfoPage = new ClientPage(
+                "changeInfoTitle",
+                "change-info",
+                "master"
+        );
+        changeInfoPage.render(req, resp);
     }
 
     @Override
@@ -44,12 +49,16 @@ public class ChangeInfoController extends HttpServlet {
         String email = StringUtils.handlesInputString(req.getParameter("email"));
         String password = userServices.hashPassword(StringUtils.handlesInputString(req.getParameter("password")));
 
+        Page changeInfoPage = new ClientPage(
+                "changeInfoTitle",
+                "change-info",
+                "master"
+        );
+
         // validate input
         if (!Regex.validate(UserRegexEnum.USER_EMAIL, email) || !Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.INVALID_INPUT.getStatusCode());
-            req.setAttribute("pageTitle", "changeInfoTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-info.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
-
+            changeInfoPage.putError(StatusCodeEnum.INVALID_INPUT.getStatusCode());
+            changeInfoPage.render(req, resp);
             return;
         }
 
@@ -60,9 +69,8 @@ public class ChangeInfoController extends HttpServlet {
         if (loginUser != null && password.equals(loginUser.getUserPassword())) {
             // when user change email then verify email
             if (!email.equalsIgnoreCase(loginUser.getUserEmail()) && userServices.getByEmail(email) != null) {
-                req.setAttribute("statusCodeErr", StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
-                req.setAttribute("pageTitle", "changeInfoTitle");
-                RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-info.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
+                changeInfoPage.putError(StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
+                changeInfoPage.render(req, resp);
             } else {
                 loginUser.setUserFullName(userFullName);
                 loginUser.setUserEmail(email);
@@ -71,9 +79,8 @@ public class ChangeInfoController extends HttpServlet {
                 resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/account-info"));
             }
         } else {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
-            req.setAttribute("pageTitle", "changeInfoTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-info.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
+            changeInfoPage.putError(StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
+            changeInfoPage.render(req, resp);
         }
 
         hibernateSessionProvider.closeSession();

@@ -1,0 +1,12 @@
+@media print {
+    body {
+        font-size: 10pt;
+        width: 148mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        background-color: white;
+        page-break-after: always;
+        line-height: 1.1;
+    }
+}

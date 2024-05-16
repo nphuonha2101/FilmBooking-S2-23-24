@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,7 +31,7 @@ public class Theater implements IModel {
     @Column(name = "theater_address")
     private String theaterAddress;
     @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Room> roomList;
+    private Set<Room> roomList;
 
     public Theater() {}
 
