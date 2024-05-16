@@ -11,6 +11,13 @@ $(function() {
             { data: 'action' },
             { data: 'level' },
             { data: 'targetTable' }
-        ]
+        ],
+        layout: {
+            topStart: {
+                buttons: [
+                    'excel'
+                ]
+            }
+        }
     });
 });
