@@ -36,6 +36,12 @@ public class User implements IModel {
     @Expose
     @Column(name = "account_type")
     private String accountType;
+    @Expose
+    @Column(name = "account_status")
+    private int accountStatus;
+
+
+
     @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
             CascadeType.PERSIST }, fetch = FetchType.LAZY)
     List<FilmBooking> filmBookingList;
@@ -49,13 +55,14 @@ public class User implements IModel {
     }
 
     public User(String username, String userFullName, String userEmail, String userPassword,
-            AccountRoleEnum accountRole, String accountType) {
+            AccountRoleEnum accountRole, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.accountRole = accountRole.getAccountRole();
         this.accountType = accountType;
+        this.accountStatus = accountStatus;
     }
 
     @Override

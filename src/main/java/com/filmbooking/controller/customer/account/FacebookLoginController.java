@@ -51,34 +51,18 @@ public class FacebookLoginController extends HttpServlet {
 		name = jsonObject.get("name").getAsString();
 		email = jsonObject.has("email") ? jsonObject.get("email").getAsString() : "Email không có sẵn";
 		id = jsonObject.get("id").getAsString();
-		
 
-		// In ra thông tin nhận được
-		System.out.println("Tên người dùng: " + name);
-		System.out.println("Email người dùng: " + email);
-		System.out.println("Id người dùng: " + id);
-		if (userServices.getByUsername(id) == null) {
-			User loginUser = new User(id, name, email, id, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType());
+		User loginUser = userServices.getByUsername(id);
+		if (loginUser == null) {
+			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType(),1);
 			userServices.save(loginUser);
-			HttpSession session = req.getSession();
-			session.setAttribute("loginUser", loginUser);
-			FilmBooking filmBooking = new FilmBooking();
-			filmBooking.setUser(loginUser);
-			session.setAttribute("filmBooking", filmBooking);
-			System.out.println("Không tìm thấy người dùng, tạo mới...");
-
-		}else{
-
-			HttpSession session = req.getSession();
-			User loginUser = userServices.getByUsername(id);
-			session.setAttribute("loginUser", loginUser);
-			FilmBooking filmBooking = new FilmBooking();
-			filmBooking.setUser(loginUser);
-			session.setAttribute("filmBooking", filmBooking);
-			System.out.println("người dùng đã tồn tại");
 		}
+		HttpSession session = req.getSession();
+		session.setAttribute("loginUser", loginUser);
+		FilmBooking filmBooking = new FilmBooking();
+		filmBooking.setUser(loginUser);
+		session.setAttribute("filmBooking", filmBooking);
 
-		// Chuyển hướng người dùng về trang chủ
 		resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
 	}
 

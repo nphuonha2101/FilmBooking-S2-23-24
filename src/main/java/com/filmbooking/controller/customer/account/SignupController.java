@@ -61,7 +61,7 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
         // validate input
-        validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword);
+       if(!validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword)) return;
 
         // username existed!
         if (userServicesLog.getByID(username) != null) {
@@ -72,8 +72,7 @@ public class SignupController extends HttpServlet {
             // username not existed and email not existed!
         } else if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
-
-            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType());
+            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType(), 1);
             userServicesLog.save(newUser);
 
             signupPage.putSuccess(StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
@@ -93,24 +92,24 @@ public class SignupController extends HttpServlet {
         hibernateSessionProvider = null;
     }
 
-    private void validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
-        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail)) {
-            handleInput(req, resp, page, StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
-
-            return;
+    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp,String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
+            handleInput(req, resp,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+            return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
-            handleInput(req, resp, page, StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
-            return;
+            handleInput(req, resp,  StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
+            return false;
         }
         if (!Regex.validate(UserRegexEnum.USERNAME, username)) {
-            handleInput(req, resp, page, StatusCodeEnum.USERNAME_ERROR.getStatusCode());
-            return;
+            handleInput(req, resp,  StatusCodeEnum.USERNAME_ERROR.getStatusCode());
+            return false;
         }
-        if (!Regex.validate(UserRegexEnum.USER_PASSWORD, userPassword)) {
-            handleInput(req, resp, page, StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
-            return;
+        if (!Regex.validate(UserRegexEnum.USER_PASS_WORD, userPassword)) {
+            handleInput(req, resp,  StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+            return false;
         }
+        return true;
     }
 
     private void handleInput(HttpServletRequest req, HttpServletResponse resp, Page page, int statusError) {
