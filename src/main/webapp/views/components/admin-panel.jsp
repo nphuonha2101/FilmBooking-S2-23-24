@@ -32,5 +32,8 @@
     <a class="links button rounded-button"
        href="<c:url value="${pageContext.request.contextPath}/admin/management/log"/>"><fmt:message key="logManagement"
                                                                                                     bundle="${adminMsg}"/></a>
+    <a class="links button rounded-button"
+       href="<c:url value="${pageContext.request.contextPath}/admin/management/user"/>"><fmt:message key="userManagement"
+                                                                                                    bundle="${adminMsg}"/></a>
     </div>
 

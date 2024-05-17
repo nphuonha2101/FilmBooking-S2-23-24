@@ -30,7 +30,7 @@ $(function () {
                     let showtime = filmBooking.showtime;
 
                     html = `<h4>Phim đang đặt</h4>`
-                    if (showtime != undefined) {
+                    if (showtime !== undefined) {
                         let film = showtime.film;
                         html += `    
                                 <div class="fb-item_horizontal-card">

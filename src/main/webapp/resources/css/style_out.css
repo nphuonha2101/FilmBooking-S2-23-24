@@ -896,18 +896,19 @@ button {
     border-bottom: 2px solid transparent;
 }
 
-.nav-links:hover, .nav-active {
+.nav-links:hover:not(.drop-down-contents), .nav-active {
     background-color: transparent;
     border-bottom: 2px solid #0556f3;
     transition: 0.3s ease-out;
     -moz-transition: 0.3s ease-out;
 }
 
-.nav-links:hover > *, .nav-active > * {
-    color: #0556f3;
-    transition: 0.3s ease-out;
-    -moz-transition: 0.3s ease-out;
-}
+
+/*.nav-links:hover > *, .nav-active > * {*/
+/*    color: #0556f3;*/
+/*    transition: 0.3s ease-out;*/
+/*    -moz-transition: 0.3s ease-out;*/
+/*}*/
 
 .light-filled-button {
     background-color: #e6f5ff;
@@ -1049,6 +1050,14 @@ button {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.border-box {
+    box-sizing: border-box;
 }
 
 .w-50 {
@@ -1624,25 +1633,49 @@ select {
     -moz-animation-duration: 0.5s;
 }
 
+.modal-header {
+display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    min-width: calc(30vw);
+}
+
+.modal-header .close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+    background-color: #e9edfc;
+    color: #e30f0f;
+}
+
+.modal-header .close-button:hover {
+    background-color: #e30f0f;
+    color: #fff;
+    transition: 0.3s ease-out;
+    -moz-transition: 0.3s ease-out;
+}
+
 .modal-content {
     background-color: #fff;
     border-radius: 20px;
-    padding: 2rem;
-    width: 80%;
-    margin: 10% auto;
+    padding: 0 2rem 2rem;
+    width: fit-content;
     overflow-y: auto;
     box-shadow: none !important;
-}
-
-.modal-footer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-.modal-footer > * {
-    margin: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .slide {

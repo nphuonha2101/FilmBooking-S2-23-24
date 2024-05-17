@@ -58,7 +58,6 @@
                         </span>
 
                         <div class="drop-down-contents" id="film-booking_menu-content">
-                                <%--content here--%>
                         </div>
                     </div>
                 </div>
