@@ -21,9 +21,3 @@ let handlesItemCardsClick = {
 }
 
 handlesItemCardsClick.start();
-
-
-
-
-
-
