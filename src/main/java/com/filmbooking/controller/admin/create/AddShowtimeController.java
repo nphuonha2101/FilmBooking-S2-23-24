@@ -4,14 +4,14 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
-import com.filmbooking.model.User;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -38,15 +38,13 @@ public class AddShowtimeController extends HttpServlet {
         filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
         roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
 
-        req.setAttribute("pageTitle", "addShowtimeTitle");
-
-        req.setAttribute("filmData", filmServices.getAll().getMultipleResults());
-        req.setAttribute("roomData", roomServices.getAll().getMultipleResults());
-
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getAdminPagesPath("add-showtime.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
-
+        Page addShowtimePage = new AdminPage(
+                "addShowtimeTitle",
+                "add-showtime",
+                "master");
+        addShowtimePage.putAttribute("filmData", filmServices.getAll().getMultipleResults());
+        addShowtimePage.putAttribute("roomData", roomServices.getAll().getMultipleResults());
+        addShowtimePage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
     }

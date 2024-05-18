@@ -9,11 +9,12 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
 import com.filmbooking.enumsAndConstants.enums.PaymentStatus;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.payment.VNPay;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,9 +32,12 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "checkoutTitle");
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("checkout.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page checkoutPage = new ClientPage(
+                "checkoutTitle",
+                "checkout",
+                "master"
+        );
+        checkoutPage.render(req, resp);
     }
 
     @Override

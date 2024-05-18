@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Normalizer;
 import java.util.Base64;
+import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 
@@ -201,8 +202,8 @@ public class StringUtils {
     }
 
     public static void main(String[] args) {
-
         System.out.println(StringUtils.generateSHA256String("1234"));
         System.out.println(StringUtils.createSlug("Nhắm mawst thấy mùa hè Nhắm mt thấy mùa hè Nhắm mt thấy mùa hè Nhắm mt thấy mùa hè", 20));
     }
+
 }

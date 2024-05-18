@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,6 +33,15 @@ public class User implements IModel {
     @Column(name = "account_role")
     @Expose
     private String accountRole;
+    @Expose
+    @Column(name = "account_type")
+    private String accountType;
+    @Expose
+    @Column(name = "account_status")
+    private int accountStatus;
+
+
+
     @OneToMany(mappedBy = "user", cascade = { CascadeType.MERGE, CascadeType.PERSIST,
             CascadeType.PERSIST }, fetch = FetchType.LAZY)
     List<FilmBooking> filmBookingList;
@@ -45,12 +55,14 @@ public class User implements IModel {
     }
 
     public User(String username, String userFullName, String userEmail, String userPassword,
-            AccountRoleEnum accountRole) {
+            AccountRoleEnum accountRole, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
         this.accountRole = accountRole.getAccountRole();
+        this.accountType = accountType;
+        this.accountStatus = accountStatus;
     }
 
     @Override
@@ -69,5 +81,12 @@ public class User implements IModel {
     @Override
     public String getStringID() {
         return this.username;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "username='" + username + '\'' + ", userFullName='" + userFullName + '\'' + ", userEmail='"
+                + userEmail + '\'' + ", userPassword='" + userPassword + '\'' + ", accountRole='" + accountRole + '\''
+                + '}';
     }
 }
