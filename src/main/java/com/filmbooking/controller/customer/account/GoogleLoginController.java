@@ -68,7 +68,7 @@ public class GoogleLoginController extends HttpServlet {
 
             User loginUser = userServices.getByEmail(userEmail);
             if (loginUser == null) {
-                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType());
+                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType(),1);
                 userServices.save(loginUser);
 
             }
