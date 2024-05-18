@@ -20,7 +20,7 @@ public class DeleteRoomController extends HttpServlet {
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
 
@@ -30,10 +30,10 @@ public class DeleteRoomController extends HttpServlet {
         Room deletedRoom = roomServices.getBySlug(roomSlug);
         if (roomServices.delete(deletedRoom)) {
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_ROOM_SUCCESSFUL.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
+//            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_ROOM_FAILED.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
+//            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/room")).forward(req, resp);
         }
 
         hibernateSessionProvider.closeSession();
