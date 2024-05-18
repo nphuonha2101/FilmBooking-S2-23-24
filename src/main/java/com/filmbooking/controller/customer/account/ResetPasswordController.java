@@ -12,6 +12,8 @@ import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.utils.WebAppPathUtils;
+import com.filmbooking.utils.validateUtils.Regex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,7 +39,7 @@ public class ResetPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
+        String username = req.getParameter("username") != null ? req.getParameter("username") : (String) req.getAttribute("username");
 
         String newPassword = req.getParameter("new-password");
         String confirmPassword = req.getParameter("confirm-new-password");
@@ -45,6 +47,13 @@ public class ResetPasswordController extends HttpServlet {
         UserServicesImpl userServices = new UserServicesImpl();
         CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(userServices, req, hibernateSessionProvider);
         TokenServicesImpl tokenServices = new TokenServicesImpl(hibernateSessionProvider);
+        if(!Regex.validate(UserRegexEnum.USER_PASSWORD, newPassword)){
+            req.setAttribute("statusCodeErr", StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+            req.setAttribute("username", username);
+            doGet(req, resp);
+            hibernateSessionProvider.closeSession();
+            return;
+        }
 
         // get token from session
         TokenModel tokenModel = (TokenModel) req.getSession(false).getAttribute("token");
