@@ -20,7 +20,7 @@ public class DeleteShowtimeController extends HttpServlet {
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
 
@@ -30,10 +30,10 @@ public class DeleteShowtimeController extends HttpServlet {
 
         if (deleteShowtime != null && showtimeServices.delete(deleteShowtime)) {
             req.setAttribute("statusCodeSuccess", StatusCodeEnum.DELETE_SHOWTIME_SUCCESSFUL.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
+//            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
         } else {
             req.setAttribute("statusCodeErr", StatusCodeEnum.DELETE_SHOWTIME_FAILED.getStatusCode());
-            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
+//            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/showtime")).forward(req, resp);
 
         }
 
