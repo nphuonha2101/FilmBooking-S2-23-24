@@ -55,7 +55,6 @@
                         <td>${film.director}</td>
                         <td>${film.cast}</td>
                         <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
-                        <td>${film.slug}</td>
                         <td>
                             <span onclick="deleteFilm('${film.slug}','${film.filmID}')" class="material-symbols-rounded warning-color delete_btn">delete</span>
                             <a href="<c:url value='${pageContext.request.contextPath}/admin/edit/film?film=${film.slug}'/>">
@@ -71,20 +70,6 @@
         <jsp:include page="/views/components/pagination.jsp"/>
     </div>
     <script>
-        <%--function deleteFilm(slug) {--%>
-        <%--    $.ajax({--%>
-        <%--        url: '${pageContext.request.contextPath}/admin/delete/film',--%>
-        <%--        method: 'POST',--%>
-        <%--        data: { film: slug },--%>
-        <%--        success: function(data) {--%>
-        <%--            alert('Film deleted successfully');--%>
-        <%--            location.reload(); // Reload the page to update the film list--%>
-        <%--        },--%>
-        <%--        error: function(xhr, status, error) {--%>
-        <%--            alert('Error deleting film: ' + error);--%>
-        <%--        }--%>
-        <%--    });--%>
-        <%--}--%>
         function deleteFilm(slug,id) {
             var filmID = getFilmId(id);
             $.ajax({
@@ -93,11 +78,8 @@
                 data: { film: slug },
                 success: function(data) {
                     alert('Film deleted successfully');
-                    // Reload the DataTable
-                    // $('.film-table').DataTable().ajax.reload();
-                    // $('span.delete_btn:contains(' + slug + ')').closest('tr').remove();
                     $('#film-row-' + filmID).remove();
-                    $('.film-table tbody').reload();
+                    // $('.film-table tbody').reload();
                 },
                 error: function(xhr, status, error) {
                     alert('Error deleting film: ' + error);
