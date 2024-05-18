@@ -77,21 +77,24 @@
 
     </div>
     <script>
-        function deleteRoom(roomId, roomslug){
-            var roomId = getIdRoom(roomId);
+        function deleteRoom(roomId, roomSlug){
+            let id = getIdRoom(roomId);
             $.ajax({
                 url: '${pageContext.request.contextPath}/admin/delete/room',
                 method: 'POST',
-                data: { room: roomslug },
+                data: { room: roomSlug },
                 success: function(data) {
                     alert('Room deleted successfully');
-                    $('#room-row-' + roomId).remove();
+                    $('#room-row-' + id).remove();
                     // $('.room-table tbody').reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Error deleting room: ' + error);
                 }
             });
-        };
+        }
         function getIdRoom(roomId){
             return roomId;
-        };
+        }
     </script>
 </section>

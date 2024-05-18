@@ -39,7 +39,7 @@
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
                 </a>
             </div>
-            <table>
+            <table class="showtime-table">
                 <thead>
                 <tr>
                     <th><fmt:message bundle="${adminMsg}" key="showtimeID"/></th>
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                 <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
-                    <tr>
+                    <tr id="showtime-row-${showtime.showtimeID}">
                         <td>${showtime.showtimeID}</td>
                         <td>${showtime.film.filmName}</td>
                         <td>${showtime.room.roomName}</td>
@@ -60,9 +60,7 @@
                         <td>${showtime.showtimeDate}</td>
 
                         <td>
-                            <a href="<c:url value="${pageContext.request.contextPath}/admin/delete/showtime?showtime=${showtime.slug}"/>">
-                                <span class="material-symbols-rounded warning-color">delete</span>
-                            </a>
+                                <span onclick="deleteShowtime('${showtime.showtimeID}','${showtime.slug}')" class="material-symbols-rounded warning-color">delete</span>
                             <a href="<c:url value="${pageContext.request.contextPath}/admin/edit/showtime?showtime=${showtime.slug}"/>">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
@@ -77,4 +75,26 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
+
+    <script>
+        function deleteShowtime(showtimeId, showtimeSlug){
+            var id = getIdShowtime(showtimeId);
+            $.ajax({
+                url: '${pageContext.request.contextPath}/admin/delete/showtime',
+                method: 'POST',
+                data: { showtime: showtimeSlug },
+                success: function(data) {
+                    alert('Showtime deleted successfully');
+                    $('#showtime-row-' + id).remove();
+                    // $('.room-table tbody').reload();
+                },
+                error: function(xhr, status, error) {
+                    alert('Error deleting showtime: ' + error);
+                }
+            });
+        }
+        function getIdShowtime(showtimeId){
+            return showtimeId;
+        }
+    </script>
 </section>
