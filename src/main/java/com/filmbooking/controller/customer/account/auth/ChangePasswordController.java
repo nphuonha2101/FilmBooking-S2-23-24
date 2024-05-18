@@ -2,11 +2,12 @@ package com.filmbooking.controller.customer.account.auth;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
+import com.filmbooking.page.ClientPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,10 +26,13 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("pageTitle", "changePasswordTitle");
-        RenderViewUtils.renderViewToLayout(req, resp,
-                WebAppPathUtils.getClientPagesPath("change-password.jsp"),
-                WebAppPathUtils.getLayoutPath("master.jsp"));
+        Page changePasswordPage = new ClientPage(
+                "changePasswordTitle",
+                "change-password",
+                "master"
+        );
+
+        changePasswordPage.render(req, resp);
     }
 
     @Override
@@ -45,6 +49,12 @@ public class ChangePasswordController extends HttpServlet {
         HttpSession session = req.getSession();
         User loginUser = (User) session.getAttribute("loginUser");
 
+        Page changePasswordPage = new ClientPage(
+                "changePasswordTitle",
+                "change-password",
+                "master"
+        );
+
 
         if (loginUser.getUserPassword().equals(StringUtils.generateSHA256String(currentPassword))) {
             if (newPassword.equals(confirmNewPassword)) {
@@ -53,19 +63,17 @@ public class ChangePasswordController extends HttpServlet {
                 session.setAttribute("loginUser", loginUser);
 
                 userServices.update(loginUser);
-                req.setAttribute("statusCodeSuccess", StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL.getStatusCode());
+                changePasswordPage.putSuccess(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL.getStatusCode());
                 // confirm password not match
             } else {
-                req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
+              changePasswordPage.putError(StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
             }
-            req.setAttribute("pageTitle", "changePasswordTitle");
-            render(req, resp);
+            changePasswordPage.render(req, resp);
 
             // current password not match
         } else {
-            req.setAttribute("statusCodeErr", StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
-            req.setAttribute("pageTitle", "changePasswordTitle");
-            render(req, resp);
+            changePasswordPage.putError(StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
+            changePasswordPage.render(req, resp);
         }
         hibernateSessionProvider.closeSession();
     }
@@ -74,10 +82,5 @@ public class ChangePasswordController extends HttpServlet {
     public void destroy() {
         userServicesLog = null;
         hibernateSessionProvider = null;
-    }
-
-    private void render(HttpServletRequest req, HttpServletResponse resp) {
-//        RenderViewUtils.updateView(req, resp,  WebAppPathUtils.getClientPagesPath("change-password.jsp"));
-        RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getClientPagesPath("change-password.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
     }
 }

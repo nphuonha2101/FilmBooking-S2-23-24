@@ -1,4 +1,4 @@
-<%--
+    <%--
   Created by IntelliJ IDEA.
   User: Moc Lan
   Date: 4/14/2024
@@ -31,9 +31,9 @@
         <div class="centered-vertical-content wrapper">
 
             <%--        Status Code Messages--%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+            <jsp:include page="/views/components/status-code-message.jsp"/>
 
-                <table id="myTable" class="display">
+                <table id="myTable" class="display dataTable">
                     <thead>
                     <tr>
                         <th>LogID</th>
@@ -41,11 +41,13 @@
                         <th>Action</th>
                         <th>Level</th>
                         <th>Target table</th>
+                        <th>Before Value</th>
+                        <th>After Value</th>
+                        <th>Created At</th>
+                        <th>Update At</th>
                     </tr>
                     </thead>
-
                 </table>
-
         </div>
 
         <%--        Pagination--%>
@@ -53,4 +55,5 @@
 
     </div>
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
+
 </section>

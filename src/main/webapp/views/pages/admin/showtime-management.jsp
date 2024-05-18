@@ -30,7 +30,7 @@
         <div class="centered-vertical-content wrapper">
 
             <%--        Status Code Messages--%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+            <jsp:include page="/views/components/status-code-message.jsp"/>
 
             <div class="justify-right-row wrapper">
                 <a href="<c:url value="${pageContext.request.contextPath}/admin/add/showtime"/>"

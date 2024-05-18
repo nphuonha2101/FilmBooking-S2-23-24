@@ -25,8 +25,10 @@
     <div class="container centered-vertical-content">
         <h2><fmt:message bundle="${adminMsg}" key="filmManagement"/></h2>
         <div class="centered-vertical-content wrapper">
-            <%-- Status Code Messages --%>
-            <jsp:include page="/views/components/statusCodeMessage.jsp"/>
+
+
+            <%--        Status Code Messages--%>
+            <jsp:include page="/views/components/status-code-message.jsp"/>
 
             <div class="justify-right-row wrapper">
                 <a href="<c:url value="${pageContext.request.contextPath}/admin/add/film"/>" class="primary-filled-button rounded-button button submit-button icon-button">

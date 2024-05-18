@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = FilmVote.TABLE_NAME)
 public class FilmVote implements IModel {
     @Transient
-    public static final String TABLE_NAME = "films_votes";
+    public static final String TABLE_NAME = "film_votes";
 
     @Getter
     @Setter

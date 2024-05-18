@@ -20,7 +20,7 @@ public class FileUploadUtils {
                 System.out.println("File part is null");
                 return false;
             }
-  
+
             // write file to real directory
             filePart.write(realFilePath);
             return true;

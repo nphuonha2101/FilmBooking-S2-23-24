@@ -3,11 +3,12 @@ package com.filmbooking.controller.admin.read;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.page.AdminPage;
+import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.PaginationUtils;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.filmbooking.utils.RenderViewUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,21 +33,25 @@ public class FilmManagementController extends HttpServlet {
         int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
         int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
+        Page filmManagementPage = new AdminPage(
+                "filmManagementTitle",
+                "film-management",
+                "master"
+        );
+
+
         // if page valid (offset != -2)
         if (offset != -2) {
             // if page has data (offset != -1)
             if (offset != -1) {
                 List<Film> films = filmServices.getByOffset(offset, LIMIT).getMultipleResults();
-
-                req.setAttribute("filmsData", films);
+                // set film data to page
+                filmManagementPage.putAttribute("filmsData", films);
                 // set page url for pagination
-                req.setAttribute("pageUrl", "admin/management/film");
-
+                filmManagementPage.putAttribute("pageUrl", "admin/management/film");
             }
-
-            req.setAttribute("pageTitle", "filmManagementTitle");
-            RenderViewUtils.renderViewToLayout(req, resp, WebAppPathUtils.getAdminPagesPath("film-management.jsp"), WebAppPathUtils.getLayoutPath("master.jsp"));
         }
+        filmManagementPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
 
