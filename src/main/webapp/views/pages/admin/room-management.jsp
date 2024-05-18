@@ -38,7 +38,7 @@
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewRoom"/></span>
                 </a>
             </div>
-            <table>
+            <table class="room-table">
                 <thead>
                 <tr>
                     <th><fmt:message bundle="${adminMsg}" key="roomID"/></th>
@@ -52,7 +52,7 @@
                 </thead>
                 <tbody>
                 <c:forEach var="room" items="${roomData}" varStatus="loop">
-                    <tr>
+                    <tr id="room-row-${room.roomID}">
                         <td>${room.roomID}</td>
                         <td>${room.roomName}</td>
                         <td>${room.seatRows}</td>
@@ -61,9 +61,7 @@
                         <td>${room.seatRows * room.seatCols}</td>
 
                         <td>
-                            <a href="<c:url value="${pageContext.request.contextPath}/admin/delete/room?room=${room.slug}"/>">
-                                <span class="material-symbols-rounded warning-color">delete</span>
-                            </a>
+                                <span onclick="deleteRoom('${room.roomID}','${room.slug}' )" class="material-symbols-rounded warning-color">delete</span>
                             <a href="<c:url value="${pageContext.request.contextPath}/admin/edit/room?room=${room.slug}"/>">
                                 <span class="material-symbols-rounded primary-color">edit</span>
                             </a>
@@ -78,4 +76,22 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
+    <script>
+        function deleteRoom(roomId, roomslug){
+            var roomId = getIdRoom(roomId);
+            $.ajax({
+                url: '${pageContext.request.contextPath}/admin/delete/room',
+                method: 'POST',
+                data: { room: roomslug },
+                success: function(data) {
+                    alert('Room deleted successfully');
+                    $('#room-row-' + roomId).remove();
+                    // $('.room-table tbody').reload();
+                }
+            });
+        };
+        function getIdRoom(roomId){
+            return roomId;
+        };
+    </script>
 </section>
