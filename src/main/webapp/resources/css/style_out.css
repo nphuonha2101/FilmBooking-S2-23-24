@@ -671,7 +671,7 @@ span {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    font-family: 'Merriweather', serif;
+    font-family: 'Fira Sans', serif;
 }
 
 h1 {
@@ -803,6 +803,7 @@ button {
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
     * {
         margin: 0 0.5rem;
     }
@@ -1634,13 +1635,14 @@ select {
 }
 
 .modal-header {
-display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    min-width: calc(30vw);
 }
+
 
 .modal-header .close-button {
     display: flex;
@@ -1669,7 +1671,6 @@ display: flex;
     background-color: #fff;
     border-radius: 20px;
     padding: 0 2rem 2rem;
-    width: fit-content;
     overflow-y: auto;
     box-shadow: none !important;
     position: absolute;
@@ -1746,7 +1747,7 @@ display: flex;
 
 .admin-two-cols__wrapper {
     display: grid;
-    grid-template-columns: 2fr 7fr;
+    grid-template-columns: 1.5fr 7fr;
     grid-column-gap: 0;
 }
 
@@ -1971,7 +1972,7 @@ thead > tr > th {
     margin: 0 !important;
 }
 
-#search-input{
+#search-input {
     width: 18rem !important;
     height: 2.4rem;
 }
@@ -1984,8 +1985,8 @@ thead > tr > th {
     font-family: 'Inter', sans-serif !important;
 }
 
-.font-Merriweather {
-    font-family: 'Merriweather', serif !important;
+.font-FiraSans {
+    font-family: 'Fira Sans', sans-serif !important;
 }
 
 .tooltip {
@@ -2214,3 +2215,5 @@ input[type='radio'] + label {
 .grecaptcha-badge {
     visibility: hidden !important;
 }
+
+

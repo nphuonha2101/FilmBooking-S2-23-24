@@ -19,6 +19,8 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
+<fmt:setBundle basename="properties.message" var="msg"/>
+<fmt:setBundle basename="properties.pageTitle" var="pageTitleMsg"/>
 
 <section class="section align-top admin-two-cols__wrapper centered-vertical-content">
     <div class="container ">
@@ -26,7 +28,9 @@
     </div>
     <div class="container centered-vertical-content">
 
-        <h2><fmt:message bundle="${adminMsg}" key="logManagement"/></h2>
+        <h2>
+            <fmt:message bundle="${pageTitleMsg}" key="userManagementSectionTitle"/>
+        </h2>
 
         <div class="centered-vertical-content wrapper">
 
@@ -37,11 +41,21 @@
                 <thead>
                 <tr>
                     <th></th>
-                    <th>Username</th>
-                    <th>Full Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Edit</th>
+                    <th>
+                        <fmt:message key="username" bundle="${msg}"/>
+                    </th>
+                    <th>
+                        <fmt:message key="fullname" bundle="${msg}"/>
+                    </th>
+                    <th>
+                        <fmt:message key="email" bundle="${msg}"/>
+                    </th>
+                    <th>
+                        <fmt:message key="role" bundle="${msg}"/>
+                    </th>
+                    <th>
+                        <fmt:message key="edit" bundle="${msg}"/>
+                    </th>
                 </tr>
                 </thead>
             </table>
