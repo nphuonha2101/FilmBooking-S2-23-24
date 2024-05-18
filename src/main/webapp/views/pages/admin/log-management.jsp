@@ -56,34 +56,35 @@
 
     </div>
 
-<!-- 
-    <script>
-        $(function() {
-            $('#myTable').DataTable({
-                ajax: {
-                    url: '/api/v1/logs?command=all',
-                    dataSrc: 'data'
-                },
-                columns: [
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            return '<input type="checkbox" name="select[]" value="' + data.logID + '">';
-                        }
+
+    <!--
+        <script>
+            $(function() {
+                $('#myTable').DataTable({
+                    ajax: {
+                        url: '/api/v1/logs?command=all',
+                        dataSrc: 'data'
                     },
-                    { data: 'logID' },
-                    { data: 'user.username',
-                        defaultContent: 'Unknown User'},
-                    { data: 'action' },
-                    { data: 'level' },
-                    { data: 'targetTable' },
-                    // { data: 'beforeValueJSON' },
-                    // { data: 'afterValueJSON' },
-                    // { data: 'createdAt' },
-                    // { data: 'updatedAt' }
-                ]
+                    columns: [
+                        {
+                            data: null,
+                            render: function(data, type, row) {
+                                return '<input type="checkbox" name="select[]" value="' + data.logID + '">';
+                            }
+                        },
+                        { data: 'logID' },
+                        { data: 'user.username',
+                            defaultContent: 'Unknown User'},
+                        { data: 'action' },
+                        { data: 'level' },
+                        { data: 'targetTable' },
+                        // { data: 'beforeValueJSON' },
+                        // { data: 'afterValueJSON' },
+                        // { data: 'createdAt' },
+                        // { data: 'updatedAt' }
+                    ]
+                });
             });
-        });
-    </script> -->
+        </script> -->
 
 </section>

@@ -46,6 +46,12 @@ public class UserAPI extends HttpServlet {
             super.service(req, resp);
     }
 
+    /**
+     * Handle PATCH request
+     * @param req request
+     * @param resp response
+     * @throws IOException exception. It is thrown cause of PrintWriter
+     */
     private void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         MultipartsFormUtils formUtils = new MultipartsFormUtils(req);
         Map<String, String> formFields = formUtils.getFormFields(List.of("username", "full-name", "role"));

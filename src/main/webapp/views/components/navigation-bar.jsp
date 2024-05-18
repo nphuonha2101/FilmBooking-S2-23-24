@@ -76,7 +76,7 @@
                     </a>
 
                     <div class="drop-down-contents">
-                        <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
+                        <p class="font-FiraSans"> ${sessionScope.loginUser.userFullName}</p>
 
                         <a class="drop-down-links"
                            href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">

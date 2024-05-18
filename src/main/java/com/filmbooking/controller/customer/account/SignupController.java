@@ -60,30 +60,45 @@ public class SignupController extends HttpServlet {
         String userPassword = StringUtils.handlesInputString(req.getParameter("password"));
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
-        // validate input
-        validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword);
+//         validate input
+        boolean isAllValid = validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword);
+        if (!isAllValid) {
+            return;
+        }
 
         // username existed!
         if (userServicesLog.getByID(username) != null) {
-            signupPage.putError(StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
-            // username not existed but email existed!
-        } else if (userServices.getByEmail(userEmail) != null) {
-            signupPage.putError(StatusCodeEnum.EMAIL_EXISTED.getStatusCode());
-            // username not existed and email not existed!
-        } else if (userPassword.equals(confirmPassword)) {
+            renderError(signupPage, StatusCodeEnum.USERNAME_EXISTED.getStatusCode(), req, resp);
+            return;
+        }
+
+        // username not existed but email existed!
+        if (userServices.getByEmail(userEmail) != null) {
+            renderError(signupPage, StatusCodeEnum.EMAIL_EXISTED.getStatusCode(), req, resp);
+            return;
+        }
+
+        // username not existed and email not existed!
+        if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
 
             User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType());
             userServicesLog.save(newUser);
+            hibernateSessionProvider.closeSession();
 
-            signupPage.putSuccess(StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode());
-            // confirm password not match!
-        } else {
-            signupPage.putError(StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
+            renderSuccess(signupPage, StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode(), req, resp);
         }
 
-        signupPage.render(req, resp);
-        hibernateSessionProvider.closeSession();
+    }
+
+    private void renderError(Page page, int statusError, HttpServletRequest req, HttpServletResponse resp) {
+        page.putError(statusError);
+        page.render(req, resp);
+    }
+
+    private void renderSuccess(Page page, int statusSuccess, HttpServletRequest req, HttpServletResponse resp) {
+        page.putSuccess(statusSuccess);
+        page.render(req, resp);
     }
 
     @Override
@@ -93,24 +108,28 @@ public class SignupController extends HttpServlet {
         hibernateSessionProvider = null;
     }
 
-    private void validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
         if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail)) {
             handleInput(req, resp, page, StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
-
-            return;
+            return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
             handleInput(req, resp, page, StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
-            return;
+            return false;
         }
         if (!Regex.validate(UserRegexEnum.USERNAME, username)) {
             handleInput(req, resp, page, StatusCodeEnum.USERNAME_ERROR.getStatusCode());
-            return;
+            return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_PASSWORD, userPassword)) {
             handleInput(req, resp, page, StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
-            return;
+            return false;
         }
+        if (!userPassword.equals(confirmPassword)) {
+            handleInput(req, resp, page, StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
+            return false;
+        }
+        return true;
     }
 
     private void handleInput(HttpServletRequest req, HttpServletResponse resp, Page page, int statusError) {
