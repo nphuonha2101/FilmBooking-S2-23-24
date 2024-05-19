@@ -43,7 +43,7 @@
                             bundle="${msg}" />"
                    autocomplete="true" required>
             <input type="submit" class="primary-filled-button button mt-4" value="<fmt:message key="login"
-                                                                                    bundle="${msg}"/>" />
+                                                                                    bundle="${msg}"/>"/>
 
         </form>
         <p>
@@ -102,8 +102,15 @@
                 </button>
             </a>
         </p>
+
+        <%-- facebook login--%>
+        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+        </fb:login-button>
+        <div id="status">
+        </div>
     </div>
 
+<
                         <%-- facebook login--%>
                             <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                             </fb:login-button>

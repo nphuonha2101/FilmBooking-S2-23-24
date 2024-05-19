@@ -24,6 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="<c:url value='/resources/css/style_out.css'/>"/>
+<link rel="stylesheet" href="<c:url value='/resources/css/custom-dataTables.css'/>"/>
 <link rel="icon" href="<c:url value='/resources/images/site-logo.png'/>"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
