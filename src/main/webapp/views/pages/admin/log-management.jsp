@@ -54,6 +54,7 @@
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
+
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
 
 </section>
