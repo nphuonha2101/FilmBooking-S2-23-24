@@ -51,6 +51,7 @@ public class FacebookLoginController extends HttpServlet {
 		name = jsonObject.get("name").getAsString();
 		email = jsonObject.has("email") ? jsonObject.get("email").getAsString() : "Email không có sẵn";
 		id = jsonObject.get("id").getAsString();
+		System.out.println(name + "," + email +"," + id);
 
 		User loginUser = userServices.getByUsername(id);
 		if (loginUser == null) {

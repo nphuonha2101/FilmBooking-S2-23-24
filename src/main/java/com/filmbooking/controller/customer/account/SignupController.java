@@ -61,8 +61,11 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
         // validate input
-       if(!validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword)) return;
-
+       //if(!validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword)) return;
+        boolean isAllValid = validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword);
+        if (!isAllValid) {
+            return;
+        }
         // username existed!
         if (userServicesLog.getByID(username) != null) {
             signupPage.putError(StatusCodeEnum.USERNAME_EXISTED.getStatusCode());
@@ -92,26 +95,50 @@ public class SignupController extends HttpServlet {
         hibernateSessionProvider = null;
     }
 
-    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp,String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
-        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
-            handleInput(req, resp,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+//    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp,String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+//        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
+//            handleInput(req, resp, page,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+//            return false;
+//        }
+//        if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
+//            handleInput(req, resp,  StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
+//            return false;
+//        }
+//        if (!Regex.validate(UserRegexEnum.USERNAME, username)) {
+//            handleInput(req, resp,  StatusCodeEnum.USERNAME_ERROR.getStatusCode());
+//            return false;
+//        }
+//        if (!Regex.validate(UserRegexEnum.USER_PASS_WORD, userPassword)) {
+//            handleInput(req, resp,  StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+//            return false;
+//        }
+//        return true;
+//    }
+
+    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail)) {
+
+            handleInput(req, resp, page, StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
             return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
-            handleInput(req, resp,  StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
+            handleInput(req, resp, page, StatusCodeEnum.USER_FULL_NAME_ERROR.getStatusCode());
             return false;
         }
         if (!Regex.validate(UserRegexEnum.USERNAME, username)) {
-            handleInput(req, resp,  StatusCodeEnum.USERNAME_ERROR.getStatusCode());
+            handleInput(req, resp, page, StatusCodeEnum.USERNAME_ERROR.getStatusCode());
             return false;
         }
-        if (!Regex.validate(UserRegexEnum.USER_PASS_WORD, userPassword)) {
-            handleInput(req, resp,  StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+        if (!Regex.validate(UserRegexEnum.USER_PASSWORD, userPassword)) {
+            handleInput(req, resp, page, StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+            return false;
+        }
+        if (!userPassword.equals(confirmPassword)) {
+            handleInput(req, resp, page, StatusCodeEnum.PASSWORD_CONFIRM_NOT_MATCH.getStatusCode());
             return false;
         }
         return true;
     }
-
     private void handleInput(HttpServletRequest req, HttpServletResponse resp, Page page, int statusError) {
         page.putError(statusError);
         page.render(req, resp);
