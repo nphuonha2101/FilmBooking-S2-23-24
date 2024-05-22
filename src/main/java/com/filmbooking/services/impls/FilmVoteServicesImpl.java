@@ -58,11 +58,4 @@ public class FilmVoteServicesImpl extends AbstractCRUDServices<FilmVote> {
     public boolean delete(FilmVote filmVote) {
         throw new UnsupportedOperationException("This method is not supported for FilmVote");
     }
-
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
-
 }

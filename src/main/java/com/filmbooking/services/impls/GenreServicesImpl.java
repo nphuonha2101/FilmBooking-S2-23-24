@@ -43,11 +43,4 @@ public class GenreServicesImpl extends AbstractCRUDServices<Genre> {
             throw new RuntimeException("ID must not be null");
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
-
-
 }

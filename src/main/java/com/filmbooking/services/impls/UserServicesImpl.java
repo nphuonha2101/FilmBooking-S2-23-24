@@ -226,18 +226,6 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
      * @param email
      * @return
      */
-    @Override
-    public User newUser(String username, String email) {
-        User userInfo = null;
-        boolean isEmail = Regex.validate(UserRegexEnum.USER_EMAIL, email);
-        boolean isUsername = Regex.validate(UserRegexEnum.USERNAME, username);
-        if (isEmail)
-            userInfo = getByEmail(email);
-        // login by username
-        if (isUsername)
-            userInfo = getByID(username);
-        return userInfo;
-    }
 
 
 }

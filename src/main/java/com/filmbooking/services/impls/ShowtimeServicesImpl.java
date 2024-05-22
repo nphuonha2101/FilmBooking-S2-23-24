@@ -72,11 +72,7 @@ public class ShowtimeServicesImpl extends AbstractCRUDServices<Showtime> impleme
         return result;
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
+
 
 
 }

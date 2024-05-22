@@ -121,6 +121,13 @@ create table logs
     updated_at        timestamp null
 );
 
+create table failed_logins 
+(
+	req_ip            varchar(50) not null PRIMARY KEY,
+	login_count int not null,
+	lock_time timestamp
+)
+
 
 -- Genre
 insert into genres (genre_id, genre_name) values ('haikich', 'Hài kịch');
@@ -230,3 +237,6 @@ insert into theaters (theater_name, tax_code, theater_address) values ('FilmBook
 select * from user_infos;
 
 DELETE FROM user_infos where account_type = 'google';
+
+
+SELECT * FROM failed_logins;
