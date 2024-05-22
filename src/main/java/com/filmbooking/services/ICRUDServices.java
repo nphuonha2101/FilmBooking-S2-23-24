@@ -91,16 +91,6 @@ public interface ICRUDServices<T> {
     boolean save(T t);
 
     /**
-     * Save a record
-     *
-     * @param t is the record to save
-     * @return boolean true if success, false if fail
-     *         <br>
-     *         <b>If object cannot save, you must override this method</b>
-     */
-    User newUser(String username, String email);
-
-    /**
      * Update a record
      *
      * @param t is the record to update

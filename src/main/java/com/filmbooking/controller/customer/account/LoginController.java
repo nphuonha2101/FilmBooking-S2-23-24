@@ -1,11 +1,13 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.FailedLogin;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.recaptchaV3Verification.RecaptchaVerification;
+import com.filmbooking.services.impls.FailedLoginServicesImpl;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -20,6 +22,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,7 @@ import java.util.Map;
 @MultipartConfig
 public class LoginController extends HttpServlet {
     private UserServicesLogProxy<User> userServices;
+    private FailedLoginServicesImpl failedLoginServices;
     private HibernateSessionProvider hibernateSessionProvider;
     private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
@@ -35,8 +39,6 @@ public class LoginController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
         if (req.getSession().getAttribute("loginUser") != null)
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
@@ -71,58 +73,79 @@ public class LoginController extends HttpServlet {
                 "login",
                 "master"
         );
-        boolean isCaptchaVerified = req.getSession().getAttribute("captchaVerified") != null && (boolean) req.getSession().getAttribute("captchaVerified");
-
-        String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
-        String password = StringUtils.handlesInputString(req.getParameter("password"));
-
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-
-        if (!isCaptchaVerified) {
-            loginPage.putError(StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
-            getHtmlRespFromPage(req, resp, loginPage);
-            return;
+        hibernateSessionProvider = new HibernateSessionProvider();
+        failedLoginServices = new FailedLoginServicesImpl(hibernateSessionProvider);
+        FailedLogin failedLogin = failedLoginServices.getByID(req.getRemoteAddr());
+        if(failedLogin!=null){
+            if(failedLogin.getLockTime().isAfter(LocalDateTime.now())){
+                System.out.println("Login after 5 minutes");
+                loginPage.putError(StatusCodeEnum.LOGIN_AGAIN_AFTER_5_MINUTES.getStatusCode());
+                getHtmlRespFromPage(req, resp, loginPage);
+                return;
+            }else if(failedLogin.getLockTime().isBefore(LocalDateTime.now())){
+                failedLoginServices.delete(failedLogin);
+            }
         }
 
-        hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+            boolean isCaptchaVerified = req.getSession().getAttribute("captchaVerified") != null && (boolean) req.getSession().getAttribute("captchaVerified");
+
+            String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
+            String password = StringUtils.handlesInputString(req.getParameter("password"));
+
+            System.out.println("Username: " + username);
+            System.out.println("Password: " + password);
+
+            if (!isCaptchaVerified) {
+                loginPage.putError(StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
+                getHtmlRespFromPage(req, resp, loginPage);
+                return;
+            }
 
 
-        User loginUser = null;
+            userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
 
-        // user authentication
-        ServiceResult serviceResult = userServices.userAuthentication(username, password);
-        // case user not found then send error to login page
-        if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
-            loginPage.putError(serviceResult.getStatus().getStatusCode());
 
-            getHtmlRespFromPage(req, resp, loginPage);
+            User loginUser = null;
 
-        } else {
-            HttpSession session = req.getSession();
-            loginUser = (User) serviceResult.getData();
+            // user authentication
+            ServiceResult serviceResult = userServices.userAuthentication(username, password);
+            // case user not found then send error to login page
+            if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
+                if(failedLogin == null) {
+                    failedLogin = new FailedLogin();
+                    failedLogin.setReqIp(req.getRemoteAddr());
+                    failedLogin.setLoginCount(1);
+                    failedLogin.setLockTime(LocalDateTime.now());
+                    failedLoginServices.save(failedLogin);
+                }else{
+                    failedLoginServices.update(failedLogin);
+                }
+                loginPage.putError(serviceResult.getStatus().getStatusCode());
+                getHtmlRespFromPage(req, resp, loginPage);
 
-            System.out.println(loginUser.getUserEmail() + " logged in");
+            } else {
+                HttpSession session = req.getSession();
+                loginUser = (User) serviceResult.getData();
 
-            session.setAttribute("loginUser", loginUser);
-            FilmBooking filmBooking = new FilmBooking();
-            filmBooking.setUser(loginUser);
-            session.setAttribute("filmBooking", filmBooking);
+                System.out.println(loginUser.getUserEmail() + " logged in");
 
-            System.out.println("Test login found user");
+                session.setAttribute("loginUser", loginUser);
+                FilmBooking filmBooking = new FilmBooking();
+                filmBooking.setUser(loginUser);
+                session.setAttribute("filmBooking", filmBooking);
 
-            /* return to previous page that was visited before login
-             * if it has no previous page, return to home page
-             */
+                System.out.println("Test login found user");
+
+                /* return to previous page that was visited before login
+                 * if it has no previous page, return to home page
+                 */
 //            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
 
-            PrintWriter out = resp.getWriter();
-            resp.setContentType("text/plain");
-            out.println("/home");
+                PrintWriter out = resp.getWriter();
+                resp.setContentType("text/plain");
+                out.println("/home");
 
-        }
-
+            }
 
         hibernateSessionProvider.closeSession();
 

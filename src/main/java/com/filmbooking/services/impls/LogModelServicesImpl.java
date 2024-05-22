@@ -47,9 +47,5 @@ public class LogModelServicesImpl extends AbstractCRUDServices<LogModel> {
         throw new UnsupportedOperationException("This method is not supported for LogModel");
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
+
 }
