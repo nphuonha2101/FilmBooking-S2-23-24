@@ -84,16 +84,16 @@
             <h4><fmt:message bundle="${msg}" key="paymentMethod"/></h4>
 
             <form action="<c:url value="${pageContext.request.contextPath}/auth/checkout"/>" method="post">
-                <div class="centered-horizontal-content wrapper justify-left-row">
-                    <input type="radio" id="cash-radio" name="payment-method" value="cash" checked>
-                    &nbsp;<label for="cash-radio">
-                        &nbsp;&nbsp;
-                        <img src="<c:url value="/resources/images/icons8-cash-35.png"/>" alt="cash">
-                        &nbsp;&nbsp;
-                        <span><fmt:message bundle="${msg}" key="cash"/></span>
-                    </label>
+<%--                <div class="centered-horizontal-content wrapper justify-left-row">--%>
+<%--                    <input type="radio" id="cash-radio" name="payment-method" value="cash" checked>--%>
+<%--                    &nbsp;<label for="cash-radio">--%>
+<%--                        &nbsp;&nbsp;--%>
+<%--                        <img src="<c:url value="/resources/images/icons8-cash-35.png"/>" alt="cash">--%>
+<%--                        &nbsp;&nbsp;--%>
+<%--                        <span><fmt:message bundle="${msg}" key="cash"/></span>--%>
+<%--                    </label>--%>
 
-                </div>
+<%--                </div>--%>
                 <div class="centered-horizontal-content wrapper justify-left-row">
 
                     <input type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
