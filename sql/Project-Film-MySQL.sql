@@ -5,8 +5,8 @@ create table user_infos
     user_email    varchar(50)  not null,
     user_password varchar(64) ,
     account_role  varchar(10)  not null,
-		account_type varchar(10) not null,
-		account_status int not null
+	account_type varchar(10) not null,
+	account_status int not null
 );
 
 create table films
@@ -76,19 +76,6 @@ create table film_genres
     primary key (film_id, genre_id)
 );
 
-create table foods
-(
-    food_id    varchar(50)  not null primary key,
-    food_name  varchar(255) not null,
-    food_price numeric      not null
-);
-
-create table food_bookings
-(
-    food_booking_id bigint auto_increment primary key,
-    food_id         varchar(50) references foods (food_id),
-    film_booking_id bigint references film_bookings (film_booking_id)
-);
 
 create table film_votes
 (
