@@ -121,10 +121,4 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
     public String getTableName() {
         return this.crudServices.getTableName();
     }
-
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
 }
