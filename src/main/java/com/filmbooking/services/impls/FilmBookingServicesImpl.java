@@ -56,11 +56,6 @@ public class FilmBookingServicesImpl extends AbstractCRUDServices<FilmBooking> {
         return this.getByPredicates(condition).getMultipleResults();
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
 
 
 }

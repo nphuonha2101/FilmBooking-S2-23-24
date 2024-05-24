@@ -85,9 +85,5 @@ public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFil
         return this.getByPredicates(conditions).getMultipleResults();
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
+
 }

@@ -47,6 +47,7 @@ public class HibernateManagement {
         configuration.addAnnotatedClass(FilmVote.class);
         configuration.addAnnotatedClass(TokenModel.class);
         configuration.addAnnotatedClass(LogModel.class);
+        configuration.addAnnotatedClass(FailedLogin.class);
 
         StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(standardServiceRegistryBuilder.build());
