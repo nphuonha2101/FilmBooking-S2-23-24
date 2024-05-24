@@ -55,8 +55,13 @@ function sendDataToServlet(userData) {
 
     // Xử lý sự kiện khi yêu cầu hoàn thành
     xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("Dữ liệu đã được gửi thành công đến servlet");
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                console.log("Dữ liệu đã được gửi thành công đến servlet");
+                window.location.href = "/home";  // Chuyển hướng đến trang /home
+            } else {
+                console.error("Có lỗi xảy ra khi gửi dữ liệu đến servlet");
+            }
         }
     };
 

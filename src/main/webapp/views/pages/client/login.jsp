@@ -97,7 +97,6 @@
                                 <path fill="none" d="M0 0h48v48H0z"></path>
                             </svg>
                         </div>
-
                     </div>
                 </button>
             </a>
@@ -110,7 +109,6 @@
         </div>
     </div>
 
-<
                         <%-- facebook login--%>
                             <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
                             </fb:login-button>
@@ -209,7 +207,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/handlesFBLogin.js"></script>
     <!-- Load the JS SDK asynchronously -->
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/handlesRecaptchaV3.js"></script>
     <script type="text/javascript">
