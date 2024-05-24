@@ -25,7 +25,7 @@
 <c:if test="${not empty statusCodeSuccess}">
             <span class="successful-span message-span">
                 <span class="material-symbols-rounded">task_alt</span>
-                <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
+                    <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
             </span>
 </c:if>
 

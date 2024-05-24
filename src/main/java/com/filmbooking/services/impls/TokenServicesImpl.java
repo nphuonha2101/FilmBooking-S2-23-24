@@ -77,9 +77,5 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
         return new ServiceResult(StatusCodeEnum.TOKEN_VERIFIED, tokenModel);
     }
 
-    @Override
-    public User newUser(String username, String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'newUser'");
-    }
+
 }

@@ -2,13 +2,16 @@ package com.filmbooking.hibernate;
 
 import com.filmbooking.model.*;
 import com.filmbooking.utils.PropertiesUtils;
+import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+@Getter
 public class HibernateManagement {
     private static HibernateManagement instance;
+
     private final SessionFactory sessionFactory;
 
     private HibernateManagement() {
@@ -44,18 +47,10 @@ public class HibernateManagement {
         configuration.addAnnotatedClass(FilmVote.class);
         configuration.addAnnotatedClass(TokenModel.class);
         configuration.addAnnotatedClass(LogModel.class);
+        configuration.addAnnotatedClass(FailedLogin.class);
 
         StandardServiceRegistryBuilder standardServiceRegistryBuilder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
         return configuration.buildSessionFactory(standardServiceRegistryBuilder.build());
-    }
-
-    /**
-     * Get {@link SessionFactory} of hibernate
-     *
-     * @return {@link Session}
-     */
-    public SessionFactory getSessionFactory() {
-        return this.sessionFactory;
     }
 
 }

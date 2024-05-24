@@ -56,7 +56,8 @@ public enum StatusCodeEnum {
     USER_EMAIL_ERROR(519, "Email không hợp lệ"),
     USER_FULL_NAME_ERROR(520, "Tên đầy đủ không hợp lệ"),
     USER_PASSWORD_ERROR(521, "Mật khẩu không hợp lệ"),
-    RECAPTCHA_VERIFICATION_ERROR(522, "Lỗi xác thực reCAPTCHA");
+    RECAPTCHA_VERIFICATION_ERROR(522, "Lỗi xác thực reCAPTCHA"),
+    LOGIN_AGAIN_AFTER_5_MINUTES(523, "Vui lòng đăng nhập lại sau 5 phút");
 
 
 

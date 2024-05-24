@@ -18,11 +18,11 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>com.google.api-client</groupId>-->
-<!--            <artifactId>google-api-client-recaptcha-v3</artifactId>-->
-<!--            <version>1.32.1</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client-recaptcha-v3</artifactId>
+            <version>1.32.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.api-client</groupId>
