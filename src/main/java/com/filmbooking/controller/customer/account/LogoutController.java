@@ -5,7 +5,6 @@ import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.services.logProxy.ShowtimeServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -26,6 +25,10 @@ public class LogoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        handleLogOut(req, resp);
+    }
+
+    public static void handleLogOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
         if (session != null) {
             FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
@@ -42,7 +45,5 @@ public class LogoutController extends HttpServlet {
             session.invalidate();
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         } else resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
-
-
     }
 }

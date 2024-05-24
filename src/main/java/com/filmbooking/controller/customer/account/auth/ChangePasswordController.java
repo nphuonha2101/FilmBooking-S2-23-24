@@ -7,8 +7,11 @@ import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
+import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.StringUtils;
+import com.filmbooking.utils.validateUtils.Regex;
+import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -55,8 +58,12 @@ public class ChangePasswordController extends HttpServlet {
                 "master"
         );
 
-
-        if (loginUser.getUserPassword().equals(StringUtils.generateSHA256String(currentPassword))) {
+        if (loginUser.getUserPassword().equals(userServices.hashPassword(currentPassword))){
+            if(!Regex.validate(UserRegexEnum.USER_PASSWORD, newPassword)){
+                changePasswordPage.putError(StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
+                changePasswordPage.render(req, resp);
+                return;
+            }
             if (newPassword.equals(confirmNewPassword)) {
                 newPassword = userServices.hashPassword(newPassword);
                 loginUser.setUserPassword(newPassword);

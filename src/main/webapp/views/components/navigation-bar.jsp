@@ -48,7 +48,7 @@
 
         <c:if test="${not empty sessionScope.loginUser.username}">
             <li>
-                <a class="nav-links small-icon-button" href="">
+                <div class="nav-links small-icon-button">
                     <div class="tooltip click-menu" id="film-booking_menu">
                         <span class="material-symbols-rounded">
                             history
@@ -58,10 +58,9 @@
                         </span>
 
                         <div class="drop-down-contents" id="film-booking_menu-content">
-                                <%--content here--%>
                         </div>
                     </div>
-                </a>
+                </div>
             </li>
         </c:if>
 
@@ -77,7 +76,7 @@
                     </a>
 
                     <div class="drop-down-contents">
-                        <p class="font-Merriweather"> ${sessionScope.loginUser.userFullName}</p>
+                        <p class="font-FiraSans"> ${sessionScope.loginUser.userFullName}</p>
 
                         <a class="drop-down-links"
                            href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
