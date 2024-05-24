@@ -54,6 +54,9 @@
                         <fmt:message key="role" bundle="${msg}"/>
                     </th>
                     <th>
+                        <fmt:message key="accountType" bundle="${msg}"/>
+                    </th>
+                    <th>
                         <fmt:message key="edit" bundle="${msg}"/>
                     </th>
                 </tr>
@@ -88,6 +91,16 @@
                     {data: 'userFullName'},
                     {data: 'userEmail'},
                     {data: 'accountRole'},
+                    {data: 'accountType',
+                        render: function (data, type, row) {
+                          if (data === 'normal')
+                              return 'Normal';
+                          if (data === 'google')
+                              return 'Google';
+                            if (data === 'facebook')
+                                return 'Facebook';
+                        }
+                    },
                     {
                         data: null,
                         render: function (data, type, row) {
