@@ -1,40 +1,41 @@
 package com.filmbooking.model;
 
-
-import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
 @Setter
-@Entity
-@Table(name = FailedLogin.TABLE_NAME)
+@ToString
+@TableIdName("req_ip")
+@TableName("failed_logins")
+@IdAutoIncrement
 public class FailedLogin implements IModel {
-    @Transient
     public static final String TABLE_NAME = "failed_logins";
-    @Expose
-    @Id
-    @Column(name = "req_ip")
     private String reqIp;
-    @Expose
-    @Column(name = "login_count")
     private int loginCount;
-    @Expose
-    @Column(name = "lock_time")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime lockTime;
 
     public FailedLogin() {
     }
 
-
-
     @Override
     public String getStringID() {
         return this.reqIp;
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "req_ip", this.reqIp,
+                "login_count", this.loginCount,
+                "lock_time", this.lockTime
+        );
     }
 
 }

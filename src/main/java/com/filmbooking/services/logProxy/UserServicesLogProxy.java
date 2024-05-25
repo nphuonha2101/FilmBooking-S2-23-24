@@ -49,7 +49,7 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
             else
                 user = userServices.getByEmail(usernameOrEmail);
         }
-        logModel.setUser(user);
+        logModel.setUsername(user.getUsername());
         logModelServices.save(logModel);
         return serviceResult;
     }
@@ -70,7 +70,7 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
             user = userServices.getByID(username);
         }
 
-        logModel.setUser(user);
+        logModel.setUsername(user.getUsername());
         logModelServices.save(logModel);
 
         return serviceResult;
@@ -92,7 +92,7 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
             user = userServices.getByID(username);
         }
 
-        logModel.setUser(user);
+        logModel.setUsername(user.getUsername());
         logModelServices.save(logModel);
         return serviceResult;
     }

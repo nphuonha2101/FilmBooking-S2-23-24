@@ -1,12 +1,17 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.GeoLite2IPUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -16,8 +21,10 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@Entity
-@Table(name = LogModel.TABLE_NAME)
+@ToString
+@TableName("logs")
+@TableIdName("log_id")
+@IdAutoIncrement
 public class LogModel implements IModel {
     // log actions
     public static final String TABLE_NAME = "logs";
@@ -34,32 +41,22 @@ public class LogModel implements IModel {
     public static final String LOG_LVL_WARN = "WARN";
     public static final String LOG_LVL_ALERT = "ALERT";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Expose
-    @Column(name="log_id", updatable = false, insertable = false)
     private long logID;
-    @ManyToOne
     @Expose
-    @JoinColumn(name= "username")
-    private User user;
+    private String username;
     @Expose
-    @Column(name = "req_ip")
     private String reqIP;
     @Expose
-    @Column(name = "ip_country")
     private String ipCountry;
     @Expose
-    @Column(name = "log_level")
     private String level;
     @Expose
-    @Column(name = "target_table")
     private String targetTable;
     @Expose
-    @Column(name = "actions")
     private String action;
     @Expose
-    @Column(name = "is_action_success")
     private boolean isActionSuccess;
     @Expose
     @Column(name = "before_data")
@@ -75,7 +72,7 @@ public class LogModel implements IModel {
     private LocalDateTime updatedAt;
 
     public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
-        this.user = user;
+        this.username = user.getUsername();
         this.reqIP = reqIP;
 //        this.ipCountry = String.valueOf(GeoLite2IPUtils.getInstance().getCountry(reqIP));
         this.level = level;
@@ -98,11 +95,27 @@ public class LogModel implements IModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LogModel logModel = (LogModel) o;
-        return logID == logModel.logID && isActionSuccess == logModel.isActionSuccess && Objects.equals(user, logModel.user) && Objects.equals(reqIP, logModel.reqIP) && Objects.equals(level, logModel.level) && Objects.equals(targetTable, logModel.targetTable) && Objects.equals(action, logModel.action) && Objects.equals(beforeValueJSON, logModel.beforeValueJSON) && Objects.equals(afterValueJSON, logModel.afterValueJSON) && Objects.equals(createdAt, logModel.createdAt) && Objects.equals(updatedAt, logModel.updatedAt);
+        return logID == logModel.logID && isActionSuccess == logModel.isActionSuccess && Objects.equals(username, logModel.username) && Objects.equals(reqIP, logModel.reqIP) && Objects.equals(level, logModel.level) && Objects.equals(targetTable, logModel.targetTable) && Objects.equals(action, logModel.action) && Objects.equals(beforeValueJSON, logModel.beforeValueJSON) && Objects.equals(afterValueJSON, logModel.afterValueJSON) && Objects.equals(createdAt, logModel.createdAt) && Objects.equals(updatedAt, logModel.updatedAt);
     }
 
-    @Override
     public String getStringID() {
         return String.valueOf(this.logID);
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.ofEntries(
+                Map.entry("log_id", this.logID),
+                Map.entry("username", this.username),
+                Map.entry("req_ip", this.reqIP),
+                Map.entry("ip_country", this.ipCountry),
+                Map.entry("log_level", this.level),
+                Map.entry("target_table", this.targetTable),
+                Map.entry("action", this.action),
+                Map.entry("is_action_success", this.isActionSuccess),
+                Map.entry("before_data", this.beforeValueJSON),
+                Map.entry("after_data", this.afterValueJSON),
+                Map.entry("created_at", this.createdAt),
+                Map.entry("updated_at", this.updatedAt)
+        );
     }
 }

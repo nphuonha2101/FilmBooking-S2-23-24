@@ -1,61 +1,55 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-@Entity
-@Table(name = Room.TABLE_NAME)
+@ToString
+@TableName("rooms")
+@TableIdName("room_id")
+@IdAutoIncrement
 public class Room implements IModel {
-    @Transient
     public static final String TABLE_NAME = "rooms";
 
     @Setter
     @Getter
     @Expose
-    @Column(name = "room_id", updatable = false, insertable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomID;
     @Getter
-    @Column(name = "room_name")
     @Expose
     private String roomName;
     @Getter
     @Expose
-    @Column(name = "seat_rows")
     private int seatRows;
     @Getter
     @Expose
-    @Column(name = "seat_cols")
     private int seatCols;
     @Setter
-    @Transient
     private String[][] seatMatrix;
     @Setter
     @Getter
     @Expose
-    @Column(name = "seats_data")
     private String seatData;
     @Expose
     @Setter
     @Getter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
     private Theater theater;
     @Setter
     @Getter
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Showtime> showtimeSet;
     @Setter
     @Getter
     @Expose
-    @Column(name = "slug")
     private String slug;
 
     public Room() {
@@ -125,6 +119,18 @@ public class Room implements IModel {
     @Override
     public String getStringID() {
         return String.valueOf(this.roomID);
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "room_id", this.roomID,
+                "room_name", this.roomName,
+                "seat_rows", this.seatRows,
+                "seat_cols", this.seatCols,
+                "seat_data", this.seatData,
+                "theater_id", this.theater.getTheaterID(),
+                "slug", this.slug
+        );
     }
 
 }

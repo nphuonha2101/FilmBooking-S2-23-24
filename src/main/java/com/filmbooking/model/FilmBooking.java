@@ -1,65 +1,52 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
-@Entity
-@Table(name = FilmBooking.TABLE_NAME)
+@TableName("film_bookings")
+@TableIdName("film_booking_id")
+@IdAutoIncrement
 public class FilmBooking implements Cloneable, IModel {
-    @Transient
     public static final String TABLE_NAME = "film_bookings";
     private static final int EXPIRE_TIME = 15;
 
     @Getter
     @Setter
     @Expose
-    @Column(name = "film_booking_id", insertable = false, updatable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmBookingID;
     @Getter
     @Setter
     @Expose
-    @ManyToOne()
-    @JoinColumn(name = "showtime_id")
     private Showtime showtime;
     @Getter
     @Setter
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
     private User user;
     @Getter
     @Expose
-    @Column(name = "booking_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime bookingDate;
     @Expose
-    @Transient
     private String[] bookedSeats;
     @Getter
     @Expose
-    @Column(name = "seats")
     private String seatsData;
     @Setter
     @Getter
-    @Expose
-    @Column(name = "total_fee")
     private double totalFee;
     @Getter
     @Setter
-    @Expose
-    @Column(name = "payment_status")
     private String paymentStatus;
-
-    @Transient
     private LocalDateTime expireDate;
     @Getter
-    @Transient
     private String vnpayTxnRef;
 
     public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] bookedSeats, double totalFee) {
@@ -161,10 +148,21 @@ public class FilmBooking implements Cloneable, IModel {
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
-
     @Override
     public String getStringID() {
         return String.valueOf(this.filmBookingID);
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "film_booking_id", this.filmBookingID,
+                "showtime_id", this.showtime.getShowtimeID(),
+                "username", this.user.getUsername(),
+                "booking_date", this.bookingDate,
+                "seats", this.seatsData,
+                "total_fee", this.totalFee,
+                "payment_status", this.paymentStatus
+        );
     }
 
 }

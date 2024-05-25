@@ -25,9 +25,9 @@ public class RecaptchaVerification {
     private final String SITE_VERIFY_URL = "https://www.google.com/recaptcha/api/siteverify";
 
     public RecaptchaVerification() {
-        PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
+
 //        this.siteKey = propertiesUtils.getProperty("recaptcha.site_key");
-        this.secretKey = propertiesUtils.getProperty("recaptcha.secret_key");
+        this.secretKey = PropertiesUtils.getProperty("recaptcha.secret_key");
     }
 
     public boolean verify(HttpServletRequest req, HttpServletResponse resp) {

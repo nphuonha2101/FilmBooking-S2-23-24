@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertiesUtils {
     private static final String APPLICATION_PROPERTIES_PATH = "/properties/application.properties";
-    private final Properties properties;
+    private static Properties properties;
     private static PropertiesUtils instance = null;
 
     private PropertiesUtils() {
@@ -14,7 +14,7 @@ public class PropertiesUtils {
         loadPropertiesFile();
     }
 
-    public static PropertiesUtils getInstance() {
+    private static PropertiesUtils getInstance() {
         if (instance == null) {
             instance = new PropertiesUtils();
         }
@@ -35,11 +35,13 @@ public class PropertiesUtils {
         }
     }
 
-    public String getProperty(String key) {
+    public static String getProperty(String key) {
+        getInstance();
         return properties.getProperty(key);
     }
 
-    public Properties getProperties() {
-        return this.properties;
+    public static Properties getProperties() {
+        getInstance();
+        return properties;
     }
 }
