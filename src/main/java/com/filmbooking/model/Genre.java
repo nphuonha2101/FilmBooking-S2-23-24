@@ -1,29 +1,31 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.StringID;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-@Entity
 @Getter
 @Setter
-@Table(name = Genre.TABLE_NAME)
+@ToString
+@TableName("genres")
+@TableIdName("genre_id")
+@StringID
 public class Genre implements IModel {
-    @Transient
     public static final String TABLE_NAME = "genres";
 
     @Expose
-    @Column(name = "genre_id")
-    @Id
     private String genreID;
     @Expose
-    @Column(name = "genre_name")
     private String genreName;
-    @ManyToMany(mappedBy = "genreList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Film> filmList;
 
     public Genre() {
@@ -51,12 +53,14 @@ public class Genre implements IModel {
     }
 
     @Override
-    public String toString() {
-        return this.genreID + ", " + this.genreName;
-    }
-
-    @Override
     public String getStringID() {
         return this.genreID;
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "genre_id", this.genreID,
+                "genre_name", this.genreName
+        );
     }
 }

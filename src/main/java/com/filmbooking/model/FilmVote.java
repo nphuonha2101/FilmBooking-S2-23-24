@@ -6,33 +6,32 @@ package com.filmbooking.model;
  *  @author nphuonha
  */
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+import java.util.Map;
+
 @Getter
 @Setter
-@Table(name = FilmVote.TABLE_NAME)
+@TableName("film_votes")
+@TableIdName("film_vote_id")
+@IdAutoIncrement
 public class FilmVote implements IModel {
-    @Transient
     public static final String TABLE_NAME = "film_votes";
 
     @Getter
     @Setter
-    @Id
     @Expose
-    @Column(name = "film_vote_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_id")
     private Film film;
     @Expose
-    @Column(name = "scores")
     private int scores;
 
     public FilmVote() {}
@@ -45,6 +44,14 @@ public class FilmVote implements IModel {
     @Override
     public String getStringID() {
         return String.valueOf(this.id);
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "film_vote_id", this.id,
+                "film_id", this.film.getFilmID(),
+                "scores", this.scores
+        );
     }
 
 

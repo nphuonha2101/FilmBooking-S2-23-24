@@ -37,7 +37,7 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
     }
     @Override
     public AbstractSendEmail loadHTMLEmail(LanguageEnum language) {
-        String tokenVerifyUrl = PropertiesUtils.getInstance().getProperty("verify_token.url");
+        String tokenVerifyUrl = PropertiesUtils.getProperty("verify_token.url");
         String currentYear = String.valueOf(LocalDateTime.now().getYear());
 
         // load email html template

@@ -6,7 +6,7 @@ package com.filmbooking.enumsAndConstants.enums;
  * @project_name FilmBooking-S2-23-24
  */
 public enum TokenTypeEnum {
-    PASSWORD_RESET("PASSWORD_RESET");
+    PASSWORD_RESET("PASSWORD_RESET"), AUTHENTICATION("AUTHENTICATION");
 
     private final String tokenType;
 

@@ -36,7 +36,6 @@ import java.util.List;
 @WebServlet("/google/login")
 public class GoogleLoginController extends HttpServlet {
 
-    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -84,13 +83,13 @@ public class GoogleLoginController extends HttpServlet {
     }
 
     private String getToken(final String code) throws IOException, ParseException {
-        HttpPost httpPost = new HttpPost(propertiesUtils.getProperty("link_get_token"));
+        HttpPost httpPost = new HttpPost(PropertiesUtils.getProperty("link_get_token"));
         List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("client_id", propertiesUtils.getProperty("client_id")));
-        params.add(new BasicNameValuePair("client_secret", propertiesUtils.getProperty("client_secret")));
-        params.add(new BasicNameValuePair("redirect_uri", propertiesUtils.getProperty("redirect_uri")));
+        params.add(new BasicNameValuePair("client_id", PropertiesUtils.getProperty("client_id")));
+        params.add(new BasicNameValuePair("client_secret", PropertiesUtils.getProperty("client_secret")));
+        params.add(new BasicNameValuePair("redirect_uri", PropertiesUtils.getProperty("redirect_uri")));
         params.add(new BasicNameValuePair("code", code));
-        params.add(new BasicNameValuePair("grant_type", propertiesUtils.getProperty("grant_type")));
+        params.add(new BasicNameValuePair("grant_type", PropertiesUtils.getProperty("grant_type")));
         httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -102,7 +101,7 @@ public class GoogleLoginController extends HttpServlet {
     }
 
     private GoogleUserInfo getUserInfo(final String accessToken) throws IOException, ParseException {
-        HttpGet httpGet = new HttpGet(propertiesUtils.getProperty("link_get_user_info") + accessToken);
+        HttpGet httpGet = new HttpGet(PropertiesUtils.getProperty("link_get_user_info") + accessToken);
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = httpClient.execute(httpGet);
