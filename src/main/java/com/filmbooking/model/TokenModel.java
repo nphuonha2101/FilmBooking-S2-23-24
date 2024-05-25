@@ -6,6 +6,7 @@
 
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
@@ -28,6 +29,7 @@ import java.util.Map;
 @TableName("user_tokens")
 @TableIdName("token")
 @AllArgsConstructor
+@StringID
 public class TokenModel implements IModel {
     public static final String TABLE_NAME = "user_tokens";
 

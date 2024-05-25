@@ -24,12 +24,14 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             jdbiBuilder.setMapToRow(mapToRow(t));
             String sql = jdbiBuilder.buildInsertSQL();
+            System.out.println("Insert SQL: " + sql);
 
             handle.createUpdate(sql)
                     .bindMap(jdbiBuilder.getMapToRow())
                     .execute();
             return true;
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             return false;
         } finally {
             JdbiDBConnection.closeHandle();
@@ -44,6 +46,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             jdbiBuilder.setMapToRow(mapToRow(t));
             String sql = jdbiBuilder.buildUpdateSQL();
+            System.out.println("Update SQL: " + sql);
 
             handle.createUpdate(sql)
                     .bindMap(jdbiBuilder.getMapToRow())
@@ -51,6 +54,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             return true;
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             return false;
         } finally {
             JdbiDBConnection.closeHandle();
@@ -63,6 +67,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildDeleteSQL();
+            System.out.println("Delete SQL: " + sql);
 
             Object id = jdbiBuilder.isStringId() ? t.getStringID() : Long.parseLong(t.getStringID());
 
@@ -72,6 +77,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             return true;
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             return false;
         } finally {
             JdbiDBConnection.closeHandle();
@@ -85,12 +91,14 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectSQL();
+            System.out.println("Select SQL: " + sql);
 
             return handle.createQuery(sql)
                     .bind(jdbiBuilder.getPrimaryKeyName(), id)
                     .map(getRowMapper())
                     .one();
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             return null;
         } finally {
             JdbiDBConnection.closeHandle();
@@ -103,11 +111,13 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL();
+            System.out.println("Select All SQL: " + sql);
 
             return handle.createQuery(sql)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {
+            e.printStackTrace(System.out);
             return null;
         } finally {
             JdbiDBConnection.closeHandle();

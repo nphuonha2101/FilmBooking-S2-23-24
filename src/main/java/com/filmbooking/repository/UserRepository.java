@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class UserRepository extends AbstractRepository<User> {
 
-
     public UserRepository(Class<User> modelClass) {
         super(modelClass);
     }
@@ -30,4 +29,5 @@ public class UserRepository extends AbstractRepository<User> {
                 "account_status", user.getAccountStatus()
         );
     }
+
 }

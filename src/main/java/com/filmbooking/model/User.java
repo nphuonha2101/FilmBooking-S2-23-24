@@ -1,24 +1,22 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @ToString
 @TableName("user_infos")
 @TableIdName("username")
+@StringID
 public class User implements IModel {
     public static final String TABLE_NAME = "user_infos";
     @Expose
@@ -47,8 +45,19 @@ public class User implements IModel {
         this.userEmail = userEmail;
     }
 
+    public User(String username, String userFullName, String userEmail, String userPassword, String accountRole, String accountType, int accountStatus, List<FilmBooking> filmBookingList) {
+        this.username = username;
+        this.userFullName = userFullName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.accountRole = accountRole;
+        this.accountType = accountType;
+        this.accountStatus = accountStatus;
+        this.filmBookingList = filmBookingList;
+    }
+
     public User(String username, String userFullName, String userEmail, String userPassword,
-            AccountRoleEnum accountRole, String accountType, int accountStatus) {
+                AccountRoleEnum accountRole, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
