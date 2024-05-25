@@ -2,12 +2,14 @@ package com.filmbooking.jdbi.builder;
 
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.StringID;
+import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.model.IModel;
 import com.filmbooking.utils.annotation.ClazzAnnotationProcessor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class JdbiBuilder<T extends IModel> {
@@ -27,9 +29,13 @@ public class JdbiBuilder<T extends IModel> {
     public JdbiBuilder(Class<T> modelClass) {
         ClazzAnnotationProcessor clazzAnnotationProcessor = ClazzAnnotationProcessor.getInstance(modelClass);
         this.tableName = (String) clazzAnnotationProcessor.getAnnotationValue(TableName.class, "value");
-        this.primaryKeyName = (String) clazzAnnotationProcessor.getAnnotationValue(TableName.class, "value");
+        this.primaryKeyName = (String) clazzAnnotationProcessor.getAnnotationValue(TableIdName.class, "value");
         this.isIdAutoIncrement = clazzAnnotationProcessor.isAnnotationPresent(IdAutoIncrement.class);
         this.isStringId = clazzAnnotationProcessor.isAnnotationPresent(StringID.class);
+    }
+
+    public void setMapToRow(Map<String, Object> mapToRow) {
+        this.mapToRow = new HashMap<>(mapToRow);
     }
 
     public String buildInsertSQL() {
@@ -56,8 +62,6 @@ public class JdbiBuilder<T extends IModel> {
 
     public String buildUpdateSQL() {
         sql = new StringBuilder("UPDATE " + this.tableName + " SET ");
-
-        this.mapToRow.remove(this.primaryKeyName);
 
         for (String key : this.mapToRow.keySet()) {
             sql.append(key).append(" = :").append(key).append(", ");
