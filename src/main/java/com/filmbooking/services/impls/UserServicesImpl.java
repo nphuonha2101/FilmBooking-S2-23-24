@@ -215,7 +215,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
      * @return hashed password
      */
     public String hashPassword(String password) {
-        String passwordSecretKey = PropertiesUtils.getInstance().getProperty("password.hash_secret_key");
+        String passwordSecretKey = PropertiesUtils.getProperty("password.hash_secret_key");
         return StringUtils.generateSHA256String(password + passwordSecretKey);
     }
 

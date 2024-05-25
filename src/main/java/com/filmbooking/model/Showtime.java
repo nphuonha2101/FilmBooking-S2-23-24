@@ -1,52 +1,43 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 @Getter
 @Setter
-@Entity
-@Table(name = Showtime.TABLE_NAME)
+@ToString
+@TableName("showtimes")
+@TableIdName("showtime_id")
+@IdAutoIncrement
+@AllArgsConstructor
 public class Showtime implements IModel {
-    @Transient
     public static final String TABLE_NAME = "showtimes";
 
     @Expose
-    @Column(name = "showtime_id", updatable = false, insertable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long showtimeID;
     @Expose
-    @ManyToOne
-    @JoinColumn(name = "film_id")
     private Film film;
-
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
     private Room room;
-
     @Expose
-    @Column(name = "showtime_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime showtimeDate;
     @Expose
-    @Column(name = "seats_data")
     private String seatsData;
-
-    @OneToMany(mappedBy = "showtime", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FilmBooking> filmBookingSet;
+    private List<FilmBooking> filmBookingList;
     @Expose
-    @Column(name = "slug")
     private String slug;
 
     public Showtime() {
@@ -57,7 +48,7 @@ public class Showtime implements IModel {
         this.room = room;
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
-        this.filmBookingSet = new ArrayList<>();
+        this.filmBookingList = new ArrayList<>();
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
@@ -205,6 +196,17 @@ public class Showtime implements IModel {
     @Override
     public String getStringID() {
         return String.valueOf(this.showtimeID);
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "showtime_id", this.showtimeID,
+                "film_id", this.film.getFilmID(),
+                "room_id", this.room.getRoomID(),
+                "showtime_date", this.showtimeDate,
+                "seats_data", this.seatsData,
+                "slug", this.slug
+        );
     }
 
 }

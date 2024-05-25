@@ -61,7 +61,7 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
         // validate input
-       if(!validateInput(req, resp, username, userFullName, userEmail, userPassword, confirmPassword)) return;
+       if(!validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword)) return;
 
         // username existed!
         if (userServicesLog.getByID(username) != null) {
@@ -104,9 +104,9 @@ public class SignupController extends HttpServlet {
         hibernateSessionProvider = null;
     }
 
-    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp,String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
+    private boolean validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
         if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
-            handleInput(req, resp,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+            handleInput(req, resp, page,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
             return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {

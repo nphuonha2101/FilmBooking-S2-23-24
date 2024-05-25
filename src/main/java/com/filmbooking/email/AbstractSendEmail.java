@@ -39,23 +39,21 @@ import java.util.Properties;
  * </ul>
  */
 public abstract class AbstractSendEmail {
-    private final PropertiesUtils propertiesUtils;
     protected StringBuilder emailHtmls;
     protected Map<String, Object> emailInfo;
     protected Properties emailProperties;
 
 
     protected AbstractSendEmail() {
-        propertiesUtils = PropertiesUtils.getInstance();
         this.emailInfo = new HashMap<>();
         this.emailHtmls = new StringBuilder();
 
         emailProperties = new Properties();
         emailProperties.put("mail.smtp.auth", "true");
-        emailProperties.put("mail.smtp.host", propertiesUtils.getProperty("email.hostName"));
-        emailProperties.put("mail.smtp.socketFactory.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
+        emailProperties.put("mail.smtp.host", PropertiesUtils.getProperty("email.hostName"));
+        emailProperties.put("mail.smtp.socketFactory.port", Integer.parseInt(PropertiesUtils.getProperty("email.sslPort")));
         emailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        emailProperties.put("mail.smtp.port", Integer.parseInt(propertiesUtils.getProperty("email.sslPort")));
+        emailProperties.put("mail.smtp.port", Integer.parseInt(PropertiesUtils.getProperty("email.sslPort")));
     }
 
     /**
@@ -67,7 +65,7 @@ public abstract class AbstractSendEmail {
         return Session.getDefaultInstance(emailProperties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(propertiesUtils.getProperty("email.appName"), propertiesUtils.getProperty("email.appPassword"));
+                return new PasswordAuthentication(PropertiesUtils.getProperty("email.appName"), PropertiesUtils.getProperty("email.appPassword"));
             }
         });
     }
