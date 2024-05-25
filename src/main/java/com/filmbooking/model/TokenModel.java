@@ -6,49 +6,48 @@
 
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Getter
-@Entity
-@Table(name = TokenModel.TABLE_NAME)
+@ToString
+@TableName("user_tokens")
+@TableIdName("token")
+@AllArgsConstructor
 public class TokenModel implements IModel {
-    @Transient
     public static final String TABLE_NAME = "user_tokens";
 
     @Expose
-    @Id
-    @Column(name = "token")
     private String token;
     @Expose
-    @Column(name = "username")
     private String username;
     @Expose
-    @Column(name = "expiry_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime expiryDate;
     @Expose
-    @Column(name = "token_type")
     private String tokenType;
     @Expose
     @Setter
-    @Column(name="token_state")
     private String tokenState;
 
     public TokenModel() {
     }
 
     private void tokenModelConstruct(String dataToGenerateToken, String username, TokenTypeEnum tokenType) {
-        String SECRET_KEY = PropertiesUtils.getInstance()
-                .getProperty("token.hash_secret_key");
+        String SECRET_KEY = PropertiesUtils.getProperty("token.hash_secret_key");
         String currentSystemMillis = String.valueOf(System.currentTimeMillis());
         this.token = StringUtils.generateSHA256String(dataToGenerateToken + currentSystemMillis + SECRET_KEY);
         this.username = username;
@@ -75,8 +74,7 @@ public class TokenModel implements IModel {
      * @param username            username has the token
      */
     public TokenModel(String dataToGenerateToken, String username, TokenTypeEnum tokenType) {
-        int tokenExpiryTime = Integer.parseInt(PropertiesUtils.getInstance()
-                .getProperty("token.expiry_time"));
+        int tokenExpiryTime = Integer.parseInt(PropertiesUtils.getProperty("token.expiry_time"));
         tokenModelConstruct(dataToGenerateToken, username, tokenType);
         this.expiryDate = LocalDateTime.now().plusSeconds(tokenExpiryTime);
     }
@@ -84,5 +82,15 @@ public class TokenModel implements IModel {
     @Override
     public String getStringID() {
         return this.token;
+    }
+
+    public Map<String, Object> mapToRow() {
+        return Map.of(
+                "token", this.token,
+                "username", this.username,
+                "expiry_date", Timestamp.valueOf(this.expiryDate),
+                "token_type", this.tokenType,
+                "token_state", this.tokenState
+        );
     }
 }

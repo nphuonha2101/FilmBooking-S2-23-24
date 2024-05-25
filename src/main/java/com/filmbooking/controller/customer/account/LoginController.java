@@ -33,7 +33,6 @@ public class LoginController extends HttpServlet {
     private UserServicesLogProxy<User> userServices;
     private FailedLoginServicesImpl failedLoginServices;
     private HibernateSessionProvider hibernateSessionProvider;
-    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
 
@@ -42,8 +41,8 @@ public class LoginController extends HttpServlet {
         if (req.getSession().getAttribute("loginUser") != null)
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/home"));
         else {
-            String clientID = propertiesUtils.getProperty("client_id");
-            String redirectURI = propertiesUtils.getProperty("redirect_uri");
+            String clientID = PropertiesUtils.getProperty("client_id");
+            String redirectURI = PropertiesUtils.getProperty("redirect_uri");
             System.out.println(redirectURI);
             Page loginPage = getPage(redirectURI, clientID);
             loginPage.render(req, resp);

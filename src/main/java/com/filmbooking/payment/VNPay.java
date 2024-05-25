@@ -18,12 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VNPay {
-    private final PropertiesUtils propertiesUtils;
     private    Map<String, String> vnp_Params;
 
     public VNPay() {
         vnp_Params = new HashMap<>();
-        propertiesUtils = PropertiesUtils.getInstance();
+
         defaultConfig();
     }
 
@@ -33,13 +32,13 @@ public class VNPay {
     private void defaultConfig() {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String vnp_TmnCode = propertiesUtils.getProperty("vnp_TmnCode");
+        String vnp_TmnCode = PropertiesUtils.getProperty("vnp_TmnCode");
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_OrderType", "190000");
-        vnp_Params.put("vnp_ReturnUrl", propertiesUtils.getProperty("vnp_ReturnUrl"));
+        vnp_Params.put("vnp_ReturnUrl", PropertiesUtils.getProperty("vnp_ReturnUrl"));
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -145,10 +144,10 @@ public class VNPay {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = StringUtils.hmacSHA512(propertiesUtils.getProperty("vnp_HashSecret"), hashData.toString());
+        String vnp_SecureHash = StringUtils.hmacSHA512(PropertiesUtils.getProperty("vnp_HashSecret"), hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
 
-        return propertiesUtils.getProperty("vnp_Url") + "?" + queryUrl;
+        return PropertiesUtils.getProperty("vnp_Url") + "?" + queryUrl;
     }
 
 //    public String getPaymentURL(double amount, String orderInfo, String customerIP, String locate, String vnp_TxnRef) {

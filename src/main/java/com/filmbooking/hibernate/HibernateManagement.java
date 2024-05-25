@@ -34,7 +34,7 @@ public class HibernateManagement {
      */
     private SessionFactory buildSessionFactory() {
         Configuration configuration =
-                new org.hibernate.cfg.Configuration().setProperties(PropertiesUtils.getInstance().getProperties());
+                new org.hibernate.cfg.Configuration().setProperties(PropertiesUtils.getProperties());
 
         // add all Entity to Hibernate Config
         configuration.addAnnotatedClass(Film.class);
