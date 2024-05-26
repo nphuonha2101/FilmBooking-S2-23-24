@@ -67,7 +67,7 @@ public class Room implements IModel {
         generateSeatsData();
     }
 
-    public Room(String roomName,int theaterID, int seatRows, int seatCols, String seatData, String slug) {
+    public Room(String roomName, int seatRows, int seatCols, String seatData, String slug) {
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;

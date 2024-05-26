@@ -12,7 +12,7 @@ public class RoomRepositoryTest {
         assertDoesNotThrow(() -> {
             RoomRepository repository = new RoomRepository(Room.class);
             Room room = new Room(
-                    "R001", 1, 10, 10, "abc", "xyz"
+                    "R001", 10, 10, "abc", "xyz"
             );
             assertTrue(repository.insert(room));
         });
