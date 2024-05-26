@@ -13,7 +13,7 @@ public class RoomMapper implements RowMapper<Room> {
     public Room map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new Room(
                 rs.getString("room_name"),
-                rs.getInt("theater_id"),
+//                rs.getInt("theater_id"),
                 rs.getInt("seat_rows"),
                 rs.getInt("seat_cols"),
                 rs.getString("seats_data"),

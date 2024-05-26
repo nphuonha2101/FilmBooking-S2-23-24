@@ -20,7 +20,7 @@ public class RoomRepository extends AbstractRepository<Room>{
     Map<String, Object> mapToRow(Room room) {
         return Map.of(
                 "room_name", room.getRoomName(),
-                "theater_id", room.getTheater().getTheaterID(),
+//                "theater_id", room.getTheater().getTheaterID(),
                 "seat_rows", room.getSeatRows(),
                 "seat_cols", room.getSeatCols(),
                 "seat_data", room.getSeatData(),
