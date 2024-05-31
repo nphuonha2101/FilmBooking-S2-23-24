@@ -32,14 +32,14 @@ public class BookingFilmController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl();
-        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(showtimeServices, req, hibernateSessionProvider);
+        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(showtimeServices, req, Showtime.class);
 
         // get film booking from session
         filmBooking = (FilmBooking) req.getSession(false).getAttribute("filmBooking");
 
         Showtime bookedShowtime = filmBooking.getShowtime();
         // update showtime from Database
-        bookedShowtime = showtimeServicesLog.getByID(bookedShowtime.getStringID());
+        bookedShowtime = showtimeServicesLog.select(bookedShowtime.getIdValue());
 
         HashMap<Long, String[][]> showtimeIDAndSeatMatrix = showtimeServices.getShowtimeIDAndSeatMatrix();
 
@@ -60,8 +60,8 @@ public class BookingFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
-        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+        showtimeServices = new ShowtimeServicesImpl();
+        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
 
         String seats = req.getParameter("seats");
 
@@ -78,7 +78,7 @@ public class BookingFilmController extends HttpServlet {
 
             Showtime showtime = filmBooking.getShowtime();
             // update showtime from database
-            showtime = showtimeServicesLog.getByID(showtime.getStringID());
+            showtime = showtimeServicesLog.select(showtime.getIdValue());
 
             showtime.reserveSeats(seats.split(", "));
 
