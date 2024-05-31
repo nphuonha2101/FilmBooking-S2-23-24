@@ -111,8 +111,8 @@ public class Film implements IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.filmID);
+    public Object getIdValue() {
+        return this.filmID;
     }
 
 
