@@ -81,7 +81,7 @@ public class User implements IModel {
     }
 
     @Override
-    public String getStringID() {
+    public Object getIdValue() {
         return this.username;
     }
 

@@ -10,7 +10,6 @@ import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,8 +41,8 @@ public class FilmVote implements IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.id);
+    public Object getIdValue() {
+        return this.id;
     }
 
     public Map<String, Object> mapToRow() {

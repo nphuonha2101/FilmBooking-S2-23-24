@@ -26,7 +26,7 @@ public class FailedLogin implements IModel {
     }
 
     @Override
-    public String getStringID() {
+    public Object getIdValue() {
         return this.reqIp;
     }
 
