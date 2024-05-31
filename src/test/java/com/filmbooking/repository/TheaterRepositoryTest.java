@@ -11,7 +11,7 @@ class TheaterRepositoryTest {
     void select() {
         assertDoesNotThrow(() -> {
             TheaterRepository theaterRepository = new TheaterRepository(Theater.class);
-            System.out.println(theaterRepository.select(1));
+            System.out.println(theaterRepository.selectAll(2, 0));
         });
     }
 

@@ -113,7 +113,7 @@ create table failed_logins
 	req_ip            varchar(50) not null PRIMARY KEY,
 	login_count int not null,
 	lock_time timestamp
-)
+);
 
 
 -- Genre

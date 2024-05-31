@@ -23,7 +23,7 @@ public class TheaterAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        theaterServices = new TheaterServicesImpl(sessionProvider);
+        theaterServices = new TheaterServicesImpl();
 
         APIUtils<Theater> apiUtils = new APIUtils<>(theaterServices, req, resp);
         String command = req.getParameter("command");

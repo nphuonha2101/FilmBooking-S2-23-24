@@ -28,7 +28,6 @@ import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class GoogleLoginController extends HttpServlet {
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
             HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-            UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
+            UserServicesImpl userServices = new UserServicesImpl();
 
             String accessToken = null;
             try {
@@ -68,7 +67,7 @@ public class GoogleLoginController extends HttpServlet {
             User loginUser = userServices.getByEmail(userEmail);
             if (loginUser == null) {
                 loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType(),1);
-                userServices.save(loginUser);
+                userServices.insert(loginUser);
 
             }
             HttpSession session = req.getSession();

@@ -1,21 +1,17 @@
 package com.filmbooking.services.impls;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
-import com.filmbooking.services.ICRUDServices;
+import com.filmbooking.repository.UserRepository;
+import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.utils.PropertiesUtils;
@@ -24,57 +20,33 @@ import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.persistence.NoResultException;
 
-public class UserServicesImpl extends AbstractCRUDServices<User> implements IUserServices {
-
+public class UserServicesImpl extends AbstractService<User> implements IUserServices {
     private final TokenServicesImpl tokenServices;
 
-    public UserServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(User.class);
-        this.tokenServices = new TokenServicesImpl();
-        this.setSessionProvider(sessionProvider);
-    }
-
     public UserServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(User.class);
+        super(new UserRepository(User.class));
         this.tokenServices = new TokenServicesImpl();
-    }
-
-    @Override
-    public String getTableName() {
-        return User.TABLE_NAME;
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-        this.tokenServices.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public User getBySlug(String slug) {
-        throw new UnsupportedOperationException("This method is not supported for User");
-    }
-
-    @Override
-    public User getByID(String id) {
-        if (!Objects.equals(id, "null"))
-            return this.decoratedDAO.getByID(id, false);
-        else
-            throw new RuntimeException("ID must not be null");
     }
 
     public User getByEmail(String email) {
         try {
-            Map<String, Object> map = Map.of("userEmail_=", email);
-            return this.getByPredicates(map).getSingleResult();
+            Map<String, Object> filters = new HashMap<>();
+            filters.put("user_email", email);
+            return this.selectAll(filters).get(0);
         } catch (NoResultException e) {
+            e.printStackTrace(System.out);
             return null;
         }
     }
 
     public User getByUsername(String username){
-        Map<String,Object> map = Map.of("username_=", username);
-        return this.getByPredicates(map).getSingleResult();
+        try {
+            Map<String, Object> filters = new HashMap<>();
+            filters.put("username", username);
+            return this.selectAll(filters).get(0);
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     /**
@@ -101,7 +73,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
             loginUser = getByEmail(usernameOrEmail);
         // login by username
         if (isUsername)
-            loginUser = getByID(usernameOrEmail);
+            loginUser = select(usernameOrEmail);
         // if input is not email or username
         if (!(isEmail || isUsername)) {
             serviceResult = new ServiceResult(StatusCodeEnum.INVALID_INPUT);
@@ -137,7 +109,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     public ServiceResult userForgotPassword(String username, String email, String language) {
         ServiceResult result = null;
 
-        User forgotPassUser = getByID(username);
+        User forgotPassUser = select(username);
 
         // if user not exist
         if (forgotPassUser == null) {
@@ -152,7 +124,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
                 TokenModel tokenModel = new TokenModel(forgotPassUser.getUserEmail(), forgotPassUser.getUsername(),
                         TokenTypeEnum.PASSWORD_RESET);
                 // save token to database
-                tokenServices.save(tokenModel);
+                tokenServices.insert(tokenModel);
 
                 // send Email
                 String emailSubject = language == null || language.equals("default") ? "Bạn quên mật khẩu?"
@@ -187,7 +159,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
     public ServiceResult userChangePassword(String username, String oldPassword, String newPassword) {
         ServiceResult result = null;
 
-        User user = getByID(username);
+        User user = select(username);
 
         // if user not exist
         if (user == null) {
@@ -201,7 +173,7 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
             } else {
                 // update password
                 user.setUserPassword(StringUtils.generateSHA256String(newPassword));
-                super.decoratedDAO.update(user);
+                super.repository.update(user);
                 result = new ServiceResult(StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL, user);
             }
             return result;
@@ -219,13 +191,6 @@ public class UserServicesImpl extends AbstractCRUDServices<User> implements IUse
         return StringUtils.generateSHA256String(password + passwordSecretKey);
     }
 
-    /**
-     * Hashing password with SHA-256 algorithm and secret key
-     *
-     * @param username
-     * @param email
-     * @return
-     */
 
 
 }
