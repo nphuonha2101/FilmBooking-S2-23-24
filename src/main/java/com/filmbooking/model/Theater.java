@@ -35,6 +35,9 @@ public class Theater implements IModel {
     private List<Room> roomList;
 
     public Theater() {}
+    public Theater(long theaterID){
+        this.theaterID = theaterID;
+    }
 
     @Override
     public boolean equals(Object obj) {

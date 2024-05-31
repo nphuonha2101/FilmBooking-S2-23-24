@@ -17,13 +17,14 @@ public class RoomRepository extends AbstractRepository<Room>{
     }
 
     @Override
-    Map<String, Object> mapToRow(Room room) {
+    public Map<String, Object> mapToRow(Room room) {
         return Map.of(
+                "room_id", room.getRoomID(),
                 "room_name", room.getRoomName(),
-//                "theater_id", room.getTheater().getTheaterID(),
                 "seat_rows", room.getSeatRows(),
                 "seat_cols", room.getSeatCols(),
                 "seat_data", room.getSeatData(),
+                "theater_id", room.getTheater().getTheaterID(),
                 "slug", room.getSlug()
         );
     }
