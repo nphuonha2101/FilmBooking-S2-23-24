@@ -22,7 +22,7 @@ public class RoomMapper implements RowMapper<Room> {
                 rs.getString("room_name"),
                 rs.getInt("seat_rows"),
                 rs.getInt("seat_cols"),
-                StringUtils.convertTo2DArr(rs.getInt("seat_rows") + " " + rs.getInt("seat_cols")),
+                StringUtils.convertTo2DArr(rs.getString("seats_data")),
                 rs.getString("seats_data"),
                 theaterRepository.select(rs.getLong("theater_id")),
                 null,
