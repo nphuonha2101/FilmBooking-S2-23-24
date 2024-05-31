@@ -5,6 +5,7 @@ import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import java.util.Map;
 @TableName("film_bookings")
 @TableIdName("film_booking_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class FilmBooking implements Cloneable, IModel {
     public static final String TABLE_NAME = "film_bookings";
     private static final int EXPIRE_TIME = 15;

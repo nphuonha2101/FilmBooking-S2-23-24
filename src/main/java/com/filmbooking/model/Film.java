@@ -53,6 +53,20 @@ public class Film implements IModel {
     public Film() {
     }
 
+
+    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath, String slug) {
+        this.filmID = filmID;
+        this.filmName = filmName;
+        this.filmPrice = filmPrice;
+        this.director = director;
+        this.cast = cast;
+        this.filmLength = filmLength;
+        this.filmDescription = filmDescription;
+        this.filmTrailerLink = filmTrailerLink;
+        this.imgPath = imgPath;
+        this.slug = slug;
+    }
+
     /**
      * For add new Film constructor
      */
