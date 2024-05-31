@@ -29,7 +29,7 @@ public class VerifyUserToken extends HttpServlet {
         String tokenType = req.getParameter("token-type");
 
         HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-        TokenServicesImpl tokenServices = new TokenServicesImpl(hibernateSessionProvider);
+        TokenServicesImpl tokenServices = new TokenServicesImpl();
 
         // verify token
         TokenModel tokenModel = tokenServices.getToken(token, username, tokenType);

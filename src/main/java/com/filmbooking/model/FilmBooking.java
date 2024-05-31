@@ -151,8 +151,8 @@ public class FilmBooking implements Cloneable, IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.filmBookingID);
+    public Object getIdValue() {
+        return this.filmBookingID;
     }
 
     public Map<String, Object> mapToRow() {

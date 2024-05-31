@@ -194,8 +194,8 @@ public class Showtime implements IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.showtimeID);
+    public Object getIdValue() {
+        return this.showtimeID;
     }
 
     public Map<String, Object> mapToRow() {

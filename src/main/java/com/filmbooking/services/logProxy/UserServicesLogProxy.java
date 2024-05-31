@@ -5,7 +5,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.IUserServices;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -21,11 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IUserServices {
     private final UserServicesImpl userServices;
 
-    public UserServicesLogProxy(UserServicesImpl userServices, HttpServletRequest req, HibernateSessionProvider sessionProvider) {
-        super(req);
+    public UserServicesLogProxy(UserServicesImpl userServices, HttpServletRequest req, Class<T> modelClass) {
+        super(req, modelClass);
         this.userServices = userServices;
-        this.logModelServices.setSessionProvider(sessionProvider);
-        this.userServices.setSessionProvider(sessionProvider);
     }
 
     @Override
@@ -35,22 +33,22 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user;
 
         if (serviceResult.getStatus() == StatusCodeEnum.FOUND_USER) {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, true);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractService<T>) userServices, true);
             // set user for log model because current user not in session yet
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, false);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractService<T>) userServices, false);
             // default log level is INFO, but when user login fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
             // get user by username or email
             boolean isLoginWithUsername = Regex.validate(UserRegexEnum.USERNAME, usernameOrEmail);
             if (isLoginWithUsername)
-                user = userServices.getByID(usernameOrEmail);
+                user = userServices.select(usernameOrEmail);
             else
                 user = userServices.getByEmail(usernameOrEmail);
         }
         logModel.setUsername(user.getUsername());
-        logModelServices.save(logModel);
+        logModelServices.insert(logModel);
         return serviceResult;
     }
 
@@ -61,17 +59,17 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user = null;
 
         if (serviceResult.getStatus() == StatusCodeEnum.SUCCESSFUL) {
-            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, true);
+            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, (AbstractService<T>) userServices, true);
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, false);
+            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, (AbstractService<T>) userServices, false);
             // default log level is INFO, but when user forgot password fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
-            user = userServices.getByID(username);
+            user = userServices.select(username);
         }
 
         logModel.setUsername(user.getUsername());
-        logModelServices.save(logModel);
+        logModelServices.insert(logModel);
 
         return serviceResult;
     }
@@ -83,17 +81,17 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user = null;
 
         if (serviceResult.getStatus() == StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL) {
-            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, true);
+            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractService<T>) userServices, true);
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractCRUDServices<T>) userServices, false);
+            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractService<T>) userServices, false);
             // default log level is INFO, but when user change password fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
-            user = userServices.getByID(username);
+            user = userServices.select(username);
         }
 
         logModel.setUsername(user.getUsername());
-        logModelServices.save(logModel);
+        logModelServices.insert(logModel);
         return serviceResult;
     }
 }

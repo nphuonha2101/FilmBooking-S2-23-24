@@ -3,8 +3,7 @@ package com.filmbooking.utils;
 import com.filmbooking.controller.apis.apiResponse.APIJSONResponse;
 import com.filmbooking.controller.apis.apiResponse.RespCodeEnum;
 import com.filmbooking.model.IModel;
-import com.filmbooking.services.AbstractCRUDServices;
-import com.filmbooking.services.ICRUDServices;
+import com.filmbooking.services.AbstractService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -19,7 +18,7 @@ import java.util.List;
  * @project_name FilmBooking-S2-23-24
  */
 public class APIUtils<T extends IModel> {
-    private final AbstractCRUDServices<T> services;
+    private final AbstractService<T> services;
     private final String currentLanguage;
     private final HttpServletRequest req;
     private final HttpServletResponse resp;
@@ -28,7 +27,7 @@ public class APIUtils<T extends IModel> {
     private APIJSONResponse jsonResponse;
 
 
-    public APIUtils(AbstractCRUDServices<T> services, HttpServletRequest req, HttpServletResponse resp) {
+    public APIUtils(AbstractService<T> services, HttpServletRequest req, HttpServletResponse resp) {
         this.services = services;
         this.req = req;
         this.resp = resp;
@@ -44,7 +43,7 @@ public class APIUtils<T extends IModel> {
         if (id == null)
             throw new RuntimeException("ID must not be null");
 
-        T model = services.getByID(id);
+        T model = services.select(id);
 
         if (model == null)
             this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
@@ -57,7 +56,7 @@ public class APIUtils<T extends IModel> {
      * Get all models and return as JSON response
      */
     private void getAll() {
-        List<T> allModels = services.getAll().getMultipleResults();
+        List<T> allModels = services.selectAll();
 
         if (allModels == null)
             this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);
@@ -74,7 +73,7 @@ public class APIUtils<T extends IModel> {
         int limit = req.getParameter("limit") != null ? Integer.parseInt(req.getParameter("limit")) : 5;
 
         if (offset >= 0) {
-            List<T> models = services.getByOffset(offset, limit).getMultipleResults();
+            List<T> models = services.selectAll(offset, limit);
 
             if (models == null)
                 this.jsonResponse = new APIJSONResponse(RespCodeEnum.NOT_FOUND.getCode(), RespCodeEnum.NOT_FOUND.getMessage(), currentLanguage, null);

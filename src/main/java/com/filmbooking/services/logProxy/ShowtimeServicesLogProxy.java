@@ -16,11 +16,9 @@ import java.util.Map;
 public class ShowtimeServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IShowtimeServices {
     private final ShowtimeServicesImpl showtimeServices;
 
-    public ShowtimeServicesLogProxy(ShowtimeServicesImpl showtimeServices, HttpServletRequest request, HibernateSessionProvider sessionProvider) {
-        super(request);
-        this.logModelServices.setSessionProvider(sessionProvider);
+    public ShowtimeServicesLogProxy(ShowtimeServicesImpl showtimeServices, HttpServletRequest req, Class<T> modelClass) {
+        super(req, modelClass);
         this.showtimeServices = showtimeServices;
-        this.showtimeServices.setSessionProvider(sessionProvider);
     }
 
     @Override
