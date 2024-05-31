@@ -3,7 +3,7 @@ import com.filmbooking.model.FailedLogin;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class FailedLoginTest {
+public class FailedLoginRepositoryTest {
 
             @Test
             void select() {
