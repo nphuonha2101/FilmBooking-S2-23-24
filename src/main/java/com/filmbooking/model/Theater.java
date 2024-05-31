@@ -52,8 +52,8 @@ public class Theater implements IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.theaterID);
+    public Object getIdValue() {
+        return this.theaterID;
     }
 
     public Map<String, Object> mapToRow() {

@@ -2,12 +2,12 @@ package com.filmbooking.controller.customer;
 
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
+import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.utils.PaginationUtils;
-import com.filmbooking.utils.WebAppPathUtils;
+import com.filmbooking.utils.Pagination;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -25,12 +25,7 @@ public class HomeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
-
-        int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
-        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
+        filmServices = new FilmServicesImpl();
 
         Page homePage = new ClientPage(
                 "homeTitle",
@@ -38,23 +33,12 @@ public class HomeController extends HttpServlet {
                 "master"
         );
 
-        // if offset == -2, it means that the current page is not valid
-        if (offset != -2) {
-            // if offset == -1, it means that no data is found
-            if (offset != -1) {
-                List<Film> films = filmServices.getByOffset(offset, LIMIT).getMultipleResults();
+        Pagination<Film> pagination = new Pagination<>(filmServices, req, resp, LIMIT, "/home");
 
-                homePage.putAttribute("filmsData", films);
-                homePage.putAttribute("pageUrl", "home");
-            } else {
-                homePage.putAttribute("statusCodeErr", StatusCodeEnum.NO_DATA.getStatusCode());
-                homePage.putAttribute("messageDescription", "noData");
-            }
+        homePage.putAttribute("filmsData", pagination.getPaginatedRecords());
+        homePage.putAttribute("sectionTitle", "newFilmArriveSectionTitle");
+        homePage.render(req, resp);
 
-            homePage.putAttribute("sectionTitle", "newFilmArriveSectionTitle");
-            homePage.render(req, resp);
-        }
-        hibernateSessionProvider.closeSession();
     }
 
     @Override

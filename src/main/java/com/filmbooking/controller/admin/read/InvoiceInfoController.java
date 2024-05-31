@@ -22,11 +22,10 @@ public class InvoiceInfoController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new CRUDServicesLogProxy<>(new FilmBookingServicesImpl(), req, hibernateSessionProvider);
+        filmBookingServices = new CRUDServicesLogProxy<>(new FilmBookingServicesImpl(), req, FilmBooking.class);
 
         String bookingID = req.getParameter("booking-id");
-        FilmBooking filmBooking = filmBookingServices.getByID(bookingID);
+        FilmBooking filmBooking = filmBookingServices.select(bookingID);
 
         Page invoiceInfoPage = new ClientPage(
                 "invoiceInfoTitle",

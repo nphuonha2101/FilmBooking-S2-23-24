@@ -119,8 +119,8 @@ public class Room implements IModel {
     }
 
     @Override
-    public String getStringID() {
-        return String.valueOf(this.roomID);
+    public Object getIdValue() {
+        return this.roomID;
     }
 
     public Map<String, Object> mapToRow() {

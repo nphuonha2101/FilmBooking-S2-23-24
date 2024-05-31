@@ -82,7 +82,7 @@ public class TokenModel implements IModel {
     }
 
     @Override
-    public String getStringID() {
+    public Object getIdValue() {
         return this.token;
     }
 

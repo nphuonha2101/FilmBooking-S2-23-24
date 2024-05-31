@@ -6,7 +6,6 @@ import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
-import com.filmbooking.recaptchaV3Verification.RecaptchaVerification;
 import com.filmbooking.services.impls.FailedLoginServicesImpl;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
@@ -23,8 +22,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "login", value = "/login")
@@ -72,9 +69,8 @@ public class LoginController extends HttpServlet {
                 "login",
                 "master"
         );
-        hibernateSessionProvider = new HibernateSessionProvider();
-        failedLoginServices = new FailedLoginServicesImpl(hibernateSessionProvider);
-        FailedLogin failedLogin = failedLoginServices.getByID(req.getRemoteAddr());
+        failedLoginServices = new FailedLoginServicesImpl();
+        FailedLogin failedLogin = failedLoginServices.select(req.getRemoteAddr());
         if(failedLogin!=null){
             if(failedLogin.getLockTime().isAfter(LocalDateTime.now())){
                 System.out.println("Login after 5 minutes");
@@ -101,7 +97,7 @@ public class LoginController extends HttpServlet {
             }
 
 
-            userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+            userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
 
             User loginUser = null;
@@ -115,7 +111,7 @@ public class LoginController extends HttpServlet {
                     failedLogin.setReqIp(req.getRemoteAddr());
                     failedLogin.setLoginCount(1);
                     failedLogin.setLockTime(LocalDateTime.now());
-                    failedLoginServices.save(failedLogin);
+                    failedLoginServices.insert(failedLogin);
                 }else{
                     failedLoginServices.update(failedLogin);
                 }
