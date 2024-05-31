@@ -25,6 +25,12 @@ public class FailedLogin implements IModel {
     public FailedLogin() {
     }
 
+    public FailedLogin(String reqIp, int loginCount, LocalDateTime lockTime) {
+        this.reqIp = reqIp;
+        this.loginCount = loginCount;
+        this.lockTime = lockTime;
+    }
+
     @Override
     public String getStringID() {
         return this.reqIp;
