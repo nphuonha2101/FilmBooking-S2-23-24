@@ -2,7 +2,6 @@ package com.filmbooking.controller.apis;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +27,7 @@ public class UserAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        userServicesImpl = new UserServicesImpl(sessionProvider);
+        userServicesImpl = new UserServicesImpl();
 
         APIUtils<User> apiUtils = new APIUtils<>(userServicesImpl, req, resp);
         String command = req.getParameter("command");
@@ -63,9 +61,9 @@ public class UserAPI extends HttpServlet {
         System.out.println("form fields: " + formFields);
 
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<User>(new UserServicesImpl(), req, sessionProvider);
+        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
-        User user = userServicesLog.getByID(username);
+        User user = userServicesLog.select(username);
         user.setUserFullName(fullName);
         user.setAccountRole(role);
 

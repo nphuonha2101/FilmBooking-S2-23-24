@@ -12,7 +12,6 @@ import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.WebAppPathUtils;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import jakarta.servlet.ServletException;
@@ -32,8 +31,7 @@ public class FacebookLoginController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-		userServices = new UserServicesImpl(sessionProvider);
+		userServices = new UserServicesImpl();
 
 		// Đọc dữ liệu được gửi từ client-side
 		StringBuilder requestData = new StringBuilder();
@@ -56,7 +54,7 @@ public class FacebookLoginController extends HttpServlet {
 		User loginUser = userServices.getByUsername(id);
 		if (loginUser == null) {
 			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType(),1);
-			userServices.save(loginUser);
+			userServices.insert(loginUser);
 		}
 		HttpSession session = req.getSession();
 		session.setAttribute("loginUser", loginUser);

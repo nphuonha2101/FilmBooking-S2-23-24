@@ -53,7 +53,7 @@ public class Genre implements IModel {
     }
 
     @Override
-    public String getStringID() {
+    public Object getIdValue() {
         return this.genreID;
     }
 
