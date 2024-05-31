@@ -69,7 +69,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             String sql = jdbiBuilder.buildDeleteSQL();
             System.out.println("Delete SQL: " + sql);
 
-            Object id = jdbiBuilder.isStringId() ? t.getStringID() : Long.parseLong(t.getStringID());
+            Object id = t.getIdValue();
 
             handle.createUpdate(sql)
                     .bind(jdbiBuilder.getPrimaryKeyName(), id)
@@ -119,6 +119,102 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    @Override
+    public List<T> selectAll(Map<String, Object> filters) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = jdbiBuilder.buildSelectAllSQL(filters);
+            System.out.println("Select All SQL: " + sql);
+
+            return handle.createQuery(sql)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    @Override
+    public List<T> selectAll(int limit, int offset) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = jdbiBuilder.buildSelectAllSQL(limit, offset);
+            System.out.println("Select All SQL: " + sql);
+
+            return handle.createQuery(sql)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    @Override
+    public List<T> selectAll(int limit, int offset, String order) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = jdbiBuilder.buildSelectAllSQL(limit, offset, order);
+            System.out.println("Select All SQL: " + sql);
+
+            return handle.createQuery(sql)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    @Override
+    public List<T> selectAll(int limit, int offset, String order, Map<String, Object> filters) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = jdbiBuilder.buildSelectAllSQL(limit, offset, order, filters);
+            System.out.println("Select All SQL: " + sql);
+
+            return handle.createQuery(sql)
+                    .bindMap(filters)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    @Override
+    public long countRecords() {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = jdbiBuilder.buildCountSQL();
+            System.out.println("Count SQL: " + sql);
+
+            return handle.createQuery(sql)
+                    .mapTo(Long.class)
+                    .one();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return 0;
         } finally {
             JdbiDBConnection.closeHandle();
         }
