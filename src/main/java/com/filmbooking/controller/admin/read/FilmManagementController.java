@@ -1,14 +1,10 @@
 package com.filmbooking.controller.admin.read;
 
-
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.FilmServicesImpl;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.PaginationUtils;
-import com.filmbooking.utils.WebAppPathUtils;
+import com.filmbooking.utils.Pagination;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,22 +12,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "filmManagement", value = "/admin/management/film")
 public class FilmManagementController extends HttpServlet {
-    private CRUDServicesLogProxy<Film> filmServices;
-    private HibernateSessionProvider hibernateSessionProvider;
+
     private static final int LIMIT = 5;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        FilmServicesImpl filmServices = new FilmServicesImpl();
 
-        int currentPage = 1;
-        int totalPages = (int) Math.ceil((double) filmServices.getTotalRecordRows() / LIMIT);
-        int offset = PaginationUtils.handlesPagination(LIMIT, currentPage, totalPages, req, resp);
 
         Page filmManagementPage = new AdminPage(
                 "filmManagementTitle",
@@ -39,27 +29,10 @@ public class FilmManagementController extends HttpServlet {
                 "master"
         );
 
+        Pagination<Film> pagination = new Pagination<>(filmServices, req, resp, LIMIT, "/admin/management/film");
+        filmManagementPage.putAttribute("filmsData", pagination.getPaginatedRecords());
 
-        // if page valid (offset != -2)
-        if (offset != -2) {
-            // if page has data (offset != -1)
-            if (offset != -1) {
-                List<Film> films = filmServices.getByOffset(offset, LIMIT).getMultipleResults();
-                // set film data to page
-                filmManagementPage.putAttribute("filmsData", films);
-                // set page url for pagination
-                filmManagementPage.putAttribute("pageUrl", "admin/management/film");
-            }
-        }
         filmManagementPage.render(req, resp);
-
-        hibernateSessionProvider.closeSession();
-
     }
 
-    @Override
-    public void destroy() {
-        filmServices = null;
-        hibernateSessionProvider = null;
-    }
 }
