@@ -8,82 +8,90 @@ import java.util.Objects;
 
 import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.model.FailedLogin;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.AbstractRepository;
+import com.filmbooking.repository.FailedLoginRepository;
+import com.filmbooking.repository.FilmRepository;
+import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.IFilmServices;
 
-public class FilmServicesImpl extends AbstractCRUDServices<Film> implements IFilmServices {
-    private final GenreServicesImpl genreServices;
-
-    public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(Film.class);
-        this.genreServices = new GenreServicesImpl(sessionProvider);
-        this.setSessionProvider(sessionProvider);
-    }
+public class FilmServicesImpl extends AbstractService<Film>{
 
     public FilmServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(Film.class);
-        this.genreServices = new GenreServicesImpl();
+        super(new FilmRepository(Film.class));
     }
 
-    @Override
-    public String getTableName() {
-        return Film.TABLE_NAME;
-    }
 
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-        this.genreServices.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public Film getByID(String id) {
-        if (!Objects.equals(id, "null"))
-            return this.decoratedDAO.getByID(id, true);
-        else
-            throw new RuntimeException("ID must not be null");
-    }
-
-    @Override
-    public boolean save(Film film, String... genreIDs) {
-        List<Genre> genreList = new ArrayList<>();
-        for (String genreID : genreIDs) {
-            genreList.add(genreServices.getByID(genreID));
-        }
-        film.setGenreList(genreList);
-
-        return this.decoratedDAO.save(film);
-    }
-
-    @Override
-    public boolean update(Film film, String... genreIDs) {
-        List<Genre> genreList = new ArrayList<>();
-        for (String genreID : genreIDs) {
-            genreList.add(genreServices.getByID(genreID));
-        }
-        film.setGenreList(genreList);
-
-        return this.decoratedDAO.update(film);
-    }
-
-    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
-        Map<String, Object> conditions = new HashMap<>();
-
-        if (!searchQuery.isBlank()) {
-            conditions.put("filmName_like", searchQuery);
-        }
-        // if searchQuery is blank then find with price
-        if (endPriceNumber > 0) {
-            conditions.put("filmPrice_<=", endPriceNumber);
-        }
-        conditions.put("filmPrice_>=", beginPriceNumber);
-
-
-        return this.getByPredicates(conditions).getMultipleResults();
-    }
+//    public FilmServicesImpl(HibernateSessionProvider sessionProvider) {
+//        this.decoratedDAO = new DataAccessObjects<>(Film.class);
+//        this.genreServices = new GenreServicesImpl(sessionProvider);
+//        this.setSessionProvider(sessionProvider);
+//    }
+//
+//    public FilmServicesImpl() {
+//        this.decoratedDAO = new DataAccessObjects<>(Film.class);
+//        this.genreServices = new GenreServicesImpl();
+//    }
+//
+//    @Override
+//    public String getTableName() {
+//        return Film.TABLE_NAME;
+//    }
+//
+//    @Override
+//    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
+//        this.decoratedDAO.setSessionProvider(sessionProvider);
+//        this.genreServices.setSessionProvider(sessionProvider);
+//    }
+//
+//    @Override
+//    public Film getByID(String id) {
+//        if (!Objects.equals(id, "null"))
+//            return this.decoratedDAO.getByID(id, true);
+//        else
+//            throw new RuntimeException("ID must not be null");
+//    }
+//
+//    @Override
+//    public boolean save(Film film, String... genreIDs) {
+//        List<Genre> genreList = new ArrayList<>();
+//        for (String genreID : genreIDs) {
+//            genreList.add(genreServices.getByID(genreID));
+//        }
+//        film.setGenreList(genreList);
+//
+//        return this.decoratedDAO.save(film);
+//    }
+//
+//    @Override
+//    public boolean update(Film film, String... genreIDs) {
+//        List<Genre> genreList = new ArrayList<>();
+//        for (String genreID : genreIDs) {
+//            genreList.add(genreServices.getByID(genreID));
+//        }
+//        film.setGenreList(genreList);
+//
+//        return this.decoratedDAO.update(film);
+//    }
+//
+//    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
+//        Map<String, Object> conditions = new HashMap<>();
+//
+//        if (!searchQuery.isBlank()) {
+//            conditions.put("filmName_like", searchQuery);
+//        }
+//        // if searchQuery is blank then find with price
+//        if (endPriceNumber > 0) {
+//            conditions.put("filmPrice_<=", endPriceNumber);
+//        }
+//        conditions.put("filmPrice_>=", beginPriceNumber);
+//
+//
+//        return this.getByPredicates(conditions).getMultipleResults();
+//    }
 
 
 }
