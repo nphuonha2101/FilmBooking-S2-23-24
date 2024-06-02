@@ -6,11 +6,14 @@ import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.GeoLite2IPUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,6 +28,7 @@ import java.util.Objects;
 @TableName("logs")
 @TableIdName("log_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class LogModel implements IModel {
     // log actions
     public static final String TABLE_NAME = "logs";
@@ -66,10 +70,10 @@ public class LogModel implements IModel {
     private String afterValueJSON;
     @Expose
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
     @Expose
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Timestamp updatedAt;
 
     public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
         this.username = user.getUsername();
@@ -82,9 +86,9 @@ public class LogModel implements IModel {
         this.beforeValueJSON = beforeValueJSON;
         this.afterValueJSON = afterValueJSON;
         if (isCreate) {
-            this.createdAt = LocalDateTime.now();
+            this.createdAt = new Timestamp(new Date().getTime());
         } else {
-            this.updatedAt = LocalDateTime.now();
+            this.updatedAt = new Timestamp(new Date().getTime());
         }
     }
 
