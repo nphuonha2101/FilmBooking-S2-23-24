@@ -8,9 +8,9 @@ import java.util.Map;
 
 public class FilmVoteRepository extends AbstractRepository<FilmVote> {
 
-        public FilmVoteRepository(Class<FilmVote> modelClass) {
+    public FilmVoteRepository(Class<FilmVote> modelClass) {
             super(modelClass);
-        }
+    }
 
     @Override
     RowMapper<FilmVote> getRowMapper() {
