@@ -6,6 +6,7 @@ import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,41 +15,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@Getter
+@Setter
 @ToString
 @TableName("rooms")
 @TableIdName("room_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class Room implements IModel {
     public static final String TABLE_NAME = "rooms";
 
-    @Setter
-    @Getter
     @Expose
     private long roomID;
-    @Getter
     @Expose
     private String roomName;
-    @Getter
     @Expose
     private int seatRows;
-    @Getter
     @Expose
     private int seatCols;
-    @Setter
     private String[][] seatMatrix;
-    @Setter
-    @Getter
     @Expose
     private String seatData;
     @Expose
-    @Setter
-    @Getter
     private Theater theater;
-    @Setter
-    @Getter
     private List<Showtime> showtimeSet;
-    @Setter
-    @Getter
     @Expose
     private String slug;
 
@@ -66,6 +56,18 @@ public class Room implements IModel {
         this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
         generateSeatsData();
     }
+
+    public Room(long roomId, String roomName, int seatRows, int seatCols, String seatsData, Theater theater, String slug) {
+        this.roomID = roomId;
+        this.roomName = roomName;
+        this.seatRows = seatRows;
+        this.seatCols = seatCols;
+        this.seatData = seatsData;
+        this.theater = theater;
+        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
+        generateSeatsData();
+    }
+
 
     private void generateSeatsData() {
         this.seatMatrix = new String[seatRows][seatCols];
