@@ -20,7 +20,7 @@ public class FilmBookingAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        FilmBookingServicesImpl filmBookingServices = new FilmBookingServicesImpl(sessionProvider);
+        FilmBookingServicesImpl filmBookingServices = new FilmBookingServicesImpl();
 
         String command = req.getParameter("command");
         String language = (String) req.getSession().getAttribute("lang");
