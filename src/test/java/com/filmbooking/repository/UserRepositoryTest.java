@@ -27,7 +27,7 @@ class UserRepositoryTest {
     void insert() {
         assertDoesNotThrow(() -> {
             UserRepository userRepository = new UserRepository(User.class);
-            User user = new User("nphuonha1",
+            User user = new User("nphuonha2",
                     "Nguyen Phuong Nha",
                     "abc@gmail.com",
                     "123456",
