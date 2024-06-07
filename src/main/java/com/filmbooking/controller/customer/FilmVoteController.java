@@ -24,11 +24,9 @@ import java.io.IOException;
 public class FilmVoteController extends HttpServlet {
     private FilmVoteServicesImpl filmVoteServices;
     private FilmServicesImpl filmServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl();
         filmVoteServices = new FilmVoteServicesImpl();
 
@@ -41,13 +39,11 @@ public class FilmVoteController extends HttpServlet {
         filmVoteServices.insert(filmVote);
         resp.sendRedirect(req.getHeader("Referer"));
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmVoteServices = null;
         filmServices = null;
-        hibernateSessionProvider = null;
     }
 }
