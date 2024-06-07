@@ -8,6 +8,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 public class FilmVoteMapper implements RowMapper<FilmVote> {
     private FilmRepository filmRepository;
@@ -20,4 +21,5 @@ public class FilmVoteMapper implements RowMapper<FilmVote> {
                 rs.getInt("scores")
         );
     }
+
 }
