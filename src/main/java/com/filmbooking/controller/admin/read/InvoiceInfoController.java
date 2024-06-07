@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 @WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
-    private CRUDServicesLogProxy<FilmBooking> filmBookingServices;
+    private FilmBookingServicesImpl filmBookingServices;
     private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new CRUDServicesLogProxy<>(new FilmBookingServicesImpl(), req, FilmBooking.class);
+        filmBookingServices = new FilmBookingServicesImpl();
 
         String bookingID = req.getParameter("booking-id");
         FilmBooking filmBooking = filmBookingServices.select(bookingID);

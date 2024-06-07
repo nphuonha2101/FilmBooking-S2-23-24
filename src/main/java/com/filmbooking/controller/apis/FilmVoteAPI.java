@@ -19,7 +19,7 @@ public class FilmVoteAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        filmVoteServices = new FilmVoteServicesImpl(sessionProvider);
+        filmVoteServices = new FilmVoteServicesImpl();
 
         APIUtils<FilmVote> apiUtils = new APIUtils<>(filmVoteServices, req, resp);
         String command = req.getParameter("command");
