@@ -10,6 +10,8 @@ import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +22,7 @@ import java.util.Map;
 @TableName("film_votes")
 @TableIdName("film_vote_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class FilmVote implements IModel {
     public static final String TABLE_NAME = "film_votes";
 
@@ -34,7 +37,6 @@ public class FilmVote implements IModel {
     private int scores;
 
     public FilmVote() {}
-
     public FilmVote(Film film, int scores) {
         this.film = film;
         this.scores = scores;
