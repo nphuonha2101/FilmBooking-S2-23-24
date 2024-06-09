@@ -6,41 +6,16 @@ import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
 import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.AbstractRepository;
+import com.filmbooking.repository.GenreRepository;
+import com.filmbooking.services.AbstractService;
+import com.filmbooking.services.IGenreService;
 
-public class GenreServicesImpl extends AbstractCRUDServices<Genre> {
+public class GenreServicesImpl extends AbstractService<Genre> implements IGenreService {
 
-    public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(Genre.class);
-        this.setSessionProvider(sessionProvider);
+    protected GenreServicesImpl(AbstractRepository<Genre> repository) {
+        super(new GenreRepository(Genre.class));
     }
 
-    public GenreServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(Genre.class);
-    }
-
-    @Override
-    public String getTableName() {
-        return Genre.TABLE_NAME;
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public Genre getBySlug(String slug) {
-        throw new UnsupportedOperationException("This method is not supported for Genre");
-    }
-
-
-    @Override
-    public Genre getByID(String id) {
-        if (!Objects.equals(id, "null"))
-            return this.decoratedDAO.getByID(id, false);
-        else
-            throw new RuntimeException("ID must not be null");
-    }
-
+    
 }
