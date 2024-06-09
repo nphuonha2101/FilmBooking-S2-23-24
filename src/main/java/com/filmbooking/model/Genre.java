@@ -57,10 +57,4 @@ public class Genre implements IModel {
         return this.genreID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "genre_id", this.genreID,
-                "genre_name", this.genreName
-        );
-    }
 }

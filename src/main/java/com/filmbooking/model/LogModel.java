@@ -101,21 +101,4 @@ public class LogModel implements IModel {
     public Object getIdValue() {
         return this.logID;
     }
-
-    public Map<String, Object> mapToRow() {
-        return Map.ofEntries(
-                Map.entry("log_id", this.logID),
-                Map.entry("username", this.username),
-                Map.entry("req_ip", this.reqIP),
-                Map.entry("ip_country", this.ipCountry),
-                Map.entry("log_level", this.level),
-                Map.entry("target_table", this.targetTable),
-                Map.entry("action", this.action),
-                Map.entry("is_action_success", this.isActionSuccess),
-                Map.entry("before_data", this.beforeValueJSON),
-                Map.entry("after_data", this.afterValueJSON),
-                Map.entry("created_at", this.createdAt),
-                Map.entry("updated_at", this.updatedAt)
-        );
-    }
 }
