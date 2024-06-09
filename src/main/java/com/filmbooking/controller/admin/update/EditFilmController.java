@@ -70,7 +70,7 @@ public class EditFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, hibernateSessionProvider);
+        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, Film.class);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
