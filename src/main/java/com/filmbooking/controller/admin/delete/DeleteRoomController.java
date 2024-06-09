@@ -22,7 +22,7 @@ public class DeleteRoomController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
+        roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, Room.class);
 
         String roomSlug = req.getParameter("room");
         System.out.println("DeleteFilmController Test: " + roomSlug);

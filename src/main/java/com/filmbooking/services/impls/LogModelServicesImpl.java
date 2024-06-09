@@ -7,7 +7,7 @@ import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
 import com.filmbooking.repository.AbstractRepository;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.LogRepository;
 import com.filmbooking.services.AbstractService;
 
 /**
@@ -16,8 +16,8 @@ import com.filmbooking.services.AbstractService;
  * @project_name FilmBooking-S2-23-24
  */
 public class LogModelServicesImpl extends AbstractService<LogModel> {
-    protected LogModelServicesImpl(AbstractRepository<LogModel> repository) {
-        super(repository);
+    public LogModelServicesImpl() {
+        super(new LogRepository(LogModel.class));
     }
 
 }

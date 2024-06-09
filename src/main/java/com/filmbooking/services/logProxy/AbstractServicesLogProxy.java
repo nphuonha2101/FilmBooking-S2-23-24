@@ -4,6 +4,7 @@ import com.filmbooking.annotations.TableName;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
+import com.filmbooking.repository.LogRepository;
 import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.impls.LogModelServicesImpl;
 import com.filmbooking.utils.annotation.ClazzAnnotationProcessor;
