@@ -19,7 +19,7 @@ public class GenreAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        genreServices = new GenreServicesImpl(sessionProvider);
+        genreServices = new GenreServicesImpl();
 
         APIUtils<Genre> apiUtils = new APIUtils<>(genreServices, req, resp);
         String command = req.getParameter("command");

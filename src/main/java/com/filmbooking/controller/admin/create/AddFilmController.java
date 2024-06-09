@@ -34,7 +34,7 @@ public class AddFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
         genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, Genre.class);
 
         Page addFilmPage = new AdminPage(

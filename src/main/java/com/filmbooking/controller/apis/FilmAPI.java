@@ -18,7 +18,7 @@ public class FilmAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(sessionProvider);
+        filmServices = new FilmServicesImpl();
         APIUtils<Film> apiUtils = new APIUtils<>(filmServices, req, resp);
         String command = req.getParameter("command");
 
