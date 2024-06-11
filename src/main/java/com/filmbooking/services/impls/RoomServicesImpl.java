@@ -1,7 +1,6 @@
 package com.filmbooking.services.impls;
 
 import com.filmbooking.model.Room;
-import com.filmbooking.repository.AbstractRepository;
 import com.filmbooking.repository.RoomRepository;
 import com.filmbooking.services.AbstractService;
 

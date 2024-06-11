@@ -29,8 +29,8 @@ public class EditRoomController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
-        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
+        roomServices = new RoomServicesImpl();
+        theaterServices = new TheaterServicesImpl();
 
         String roomSlug = req.getParameter("room");
         if (roomSlug != null)
@@ -41,7 +41,7 @@ public class EditRoomController extends HttpServlet {
                 "edit-room",
                 "master");
         editRoomPage.putAttribute("editRoom", editRoom);
-        editRoomPage.putAttribute("theaters", theaterServices.getAll().getMultipleResults());
+        editRoomPage.putAttribute("theaters", theaterServices.selectAll());
 
         editRoomPage.render(req, resp);
 

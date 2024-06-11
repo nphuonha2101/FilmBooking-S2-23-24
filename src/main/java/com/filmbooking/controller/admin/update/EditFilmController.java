@@ -37,8 +37,8 @@ public class EditFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        genreServices = new GenreServicesImpl(hibernateSessionProvider);
+        filmServices = new FilmServicesImpl();
+        genreServices = new GenreServicesImpl();
 
         String filmSlug = req.getParameter("film");
         editFilm = filmServices.getBySlug(filmSlug);
@@ -58,7 +58,7 @@ public class EditFilmController extends HttpServlet {
                 "master");
 
         editFilmPage.putAttribute("editFilm", editFilm);
-        editFilmPage.putAttribute("genres", genreServices.getAll());
+        editFilmPage.putAttribute("genres", genreServices.selectAll());
         editFilmPage.putAttribute("filmGenresStr", editFilm.getFilmGenresStr());
         editFilmPage.putAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
 
@@ -70,7 +70,7 @@ public class EditFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, hibernateSessionProvider);
+        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, Film.class);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));

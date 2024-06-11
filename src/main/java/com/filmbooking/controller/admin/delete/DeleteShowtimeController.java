@@ -22,7 +22,7 @@ public class DeleteShowtimeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+        showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
 
         String showtimeSlug = req.getParameter("showtime");
 
