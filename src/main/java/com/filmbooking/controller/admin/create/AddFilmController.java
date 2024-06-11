@@ -34,14 +34,14 @@ public class AddFilmController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
-        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, hibernateSessionProvider);
+        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
+        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, Genre.class);
 
         Page addFilmPage = new AdminPage(
                 "addFilmTitle",
                 "add-film",
                 "master");
-        addFilmPage.putAttribute("genres", genreServices.getAll().getMultipleResults());
+        addFilmPage.putAttribute("genres", genreServices.selectAll());
         addFilmPage.render(req, resp);
 
         hibernateSessionProvider.closeSession();
@@ -51,8 +51,8 @@ public class AddFilmController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
 
-        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
-        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, hibernateSessionProvider);
+        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
+        genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, Genre.class);
         String fileName = req.getParameter("film-img-name");
 
         // generate uuid from filename

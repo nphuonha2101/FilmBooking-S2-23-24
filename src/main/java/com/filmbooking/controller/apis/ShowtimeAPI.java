@@ -19,7 +19,7 @@ public class ShowtimeAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        showtimeServicesImpl = new ShowtimeServicesImpl(sessionProvider);
+        showtimeServicesImpl = new ShowtimeServicesImpl();
 
         APIUtils<Showtime> apiUtils = new APIUtils<>(showtimeServicesImpl, req, resp);
         String command = req.getParameter("command");

@@ -25,7 +25,7 @@ public class DeleteFilmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, hibernateSessionProvider);
+        filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
 
         String filmSlug = req.getParameter("film");
 

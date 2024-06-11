@@ -19,7 +19,7 @@ public class RoomAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        roomServicesImpl = new RoomServicesImpl(sessionProvider);
+        roomServicesImpl = new RoomServicesImpl();
 
         APIUtils<Room> apiUtils = new APIUtils<>(roomServicesImpl, req, resp);
         String command = req.getParameter("command");
