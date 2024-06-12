@@ -17,7 +17,7 @@ public class RoomMapper implements RowMapper<Room> {
      TheaterRepository theaterRepository;
     @Override
     public Room map(ResultSet rs, StatementContext ctx) throws SQLException {
-        theaterRepository = new TheaterRepository(Theater.class);
+        theaterRepository = new TheaterRepository();
 
         return new Room(
                 rs.getLong("room_id"),

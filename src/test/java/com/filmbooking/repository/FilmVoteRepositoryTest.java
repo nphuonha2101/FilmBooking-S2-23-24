@@ -8,7 +8,7 @@ public class FilmVoteRepositoryTest {
                 @Test
                 void select() {
                     assertDoesNotThrow(() -> {
-                        FilmVoteRepository filmVoteRepository = new FilmVoteRepository(FilmVote.class);
+                        FilmVoteRepository filmVoteRepository = new FilmVoteRepository();
                         System.out.println(filmVoteRepository.selectAll());
                     });
                 }

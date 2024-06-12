@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class TheaterRepository extends AbstractRepository<Theater>{
 
-    public TheaterRepository(Class<Theater> modelClass) {
-        super(modelClass);
+    public TheaterRepository() {
+        super(Theater.class);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class TheaterRepository extends AbstractRepository<Theater>{
         }
 
         for (Room room : roomList) {
-            new RoomRepository(Room.class).delete(room);
+            new RoomRepository().delete(room);
         }
 
         return super.delete(theater);
@@ -38,7 +38,6 @@ public class TheaterRepository extends AbstractRepository<Theater>{
     @Override
     Map<String, Object> mapToRow(Theater theater) {
         return Map.of(
-                "theater_id", theater.getTheaterID(),
                 "theater_name", theater.getTheaterName(),
                 "tax_code", theater.getTaxCode(),
                 "theater_address", theater.getTheaterAddress()

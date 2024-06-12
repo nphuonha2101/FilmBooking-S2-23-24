@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class TokenModelRepository extends AbstractRepository<TokenModel> {
 
-    public TokenModelRepository(Class<TokenModel> modelClass) {
-        super(modelClass);
+    public TokenModelRepository() {
+        super(TokenModel.class);
     }
 
     @Override

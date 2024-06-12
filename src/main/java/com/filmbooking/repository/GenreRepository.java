@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class GenreRepository extends AbstractRepository<Genre> {
-    public GenreRepository(Class<Genre> modelClass) {
-        super(modelClass);
+    public GenreRepository() {
+        super(Genre.class);
     }
 
     public List<Genre> selectAllByFilmId(long filmId) {

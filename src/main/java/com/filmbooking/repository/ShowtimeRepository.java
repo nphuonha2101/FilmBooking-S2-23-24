@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ShowtimeRepository extends AbstractRepository<Showtime> {
-    public ShowtimeRepository(Class<Showtime> modelClass) {
-        super(modelClass);
+    public ShowtimeRepository() {
+        super(Showtime.class);
     }
 
     public List<Showtime> selectAllByFilmId(long filmId) {
@@ -93,7 +93,6 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
     @Override
     Map<String, Object> mapToRow(Showtime showtime) {
         return Map.of(
-                "showtime_id", showtime.getShowtimeID(),
                 "film_id", showtime.getFilm().getFilmID(),
                 "room_id", showtime.getRoom().getRoomID(),
                 "showtime_date", showtime.getShowtimeDate(),

@@ -48,7 +48,7 @@ public class Theater implements IModel {
 
     public List<Room> getRoomList() {
         if (this.roomList == null)
-            this.roomList = new RoomRepository(Room.class).selectAllByTheaterId(this.theaterID);
+            this.roomList = new RoomRepository().selectAllByTheaterId(this.theaterID);
         return roomList;
     }
 

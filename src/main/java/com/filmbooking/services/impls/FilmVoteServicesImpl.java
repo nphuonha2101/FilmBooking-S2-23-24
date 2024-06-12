@@ -16,7 +16,7 @@ import com.filmbooking.services.AbstractService;
 
 public class FilmVoteServicesImpl extends AbstractService<FilmVote> {
     public FilmVoteServicesImpl() {
-        super(new FilmVoteRepository(FilmVote.class));
+        super(new FilmVoteRepository());
     }
 
     @Override

@@ -10,7 +10,7 @@ public class FilmRepositoryTest {
         @Test
         void select() {
             assertDoesNotThrow(() -> {
-                FilmRepository filmRepository = new FilmRepository(Film.class);
+                FilmRepository filmRepository = new FilmRepository();
                 System.out.println(filmRepository.select(1));
             });
         }

@@ -12,7 +12,7 @@ import com.filmbooking.services.serviceResult.ServiceResult;
 public class TokenServicesImpl extends AbstractService<TokenModel> {
 
     public TokenServicesImpl() {
-        super(new TokenModelRepository(TokenModel.class));
+        super(new TokenModelRepository());
     }
 
     @Override

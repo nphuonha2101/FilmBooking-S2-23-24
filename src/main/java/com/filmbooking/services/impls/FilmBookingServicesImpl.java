@@ -10,7 +10,7 @@ import com.filmbooking.services.AbstractService;
 
 public class FilmBookingServicesImpl extends AbstractService<FilmBooking> {
     public FilmBookingServicesImpl() {
-        super(new FilmBookingRepository(FilmBooking.class));
+        super(new FilmBookingRepository());
     }
 
     /**

@@ -10,7 +10,7 @@ public class GenreRepositoryTest {
     @Test
     void selectAll(){
         assertDoesNotThrow(() -> {
-            GenreRepository genreRepository = new GenreRepository(Genre.class);
+            GenreRepository genreRepository = new GenreRepository();
             System.out.println(genreRepository.selectAll());
         });
     }

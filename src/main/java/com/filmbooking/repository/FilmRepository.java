@@ -11,17 +11,17 @@ import java.util.Map;
 
 public class FilmRepository extends AbstractRepository<Film>{
 
-    public FilmRepository(Class<Film> modelClass) {
-        super(modelClass);
+    public FilmRepository() {
+        super(Film.class);
     }
 
     @Override
     public boolean delete(Film film) {
-        if (!new ShowtimeRepository(Showtime.class).deleteByFilmId(film.getFilmID()))
+        if (!new ShowtimeRepository().deleteByFilmId(film.getFilmID()))
             return false;
-        if (!new GenreRepository(Genre.class).deleteByFilmId(film.getFilmID()))
+        if (!new GenreRepository().deleteByFilmId(film.getFilmID()))
             return false;
-        if (!new FilmVoteRepository(FilmVote.class).deleteByFilmId(film.getFilmID()))
+        if (!new FilmVoteRepository().deleteByFilmId(film.getFilmID()))
             return false;
 
         return super.delete(film);
@@ -29,11 +29,11 @@ public class FilmRepository extends AbstractRepository<Film>{
 
     @Override
     public boolean update(Film film) {
-        if (!new ShowtimeRepository(Showtime.class).updateByFilm(film))
+        if (!new ShowtimeRepository().updateByFilm(film))
             return false;
-        if (!new GenreRepository(Genre.class).updateByFilm(film))
+        if (!new GenreRepository().updateByFilm(film))
             return false;
-        if (!new FilmVoteRepository(FilmVote.class).updateByFilm(film))
+        if (!new FilmVoteRepository().updateByFilm(film))
             return false;
 
         return super.update(film);
@@ -65,7 +65,6 @@ public class FilmRepository extends AbstractRepository<Film>{
     @Override
     Map<String, Object> mapToRow(Film film) {
         return Map.of(
-                "film_id", film.getFilmID(),
                 "film_name", film.getFilmName(),
                 "film_price", film.getFilmPrice(),
                 "film_director", film.getDirector(),

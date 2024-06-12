@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
-    public FilmBookingRepository(Class<FilmBooking> modelClass) {
-        super(modelClass);
+    public FilmBookingRepository() {
+        super(FilmBooking.class);
     }
 
     @Override
@@ -22,7 +22,6 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
     @Override
     Map<String, Object> mapToRow(FilmBooking filmBooking) {
         return Map.of(
-                "showtime_id", filmBooking.getShowtime().getShowtimeID(),
                 "username", filmBooking.getUser().getUsername(),
                 "booking_date", filmBooking.getBookingDate(),
                 "seats", String.join(",", filmBooking.getBookedSeats()),
