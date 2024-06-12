@@ -7,6 +7,7 @@ import com.filmbooking.annotations.TableName;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,6 +23,7 @@ import java.util.Set;
 @TableName("films")
 @TableIdName("film_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class Film implements IModel {
     public static final String TABLE_NAME = "films";
 
@@ -128,22 +130,4 @@ public class Film implements IModel {
     public Object getIdValue() {
         return this.filmID;
     }
-
-
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "film_id", this.filmID,
-                "film_name", this.filmName,
-                "film_price", this.filmPrice,
-                "film_director", this.director,
-                "film_cast", this.cast,
-                "film_length", this.filmLength,
-                "film_description", this.filmDescription,
-                "film_trailer_link", this.filmTrailerLink,
-                "img_path", this.imgPath,
-                "slug", this.slug
-        );
-    }
-
-
 }
