@@ -1,7 +1,6 @@
 package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.services.impls.TokenServicesImpl;
 import com.filmbooking.services.serviceResult.ServiceResult;
@@ -28,7 +27,6 @@ public class VerifyUserToken extends HttpServlet {
         String username = req.getParameter("username");
         String tokenType = req.getParameter("token-type");
 
-        HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
         TokenServicesImpl tokenServices = new TokenServicesImpl();
 
         // verify token
@@ -65,6 +63,5 @@ public class VerifyUserToken extends HttpServlet {
                 return;
             }
         }
-        hibernateSessionProvider.closeSession();
     }
 }

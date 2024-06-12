@@ -31,7 +31,7 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
         }
     }
 
-    public Showtime selectAllByRoomId(long roomID) {
+    public List<Showtime> selectAllByRoomId(long roomID) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM showtimes WHERE room_id = :room_id";
@@ -39,7 +39,7 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
             return handle.createQuery(sql)
                     .bind("room_id", roomID)
                     .map(getRowMapper())
-                    .one();
+                    .list();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;

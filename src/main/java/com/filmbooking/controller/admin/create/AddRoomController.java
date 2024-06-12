@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.create;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
 import com.filmbooking.page.AdminPage;
@@ -22,11 +21,9 @@ import java.io.IOException;
 public class AddRoomController extends HttpServlet {
     private CRUDServicesLogProxy<Room> roomServices;
     private CRUDServicesLogProxy<Theater> theaterServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         theaterServices = new CRUDServicesLogProxy<>(new TheaterServicesImpl(), req, Theater.class);
 
         Page addRoomPage = new AdminPage(
@@ -36,15 +33,10 @@ public class AddRoomController extends HttpServlet {
         );
         addRoomPage.putAttribute("theaters", theaterServices.selectAll());
         addRoomPage.render(req, resp);
-
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-
-
         roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, Room.class);
         theaterServices = new CRUDServicesLogProxy<>(new TheaterServicesImpl(), req, Theater.class);
 
@@ -61,14 +53,11 @@ public class AddRoomController extends HttpServlet {
 
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.ADD_ROOM_SUCCESSFUL.getStatusCode());
         doGet(req, resp);
-
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         roomServices = null;
         theaterServices = null;
-        hibernateSessionProvider = null;
     }
 }

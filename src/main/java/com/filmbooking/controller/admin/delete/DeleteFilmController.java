@@ -1,12 +1,10 @@
 package com.filmbooking.controller.admin.delete;
 
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.fileUtils.FileUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,11 +18,9 @@ import java.io.IOException;
 @WebServlet(name = "deleteFilm", value = "/admin/delete/film")
 public class DeleteFilmController extends HttpServlet {
     private CRUDServicesLogProxy<Film> filmServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
 
         String filmSlug = req.getParameter("film");
@@ -45,13 +41,10 @@ public class DeleteFilmController extends HttpServlet {
 //            req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film")).forward(req, resp);
         }
 
-        hibernateSessionProvider.closeSession();
-        System.out.println(hibernateSessionProvider.getSession());
     }
 
     @Override
     public void destroy() {
         filmServices = null;
-        hibernateSessionProvider = null;
     }
 }

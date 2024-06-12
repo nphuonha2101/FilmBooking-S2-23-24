@@ -1,6 +1,5 @@
 package com.filmbooking.services.logProxy;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.IModel;
 import com.filmbooking.services.IShowtimeServices;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;

@@ -26,7 +26,6 @@ public class Genre implements IModel {
     private String genreID;
     @Expose
     private String genreName;
-    private List<Film> filmList;
 
     public Genre() {
     }
@@ -35,13 +34,6 @@ public class Genre implements IModel {
         this.genreID = genreID;
         this.genreName = genreName;
     }
-
-    public Genre(String genreID, String genreName, List<Film> filmList) {
-        this.genreID = genreID;
-        this.genreName = genreName;
-        this.filmList = filmList;
-    }
-
 
     @Override
     public boolean equals(Object obj) {

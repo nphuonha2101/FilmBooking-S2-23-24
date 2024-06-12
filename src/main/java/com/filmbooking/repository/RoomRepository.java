@@ -1,14 +1,38 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.Room;
 import com.filmbooking.repository.mapper.RoomMapper;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.List;
 import java.util.Map;
 
 public class RoomRepository extends AbstractRepository<Room>{
     public RoomRepository(Class<Room> modelClass) {
         super(modelClass);
+    }
+
+    public List<Room> selectAllByTheaterId(Long theaterId) {
+       try {
+            Handle handle = JdbiDBConnection.openHandle();
+
+            String sql = "SELECT * FROM rooms WHERE theater_id = :theater_id";
+            System.out.println("Select All By Theater ID SQL: " + sql);
+
+            List<Room> rooms = handle.createQuery(sql)
+                    .bind("theater_id", theaterId)
+                    .map(getRowMapper())
+                    .list();
+
+            return rooms;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+       }
     }
 
     @Override

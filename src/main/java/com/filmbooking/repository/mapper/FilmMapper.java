@@ -1,7 +1,9 @@
 package com.filmbooking.repository.mapper;
 
-import com.filmbooking.model.Film;
-import com.filmbooking.model.User;
+import com.filmbooking.model.*;
+import com.filmbooking.repository.FilmVoteRepository;
+import com.filmbooking.repository.GenreRepository;
+import com.filmbooking.repository.ShowtimeRepository;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 
