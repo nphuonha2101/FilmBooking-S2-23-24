@@ -30,7 +30,7 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
                 "payment_status", filmBooking.getPaymentStatus()
         );
     }
-    public List<FilmBooking> sellectAllByShowtimeId(String username) {
+    public List<FilmBooking> sellectAllByUsername(String username) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM film_bookings WHERE username = :username";
@@ -57,6 +57,21 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public boolean deleteByUsername(String username) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "DELETE FROM film_bookings WHERE username = :username";
+            return handle.createUpdate(sql)
+                    .bind("username", username)
+                    .execute() == 1;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
         } finally {
             JdbiDBConnection.closeHandle();
         }

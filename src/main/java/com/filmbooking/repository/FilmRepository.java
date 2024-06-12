@@ -1,9 +1,7 @@
 package com.filmbooking.repository;
 
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
-import com.filmbooking.model.Film;
-import com.filmbooking.model.FilmBooking;
-import com.filmbooking.model.User;
+import com.filmbooking.model.*;
 import com.filmbooking.repository.mapper.FilmMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
@@ -15,6 +13,48 @@ public class FilmRepository extends AbstractRepository<Film>{
 
     public FilmRepository(Class<Film> modelClass) {
         super(modelClass);
+    }
+
+    @Override
+    public boolean delete(Film film) {
+        if (!new ShowtimeRepository(Showtime.class).deleteByFilmId(film.getFilmID()))
+            return false;
+        if (!new GenreRepository(Genre.class).deleteByFilmId(film.getFilmID()))
+            return false;
+        if (!new FilmVoteRepository(FilmVote.class).deleteByFilmId(film.getFilmID()))
+            return false;
+
+        return super.delete(film);
+    }
+
+    @Override
+    public boolean update(Film film) {
+        if (!new ShowtimeRepository(Showtime.class).updateByFilm(film))
+            return false;
+        if (!new GenreRepository(Genre.class).updateByFilm(film))
+            return false;
+        if (!new FilmVoteRepository(FilmVote.class).updateByFilm(film))
+            return false;
+
+        return super.update(film);
+    }
+
+    public List<Film> sellectAll(String genreId) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM films " +
+                    "JOIN film_genres ON films.film_id = film_genres.film_id " +
+                    "WHERE film_genres.genre_id = :genre_id";
+            return handle.createQuery(sql)
+                    .bind("genre_id", genreId)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
     }
 
     @Override
@@ -38,21 +78,5 @@ public class FilmRepository extends AbstractRepository<Film>{
         );
     }
 
-    public List<Film> sellectAll(String genreId) {
-        try {
-            Handle handle = JdbiDBConnection.openHandle();
-            String sql = "SELECT * FROM films " +
-                    "JOIN film_genres ON films.film_id = film_genres.film_id " +
-                    "WHERE film_genres.genre_id = :genre_id";
-            return handle.createQuery(sql)
-                    .bind("genre_id", genreId)
-                    .map(getRowMapper())
-                    .list();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return null;
-        } finally {
-            JdbiDBConnection.closeHandle();
-        }
-    }
+
 }

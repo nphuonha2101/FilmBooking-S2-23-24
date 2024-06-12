@@ -4,6 +4,7 @@ import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.repository.FilmBookingRepository;
 import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class User implements IModel {
     @Expose
     private int accountStatus;
 
+    private List<FilmBooking> filmBookingList;
 
     public User() {
     }
@@ -52,6 +54,11 @@ public class User implements IModel {
         this.accountStatus = accountStatus;
     }
 
+    public List<FilmBooking> getFilmBookingList() {
+        if (this.filmBookingList == null)
+            this.filmBookingList = new FilmBookingRepository(FilmBooking.class).sellectAllByUsername(this.username);
+        return filmBookingList;
+    }
 
     @Override
     public boolean equals(Object obj) {

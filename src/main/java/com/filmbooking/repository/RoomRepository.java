@@ -2,6 +2,7 @@ package com.filmbooking.repository;
 
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.Room;
+import com.filmbooking.model.Showtime;
 import com.filmbooking.repository.mapper.RoomMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
@@ -21,18 +22,32 @@ public class RoomRepository extends AbstractRepository<Room>{
             String sql = "SELECT * FROM rooms WHERE theater_id = :theater_id";
             System.out.println("Select All By Theater ID SQL: " + sql);
 
-            List<Room> rooms = handle.createQuery(sql)
+           return handle.createQuery(sql)
                     .bind("theater_id", theaterId)
                     .map(getRowMapper())
                     .list();
-
-            return rooms;
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
         } finally {
             JdbiDBConnection.closeHandle();
        }
+    }
+
+    @Override
+    public boolean delete(Room room) {
+
+        List<Showtime> showtimeList = room.getShowtimeList();
+
+        if (showtimeList == null) {
+            return super.delete(room);
+        }
+
+        for (Showtime showtime : showtimeList) {
+            new ShowtimeRepository(Showtime.class).delete(showtime);
+        }
+
+        return super.delete(room);
     }
 
     @Override
