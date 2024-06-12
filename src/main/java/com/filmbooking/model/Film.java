@@ -113,17 +113,20 @@ public class Film implements IModel {
 
 
     public List<FilmVote> getFilmVoteList() {
-        this.filmVoteList = new FilmVoteRepository(FilmVote.class).selectAllByFilmId(this.filmID);
+        if (this.filmVoteList == null)
+            this.filmVoteList = new FilmVoteRepository(FilmVote.class).selectAllByFilmId(this.filmID);
         return this.filmVoteList;
     }
 
     public List<Genre> getGenreList() {
-        this.genreList = new GenreRepository(Genre.class).selectAllByFilmId(this.filmID);
+        if (this.genreList == null)
+            this.genreList = new GenreRepository(Genre.class).selectAllByFilmId(this.filmID);
         return this.genreList;
     }
 
     public List<Showtime> getShowtimeList() {
-        this.showtimeList = new ShowtimeRepository(Showtime.class).selectAllByFilmId(this.filmID);
+        if (this.showtimeList == null)
+            this.showtimeList = new ShowtimeRepository(Showtime.class).selectAllByFilmId(this.filmID);
         return this.showtimeList;
     }
 

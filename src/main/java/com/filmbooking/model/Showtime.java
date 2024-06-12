@@ -64,7 +64,8 @@ public class Showtime implements IModel {
     }
 
     public List<FilmBooking> getFilmBookingList() {
-        this.filmBookingList = new FilmBookingRepository(FilmBooking.class).sellectAllByShowtimeId(this.showtimeID);
+        if (this.filmBookingList == null)
+            this.filmBookingList = new FilmBookingRepository(FilmBooking.class).sellectAllByShowtimeId(this.showtimeID);
         return filmBookingList;
     }
 
