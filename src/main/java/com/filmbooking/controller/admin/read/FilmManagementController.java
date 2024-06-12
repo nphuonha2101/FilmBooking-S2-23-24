@@ -29,7 +29,7 @@ public class FilmManagementController extends HttpServlet {
                 "master"
         );
 
-        Pagination<Film> pagination = new Pagination<>(filmServices, req, resp, LIMIT, "/admin/management/film");
+        Pagination<Film> pagination = new Pagination<>(filmServices, req, resp, LIMIT, "admin/management/film");
         filmManagementPage.putAttribute("filmsData", pagination.getPaginatedRecords());
 
         filmManagementPage.render(req, resp);

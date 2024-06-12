@@ -34,9 +34,6 @@ public class User implements IModel {
     private int accountStatus;
 
 
-
-    List<FilmBooking> filmBookingList;
-
     public User() {
     }
 
@@ -45,27 +42,16 @@ public class User implements IModel {
         this.userEmail = userEmail;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword, String accountRole, String accountType, int accountStatus, List<FilmBooking> filmBookingList) {
+    public User(String username, String userFullName, String userEmail, String userPassword, AccountRoleEnum accountRoleEnum, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
-        this.accountRole = accountRole;
+        this.accountRole = accountRoleEnum.getAccountRole();
         this.accountType = accountType;
         this.accountStatus = accountStatus;
-        this.filmBookingList = filmBookingList;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword,
-                AccountRoleEnum accountRole, String accountType, int accountStatus) {
-        this.username = username;
-        this.userFullName = userFullName;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.accountRole = accountRole.getAccountRole();
-        this.accountType = accountType;
-        this.accountStatus = accountStatus;
-    }
 
     @Override
     public boolean equals(Object obj) {
@@ -74,8 +60,7 @@ public class User implements IModel {
                     && this.userFullName.equals(user.getUserFullName())
                     && this.userEmail.equals(user.getUserEmail())
                     && this.userPassword.equals(user.getUserPassword())
-                    && this.accountRole.equals(user.getAccountRole())
-                    && this.filmBookingList.equals(user.getFilmBookingList());
+                    && this.accountRole.equals(user.getAccountRole());
         }
         return false;
     }

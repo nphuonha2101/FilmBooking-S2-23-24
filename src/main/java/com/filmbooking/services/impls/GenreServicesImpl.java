@@ -11,6 +11,4 @@ public class GenreServicesImpl extends AbstractService<Genre> implements IServic
     public GenreServicesImpl() {
         super(new GenreRepository(Genre.class));
     }
-
-    
 }

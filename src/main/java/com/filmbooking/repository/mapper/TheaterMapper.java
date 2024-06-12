@@ -1,6 +1,8 @@
 package com.filmbooking.repository.mapper;
 
+import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
+import com.filmbooking.repository.RoomRepository;
 import org.jdbi.v3.core.mapper.RowMapper;
 import org.jdbi.v3.core.statement.StatementContext;
 
@@ -14,8 +16,7 @@ public class TheaterMapper implements RowMapper<Theater> {
                 rs.getLong("theater_id"),
                 rs.getString("theater_name"),
                 rs.getString("tax_code"),
-                rs.getString("theater_address"),
-                null // TODO: Implement this in the future
+                rs.getString("theater_address")
         );
     }
 }

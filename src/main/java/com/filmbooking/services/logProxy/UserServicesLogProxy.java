@@ -1,7 +1,6 @@
 package com.filmbooking.services.logProxy;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;

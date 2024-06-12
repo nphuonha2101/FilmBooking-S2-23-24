@@ -2,7 +2,6 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
@@ -11,7 +10,6 @@ import com.filmbooking.services.impls.TokenServicesImpl;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
@@ -43,15 +41,14 @@ public class ResetPasswordController extends HttpServlet {
 
         String newPassword = req.getParameter("new-password");
         String confirmPassword = req.getParameter("confirm-new-password");
-        HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
+
         UserServicesImpl userServices = new UserServicesImpl();
-        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(userServices, req, hibernateSessionProvider);
-        TokenServicesImpl tokenServices = new TokenServicesImpl(hibernateSessionProvider);
+        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(userServices, req, User.class);
+        TokenServicesImpl tokenServices = new TokenServicesImpl();
         if(!Regex.validate(UserRegexEnum.USER_PASSWORD, newPassword)){
             req.setAttribute("statusCodeErr", StatusCodeEnum.USER_PASSWORD_ERROR.getStatusCode());
             req.setAttribute("username", username);
             doGet(req, resp);
-            hibernateSessionProvider.closeSession();
             return;
         }
 
@@ -63,7 +60,7 @@ public class ResetPasswordController extends HttpServlet {
         if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_VERIFIED)) {
             // in case confirm password match new password
             if (newPassword.equals(confirmPassword)) {
-                User user = userServicesLog.getByID(username);
+                User user = userServicesLog.select(username);
                 System.out.println("reset password user: " + user);
                 String encryptedPassword = userServices.hashPassword(newPassword);
                 user.setUserPassword(encryptedPassword);
@@ -91,6 +88,5 @@ public class ResetPasswordController extends HttpServlet {
             doGet(req, resp);
         }
 
-        hibernateSessionProvider.closeSession();
     }
 }

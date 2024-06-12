@@ -1,6 +1,5 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FailedLogin;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -28,8 +27,6 @@ import java.util.Map;
 @MultipartConfig
 public class LoginController extends HttpServlet {
     private UserServicesLogProxy<User> userServices;
-    private FailedLoginServicesImpl failedLoginServices;
-    private HibernateSessionProvider hibernateSessionProvider;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
 
@@ -69,7 +66,7 @@ public class LoginController extends HttpServlet {
                 "login",
                 "master"
         );
-        failedLoginServices = new FailedLoginServicesImpl();
+        FailedLoginServicesImpl failedLoginServices = new FailedLoginServicesImpl();
         FailedLogin failedLogin = failedLoginServices.select(req.getRemoteAddr());
         if(failedLogin!=null){
             if(failedLogin.getLockTime().isAfter(LocalDateTime.now())){
@@ -141,9 +138,6 @@ public class LoginController extends HttpServlet {
                 out.println("/home");
 
             }
-
-        hibernateSessionProvider.closeSession();
-
     }
 
     private void getHtmlRespFromPage(HttpServletRequest req, HttpServletResponse resp, Page page) throws ServletException, IOException {
@@ -162,6 +156,5 @@ public class LoginController extends HttpServlet {
     @Override
     public void destroy() {
         userServices = null;
-        hibernateSessionProvider = null;
     }
 }

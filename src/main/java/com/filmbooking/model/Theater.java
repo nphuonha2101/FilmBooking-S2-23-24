@@ -32,7 +32,6 @@ public class Theater implements IModel {
     private String taxCode;
     @Expose
     private String theaterAddress;
-    private List<Room> roomList;
 
     public Theater() {}
     public Theater(long theaterID){
@@ -45,8 +44,7 @@ public class Theater implements IModel {
             return this.theaterID == theater.getTheaterID()
                     && this.theaterName.equals(theater.getTheaterName())
                     && this.taxCode.equals(theater.getTaxCode())
-                    && this.theaterAddress.equals(theater.getTheaterAddress())
-                    && this.roomList.equals(theater.getRoomList());
+                    && this.theaterAddress.equals(theater.getTheaterAddress());
         }
         return false;
     }

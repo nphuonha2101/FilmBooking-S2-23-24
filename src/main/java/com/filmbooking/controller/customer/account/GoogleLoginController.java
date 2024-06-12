@@ -2,7 +2,6 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -43,7 +42,6 @@ public class GoogleLoginController extends HttpServlet {
         if (error != null && error.equals("access_denied")) {
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
-            HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
             UserServicesImpl userServices = new UserServicesImpl();
 
             String accessToken = null;

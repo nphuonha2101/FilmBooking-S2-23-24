@@ -1,5 +1,6 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +32,10 @@ class UserRepositoryTest {
                     "Nguyen Phuong Nha",
                     "abc@gmail.com",
                     "123456",
-                    "admin",
+                    AccountRoleEnum.ADMIN,
                     "normal",
-                    1,
-                    null);
+                    1
+            );
 
             assertTrue(userRepository.insert(user));
 
