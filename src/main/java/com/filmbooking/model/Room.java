@@ -87,7 +87,7 @@ public class Room implements IModel {
 
     public List<Showtime> getShowtimeList() {
         if (this.showtimeList == null)
-            this.showtimeList = new ShowtimeRepository(Showtime.class).selectAllByRoomId(this.roomID);
+            this.showtimeList = new ShowtimeRepository().selectAllByRoomId(this.roomID);
         return showtimeList;
     }
 

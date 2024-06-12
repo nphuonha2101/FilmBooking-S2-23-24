@@ -11,7 +11,7 @@ public class FailedLoginServicesImpl extends AbstractService<FailedLogin> {
 
 
     public FailedLoginServicesImpl() {
-        super(new FailedLoginRepository(FailedLogin.class));
+        super(new FailedLoginRepository());
     }
     @Override
     public boolean update(FailedLogin failedLogin) {

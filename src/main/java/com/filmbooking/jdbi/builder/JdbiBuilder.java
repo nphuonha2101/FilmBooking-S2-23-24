@@ -31,6 +31,8 @@ public class JdbiBuilder<T extends IModel> {
         this.primaryKeyName = (String) clazzAnnotationProcessor.getAnnotationValue(TableIdName.class, "value");
         this.isIdAutoIncrement = clazzAnnotationProcessor.isAnnotationPresent(IdAutoIncrement.class);
         this.isStringId = clazzAnnotationProcessor.isAnnotationPresent(StringID.class);
+
+        System.out.println("JdbiBuilder: " + modelClass + " " + this.tableName + " " + this.primaryKeyName);
     }
 
     /**

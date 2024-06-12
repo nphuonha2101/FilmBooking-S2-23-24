@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomRepository extends AbstractRepository<Room>{
-    public RoomRepository(Class<Room> modelClass) {
-        super(modelClass);
+    public RoomRepository() {
+        super(Room.class);
     }
 
     public List<Room> selectAllByTheaterId(Long theaterId) {
@@ -44,7 +44,7 @@ public class RoomRepository extends AbstractRepository<Room>{
         }
 
         for (Showtime showtime : showtimeList) {
-            new ShowtimeRepository(Showtime.class).delete(showtime);
+            new ShowtimeRepository().delete(showtime);
         }
 
         return super.delete(room);
@@ -58,7 +58,6 @@ public class RoomRepository extends AbstractRepository<Room>{
     @Override
     public Map<String, Object> mapToRow(Room room) {
         return Map.of(
-                "room_id", room.getRoomID(),
                 "room_name", room.getRoomName(),
                 "seat_rows", room.getSeatRows(),
                 "seat_cols", room.getSeatCols(),

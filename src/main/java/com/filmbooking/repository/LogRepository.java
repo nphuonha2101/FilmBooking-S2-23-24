@@ -7,8 +7,8 @@ import org.jdbi.v3.core.mapper.RowMapper;
 import java.util.Map;
 
 public class LogRepository extends AbstractRepository<LogModel>{
-    public LogRepository(Class<LogModel> modelClass) {
-        super(modelClass);
+    public LogRepository() {
+        super(LogModel.class);
     }
 
     @Override
@@ -19,7 +19,6 @@ public class LogRepository extends AbstractRepository<LogModel>{
     @Override
     public Map<String, Object> mapToRow(LogModel logModel) {
         return Map.ofEntries(
-                Map.entry("log_id", logModel.getLogID()),
                 Map.entry("username", logModel.getUsername()),
                 Map.entry("req_ip", logModel.getReqIP()),
                 Map.entry("ip_country", logModel.getIpCountry()),

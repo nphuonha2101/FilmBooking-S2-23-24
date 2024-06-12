@@ -7,7 +7,7 @@ import com.filmbooking.services.AbstractService;
 public class TheaterServicesImpl extends AbstractService<Theater> {
 
     public TheaterServicesImpl() {
-        super(new TheaterRepository(Theater.class));
+        super(new TheaterRepository());
     }
 
     @Override

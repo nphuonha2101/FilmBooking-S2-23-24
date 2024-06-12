@@ -11,7 +11,7 @@ import com.filmbooking.services.AbstractService;
  */
 public class LogModelServicesImpl extends AbstractService<LogModel> {
     public LogModelServicesImpl() {
-        super(new LogRepository(LogModel.class));
+        super(new LogRepository());
     }
 
 }

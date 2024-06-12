@@ -8,7 +8,7 @@ public class FailedLoginRepositoryTest {
             @Test
             void select() {
                 assertDoesNotThrow(() -> {
-                    FailedLoginRepository failedLoginRepository = new FailedLoginRepository(FailedLogin.class);
+                    FailedLoginRepository failedLoginRepository = new FailedLoginRepository();
                     System.out.println(failedLoginRepository.selectAll());
                 });
             }

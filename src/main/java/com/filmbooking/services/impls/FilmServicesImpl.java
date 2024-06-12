@@ -14,7 +14,7 @@ public class FilmServicesImpl extends AbstractService<Film>{
     private final GenreServicesImpl genreServices = new GenreServicesImpl();
 
     public FilmServicesImpl() {
-        super(new FilmRepository(Film.class));
+        super(new FilmRepository());
     }
 
 

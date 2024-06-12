@@ -56,7 +56,7 @@ public class User implements IModel {
 
     public List<FilmBooking> getFilmBookingList() {
         if (this.filmBookingList == null)
-            this.filmBookingList = new FilmBookingRepository(FilmBooking.class).sellectAllByUsername(this.username);
+            this.filmBookingList = new FilmBookingRepository().sellectAllByUsername(this.username);
         return filmBookingList;
     }
 

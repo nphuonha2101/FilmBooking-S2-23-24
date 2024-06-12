@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class FilmVoteRepository extends AbstractRepository<FilmVote> {
 
-    public FilmVoteRepository(Class<FilmVote> modelClass) {
-            super(modelClass);
+    public FilmVoteRepository() {
+            super(FilmVote.class);
     }
 
     public List<FilmVote> selectAllByFilmId(long filmId) {
@@ -93,7 +93,6 @@ public class FilmVoteRepository extends AbstractRepository<FilmVote> {
     @Override
     Map<String, Object> mapToRow(FilmVote filmVote) {
         return Map.of(
-                "film_vote_id", filmVote.getId(),
                 "film_id", filmVote.getFilm().getFilmID(),
                 "scores", filmVote.getScores()
         );

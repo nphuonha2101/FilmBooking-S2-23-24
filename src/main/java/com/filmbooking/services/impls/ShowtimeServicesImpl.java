@@ -11,7 +11,7 @@ import com.filmbooking.services.IShowtimeServices;
 public class ShowtimeServicesImpl extends AbstractService<Showtime> implements IShowtimeServices {
 
     public ShowtimeServicesImpl() {
-        super(new ShowtimeRepository(Showtime.class));
+        super(new ShowtimeRepository());
     }
 
     /**
