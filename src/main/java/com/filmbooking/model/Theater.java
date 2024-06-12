@@ -56,12 +56,4 @@ public class Theater implements IModel {
         return this.theaterID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "theater_id", this.theaterID,
-                "theater_name", this.theaterName,
-                "tax_code", this.taxCode,
-                "theater_address", this.theaterAddress
-        );
-    }
 }

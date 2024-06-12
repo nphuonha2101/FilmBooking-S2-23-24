@@ -123,16 +123,4 @@ public class Room implements IModel {
         return this.roomID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "room_id", this.roomID,
-                "room_name", this.roomName,
-                "seat_rows", this.seatRows,
-                "seat_cols", this.seatCols,
-                "seat_data", this.seatData,
-                "theater_id", this.theater.getTheaterID(),
-                "slug", this.slug
-        );
-    }
-
 }

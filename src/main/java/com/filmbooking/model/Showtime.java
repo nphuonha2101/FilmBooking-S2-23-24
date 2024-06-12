@@ -198,15 +198,5 @@ public class Showtime implements IModel {
         return this.showtimeID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "showtime_id", this.showtimeID,
-                "film_id", this.film.getFilmID(),
-                "room_id", this.room.getRoomID(),
-                "showtime_date", this.showtimeDate,
-                "seats_data", this.seatsData,
-                "slug", this.slug
-        );
-    }
 
 }

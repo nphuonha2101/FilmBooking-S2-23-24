@@ -86,13 +86,4 @@ public class TokenModel implements IModel {
         return this.token;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "token", this.token,
-                "username", this.username,
-                "expiry_date", Timestamp.valueOf(this.expiryDate),
-                "token_type", this.tokenType,
-                "token_state", this.tokenState
-        );
-    }
 }

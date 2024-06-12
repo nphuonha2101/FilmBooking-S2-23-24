@@ -155,16 +155,4 @@ public class FilmBooking implements Cloneable, IModel {
         return this.filmBookingID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "film_booking_id", this.filmBookingID,
-                "showtime_id", this.showtime.getShowtimeID(),
-                "username", this.user.getUsername(),
-                "booking_date", this.bookingDate,
-                "seats", this.seatsData,
-                "total_fee", this.totalFee,
-                "payment_status", this.paymentStatus
-        );
-    }
-
 }

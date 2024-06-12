@@ -35,13 +35,4 @@ public class FailedLogin implements IModel {
     public Object getIdValue() {
         return this.reqIp;
     }
-
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "req_ip", this.reqIp,
-                "login_count", this.loginCount,
-                "lock_time", this.lockTime
-        );
-    }
-
 }
