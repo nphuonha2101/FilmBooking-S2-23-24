@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class FailedLoginRepository extends AbstractRepository<FailedLogin> {
 
-    public FailedLoginRepository(Class<FailedLogin> modelClass) {
-        super(modelClass);
+    public FailedLoginRepository() {
+        super(FailedLogin.class);
     }
 
     @Override

@@ -27,32 +27,32 @@ import java.util.Map;
  * @param <T>
  */
 public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IService<T> {
-    private final IService<T> crudServices;
+    private final IService<T> crudService;
 
-    public CRUDServicesLogProxy(IService<T> crudServices, HttpServletRequest req, Class<T> modelClass) {
+    public CRUDServicesLogProxy(IService<T> crudService, HttpServletRequest req, Class<T> modelClass) {
         super(req, modelClass);
-        this.crudServices = crudServices;
+        this.crudService = crudService;
     }
 
     @Override
     public T getBySlug(String slug) {
-        return this.crudServices.getBySlug(slug);
+        return this.crudService.getBySlug(slug);
     }
 
     @Override
     public T select(Object id) {
-        return this.crudServices.select(id);
+        return this.crudService.select(id);
     }
 
     @Override
     public long countRecords() {
-        return this.crudServices.countRecords();
+        return this.crudService.countRecords();
     }
 
     @Override
     public boolean insert(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.INSERT, t, (AbstractService<T>) this.crudServices, true);
-        boolean saveState = this.crudServices.insert(t);
+        LogModel logModel = this.buildLogModel(LogModel.INSERT, t, (AbstractService<T>) this.crudService, true);
+        boolean saveState = this.crudService.insert(t);
 
         logModel.setActionSuccess(saveState);
         this.logModelServices.insert(logModel);
@@ -62,8 +62,8 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public boolean update(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.UPDATE, t, (AbstractService<T>) this.crudServices, true);
-        boolean updateState = this.crudServices.update(t);
+        LogModel logModel = this.buildLogModel(LogModel.UPDATE, t, (AbstractService<T>) this.crudService, true);
+        boolean updateState = this.crudService.update(t);
 
         logModel.setActionSuccess(updateState);
         this.logModelServices.insert(logModel);
@@ -73,8 +73,8 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public boolean delete(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.DELETE, t, (AbstractService<T>) this.crudServices, true);
-        boolean deleteState = this.crudServices.delete(t);
+        LogModel logModel = this.buildLogModel(LogModel.DELETE, t, (AbstractService<T>) this.crudService, true);
+        boolean deleteState = this.crudService.delete(t);
 
         logModel.setActionSuccess(deleteState);
         this.logModelServices.insert(logModel);
@@ -84,22 +84,22 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public List<T> selectAll() {
-        return crudServices.selectAll();
+        return crudService.selectAll();
     }
 
     @Override
     public List<T> selectAll(int limit, int offset) {
-        return crudServices.selectAll(limit, offset);
+        return crudService.selectAll(limit, offset);
     }
 
     @Override
     public List<T> selectAll(Map<String, Object> filters) {
-        return crudServices.selectAll(filters);
+        return crudService.selectAll(filters);
     }
 
     @Override
     public List<T> selectAll(int limit, int offset, String order) {
-        return crudServices.selectAll(limit,offset,order);
+        return crudService.selectAll(limit,offset,order);
     }
 
     @Override

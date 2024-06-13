@@ -11,7 +11,6 @@ import java.util.Map;
 public class ClazzAnnotationProcessor {
     private static ClazzAnnotationProcessor instance;
     private static List<AnnotationResult> annotationResults;
-    private static Class<?> clazz;
 
     private ClazzAnnotationProcessor(Class<?> clazz) {
         annotationResults = new ArrayList<>();

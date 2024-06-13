@@ -1,11 +1,9 @@
 package com.filmbooking.controller.admin.read;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.*;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.*;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 @WebServlet("/admin/invoice-info")
 public class InvoiceInfoController extends HttpServlet {
     private FilmBookingServicesImpl filmBookingServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,12 +37,10 @@ public class InvoiceInfoController extends HttpServlet {
         invoiceInfoPage.putAttribute("bookedFilmBooking", filmBooking);
         invoiceInfoPage.render(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         filmBookingServices = null;
-        hibernateSessionProvider = null;
     }
 }

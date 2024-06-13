@@ -1,6 +1,5 @@
 package com.filmbooking.controller.customer.account.auth;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
@@ -24,8 +23,6 @@ import java.io.IOException;
 
 public class ChangeInfoController extends HttpServlet {
     private UserServicesImpl userServices;
-    private CRUDServicesLogProxy<User> userServicesLog;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -41,9 +38,8 @@ public class ChangeInfoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesImpl(hibernateSessionProvider);
-        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+        userServices = new UserServicesImpl();
+        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
         String userFullName = StringUtils.handlesInputString(req.getParameter("user-full-name"));
         String email = StringUtils.handlesInputString(req.getParameter("email"));
@@ -82,13 +78,10 @@ public class ChangeInfoController extends HttpServlet {
             changeInfoPage.putError(StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
             changeInfoPage.render(req, resp);
         }
-
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServices = null;
-        hibernateSessionProvider = null;
     }
 }

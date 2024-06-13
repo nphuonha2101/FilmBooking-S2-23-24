@@ -9,7 +9,7 @@ public class FilmBookingRepositoryTest {
     @Test
     void select() {
         assertDoesNotThrow(() -> {
-            FilmBookingRepository filmBookingRepository = new FilmBookingRepository(FilmBooking.class);
+            FilmBookingRepository filmBookingRepository = new FilmBookingRepository();
             System.out.println(filmBookingRepository.selectAll());
         });
     }

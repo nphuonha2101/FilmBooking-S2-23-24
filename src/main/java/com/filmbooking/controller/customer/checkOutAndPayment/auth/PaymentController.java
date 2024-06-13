@@ -7,7 +7,6 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  */
 
 import com.filmbooking.enumsAndConstants.enums.PaymentStatus;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
@@ -24,15 +23,14 @@ import java.io.IOException;
 
 @WebServlet("/auth/payment")
 public class PaymentController extends HttpServlet {
-    private HibernateSessionProvider hibernateSessionProvider;
+
     private FilmBookingServicesImpl filmBookingServices;
     private ShowtimeServicesImpl showtimeServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+        filmBookingServices = new FilmBookingServicesImpl();
+        showtimeServices = new ShowtimeServicesImpl();
 
         String vnPayRespCode = req.getParameter("vnp_ResponseCode");
 
@@ -46,8 +44,6 @@ public class PaymentController extends HttpServlet {
             handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
             System.out.println("Not OK");
         }
-
-        hibernateSessionProvider.closeSession();
     }
 
     // TODO: handle payment log
@@ -78,7 +74,7 @@ public class PaymentController extends HttpServlet {
     }
 
     private static void handleSaveFilmBooking(HttpServletRequest req, FilmBooking filmBooking, ShowtimeServicesImpl showtimeServices, FilmBookingServicesImpl filmBookingServices) {
-        if (filmBookingServices.save(filmBooking)) {
+        if (filmBookingServices.insert(filmBooking)) {
             Showtime bookedShowtime = filmBooking.getShowtime();
             if (bookedShowtime.bookSeats(filmBooking.getBookedSeats())) {
                 showtimeServices.update(bookedShowtime);
@@ -93,7 +89,6 @@ public class PaymentController extends HttpServlet {
 
     @Override
     public void destroy() {
-        hibernateSessionProvider = null;
         filmBookingServices = null;
         showtimeServices = null;
     }

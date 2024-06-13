@@ -24,7 +24,7 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
     private final TokenServicesImpl tokenServices;
 
     public UserServicesImpl() {
-        super(new UserRepository(User.class));
+        super(new UserRepository());
         this.tokenServices = new TokenServicesImpl();
     }
 
