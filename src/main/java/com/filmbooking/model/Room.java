@@ -3,17 +3,16 @@ package com.filmbooking.model;
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.ShowtimeRepository;
+import com.filmbooking.repository.TheaterRepository;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +20,6 @@ import java.util.Set;
 @TableName("rooms")
 @TableIdName("room_id")
 @IdAutoIncrement
-@AllArgsConstructor
 public class Room implements IModel {
     public static final String TABLE_NAME = "rooms";
 
@@ -38,7 +36,7 @@ public class Room implements IModel {
     private String seatData;
     @Expose
     private Theater theater;
-    private List<Showtime> showtimeSet;
+    private List<Showtime> showtimeList;
     @Expose
     private String slug;
 
@@ -57,17 +55,19 @@ public class Room implements IModel {
         generateSeatsData();
     }
 
-    public Room(long roomId, String roomName, int seatRows, int seatCols, String seatsData, Theater theater, String slug) {
-        this.roomID = roomId;
+    /**
+     * Use for retrieve data from database
+     */
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, Theater theater, String slug) {
+        this.roomID = roomID;
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;
-        this.seatData = seatsData;
+        this.seatData = seatData;
+        this.seatMatrix = StringUtils.convertTo2DArr(seatData);
         this.theater = theater;
-        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
-        generateSeatsData();
+        this.slug = slug;
     }
-
 
     private void generateSeatsData() {
         this.seatMatrix = new String[seatRows][seatCols];
@@ -85,6 +85,11 @@ public class Room implements IModel {
         this.seatData = stringBuilder.toString().trim();
     }
 
+    public List<Showtime> getShowtimeList() {
+        if (this.showtimeList == null)
+            this.showtimeList = new ShowtimeRepository().selectAllByRoomId(this.roomID);
+        return showtimeList;
+    }
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;

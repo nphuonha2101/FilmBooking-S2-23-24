@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.update;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
@@ -27,13 +26,10 @@ public class EditShowtimeController extends HttpServlet {
     private FilmServicesImpl filmServices;
     private ShowtimeServicesImpl showtimeServices;
     private RoomServicesImpl roomServices;
-    private CRUDServicesLogProxy<Showtime> showtimeServicesLog;
     private Showtime editShowtime;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
         roomServices = new RoomServicesImpl();
@@ -51,16 +47,14 @@ public class EditShowtimeController extends HttpServlet {
 
         editShowtimePage.render(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         filmServices = new FilmServicesImpl();
         showtimeServices = new ShowtimeServicesImpl();
         roomServices = new RoomServicesImpl();
-        showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
+        CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
 
         String filmID = StringUtils.handlesInputString(req.getParameter("film-id"));
         String roomID = StringUtils.handlesInputString(req.getParameter("room-id"));
@@ -79,7 +73,6 @@ public class EditShowtimeController extends HttpServlet {
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_SHOWTIME_SUCCESSFUL.getStatusCode());
         doGet(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
@@ -87,6 +80,5 @@ public class EditShowtimeController extends HttpServlet {
         filmServices = null;
         showtimeServices = null;
         editShowtime = null;
-        hibernateSessionProvider = null;
     }
 }

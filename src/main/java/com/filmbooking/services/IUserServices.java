@@ -37,5 +37,5 @@ public interface IUserServices {
      * @param newPassword new password
      * @return ServiceResult with status code
      */
-    public ServiceResult userChangePassword(String username, String oldPassword, String newPassword);
+    ServiceResult userChangePassword(String username, String oldPassword, String newPassword);
 }

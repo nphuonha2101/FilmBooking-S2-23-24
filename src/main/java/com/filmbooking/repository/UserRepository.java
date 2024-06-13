@@ -8,8 +8,8 @@ import java.util.Map;
 
 public class UserRepository extends AbstractRepository<User> {
 
-    public UserRepository(Class<User> modelClass) {
-        super(modelClass);
+    public UserRepository() {
+        super(User.class);
     }
 
     @Override

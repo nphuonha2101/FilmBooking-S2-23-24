@@ -12,12 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class FilmBookingMapper implements RowMapper<FilmBooking> {
-    private ShowtimeRepository showtimeRepository;
-    private UserRepository userRepository;
     @Override
     public FilmBooking map(ResultSet rs, StatementContext ctx) throws SQLException {
-        showtimeRepository = new ShowtimeRepository(Showtime.class);
-        userRepository = new UserRepository(com.filmbooking.model.User.class);
+        ShowtimeRepository showtimeRepository = new ShowtimeRepository();
+        UserRepository userRepository = new UserRepository();
         return new FilmBooking(
                 showtimeRepository.select(rs.getLong("showtime_id")),
                 userRepository.select(rs.getLong("user_id")),

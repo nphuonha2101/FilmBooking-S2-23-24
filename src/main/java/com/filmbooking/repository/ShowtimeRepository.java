@@ -1,6 +1,7 @@
 package com.filmbooking.repository;
 
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.repository.mapper.ShowtimeMapper;
 import org.jdbi.v3.core.Handle;
@@ -10,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ShowtimeRepository extends AbstractRepository<Showtime> {
-    public ShowtimeRepository(Class<Showtime> modelClass) {
-        super(modelClass);
+    public ShowtimeRepository() {
+        super(Showtime.class);
     }
 
     public List<Showtime> selectAllByFilmId(long filmId) {
@@ -31,7 +32,7 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
         }
     }
 
-    public Showtime selectAllByRoomId(long roomID) {
+    public List<Showtime> selectAllByRoomId(long roomID) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM showtimes WHERE room_id = :room_id";
@@ -39,12 +40,48 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
             return handle.createQuery(sql)
                     .bind("room_id", roomID)
                     .map(getRowMapper())
-                    .one();
+                    .list();
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
         } finally {
             JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public boolean deleteByFilmId(long filmId) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "DELETE FROM showtimes WHERE film_id = :film_id";
+            System.out.println("Delete by film id SQL: " + sql);
+            return handle.createUpdate(sql)
+                    .bind("film_id", filmId)
+                    .execute() == 1;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public boolean updateByFilm(Film film) {
+        try {
+            deleteByFilmId(film.getFilmID());
+
+            List<Showtime> showtimeList = film.getShowtimeList();
+            if (showtimeList == null) {
+                return true;
+            }
+
+            for (Showtime showtime : showtimeList) {
+                insert(showtime);
+            }
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
         }
     }
 
@@ -56,7 +93,6 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
     @Override
     Map<String, Object> mapToRow(Showtime showtime) {
         return Map.of(
-                "showtime_id", showtime.getShowtimeID(),
                 "film_id", showtime.getFilm().getFilmID(),
                 "room_id", showtime.getRoom().getRoomID(),
                 "showtime_date", showtime.getShowtimeDate(),

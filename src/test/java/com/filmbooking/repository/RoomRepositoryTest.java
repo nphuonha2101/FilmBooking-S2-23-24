@@ -12,7 +12,7 @@ public class RoomRepositoryTest {
     @Test
     void select(){
         assertDoesNotThrow(() -> {
-            RoomRepository roomRepository = new RoomRepository(Room.class);
+            RoomRepository roomRepository = new RoomRepository();
             System.out.println(roomRepository.select(1));
         });
     }

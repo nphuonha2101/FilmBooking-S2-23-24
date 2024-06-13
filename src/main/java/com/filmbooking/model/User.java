@@ -4,6 +4,7 @@ import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
+import com.filmbooking.repository.FilmBookingRepository;
 import com.google.gson.annotations.Expose;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,9 +34,7 @@ public class User implements IModel {
     @Expose
     private int accountStatus;
 
-
-
-    List<FilmBooking> filmBookingList;
+    private List<FilmBooking> filmBookingList;
 
     public User() {
     }
@@ -45,26 +44,20 @@ public class User implements IModel {
         this.userEmail = userEmail;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword, String accountRole, String accountType, int accountStatus, List<FilmBooking> filmBookingList) {
+    public User(String username, String userFullName, String userEmail, String userPassword, AccountRoleEnum accountRoleEnum, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
-        this.accountRole = accountRole;
+        this.accountRole = accountRoleEnum.getAccountRole();
         this.accountType = accountType;
         this.accountStatus = accountStatus;
-        this.filmBookingList = filmBookingList;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword,
-                AccountRoleEnum accountRole, String accountType, int accountStatus) {
-        this.username = username;
-        this.userFullName = userFullName;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
-        this.accountRole = accountRole.getAccountRole();
-        this.accountType = accountType;
-        this.accountStatus = accountStatus;
+    public List<FilmBooking> getFilmBookingList() {
+        if (this.filmBookingList == null)
+            this.filmBookingList = new FilmBookingRepository().sellectAllByUsername(this.username);
+        return filmBookingList;
     }
 
     @Override
@@ -74,8 +67,7 @@ public class User implements IModel {
                     && this.userFullName.equals(user.getUserFullName())
                     && this.userEmail.equals(user.getUserEmail())
                     && this.userPassword.equals(user.getUserPassword())
-                    && this.accountRole.equals(user.getAccountRole())
-                    && this.filmBookingList.equals(user.getFilmBookingList());
+                    && this.accountRole.equals(user.getAccountRole());
         }
         return false;
     }

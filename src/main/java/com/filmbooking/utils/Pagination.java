@@ -43,7 +43,7 @@ public class Pagination<T> {
 
         int offset = (page - 1) * limit;
 
-        request.setAttribute("totalPages", totalRecords);
+        request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
 
         return service.selectAll(limit, 0);
