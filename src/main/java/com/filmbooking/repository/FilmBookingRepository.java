@@ -6,6 +6,7 @@ import com.filmbooking.repository.mapper.FilmBookingMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,13 +22,13 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
 
     @Override
     Map<String, Object> mapToRow(FilmBooking filmBooking) {
-        return Map.of(
-                "username", filmBooking.getUser().getUsername(),
-                "booking_date", filmBooking.getBookingDate(),
-                "seats", String.join(",", filmBooking.getBookedSeats()),
-                "total_fee", filmBooking.getTotalFee(),
-                "payment_status", filmBooking.getPaymentStatus()
-        );
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", filmBooking.getUser().getUsername());
+        map.put("booking_date", filmBooking.getBookingDate());
+        map.put("seats", String.join(",", filmBooking.getBookedSeats()));
+        map.put("total_fee", filmBooking.getTotalFee());
+        map.put("payment_status", filmBooking.getPaymentStatus());
+        return map;
     }
     public List<FilmBooking> sellectAllByUsername(String username) {
         try {

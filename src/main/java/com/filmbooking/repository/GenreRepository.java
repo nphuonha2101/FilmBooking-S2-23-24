@@ -7,6 +7,7 @@ import com.filmbooking.repository.mapper.GenresMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,9 +90,10 @@ public class GenreRepository extends AbstractRepository<Genre> {
 
     @Override
     Map<String, Object> mapToRow(Genre genre) {
-        return Map.of(
-                "genre_id",genre.getGenreID(),
-                "genre_name", genre.getGenreName()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("genre_id", genre.getGenreID());
+        result.put("genre_name", genre.getGenreName());
+
+        return result;
     }
 }

@@ -66,78 +66,82 @@ public class LoginController extends HttpServlet {
                 "login",
                 "master"
         );
+
+        // check if user login failed
         FailedLoginServicesImpl failedLoginServices = new FailedLoginServicesImpl();
         FailedLogin failedLogin = failedLoginServices.select(req.getRemoteAddr());
-        if(failedLogin!=null){
-            if(failedLogin.getLockTime().isAfter(LocalDateTime.now())){
+
+        if (failedLogin != null) {
+            if (failedLogin.getLockTime().isAfter(LocalDateTime.now())) {
                 System.out.println("Login after 5 minutes");
                 loginPage.putError(StatusCodeEnum.LOGIN_AGAIN_AFTER_5_MINUTES.getStatusCode());
                 getHtmlRespFromPage(req, resp, loginPage);
                 return;
-            }else if(failedLogin.getLockTime().isBefore(LocalDateTime.now())){
+            } else if (failedLogin.getLockTime().isBefore(LocalDateTime.now())) {
                 failedLoginServices.delete(failedLogin);
             }
         }
 
-            boolean isCaptchaVerified = req.getSession().getAttribute("captchaVerified") != null && (boolean) req.getSession().getAttribute("captchaVerified");
+        // verify captcha
+        boolean isCaptchaVerified = req.getSession().getAttribute("captchaVerified") != null && (boolean) req.getSession().getAttribute("captchaVerified");
 
-            String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
-            String password = StringUtils.handlesInputString(req.getParameter("password"));
+        String username = StringUtils.handlesInputString(req.getParameter("usernameOrEmail"));
+        String password = StringUtils.handlesInputString(req.getParameter("password"));
 
-            System.out.println("Username: " + username);
-            System.out.println("Password: " + password);
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
 
-            if (!isCaptchaVerified) {
-                loginPage.putError(StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
-                getHtmlRespFromPage(req, resp, loginPage);
-                return;
-            }
-
-
-            userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, User.class);
+        if (!isCaptchaVerified) {
+            loginPage.putError(StatusCodeEnum.RECAPTCHA_VERIFICATION_ERROR.getStatusCode());
+            getHtmlRespFromPage(req, resp, loginPage);
+            return;
+        }
 
 
-            User loginUser = null;
+        userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
-            // user authentication
-            ServiceResult serviceResult = userServices.userAuthentication(username, password);
-            // case user not found then send error to login page
-            if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
-                if(failedLogin == null) {
-                    failedLogin = new FailedLogin();
-                    failedLogin.setReqIp(req.getRemoteAddr());
-                    failedLogin.setLoginCount(1);
-                    failedLogin.setLockTime(LocalDateTime.now());
-                    failedLoginServices.insert(failedLogin);
-                }else{
-                    failedLoginServices.update(failedLogin);
-                }
-                loginPage.putError(serviceResult.getStatus().getStatusCode());
-                getHtmlRespFromPage(req, resp, loginPage);
 
+        User loginUser = null;
+
+        // user authentication
+        ServiceResult serviceResult = userServices.userAuthentication(username, password);
+        // case user not found then send error to login page
+        if (serviceResult.getStatus() != StatusCodeEnum.FOUND_USER) {
+            if (failedLogin == null) {
+                failedLogin = new FailedLogin();
+                failedLogin.setReqIp(req.getRemoteAddr());
+                failedLogin.setLoginCount(1);
+                failedLogin.setLockTime(LocalDateTime.now());
+                failedLoginServices.insert(failedLogin);
             } else {
-                HttpSession session = req.getSession();
-                loginUser = (User) serviceResult.getData();
+                failedLoginServices.update(failedLogin);
+            }
+            loginPage.putError(serviceResult.getStatus().getStatusCode());
+            getHtmlRespFromPage(req, resp, loginPage);
 
-                System.out.println(loginUser.getUserEmail() + " logged in");
+        } else {
+            HttpSession session = req.getSession();
+            loginUser = (User) serviceResult.getData();
 
-                session.setAttribute("loginUser", loginUser);
-                FilmBooking filmBooking = new FilmBooking();
-                filmBooking.setUser(loginUser);
-                session.setAttribute("filmBooking", filmBooking);
+            System.out.println(loginUser.getUserEmail() + " logged in");
 
-                System.out.println("Test login found user");
+            session.setAttribute("loginUser", loginUser);
+            FilmBooking filmBooking = new FilmBooking();
+            filmBooking.setUser(loginUser);
+            session.setAttribute("filmBooking", filmBooking);
 
-                /* return to previous page that was visited before login
-                 * if it has no previous page, return to home page
-                 */
+            System.out.println("Test login found user");
+
+            /* return to previous page that was visited before login
+             * if it has no previous page, return to home page
+             */
 //            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
 
-                PrintWriter out = resp.getWriter();
-                resp.setContentType("text/plain");
-                out.println("/home");
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("text/plain");
+            out.println("/home");
 
-            }
+        }
     }
 
     private void getHtmlRespFromPage(HttpServletRequest req, HttpServletResponse resp, Page page) throws ServletException, IOException {
