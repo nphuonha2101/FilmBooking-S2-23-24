@@ -4,6 +4,7 @@ import com.filmbooking.model.FailedLogin;
 import com.filmbooking.repository.mapper.FailedLoginMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class FailedLoginRepository extends AbstractRepository<FailedLogin> {
@@ -19,10 +20,11 @@ public class FailedLoginRepository extends AbstractRepository<FailedLogin> {
 
     @Override
     Map<String, Object> mapToRow(FailedLogin failedLogin) {
-        return Map.of(
-                "req_ip", failedLogin.getReqIp(),
-                "login_count", failedLogin.getLoginCount(),
-                "lock_time", failedLogin.getLockTime()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("req_ip", failedLogin.getReqIp());
+        result.put("login_count", failedLogin.getLoginCount());
+        result.put("lock_time", failedLogin.getLockTime());
+
+        return result;
     }
 }

@@ -6,6 +6,7 @@ import com.filmbooking.repository.mapper.FilmMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class FilmRepository extends AbstractRepository<Film>{
         return super.update(film);
     }
 
-    public List<Film> sellectAll(String genreId) {
+    public List<Film> selectAll(String genreId) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM films " +
@@ -64,17 +65,17 @@ public class FilmRepository extends AbstractRepository<Film>{
 
     @Override
     Map<String, Object> mapToRow(Film film) {
-        return Map.of(
-                "film_name", film.getFilmName(),
-                "film_price", film.getFilmPrice(),
-                "film_director", film.getDirector(),
-                "film_cast", film.getCast(),
-                "film_length", film.getFilmLength(),
-                "film_description", film.getFilmDescription(),
-                "film_trailer_link", film.getFilmTrailerLink(),
-                "img_path", film.getImgPath(),
-                "slug", film.getSlug()
-        );
+        Map<String, Object> map = new HashMap<>();
+        map.put("film_name", film.getFilmName());
+        map.put("film_price", film.getFilmPrice());
+        map.put("film_director", film.getDirector());
+        map.put("film_cast", film.getCast());
+        map.put("film_length", film.getFilmLength());
+        map.put("film_description", film.getFilmDescription());
+        map.put("film_trailer_link", film.getFilmTrailerLink());
+        map.put("img_path", film.getImgPath());
+        map.put("slug", film.getSlug());
+        return map;
     }
 
 

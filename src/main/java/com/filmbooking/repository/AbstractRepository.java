@@ -14,7 +14,8 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
     protected final JdbiBuilder<T> jdbiBuilder;
 
     public AbstractRepository(Class<T> modelClass) {
-        this.jdbiBuilder = new JdbiBuilder<T>(modelClass);
+        System.out.println("AbstractRepository: " + modelClass);
+        this.jdbiBuilder = new JdbiBuilder<>(modelClass);
     }
 
     @Override

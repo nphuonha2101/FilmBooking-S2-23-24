@@ -32,11 +32,11 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user;
 
         if (serviceResult.getStatus() == StatusCodeEnum.FOUND_USER) {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractService<T>) userServices, true);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, (AbstractService<T>) userServices, true);
             // set user for log model because current user not in session yet
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, (T) null, (AbstractService<T>) userServices, false);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, (AbstractService<T>) userServices, false);
             // default log level is INFO, but when user login fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
             // get user by username or email
