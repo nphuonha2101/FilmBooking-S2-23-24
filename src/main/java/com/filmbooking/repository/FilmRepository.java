@@ -39,7 +39,7 @@ public class FilmRepository extends AbstractRepository<Film>{
         return super.update(film);
     }
 
-    public List<Film> sellectAll(String genreId) {
+    public List<Film> selectAll(String genreId) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM films " +
