@@ -5,6 +5,7 @@ import com.filmbooking.model.Theater;
 import com.filmbooking.repository.mapper.TheaterMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,10 +38,11 @@ public class TheaterRepository extends AbstractRepository<Theater>{
 
     @Override
     Map<String, Object> mapToRow(Theater theater) {
-        return Map.of(
-                "theater_name", theater.getTheaterName(),
-                "tax_code", theater.getTaxCode(),
-                "theater_address", theater.getTheaterAddress()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("theater_name", theater.getTheaterName());
+        result.put("tax_code", theater.getTaxCode());
+        result.put("theater_address", theater.getTheaterAddress());
+
+        return result;
     }
 }

@@ -7,6 +7,7 @@ import com.filmbooking.repository.mapper.RoomMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,13 +58,14 @@ public class RoomRepository extends AbstractRepository<Room>{
 
     @Override
     public Map<String, Object> mapToRow(Room room) {
-        return Map.of(
-                "room_name", room.getRoomName(),
-                "seat_rows", room.getSeatRows(),
-                "seat_cols", room.getSeatCols(),
-                "seat_data", room.getSeatData(),
-                "theater_id", room.getTheater().getTheaterID(),
-                "slug", room.getSlug()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("room_name", room.getRoomName());
+        result.put("seat_rows", room.getSeatRows());
+        result.put("seat_cols", room.getSeatCols());
+        result.put("seat_data", room.getSeatData());
+        result.put("theater_id", room.getTheater().getTheaterID());
+        result.put("slug", room.getSlug());
+        
+        return result;
     }
 }

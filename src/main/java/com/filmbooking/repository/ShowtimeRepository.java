@@ -7,6 +7,7 @@ import com.filmbooking.repository.mapper.ShowtimeMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,13 +93,14 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
 
     @Override
     Map<String, Object> mapToRow(Showtime showtime) {
-        return Map.of(
-                "film_id", showtime.getFilm().getFilmID(),
-                "room_id", showtime.getRoom().getRoomID(),
-                "showtime_date", showtime.getShowtimeDate(),
-                "seats_data", showtime.getSeatsData(),
-                "slug", showtime.getSlug()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("film_id", showtime.getFilm().getFilmID());
+        result.put("room_id", showtime.getRoom().getRoomID());
+        result.put("showtime_date", showtime.getShowtimeDate());
+        result.put("seats_data", showtime.getSeatsData());
+        result.put("slug", showtime.getSlug());
+
+        return result;
     }
 }
 
