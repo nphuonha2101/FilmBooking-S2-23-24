@@ -19,7 +19,7 @@ public class UserMapper implements RowMapper<User> {
                 rs.getString("user_fullname"),
                 rs.getString("user_email"),
                 rs.getString("user_password"),
-                rs.getString("account_role").equals("ADMIN") ? AccountRoleEnum.ADMIN : AccountRoleEnum.CUSTOMER,
+                rs.getString("account_role").equalsIgnoreCase("ADMIN") ? AccountRoleEnum.ADMIN : AccountRoleEnum.CUSTOMER,
                 rs.getString("account_type"),
                 rs.getInt("account_status")
         );
