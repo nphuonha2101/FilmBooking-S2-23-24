@@ -38,7 +38,7 @@ public class LogModel implements IModel {
     public static final String SERVICE = "SERVICE";
     public static final String LOGIN_SERVICE = "LOGIN";
     public static final String FORGOT_PASSWORD_SERVICE = "FORGOT_PASSWORD_SERVICE";
-    public static final String CHANGE_PASSWORD_SERVICE = "CHANGE_PASSWORD_SERVICE" ;
+    public static final String CHANGE_PASSWORD_SERVICE = "CHANGE_PASSWORD_SERVICE";
 
     // log levels
     public static final String LOG_LVL_INFO = "INFO";
@@ -63,20 +63,17 @@ public class LogModel implements IModel {
     @Expose
     private boolean isActionSuccess;
     @Expose
-    @Column(name = "before_data")
     private String beforeValueJSON;
     @Expose
-    @Column(name = "after_data")
     private String afterValueJSON;
     @Expose
-    @Column(name = "created_at")
     private Timestamp createdAt;
     @Expose
-    @Column(name = "updated_at")
     private Timestamp updatedAt;
 
     public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
-        this.username = user.getUsername();
+        if (user != null)
+            this.username = user.getUsername();
         this.reqIP = reqIP;
 //        this.ipCountry = String.valueOf(GeoLite2IPUtils.getInstance().getCountry(reqIP));
         this.level = level;
@@ -92,7 +89,8 @@ public class LogModel implements IModel {
         }
     }
 
-    public LogModel() {}
+    public LogModel() {
+    }
 
     @Override
     public boolean equals(Object o) {
