@@ -7,6 +7,7 @@ import com.filmbooking.repository.mapper.FilmVoteMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,10 +93,11 @@ public class FilmVoteRepository extends AbstractRepository<FilmVote> {
 
     @Override
     Map<String, Object> mapToRow(FilmVote filmVote) {
-        return Map.of(
-                "film_id", filmVote.getFilm().getFilmID(),
-                "scores", filmVote.getScores()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("film_id", filmVote.getFilm().getFilmID());
+        result.put("scores", filmVote.getScores());
+
+        return result;
     }
 
 

@@ -1,6 +1,5 @@
 package com.filmbooking.model;
 
-import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
@@ -17,7 +16,6 @@ import java.util.List;
 @ToString
 @TableName("user_infos")
 @TableIdName("username")
-@StringID
 public class User implements IModel {
     public static final String TABLE_NAME = "user_infos";
     @Expose

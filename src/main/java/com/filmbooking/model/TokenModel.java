@@ -6,7 +6,6 @@
 
 package com.filmbooking.model;
 
-import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
@@ -14,7 +13,6 @@ import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +27,6 @@ import java.util.Map;
 @TableName("user_tokens")
 @TableIdName("token")
 @AllArgsConstructor
-@StringID
 public class TokenModel implements IModel {
     public static final String TABLE_NAME = "user_tokens";
 
