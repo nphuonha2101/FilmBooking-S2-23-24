@@ -32,6 +32,7 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         try {
             Map<String, Object> filters = new HashMap<>();
             filters.put("user_email", email);
+            if (this.selectAll(filters)== null) return null;
             return this.selectAll(filters).get(0);
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
@@ -43,6 +44,7 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         try {
             Map<String, Object> filters = new HashMap<>();
             filters.put("username", username);
+            if (this.selectAll(filters)== null) return null;
             return this.selectAll(filters).get(0);
         } catch (NoResultException e) {
             return null;
