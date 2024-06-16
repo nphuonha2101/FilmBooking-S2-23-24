@@ -24,6 +24,12 @@ public class FilmBookingServicesImpl extends AbstractService<FilmBooking> {
         return this.selectAll(conditions);
     }
 
+    public List<FilmBooking> sellectAllByFilmId(Long filmId) {
+        Map<String, Object> conditions = Map.of("film_id", filmId);
+        return this.selectAll(conditions);
+    }
+
+
 
 
 }
