@@ -96,7 +96,7 @@
 <%--                </div>--%>
                 <div class="centered-horizontal-content wrapper justify-left-row">
 
-                    <input type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
+                    <input class="form-control" type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
 
                     &nbsp;<label for="vnpay-radio">
                         &nbsp;&nbsp;

@@ -19,29 +19,29 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+<section class="section align-top admin-two-cols__wrapper d-flex flex-column align-items-center">
     <div class="container ">
         <jsp:include page="/views/components/admin-panel.jsp"/>
     </div>
-    <div class="container centered-vertical-content">
+    <div class="container d-flex flex-column align-items-center">
 
         <h2><fmt:message bundle="${adminMsg}" key="editRoom"/></h2>
 
 
-        <div class="centered-vertical-content wrapper">
+        <div class="d-flex flex-column align-items-center wrapper">
 
             <%-- Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
             <!-- text form in left -->
-            <div class="wrapper centered-vertical-content">
+            <div class="wrapper d-flex flex-column align-items-center">
                 <div>
                     <c:set var="editRoom" value="${editRoom}"/>
                     <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/edit/room"/>">
                         <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomID"/>:
                             <span class="warning-color"> *</span>
                         </label>
-                        <input class="readonly-input" type="text"
+                        <input class="form-control readonly-input" type="text"
                                placeholder="<fmt:message bundle="${adminMsg}" key="roomID"/>" name="room-id"
                                id="room-id"
                                value="${editRoom.roomID}"
@@ -49,7 +49,7 @@
                         <label for="room-name"><fmt:message bundle="${adminMsg}" key="roomName"/>:
                             <span class="warning-color"> *</span>
                         </label>
-                        <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
+                        <input class="form-control" type="text" placeholder="<fmt:message bundle="${adminMsg}" key="roomName"/>"
                                name="room-name" id="room-name"
                                value="${editRoom.roomName}"
                                required/>
@@ -57,21 +57,21 @@
                         <label for="seat-rows"><fmt:message bundle="${adminMsg}" key="roomRows"/>:
                             <span class="warning-color"> *</span>
                         </label>
-                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
+                        <input class="form-control" type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomRows"/>"
                                name="seat-rows" id="seat-rows"
                                value="${editRoom.seatRows}"
                                required/>
                         <label for="seat-cols"><fmt:message bundle="${adminMsg}" key="roomCols"/>:
                             <span class="warning-color"> *</span>
                         </label>
-                        <input type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
+                        <input class="form-control" type="number" min="0" placeholder="<fmt:message bundle="${adminMsg}" key="roomCols"/>"
                                name="seat-cols" id="seat-cols"
                                value="${editRoom.seatCols}"
                                required/>
                         <label for="theater-id"><fmt:message bundle="${adminMsg}" key="theaterAgency"/>:
                             <span class="warning-color"> *</span>
                         </label>
-                        <select id="theater-id" name="theater-id">
+                        <select class="form-control" id="theater-id" name="theater-id">
                             <c:forEach var="theater" items="${theaters}">
                                 <c:choose>
                                     <c:when test="${editRoom.theater.theaterID eq theater.theaterID}">
@@ -84,7 +84,7 @@
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
-                            <div class="centered-horizontal-content">
+                            <div class="d-flex justify-content-center">
                                 <input class="primary-filled-button button" type="submit"
                                        value="<fmt:message bundle="${adminMsg}" key="editRoom"/>">
                             </div>
