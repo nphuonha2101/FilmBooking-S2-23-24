@@ -53,7 +53,7 @@
 </div>
 
 <!-- Back to Top -->
-<div id="back-to-top" class="back-to-top light-filled-button button">
+<div id="back-to-top" class="back-to-top light-filled-button button d-flex justify-content-center align-items-center">
    <span class="material-symbols-rounded">
 expand_less</span>
 </div>

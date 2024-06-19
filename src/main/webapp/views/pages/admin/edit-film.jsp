@@ -23,28 +23,29 @@
 <c:set var="editFilm" value='${editFilm}'/>
 <c:set var="genreList" value="${genres}"/>
 
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
+<section class="section align-top admin-two-cols__wrapper d-flex flex-column align-items-center">
     <div class="container ">
         <jsp:include page="/views/components/admin-panel.jsp"/>
     </div>
-    <div class="container centered-vertical-content">
+    <div class="container d-flex flex-column align-items-center">
 
         <h2><fmt:message bundle="${adminMsg}" key="editFilm"/></h2>
 
-        <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/edit/film"/>" enctype="multipart/form-data">
+        <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/edit/film"/>"
+              enctype="multipart/form-data">
 
 
-            <div class="centered-vertical-content">
+            <div class="d-flex flex-column align-items-center">
 
                 <%--        Status Code Messages--%>
                 <jsp:include page="/views/components/status-code-message.jsp"/>
 
-                <div class="two-col__wrapper centered-vertical-content wrapper">
+                <div class="two-col__wrapper d-flex flex-column align-items-center wrapper">
                     <!-- text form in left -->
                     <div class="left-col">
                         <div>
                             <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmID"/></label>
-                            <input class="readonly-input" type="text"
+                            <input class="form-control readonly-input" type="text"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="filmID"/>"
                                    name="film-id"
                                    id="film-id"
@@ -54,7 +55,8 @@
                             <label for="film-name"><fmt:message bundle="${adminMsg}" key="filmName"/>:
                                 <span class="warning-color"> *</span>
                             </label>
-                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>"
+                            <input class="form-control" type="text"
+                                   placeholder="<fmt:message bundle="${adminMsg}" key="filmName"/>"
                                    name="film-name"
                                    id="film-name"
                                    value="${editFilm.filmName}" required/>
@@ -62,7 +64,7 @@
                             <label for="film-price"><fmt:message bundle="${adminMsg}" key="ticketPrices"/>:
                                 <span class="warning-color"> *</span>
                             </label>
-                            <input type="number" min="0"
+                            <input class="form-control" type="number" min="0"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="ticketPrices"/>"
                                    name="film-price" id="film-price"
                                    value="${editFilm.filmPrice}"
@@ -71,7 +73,8 @@
                             <label for="director"><fmt:message bundle="${adminMsg}" key="director"/>:
                                 <span class="warning-color"> *</span>
                             </label>
-                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="director"/>"
+                            <input class="form-control" type="text"
+                                   placeholder="<fmt:message bundle="${adminMsg}" key="director"/>"
                                    name="director"
                                    id="director"
                                    value="${editFilm.director}"
@@ -80,8 +83,8 @@
                     </div>
 
                     <!-- hidden form in right -->
-                    <div class="centered-vertical-content right-col">
-                        <input type="file" id="upload-img" name="upload-img"/>
+                    <div class="d-flex flex-column align-items-center right-col">
+                        <input class="form-control" type="file" id="upload-img" name="upload-img"/>
                         <div class="film-img-box div-img" id="film-img" style="background-image: url('<c:url
                                 value="${editFilm.imgPath}"/>')"></div>
                         <input type="hidden" name="film-img-name" id="film-img-name" value="">
@@ -96,7 +99,8 @@
                             <label for="actors"><fmt:message bundle="${adminMsg}" key="actors"/>:
                                 <span class="warning-color"> *</span>
                             </label>
-                            <input type="text" placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>"
+                            <input class="form-control" type="text"
+                                   placeholder="<fmt:message bundle="${adminMsg}" key="actors"/>"
                                    name="actors" id="actors"
                                    value="${editFilm.cast}"
                                    required/>
@@ -108,7 +112,7 @@
                             <label for="film-trailer-link"><fmt:message bundle="${adminMsg}"
                                                                         key="linkYouTubeTrailer"/>:
                             </label>
-                            <input type="text"
+                            <input class="form-control" type="text"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="linkYouTubeTrailer"/>"
                                    name="film-trailer-link"
                                    id="film-trailer-link"
@@ -122,7 +126,7 @@
                             <label for="film-length"><fmt:message bundle="${adminMsg}" key="filmLength"/>:
                                 <span class="warning-color"> *</span>
                             </label>
-                            <input type="number" min="0"
+                            <input class="form-control" type="number" min="0"
                                    placeholder="<fmt:message bundle="${adminMsg}" key="filmLength"/>" name="film-length"
                                    id="film-length"
                                    value="${editFilm.filmLength}"
@@ -131,7 +135,7 @@
                     </div>
                 </div>
 
-                <div class="wrapper centered-vertical-content">
+                <div class="wrapper d-flex flex-column align-items-center">
                     <label for="genre-ids"><fmt:message bundle="${adminMsg}" key="genreCodes"/>:
                         <span class="warning-color"> *</span>
                     </label>
@@ -139,7 +143,7 @@
                         <span class="font-bold"><fmt:message key="selectedGenres" bundle="${adminMsg}"/>: </span>
                         <span id="selected-genres">${filmGenresStr}</span>
                     </p>
-                    <select name="genre-ids"
+                    <select class="form-control" name="genre-ids"
                             id="genre-ids"
                             class="genre-ids-select"
                             multiple>
@@ -160,15 +164,14 @@
                         <fmt:message bundle="${adminMsg}" key="filmDescription"/>:
                         <span class="warning-color"> *</span>
                     </label>
-                    <textarea class="none-resize_textarea" name="film-description" id="film-description_textarea"
+                    <textarea class="form-control none-resize_textarea" name="film-description"
+                              id="film-description_textarea"
                               placeholder="<fmt:message bundle="${adminMsg}" key="filmDescription"/>">${editFilm.filmDescription}</textarea>
                     <input type="submit" class="primary-filled-button button"
                            value="<fmt:message bundle="${adminMsg}" key="editFilm"/>">
                 </div>
-
             </div>
         </form>
-
     </div>
 </section>
 

@@ -31,7 +31,7 @@
 
                     <!-- create film cards -->
                     <c:forEach var="film" items="${filmsData}" varStatus="loop">
-                        <div class="item-cards centered-vertical-content" id="card-${loop.index}">
+                        <div class="item-cards d-flex flex-column align-items-center" id="card-${loop.index}">
                             <div class="film-img-in-card div-img"
                                  style="background-image: url('<c:url value="${film.imgPath}"/>')"
                                  id="film-img-card-${loop.index}"></div>
@@ -65,7 +65,7 @@
             </c:when>
 
             <c:otherwise>
-                <div class="wrapper centered-vertical-content">
+                <div class="wrapper d-flex flex-column align-items-center">
                     <h3><fmt:message key="${statusCodeErr}" bundle="${statusCode}"/></h3>
                     <p><fmt:message key="${messageDescription}" bundle="${msg}"/>  ${searchQuery}</p>
                 </div>

@@ -22,8 +22,8 @@
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <c:set var="loginUser" value="${sessionScope.loginUser}"/>
-<section class="content section centered-vertical-content">
-    <div class="centered-vertical-content container form__container">
+<section class="content section d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center container form__container">
         <h2 class="title"><fmt:message key="changeInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
@@ -34,21 +34,21 @@
                 <span class="material-symbols-rounded">person</span>
                 <fmt:message bundle="${msg}" key="username"/>
             </label>
-            <input type="text" name="username" id="username" class="readonly-input" value="${loginUser.username}"
+            <input type="text" name="username" id="username" class="form-control readonly-input" value="${loginUser.username}"
                    placeholder=" <fmt:message bundle="${msg}" key="username"/>" autocomplete="true" readonly>
 
             <label for="user-full-name">
                 <span class="material-symbols-rounded">badge</span>
                 <fmt:message bundle="${msg}" key="fullname"/>
             </label>
-            <input type="text" name="user-full-name" id="user-full-name" value="${loginUser.userFullName}"
+            <input class="form-control" type="text" name="user-full-name" id="user-full-name" value="${loginUser.userFullName}"
                    placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true" required>
 
             <label for="email">
                 <span class="material-symbols-rounded">mail</span>
                 <fmt:message bundle="${msg}" key="email"/>
             </label>
-            <input type="email" name="email" id="email" value="${loginUser.userEmail}"
+            <input class="form-control" type="email" name="email" id="email" value="${loginUser.userEmail}"
                    placeholder="    <fmt:message bundle="${msg}" key="email"/>"
                    autocomplete="true" required>
 
@@ -56,7 +56,7 @@
                 <span class="material-symbols-rounded">password</span>
                 <fmt:message bundle="${msg}" key="typeYourPassword"/>
             </label>
-            <input type="password" name="password" id="password"
+            <input class="form-control" type="password" name="password" id="password"
                    placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true" required>
 
             <input type="submit" class="primary-filled-button button"

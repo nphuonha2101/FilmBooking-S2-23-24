@@ -20,16 +20,16 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
-<section class="section centered-vertical-content">
+<section class="section d-flex flex-column align-items-center">
     <c:set var="filmBookingsData" value="${filmBookings}"/>
 
-    <div class="container wrapper centered-vertical-content">
+    <div class="container wrapper d-flex flex-column align-items-center">
         <h2 class="title"><fmt:message key="bookingHistorySectionTitle" bundle="${pageTitle}"/></h2>
 
-        <div class="wrapper centered-vertical-content">
+        <div class="wrapper d-flex flex-column align-items-center">
             <c:choose>
                 <c:when test="${empty filmBookingsData}">
-                    <div class="wrapper centered-vertical-content">
+                    <div class="wrapper d-flex flex-column align-items-center">
                         <h3><fmt:message bundle="${msg}" key="null"/></h3>
                     </div>
                 </c:when>
@@ -98,8 +98,8 @@
                                     </div>
                                 </div>
                                 <c:if test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                    <div class="wrapper justify-right-row">
-                                        <div class="justify-right-row wrapper">
+                                    <div class="wrapper d-flex justify-content-end">
+                                        <div class="d-flex justify-content-end wrapper">
                                             <a class="primary-filled-button button rounded-button" target="_blank"
                                                href="<c:url value="${pageContext.request.contextPath}/admin/invoice-info?booking-id=${filmBookingData.filmBookingID}"/>">
                                                 <fmt:message bundle="${msg}" key="print"/>
