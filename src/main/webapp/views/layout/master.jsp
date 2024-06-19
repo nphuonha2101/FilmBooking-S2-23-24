@@ -45,11 +45,14 @@
 </header>
 <main>
     <jsp:include page="${dynamicContents}"/>
+
 </main>
 
 <footer>
     <jsp:include page="/views/components/footer.jsp"/>
 </footer>
+
+
 
 <script type="text/javascript">${additionScript}</script>
 <script>
