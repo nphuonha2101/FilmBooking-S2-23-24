@@ -23,18 +23,22 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light top-nav" id="navigation-bar">
     <div class="d-flex w-100">
-        <div class="flex-grow-1 d-flex align-items-center justify-content-center" id="left-nav">
+        <div class="flex-grow-1 flex-nowrap d-flex align-items-center justify-content-center" id="left-nav">
             <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
             <div class="search-box">
-                <input type="text" class="form-control ms-3" id="search-input"
-                       placeholder="<fmt:message key="search" bundle="${msg}"/>">
-                <ul class="list-group" id="search-result"></ul>
+                <button
+                        class="btn btn-light search-button ms-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#search-modal"
+                >
+                    <span class="material-symbols-rounded">search</span>
+                </button>
             </div>
         </div>
 
 
         <div class="flex-grow-1 d-flex align-items-center justify-content-center" id="right-nav">
-            <ul class="navbar-nav d-flex me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav flex-nowrap d-flex me-auto mb-2 mb-lg-0">
 
                 <%--Home--%>
                 <li
@@ -223,5 +227,7 @@
         </div>
     </div>
 </nav>
+
+    <jsp:include page="/views/components/modals/search-modal.jsp" />
 
 <script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>
