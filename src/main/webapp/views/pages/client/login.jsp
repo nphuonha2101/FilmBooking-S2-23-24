@@ -27,7 +27,7 @@
         <form class="row g-3" action="<c:url value="${pageContext.request.contextPath}/login" />" method="post"
               id="login-form">
             <div class="form-floating">
-                <input class="form-control px-3" type="text" name="usernameOrEmail" id="usernameOrEmail"
+                <input class="form-control" type="text" name="usernameOrEmail" id="usernameOrEmail"
                        placeholder=" <fmt:message key="usernameOrEmail" bundle="${msg}" />"
                        autocomplete="true" required>
                 <label class="text-secondary" for="usernameOrEmail">
@@ -36,7 +36,7 @@
                 </label>
             </div>
             <div class="form-floating">
-                <input class="form-control px-3" type="password" name="password" id="password" placeholder="<fmt:message key="password"
+                <input class="form-control" type="password" name="password" id="password" placeholder="<fmt:message key="password"
                             bundle="${msg}" />"
                        autocomplete="true" required>
                 <label class="text-secondary" for="password">

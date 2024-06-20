@@ -35,31 +35,37 @@
 
             <div>
                 <form method="post" action="<c:url value="${pageContext.request.contextPath}/admin/add/showtime"/>">
+                    <div class="form-floating mb-3">
+                        <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>:
+                            <span class="warning-color"> *</span>
+                        </label>
+                        <select class="form-control" name="film-id" id="film-id">
+                            <c:forEach var="film" items="${filmData}" varStatus="loop">
+                                <option value="${film.filmID}">${film.filmName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                    <label for="film-id"><fmt:message bundle="${adminMsg}" key="filmName"/>:
-                        <span class="warning-color"> *</span>
-                    </label>
-                    <select class="form-control" name="film-id" id="film-id">
-                        <c:forEach var="film" items="${filmData}" varStatus="loop">
-                            <option value="${film.filmID}">${film.filmName}</option>
-                        </c:forEach>
-                    </select>
+                    <div class="form-floating mb-3">
+                        <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomName"/>:
+                            <span class="warning-color"> *</span>
+                        </label>
+                        <select class="form-control" name="room-id" id="room-id">
+                            <c:forEach var="room" items="${roomData}" varStatus="loop">
+                                <option value="${room.roomID}">${room.roomName} - ${room.theater.theaterName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
 
-                    <label for="room-id"><fmt:message bundle="${adminMsg}" key="roomName"/>:
-                        <span class="warning-color"> *</span>
-                    </label>
-                    <select class="form-control" name="room-id" id="room-id">
-                        <c:forEach var="room" items="${roomData}" varStatus="loop">
-                            <option value="${room.roomID}">${room.roomName} - ${room.theater.theaterName}</option>
-                        </c:forEach>
-                    </select>
-
-                    <label for="showtime-datetime"><fmt:message bundle="${adminMsg}" key="showtimeDate"/>:
-                        <span class="warning-color"> *</span>
-                    </label>
-                    <input class="form-control" type="datetime-local" placeholder="<fmt:message bundle="${adminMsg}" key="showtimeDate"/>"
-                           name="showtime-datetime" id="showtime-datetime"
-                           required/>
+                    <div class="form-floating mb-3">
+                        <label for="showtime-datetime"><fmt:message bundle="${adminMsg}" key="showtimeDate"/>:
+                            <span class="warning-color"> *</span>
+                        </label>
+                        <input class="form-control" type="datetime-local"
+                               placeholder="<fmt:message bundle="${adminMsg}" key="showtimeDate"/>"
+                               name="showtime-datetime" id="showtime-datetime"
+                               required/>
+                    </div>
 
                     <div class="d-flex flex-column align-items-center">
                         <input class="primary-filled-button button" type="submit"
