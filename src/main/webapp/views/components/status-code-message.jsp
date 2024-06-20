@@ -23,15 +23,17 @@
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 <c:if test="${not empty statusCodeSuccess}">
-            <span class="successful-span message-span">
-                <span class="material-symbols-rounded">task_alt</span>
-                    <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
-            </span>
+    <div class="alert d-flex align-items-center alert-success alert-dismissible fade show successful-alert-color " role="alert">
+            <span class="material-symbols-rounded">task_alt</span>
+            <fmt:message key="${statusCodeSuccess}" bundle="${statusCodeMsg}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 </c:if>
 
 <c:if test="${not empty statusCodeErr}">
-            <span class="error-span message-span" id="error-message">
-                <span class="material-symbols-rounded">warning</span>
-                <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
-            </span>
+    <div class="alert d-flex align-items-center  alert-danger alert-dismissible fade show error-alert-color" role="alert">
+        <span class="material-symbols-rounded">warning</span>
+        <fmt:message key="${statusCodeErr}" bundle="${statusCodeMsg}"/>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 </c:if>

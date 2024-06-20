@@ -1,9 +1,6 @@
 function handlesSubmitForm(formId, method, endpoint) {
     const form = document.getElementById(formId);
 
-
-
-
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
@@ -21,5 +18,8 @@ function handlesSubmitForm(formId, method, endpoint) {
             .then(data => {
                 alert(data.message);
             })
+            .catch(error => {
+                console.error("Error:", error);
+            });
     });
 }

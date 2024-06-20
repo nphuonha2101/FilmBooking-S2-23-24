@@ -21,172 +21,213 @@
 
 <fmt:setBundle basename="properties.message" var="msg"/>
 
-<nav class="top-nav" id="navigation-bar">
-    <div class="centered-horizontal-content" id="left-nav-elements">
-        <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="<fmt:message key="search" bundle="${msg}"/>">
-            <ul class="list-group" id="search-result"></ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light top-nav" id="navigation-bar">
+    <div class="d-flex w-100">
+        <div class="flex-grow-1 flex-nowrap d-flex align-items-center justify-content-center" id="left-nav">
+            <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
+            <div class="search-box">
+                <button
+                        class="btn btn-light search-button ms-4"
+                        data-bs-toggle="modal"
+                        data-bs-target="#search-modal"
+                >
+                    <span class="material-symbols-rounded">search</span>
+                </button>
+            </div>
         </div>
-    </div>
 
 
-    <ul id="right-nav-link">
-        <li>
-            <a class="nav-links small-icon-button" href="<c:url value="${pageContext.request.contextPath}/home"/>"
-               id="home">
-                <div class="tooltip ">
-                    <span class="material-symbols-rounded">
-                        home
-                    </span>
-                    <span class="tooltip-text">
-                    <fmt:message key="home" bundle="${msg}"/>
-                </span>
-                </div>
-            </a>
-        </li>
+        <div class="flex-grow-1 d-flex align-items-center justify-content-center" id="right-nav">
+            <ul class="navbar-nav flex-nowrap d-flex me-auto mb-2 mb-lg-0">
 
-        <c:if test="${not empty sessionScope.loginUser.username}">
-            <li>
-                <div class="nav-links small-icon-button">
-                    <div class="tooltip click-menu" id="film-booking_menu">
-                        <span class="material-symbols-rounded">
-                            history
-                        </span>
-                        <span class="tooltip-text">
-                            <fmt:message key="bookingHistory" bundle="${msg}"/>
-                        </span>
-
-                        <div class="drop-down-contents" id="film-booking_menu-content">
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </c:if>
-
-        <c:if test="${not empty sessionScope.loginUser.username}">
-            <li>
-                <div class="drop-down-menu">
-
-                    <a class="nav-links small-icon-button"
-                       href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>" id="account-info">
-                        <span class="material-symbols-rounded">
-                            person
-                        </span>
+                <%--Home--%>
+                <li
+                        class="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="<fmt:message key="home" bundle="${msg}"/>"
+                >
+                    <a class="nav-link"
+                       id="home"
+                       href="<c:url value="${pageContext.request.contextPath}/home"/>">
+                        <span class="material-symbols-rounded">home</span>
                     </a>
+                </li>
 
-                    <div class="drop-down-contents">
-                        <p class="font-FiraSans"> ${sessionScope.loginUser.userFullName}</p>
+                <%--Booking History--%>
+                <c:if test="${not empty sessionScope.loginUser}">
+                    <li
+                            class="nav-item"
+                            data-bs-toggle="tooltip"
+                            data-bs-title="<fmt:message key="bookingHistory" bundle="${msg}"/>"
+                    >
+                        <a
+                                class="nav-link"
+                                id="film-booking_menu"
+                                href="#"
+                        >
+                            <span class="material-symbols-rounded">history</span>
 
-                        <a class="drop-down-links"
-                           href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
-                            <fmt:message key="bookingHistory" bundle="${msg}"/>
+                            <div class="drop-down-contents" id="film-booking_menu-content">
+                            </div>
                         </a>
-                        <c:choose>
-                            <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
-                                <a class="drop-down-links"
-                                   href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>">
-                                    <fmt:message key="adminPage" bundle="${msg}"/>
+                    </li>
+                </c:if>
+
+                <%--Account Info--%>
+                <c:if test="${not empty sessionScope.loginUser}">
+                    <li
+                            class="nav-item dropdown"
+                            data-bs-toggle="tooltip"
+                            data-bs-title="<fmt:message key="accountInfo" bundle="${msg}"/>"
+                    >
+
+                        <a class="nav-link dropdown-toggle"
+                           href="#"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                           id="account-info">
+
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li>
+                                <p class="dropdown-item font-FiraSans"> ${sessionScope.loginUser.userFullName}</p>
+                            </li>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">
+                                    <fmt:message key="bookingHistory" bundle="${msg}"/>
                                 </a>
-                            </c:when>
-                        </c:choose>
-                        <a class="drop-down-links"
-                           href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
-                            <fmt:message key="yourAccount" bundle="${msg}"/>
-                        </a>
-                    </div>
-                </div>
-            </li>
-        </c:if>
+                            </li>
 
-        <c:choose>
-            <c:when test="${not empty sessionScope.loginUser.username}">
-                <li>
-                    <a class="nav-links small-icon-button"
-                       href="<c:url value="${pageContext.request.contextPath}/logout"/>">
-                        <div class="tooltip">
-                            <span class="material-symbols-rounded">
-                                logout
-                            </span>
-                            <span class="tooltip-text">
-                            <fmt:message key="logout" bundle="${msg}"/>
-                        </span>
-                        </div>
-                    </a>
-                </li>
-            </c:when>
-            <c:when test="${empty sessionScope.loginUser.username}">
-                <li>
-                    <a class="nav-links small-icon-button"
-                       href="<c:url value="${pageContext.request.contextPath}/signup"/>" id="signup">
-                        <div class="tooltip">
-                            <span class="material-symbols-rounded">
-                                person_add
-                            </span>
-                            <span class="tooltip-text">
-                            <fmt:message key="register" bundle="${msg}"/>
-                        </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-links small-icon-button"
-                       href="<c:url value="${pageContext.request.contextPath}/login"/>" id="login">
-                        <div class="tooltip">
-                        <span class="material-symbols-rounded">
-                            login
-                        </span>
-                            <span class="tooltip-text">
-                            <fmt:message key="login" bundle="${msg}"/>
-                        </span>
-                        </div>
-                    </a>
-                </li>
-            </c:when>
-        </c:choose>
+                            <c:choose>
+                                <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>">
+                                            <fmt:message key="adminPage" bundle="${msg}"/>
+                                        </a>
+                                    </li>
+                                </c:when>
+                            </c:choose>
+                            <li>
+                                <a class="dropdown-item"
+                                   href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
+                                    <fmt:message key="yourAccount" bundle="${msg}"/>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </c:if>
 
-        <li>
-            <div class="drop-down-menu">
 
                 <c:choose>
-                    <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">
-                        <p class="centered-horizontal-content mg-0">
-                            <img class="img-language"
-                                 src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                                 alt="default Vietnamese">
-                            <span> &ensp; VI</span>
-                        </p>
-                    </c:when>
+                    <c:when test="${empty sessionScope.loginUser.username}">
+                        <%--Register--%>
+                        <li
+                                class="nav-item"
+                                data-bs-toggle="tooltip"
+                                data-bs-title="<fmt:message key="register" bundle="${msg}"/>"
+                        >
+                            <a class="nav-link"
+                               href="<c:url value="${pageContext.request.contextPath}/signup"/>" id="signup">
+                                <span class="material-symbols-rounded">person_add</span>
+                            </a>
+                        </li>
 
-                    <c:otherwise>
-                        <p class="centered-horizontal-content mg-0">
-                            <img class="img-language" src="<c:url value='/resources/images/icons8-usa-flag-48.png'/>"
-                                 alt="English"/>
-                            <span> &ensp; EN</span>
-                        </p>
-                    </c:otherwise>
+                        <%--Login--%>
+                        <li
+                                class="nav-item"
+                                data-bs-toggle="tooltip"
+                                data-bs-title="<fmt:message key="login" bundle="${msg}"/>"
+                        >
+                            <a class="nav-link"
+                               href="<c:url value="${pageContext.request.contextPath}/login"/>" id="login">
+                                <span class="material-symbols-rounded">login</span>
+                            </a>
+                        </li>
+                    </c:when>
                 </c:choose>
 
+                <c:choose>
+                    <c:when test="${not empty sessionScope.loginUser.username}">
+                        <%--Logout--%>
+                        <li
+                                class="nav-item"
+                                data-bs-toggle="tooltip"
+                                data-bs-title="<fmt:message key="logout" bundle="${msg}"/>"
+                        >
+                            <a class="nav-link"
+                               href="<c:url value="${pageContext.request.contextPath}/logout"/>" id="logout">
+                                <span class="material-symbols-rounded">logout</span>
+                            </a>
+                        </li>
+                    </c:when>
+                </c:choose>
 
-                <div class="drop-down-contents">
-                    <a class="drop-down-links"
-                       href="<c:url value="${pageContext.request.contextPath}/lang?name=default"/>"> <img
-                            class="img-language"
-                            src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
-                            alt="default Vietnamese"> <span> &ensp; Tiếng Việt</span>
-                    </a>
-                    <a class="drop-down-links"
-                       href="<c:url value="${pageContext.request.contextPath}/lang?name=en_US"/>"> <img
-                            class="img-language"
-                            src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
-                            alt="default Vietnamese">
-                        <span> &ensp; English</span>
-                    </a>
+                <%--Change Language--%>
+                <li
+                        class="nav-item dropdown ms-3"
+                >
+                    <c:choose>
+                        <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">
+                            <a class="nav-link dropdown-toggle"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false"
+                               id="language">
+                                <img class="img-language"
+                                     src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                     alt="default Vietnamese">
+                                <span> &ensp; VI</span>
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a class="nav-link dropdown-toggle"
+                               href="#"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false"
+                               id="language">
+                                <img class="img-language"
+                                     src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
+                                     alt="English">
+                                <span> &ensp; EN</span>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
 
-                </div>
-            </div>
-        </li>
-    </ul>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="dropdown-item"
+                               href="<c:url value="${pageContext.request.contextPath}/lang?name=default"/>">
+                                <img
+                                        class="img-language"
+                                        src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "
+                                        alt="default Vietnamese">
+                                <span> &ensp; Tiếng Việt</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="<c:url value="${pageContext.request.contextPath}/lang?name=en_US"/>">
+                                <img
+                                        class="img-language"
+                                        src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "
+                                        alt="default Vietnamese">
+                                <span> &ensp; English</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>
+
+    <jsp:include page="/views/components/modals/search-modal.jsp" />
 
 <script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>
