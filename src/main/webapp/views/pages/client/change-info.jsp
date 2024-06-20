@@ -30,38 +30,49 @@
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
         <form action="<c:url value="${pageContext.request.contextPath}/auth/change-info"/>" method="post">
-            <label for="username">
-                <span class="material-symbols-rounded">person</span>
-                <fmt:message bundle="${msg}" key="username"/>
-            </label>
-            <input type="text" name="username" id="username" class="form-control readonly-input" value="${loginUser.username}"
-                   placeholder=" <fmt:message bundle="${msg}" key="username"/>" autocomplete="true" readonly>
+            <div class="form-floating">
+                <input type="text" name="username" id="username" class="form-control readonly-input"
+                       value="${loginUser.username}"
+                       placeholder=" <fmt:message bundle="${msg}" key="username"/>" autocomplete="true" readonly>
+                <label for="username">
+                    <span class="material-symbols-rounded">person</span>
+                    <fmt:message bundle="${msg}" key="username"/>
+                </label>
+            </div>
 
-            <label for="user-full-name">
-                <span class="material-symbols-rounded">badge</span>
-                <fmt:message bundle="${msg}" key="fullname"/>
-            </label>
-            <input class="form-control" type="text" name="user-full-name" id="user-full-name" value="${loginUser.userFullName}"
-                   placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true" required>
+            <div class="form-floating">
+                <input class="form-control" type="text" name="user-full-name" id="user-full-name"
+                       value="${loginUser.userFullName}"
+                       placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true" required>
+                <label for="user-full-name">
+                    <span class="material-symbols-rounded">badge</span>
+                    <fmt:message bundle="${msg}" key="fullname"/>
+                </label>
+            </div>
 
-            <label for="email">
-                <span class="material-symbols-rounded">mail</span>
-                <fmt:message bundle="${msg}" key="email"/>
-            </label>
-            <input class="form-control" type="email" name="email" id="email" value="${loginUser.userEmail}"
-                   placeholder="    <fmt:message bundle="${msg}" key="email"/>"
-                   autocomplete="true" required>
+            <div class="form-floating">
+                <input class="form-control" type="email" name="email" id="email" value="${loginUser.userEmail}"
+                       placeholder="    <fmt:message bundle="${msg}" key="email"/>"
+                       autocomplete="true" required>
+                <label for="email">
+                    <span class="material-symbols-rounded">mail</span>
+                    <fmt:message bundle="${msg}" key="email"/>
+                </label>
+            </div>
 
-            <label for="password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="typeYourPassword"/>
-            </label>
-            <input class="form-control" type="password" name="password" id="password"
-                   placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true" required>
-
+            <div class="form-floating">
+                <input class="form-control" type="password" name="password" id="password"
+                       placeholder="    <fmt:message bundle="${msg}" key="typeYourPassword"/>" autocomplete="true"
+                       required>
+                <label for="password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="typeYourPassword"/>
+                </label>
+            </div>
             <input type="submit" class="primary-filled-button button"
                    value="<fmt:message bundle="${msg}" key="change"/> ">
         </form>
+        
         <p><fmt:message bundle="${msg}" key="return"/>
             <span><a class="links" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
                 <fmt:message bundle="${msg}" key="info"/>

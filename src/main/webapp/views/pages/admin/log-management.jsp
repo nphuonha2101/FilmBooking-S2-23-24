@@ -26,14 +26,14 @@ To change this template use File | Settings | File Templates.
 
     <div class="container d-flex flex-column align-items-center">
 
-        <h2><fmt:message bundle="${adminMsg}" key="logManagement"/></h2>
+        <h2 class="mb-5"><fmt:message bundle="${adminMsg}" key="logManagement"/></h2>
 
         <div class="d-flex flex-column align-items-center wrapper">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <table id="myTable" class="display dataTable">
+            <table id="myTable" class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>LogID</th>

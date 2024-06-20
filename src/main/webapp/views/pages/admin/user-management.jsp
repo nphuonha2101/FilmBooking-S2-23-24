@@ -37,7 +37,7 @@
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <table id="myTable" class="display dataTable w-100 border-box">
+            <table id="myTable" class="display table-striped table-bordered table w-100 border-box">
                 <thead>
                 <tr>
                     <th></th>
@@ -105,7 +105,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<button class="rotate-icon edit-button button light-filled-button rounded-button"><span class="material-symbols-rounded primary-color">edit</span></button>';
+                            return '<button data-bs-toggle="modal" data-bs-target="#user-management-modal" class="rotate-icon edit-button button light-filled-button rounded-button"><span class="material-symbols-rounded primary-color">edit</span></button>';
                         }
                     }
                 ]
@@ -123,7 +123,6 @@
             $('#full-name').attr('value', fullName);
             $('#email').attr('value', email);
             $('#role').attr('value', role);
-            $('.modal').css('display', 'block');
         }
     </script>
 
