@@ -23,8 +23,8 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
-<div class="wrapper centered-vertical-content">
-    <div class="centered-vertical-content w-50">
+<div class="wrapper d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center w-50">
 
             <%--        Img copyright: https://www.flaticon.com/authors/marz-gallery--%>
             <img alt="${statusCode}" src="<c:url value="/resources/images/${paymentStatusImg}"/>"/>
