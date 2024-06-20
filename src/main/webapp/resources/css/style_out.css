@@ -338,6 +338,10 @@ button {
     height: 0 !important;
 }
 
+.readonly-input {
+    background-color: #dcdcdc !important;
+}
+
 .none-resize_textarea {
     resize: none;
 }
