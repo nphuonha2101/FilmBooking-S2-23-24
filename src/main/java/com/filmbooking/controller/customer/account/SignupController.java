@@ -2,11 +2,11 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
+import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
-import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
@@ -75,7 +75,7 @@ public class SignupController extends HttpServlet {
         // username not existed and email not existed!
         if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
-            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType(), 1);
+            User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER.getAccountRole(), AccountTypeEnum.NORMAL.getAccountType(), 1);
             userServicesLog.insert(newUser);
 
             renderSuccess(signupPage, StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode(), req, resp);

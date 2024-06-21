@@ -1,8 +1,5 @@
 package com.filmbooking.services.impls;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.filmbooking.email.AbstractSendEmail;
 import com.filmbooking.email.SendResetPasswordEmail;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
@@ -20,6 +17,9 @@ import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.persistence.NoResultException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserServicesImpl extends AbstractService<User> implements IUserServices {
     private final TokenServicesImpl tokenServices;
 
@@ -32,8 +32,10 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         try {
             Map<String, Object> filters = new HashMap<>();
             filters.put("user_email", email);
-            if (this.selectAll(filters)== null) return null;
-            return this.selectAll(filters).get(0);
+            if (this.selectAll(filters)!=null){
+                return this.selectAll(filters).get(0);
+            }
+            return null;
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
             return null;
@@ -44,8 +46,10 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         try {
             Map<String, Object> filters = new HashMap<>();
             filters.put("username", username);
-            if (this.selectAll(filters)== null) return null;
-            return this.selectAll(filters).get(0);
+            if (this.selectAll(filters)!=null){
+                return this.selectAll(filters).get(0);
+            }
+            return null;
         } catch (NoResultException e) {
             return null;
         }

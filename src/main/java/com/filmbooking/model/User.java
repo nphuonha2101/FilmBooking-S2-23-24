@@ -2,7 +2,6 @@ package com.filmbooking.model;
 
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
-import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.repository.FilmBookingRepository;
 import com.google.gson.annotations.Expose;
 import lombok.Getter;
@@ -42,12 +41,12 @@ public class User implements IModel {
         this.userEmail = userEmail;
     }
 
-    public User(String username, String userFullName, String userEmail, String userPassword, AccountRoleEnum accountRoleEnum, String accountType, int accountStatus) {
+    public User(String username, String userFullName, String userEmail, String userPassword, String accountRole, String accountType, int accountStatus) {
         this.username = username;
         this.userFullName = userFullName;
         this.userEmail = userEmail;
         this.userPassword = userPassword;
-        this.accountRole = accountRoleEnum.getAccountRole();
+        this.accountRole = accountRole;
         this.accountType = accountType;
         this.accountStatus = accountStatus;
     }
