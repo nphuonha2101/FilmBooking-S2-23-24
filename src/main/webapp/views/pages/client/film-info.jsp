@@ -21,13 +21,13 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
-<section class="section centered-vertical-content">
-    <div class="container centered-vertical-content wrapper">
+<section class="section d-flex flex-column align-items-center">
+    <div class="container d-flex flex-column align-items-center wrapper">
         <c:set var="film" value="${filmData}"/>
 
         <h2 class="title"><fmt:message key="filmInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
-        <div id="film-details" class="centered-vertical-content">
+        <div id="film-details" class="d-flex flex-column align-items-center">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
@@ -38,7 +38,7 @@
                 <div class="wrapper">
                     <h3> ${film.filmName}</h3>
                     <br>
-                    <div class="centered-horizontal-content fit-content-width">
+                    <div class="d-flex justify-content-center align-items-center fit-content-width">
                         <div class="film_score_box">
                             <h3>
                               ${filmScores}/5
@@ -69,9 +69,9 @@
 
             <br>
 
-            <div class="wrapper centered-vertical-content" id="film-description">
+            <div class="wrapper d-flex flex-column align-items-center" id="film-description">
                 <div class="wrapper outlined-container">
-                    <div class="wrapper centered-vertical-content">
+                    <div class="wrapper d-flex flex-column align-items-center">
                         <h3><fmt:message bundle="${msg}" key="description"/></h3>
                     </div>
                     <div class="wrapper">
@@ -82,13 +82,13 @@
 
             <br>
 
-            <div class="wrapper centered-vertical-content">
+            <div class="wrapper d-flex flex-column align-items-center">
                 <c:if test="${not empty film.filmTrailerLink}">
                     <div class="wrapper outlined-container">
-                        <div class="wrapper centered-vertical-content">
+                        <div class="wrapper d-flex flex-column align-items-center">
                             <h3>Trailer</h3>
                         </div>
-                        <div class="centered-vertical-content wrapper">
+                        <div class="d-flex flex-column align-items-center wrapper">
                             <iframe class="trailer-frame"
                                     src="${film.filmTrailerLink}"
                                     title="${film.filmName} Trailer"
@@ -99,16 +99,16 @@
                 </c:if>
             </div>
             <br>
-            <div class="wrapper centered-vertical-content">
+            <div class="wrapper d-flex flex-column align-items-center">
                 <div class="wrapper outlined-container">
-                    <div class="wrapper centered-vertical-content">
+                    <div class="wrapper d-flex flex-column align-items-center">
                         <h3><fmt:message bundle="${msg}" key="chooseShowtime"/></h3>
                     </div>
 
                     <div class="wrapper two-col__wrapper">
                         <div class="wrapper">
                             <c:set var="showtimeList" value="${film.showtimeList}"/>
-                            <select name="select-showtime" id="select-showtime">
+                            <select class="form-control" name="select-showtime" id="select-showtime">
                                 <c:forEach var="showtime" items="${showtimeList}" varStatus="loop">
                                     <option value="${showtime.showtimeID}">${showtime.room.roomName}
                                         - ${showtime.room.theater.theaterName} - ${showtime.showtimeDate}</option>
@@ -116,7 +116,7 @@
                             </select>
                         </div>
 
-                        <div class="wrapper centered-vertical-content">
+                        <div class="wrapper d-flex flex-column align-items-center">
                             <p><fmt:message bundle="${msg}" key="showtime"/>: <span id="selected-showtime"></span></p>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
 
             <%--            </div>--%>
 
-            <div class="wrapper centered-vertical-content">
+            <div class="wrapper d-flex flex-column align-items-center">
                 <form action="<c:url value="${pageContext.request.contextPath}/film-info"/>" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
                     <input class="primary-filled-button button" type="submit"
