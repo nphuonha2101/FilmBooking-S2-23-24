@@ -1,23 +1,36 @@
 function search() {
     $("#search-result").css("display", "block");
     $("#search-result").html("");
-    var searchField = $("#search-input").val();
+    const searchField = $("#search-input").val();
     if (searchField.length >= 2) {
-        var expression = new RegExp(searchField, "i");
+        const expression = new RegExp(searchField, "i");
         $.getJSON("http://localhost:8080/api/v1/films?command=all", function (data) {
             $.each(data.data, function (key, value) {
                 if (value.filmName.search(expression) != -1) {
                     console.log(value.filmName);
                     $("#search-result").append(
-                        '<a href="http://localhost:8080/film-info?film=' +
-                        value.slug +
-                        '" style="text-decoration: none"><li class="list-group-item link-class"><img src="' +
-                        value.imgPath +
-                        '" style="width: 60px; padding-right: 10px"/> ' +
-                        value.filmName +
-                        "<br> " +
-                        value.director +
-                        "</li></a>"
+
+                        `<div class="card search-item-card p-0 col"">
+                            <div class="row g-0">
+                                <div class="col-md-3">
+                                    <img src="${value.imgPath}" class="img-fluid rounded-start" alt="${value.filmName} thumbnail">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body p-3">
+                                        <h5 class="card-title">${value.filmName}</h5>
+                                        <dl>
+                                            <dt>Diễn viên</dt>
+                                            <dd>${value.cast}</dd>
+                                            <dt>Giá</dt>
+                                            <dd>${value.filmPrice} VND</dd>
+                                        </dl>
+                                       
+                                        <a href="http://localhost:8080/film-info?film=${value.slug}"
+                                            class="btn btn-primary">Chi tiết phim</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
                     );
                 }
             });

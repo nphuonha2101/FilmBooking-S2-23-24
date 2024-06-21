@@ -21,8 +21,8 @@
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCode"/>
 
-<section class="content section centered-vertical-content">
-    <div class="centered-vertical-content container form__container">
+<section class="content section d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center container form__container">
         <h2 class="title"><fmt:message key="forgotPassSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
@@ -49,7 +49,7 @@
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message key="send" bundle="${msg}"/>">
 
-            <div class="centered-vertical-content">
+            <div class="d-flex flex-column align-items-center">
                 <p><fmt:message key="return" bundle="${msg}"/>
                     <span> <a class="links" href="<c:url value="${pageContext.request.contextPath}/login"/>">
                         <fmt:message key="login" bundle="${msg}"/>!</a></span>

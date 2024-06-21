@@ -20,8 +20,8 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 
-<section class="content section centered-vertical-content">
-    <div class="centered-vertical-content container form__container">
+<section class="content section d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center container">
         <h2 class="title"><fmt:message key="accountInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <c:set var="loginUser" value="${sessionScope.loginUser}"/>
@@ -47,7 +47,6 @@
                         </c:otherwise>
                     </c:choose>
                 </c:if>
-
             </tr>
             </tbody>
         </table>
