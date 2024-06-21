@@ -20,6 +20,7 @@ public class RoomManagementController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RoomServicesImpl roomServices = new RoomServicesImpl();
+
         Page roomManagementPage = new AdminPage(
                 "roomManagementTitle",
                 "room-management",
@@ -27,7 +28,6 @@ public class RoomManagementController extends HttpServlet {
         );
 
         Pagination<Room> pagination = new Pagination<>(roomServices, req, resp, LIMIT, "admin/management/room");
-
         roomManagementPage.putAttribute("roomData", pagination.getPaginatedRecords());
         roomManagementPage.render(req, resp);
     }
