@@ -28,27 +28,32 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form action="${pageContext.request.contextPath}/reset-password" method="post">
+        <form class="w-30" action="${pageContext.request.contextPath}/reset-password" method="post">
             <input type="hidden" name="status" value="${verifyStatus}">
-            <input class="form-control" type="hidden" name="username" value="${username}">
-            <label for="new-password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="newPassword"/>
-            </label>
-            <input class="form-control" type="password" name="new-password" id="new-password"
-                   placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
+            <input type="hidden" name="username" value="${username}">
 
-            <label for="confirm-new-password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="confirmPassword"/>
-            </label>
-            <input class="form-control" type="password" name="confirm-new-password" id="confirm-new-password"
-                   placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="new-password" id="new-password"
+                       placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
+                <label for="new-password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="newPassword"/>
+                </label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="confirm-new-password" id="confirm-new-password"
+                       placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
+                <label for="confirm-new-password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="confirmPassword"/>
+                </label>
+            </div>
 
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>
-        <p><fmt:message bundle="${msg}" key="return"/>
+        <p class="mt-3"><fmt:message bundle="${msg}" key="return"/>
             <span><a class="links" href="${pageContext.request.contextPath}/login">
             <fmt:message bundle="${msg}" key="login"/> </a> </span>
         </p>
