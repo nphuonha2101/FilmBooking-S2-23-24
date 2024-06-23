@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-@WebFilter("/admin/*")
+//@WebFilter("/admin/*")
 public class AuthAdminLoginFilter extends HttpFilter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

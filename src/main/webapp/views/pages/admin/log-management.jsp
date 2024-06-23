@@ -41,10 +41,11 @@ To change this template use File | Settings | File Templates.
                     <th>Action</th>
                     <th>Level</th>
                     <th>Target table</th>
-                    <th>Before Value</th>
-                    <th>After Value</th>
-                    <th>Created At</th>
-                    <th>Update At</th>
+<%--                    <th>Before Value</th>--%>
+<%--                    <th>After Value</th>--%>
+<%--                    <th>Created At</th>--%>
+<%--                    <th>Update At</th>--%>
+                    <th></th>
                 </tr>
                 </thead>
             </table>
@@ -56,5 +57,4 @@ To change this template use File | Settings | File Templates.
     </div>
 
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
-
 </section>

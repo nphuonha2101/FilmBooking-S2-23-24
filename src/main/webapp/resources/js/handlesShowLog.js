@@ -1,8 +1,8 @@
 $(function() {
     $('#myTable').DataTable({
         ajax: {
-            url: '/api/v1/logs?command=all', // Thay thế 'API_URL' bằng URL của API của bạn
-            dataSrc: 'data' // Sử dụng nếu dữ liệu trả về là một mảng được gói trong một đối tượng
+            url: '/api/v1/logs?command=all',
+            dataSrc: 'data'
         },
         columns: [
             { data: 'logID' },
@@ -10,14 +10,15 @@ $(function() {
                 defaultContent: 'Unknown User'},
             { data: 'action' },
             { data: 'level' },
-            { data: 'targetTable' }
-        ],
-        layout: {
-            topStart: {
-                buttons: [
-                    'excel'
-                ]
-            }
-        }
+            { data: 'targetTable' },
+            {data: '<button >Details</button>'}
+        ]
+        // layout: {
+        //     topStart: {
+        //         buttons: [
+        //             'excel'
+        //         ]
+        //     }
+        // }
     });
 });
