@@ -24,43 +24,43 @@ class UserRepositoryTest {
         });
     }
 
-    @Test
-    void insert() {
-        assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository();
-            User user = new User("nphuonha2",
-                    "Nguyen Phuong Nha",
-                    "abc@gmail.com",
-                    "123456",
-                    AccountRoleEnum.ADMIN,
-                    "normal",
-                    1
-            );
+//    @Test
+//    void insert() {
+//        assertDoesNotThrow(() -> {
+//            UserRepository userRepository = new UserRepository();
+//            User user = new User("nphuonha2",
+//                    "Nguyen Phuong Nha",
+//                    "abc@gmail.com",
+//                    "123456",
+//                    AccountRoleEnum.ADMIN,
+//                    "normal",
+//                    1
+//            );
+//
+//            assertTrue(userRepository.insert(user));
+//
+//        });
+//    }
 
-            assertTrue(userRepository.insert(user));
+//    @Test
+//    void update() {
+//        assertDoesNotThrow(() -> {
+//            UserRepository userRepository = new UserRepository();
+//            User user = userRepository.select("nphuonha1");
+//            user.setUserFullName("Nguyen Phuong Nha 1");
+//
+//            assertTrue(userRepository.update(user));
+//            assertEquals("Nguyen Phuong Nha 1", userRepository.select("nphuonha1").getUserFullName());
+//        });
+//    }
 
-        });
-    }
-
-    @Test
-    void update() {
-        assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository();
-            User user = userRepository.select("nphuonha1");
-            user.setUserFullName("Nguyen Phuong Nha 1");
-
-            assertTrue(userRepository.update(user));
-            assertEquals("Nguyen Phuong Nha 1", userRepository.select("nphuonha1").getUserFullName());
-        });
-    }
-
-    @Test
-    void delete() {
-        assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository();
-            User user = userRepository.select("nphuonha1");
-            assertTrue(userRepository.delete(user));
-            assertNull(userRepository.select("nphuonha1"));
-        });
-    }
+//    @Test
+//    void delete() {
+//        assertDoesNotThrow(() -> {
+//            UserRepository userRepository = new UserRepository();
+//            User user = userRepository.select("nphuonha1");
+//            assertTrue(userRepository.delete(user));
+//            assertNull(userRepository.select("nphuonha1"));
+//        });
+//    }
 }

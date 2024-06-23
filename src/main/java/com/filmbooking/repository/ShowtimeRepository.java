@@ -87,6 +87,26 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
     }
 
     @Override
+    public boolean update(Showtime showtime) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "UPDATE showtimes SET film_id = :film_id, room_id = :room_id, showtime_date = :showtime_date, seats_data = :seats_data, slug = :slug WHERE showtime_id = :showtime_id";
+            handle.createUpdate(sql)
+                    .bind("showtime_id", showtime.getShowtimeID())
+                    .bind("film_id", showtime.getFilm().getFilmID())
+                    .bind("room_id", showtime.getRoom().getRoomID())
+                    .bind("showtime_date", showtime.getShowtimeDate())
+                    .bind("seats_data", showtime.getSeatsData())
+                    .bind("slug", showtime.getSlug())
+                    .execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
+        }
+    }
+
+    @Override
     RowMapper<Showtime> getRowMapper() {
         return new ShowtimeMapper();
     }
