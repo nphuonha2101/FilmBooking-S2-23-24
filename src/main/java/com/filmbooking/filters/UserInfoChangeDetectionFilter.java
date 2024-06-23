@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @WebFilter("/*")
-public class UserInfoChangeDectectionFilter extends HttpFilter {
+public class UserInfoChangeDetectionFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {

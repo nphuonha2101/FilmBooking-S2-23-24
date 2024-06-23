@@ -1,6 +1,7 @@
 package com.filmbooking.services.impls;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.filmbooking.email.AbstractSendEmail;
@@ -32,7 +33,12 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         try {
             Map<String, Object> filters = new HashMap<>();
             filters.put("user_email", email);
-            return this.selectAll(filters).get(0);
+            List<User> result=  this.selectAll(filters);
+
+            if (result.isEmpty()) {
+                return null;
+            }
+            return result.get(0);
         } catch (NoResultException e) {
             e.printStackTrace(System.out);
             return null;

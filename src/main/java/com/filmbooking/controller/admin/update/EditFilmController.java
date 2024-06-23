@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "editFilm", value = "/admin/edit/film")
@@ -38,6 +39,9 @@ public class EditFilmController extends HttpServlet {
 
         String filmSlug = req.getParameter("film");
         editFilm = filmServices.getBySlug(filmSlug);
+        if (editFilm == null) {
+            editFilm = (Film) req.getSession().getAttribute("editFilm");
+        }
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
@@ -53,6 +57,7 @@ public class EditFilmController extends HttpServlet {
                 "edit-film",
                 "master");
 
+        req.getSession().setAttribute("editFilm", editFilm);
         editFilmPage.putAttribute("editFilm", editFilm);
         editFilmPage.putAttribute("genres", genreServices.selectAll());
         editFilmPage.putAttribute("filmGenresStr", editFilm.getFilmGenresStr());
@@ -63,7 +68,7 @@ public class EditFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FilmServicesLogProxy<Film> filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, Film.class);
+        FilmServicesLogProxy filmServicesLog = new FilmServicesLogProxy(filmServices, req);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
@@ -82,6 +87,8 @@ public class EditFilmController extends HttpServlet {
             return;
         }
 
+        editFilm = (Film) req.getSession().getAttribute("editFilm");
+
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);
         editFilm.setDirector(filmDirector);
@@ -91,9 +98,14 @@ public class EditFilmController extends HttpServlet {
         editFilm.setFilmTrailerLink(filmTrailerLink);
 
         // if not change image
-        if (filmImgName.isEmpty())
-            filmServicesLog.update(editFilm, filmGenreIDs);
-        else {
+        if (filmImgName.isEmpty()) {
+            if (filmServicesLog.update(editFilm, filmGenreIDs))
+                req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+            else
+                req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
+
+            doGet(req, resp);
+        } else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = WebAppPathUtils.getUploadFileRelativePath(uuidFileName);
 
@@ -117,7 +129,7 @@ public class EditFilmController extends HttpServlet {
             }
         }
 
-        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film"));
+//        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film"));
     }
 
     @Override
