@@ -1,9 +1,5 @@
 package com.filmbooking.controller.customer.account;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.model.FilmBooking;
@@ -19,6 +15,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 @WebServlet("/login/facebook")
 public class FacebookLoginController extends HttpServlet {
@@ -48,7 +48,7 @@ public class FacebookLoginController extends HttpServlet {
 
 		User loginUser = userServices.getByUsername(id);
 		if (loginUser == null) {
-			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER,AccountTypeEnum.FACEBOOK.getAccountType(),1);
+			loginUser = new User(id, name, email, null, AccountRoleEnum.CUSTOMER.getAccountRole(),AccountTypeEnum.FACEBOOK.getAccountType(),1);
 			userServices.insert(loginUser);
 		}
 		HttpSession session = req.getSession();
