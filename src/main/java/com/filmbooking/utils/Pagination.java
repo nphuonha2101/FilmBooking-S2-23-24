@@ -32,14 +32,8 @@ public class Pagination<T> {
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         int totalPages = (int) Math.ceil((double) totalRecords / limit);
 
-        if (page < 1 || page > totalPages) {
-            try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
+        if (page < 1 || page > totalPages)
+            return null;
 
         int offset = (page - 1) * limit;
 
