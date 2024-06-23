@@ -26,12 +26,12 @@ import java.util.Map;
 @WebServlet(name = "addFilm", value = "/admin/add/film")
 @MultipartConfig
 public class AddFilmController extends HttpServlet {
-    private FilmServicesLogProxy<Film> filmServices;
+    private FilmServicesLogProxy filmServices;
     private CRUDServicesLogProxy<Genre> genreServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
+        filmServices = new FilmServicesLogProxy(new FilmServicesImpl(), req);
         genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, Genre.class);
 
         Page addFilmPage = new AdminPage(
@@ -44,7 +44,7 @@ public class AddFilmController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmServices = new FilmServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
+        filmServices = new FilmServicesLogProxy(new FilmServicesImpl(), req);
         genreServices = new CRUDServicesLogProxy<>(new GenreServicesImpl(), req, Genre.class);
         String fileName = req.getParameter("film-img-name");
 
