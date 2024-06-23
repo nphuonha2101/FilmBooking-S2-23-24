@@ -66,15 +66,22 @@ To change this template use File | Settings | File Templates.
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p><strong>LogID:</strong> <span id="logID"></span></p>
-                    <p><strong>Username:</strong> <span id="username"></span></p>
-                    <p><strong>Action:</strong> <span id="action"></span></p>
-                    <p><strong>Level:</strong> <span id="level"></span></p>
-                    <p><strong>Target Table:</strong> <span id="targetTable"></span></p>
-                    <p><strong>Before Value:</strong> <span id="beforeValue"></span></p>
-                    <p><strong>After Value:</strong> <span id="afterValue"></span></p>
-                    <p><strong>Created At:</strong> <span id="createdAt"></span></p>
-                    <p><strong>Updated At:</strong> <span id="updatedAt"></span></p>
+                    <table id="modal-body" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>LogID</th>
+                            <th>Username</th>
+                            <th>Action</th>
+                            <th>Level</th>
+                            <th>Target table</th>
+                            <th>Before Value</th>
+                            <th>After Value</th>
+                            <th>Created At</th>
+                            <th>Update At</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
