@@ -1,6 +1,5 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
@@ -36,11 +35,9 @@ public class LogoutController extends HttpServlet {
 
             if (filmBooking.getBookedSeats() != null && showtime != null) {
                 System.out.println(Arrays.toString(filmBooking.getBookedSeats()));
-                HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-                CRUDServicesLogProxy<Showtime> showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, hibernateSessionProvider);
+                CRUDServicesLogProxy<Showtime> showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
                 showtime.releaseSeats(filmBooking.getBookedSeats());
                 showtimeServices.update(showtime);
-                hibernateSessionProvider.closeSession();
             }
             session.invalidate();
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));

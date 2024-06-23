@@ -9,8 +9,6 @@ import com.filmbooking.services.IService;
 public class GenreServicesImpl extends AbstractService<Genre> implements IService<Genre> {
 
     public GenreServicesImpl() {
-        super(new GenreRepository(Genre.class));
+        super(new GenreRepository());
     }
-
-    
 }

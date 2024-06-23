@@ -7,6 +7,6 @@ import com.filmbooking.services.AbstractService;
 public class RoomServicesImpl extends AbstractService<Room> {
 
     public RoomServicesImpl() {
-        super(new RoomRepository(Room.class));
+        super(new RoomRepository());
     }
 }

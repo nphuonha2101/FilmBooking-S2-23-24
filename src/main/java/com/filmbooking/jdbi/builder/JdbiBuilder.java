@@ -1,13 +1,11 @@
 package com.filmbooking.jdbi.builder;
 
 import com.filmbooking.annotations.IdAutoIncrement;
-import com.filmbooking.annotations.StringID;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.model.IModel;
 import com.filmbooking.utils.annotation.ClazzAnnotationProcessor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,15 +20,14 @@ public class JdbiBuilder<T extends IModel> {
     private Map<String, Object> mapToRow;
     @Getter
     private final boolean isIdAutoIncrement;
-    @Getter
-    private final boolean isStringId;
 
     public JdbiBuilder(Class<T> modelClass) {
         ClazzAnnotationProcessor clazzAnnotationProcessor = ClazzAnnotationProcessor.getInstance(modelClass);
         this.tableName = (String) clazzAnnotationProcessor.getAnnotationValue(TableName.class, "value");
         this.primaryKeyName = (String) clazzAnnotationProcessor.getAnnotationValue(TableIdName.class, "value");
         this.isIdAutoIncrement = clazzAnnotationProcessor.isAnnotationPresent(IdAutoIncrement.class);
-        this.isStringId = clazzAnnotationProcessor.isAnnotationPresent(StringID.class);
+
+        System.out.println("JdbiBuilder: " + modelClass + " " + this.tableName + " " + this.primaryKeyName);
     }
 
     /**
@@ -148,10 +145,13 @@ public class JdbiBuilder<T extends IModel> {
      *
      * @param limit  limit
      * @param offset offset
-     * @param order  order
+     * @param order  order with column name and direction. Example: "column_name ASC"
      * @return select all SQL with limit, offset, and order
      */
     public String buildSelectAllSQL(int limit, int offset, String order) {
+        if (order == null)
+            return "SELECT * FROM " + this.tableName + " LIMIT " + limit + " OFFSET " + offset;
+
         return "SELECT * FROM " + this.tableName + " ORDER BY " + order + " LIMIT " + limit + " OFFSET " + offset;
     }
 
@@ -173,7 +173,12 @@ public class JdbiBuilder<T extends IModel> {
 
         // Remove the last " AND "
         sql = new StringBuilder(sql.substring(0, sql.length() - 5));
-        sql.append(" ORDER BY ").append(order).append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
+
+        if (order != null) {
+            sql.append(" ORDER BY ").append(order);
+        }
+
+        sql.append(" LIMIT ").append(limit).append(" OFFSET ").append(offset);
         return sql.toString();
     }
 

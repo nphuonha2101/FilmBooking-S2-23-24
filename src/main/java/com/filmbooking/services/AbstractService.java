@@ -20,7 +20,7 @@ public abstract class AbstractService<T extends IModel> implements IService<T> {
 
     @Override
     public T getBySlug(String slug) {
-        return repository.selectAll(1, 0,"",  Map.of("slug", slug)).get(0);
+        return repository.selectAll(1, 0, null,  Map.of("slug", slug)).get(0);
     }
 
     @Override

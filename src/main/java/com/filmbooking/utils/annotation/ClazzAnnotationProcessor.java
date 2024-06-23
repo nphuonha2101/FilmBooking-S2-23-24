@@ -11,7 +11,6 @@ import java.util.Map;
 public class ClazzAnnotationProcessor {
     private static ClazzAnnotationProcessor instance;
     private static List<AnnotationResult> annotationResults;
-    private static Class<?> clazz;
 
     private ClazzAnnotationProcessor(Class<?> clazz) {
         annotationResults = new ArrayList<>();
@@ -21,6 +20,9 @@ public class ClazzAnnotationProcessor {
     public static ClazzAnnotationProcessor getInstance(Class<?> clazz) {
         if (instance == null) {
             instance = new ClazzAnnotationProcessor(clazz);
+        } else {
+            annotationResults.clear();
+            processAnnotations(clazz);
         }
         return instance;
     }
@@ -99,7 +101,7 @@ public class ClazzAnnotationProcessor {
     /**
      * Check if the class has a specific annotation
      * @param annotationClass The annotation class
-     * @return True if the class has the annotation, false otherwise
+     * @return <code>true</code> if the class has the annotation, <code>false</code> otherwise
      */
     public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         return getAnnotationResult(annotationClass) != null;

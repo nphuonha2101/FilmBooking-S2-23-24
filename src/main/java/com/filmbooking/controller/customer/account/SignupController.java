@@ -2,14 +2,12 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
@@ -25,7 +23,6 @@ import java.io.IOException;
 public class SignupController extends HttpServlet {
     private CRUDServicesLogProxy<User> userServicesLog;
     private UserServicesImpl userServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     public void init() throws ServletException {
@@ -44,9 +41,8 @@ public class SignupController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        userServices = new UserServicesImpl(hibernateSessionProvider);
-        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+        userServices = new UserServicesImpl();
+        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
         Page signupPage = new ClientPage(
                 "signupTitle",
@@ -61,10 +57,11 @@ public class SignupController extends HttpServlet {
         String confirmPassword = StringUtils.handlesInputString(req.getParameter("confirm-password"));
 
         // validate input
-       if(!validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword)) return;
+        if (!validateInput(req, resp, signupPage, username, userFullName, userEmail, userPassword, confirmPassword))
+            return;
 
         // username existed!
-        if (userServicesLog.getByID(username) != null) {
+        if (userServices.select(username) != null) {
             renderError(signupPage, StatusCodeEnum.USERNAME_EXISTED.getStatusCode(), req, resp);
             return;
         }
@@ -79,8 +76,7 @@ public class SignupController extends HttpServlet {
         if (userPassword.equals(confirmPassword)) {
             userPassword = userServices.hashPassword(userPassword);
             User newUser = new User(username, userFullName, userEmail, userPassword, AccountRoleEnum.CUSTOMER, AccountTypeEnum.NORMAL.getAccountType(), 1);
-            userServicesLog.save(newUser);
-            hibernateSessionProvider.closeSession();
+            userServicesLog.insert(newUser);
 
             renderSuccess(signupPage, StatusCodeEnum.CREATE_NEW_USER_SUCCESSFUL.getStatusCode(), req, resp);
         }
@@ -101,12 +97,11 @@ public class SignupController extends HttpServlet {
     public void destroy() {
         userServicesLog = null;
         userServices = null;
-        hibernateSessionProvider = null;
     }
 
     private boolean validateInput(HttpServletRequest req, HttpServletResponse resp, Page page, String username, String userFullName, String userEmail, String userPassword, String confirmPassword) {
-        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail) ) {
-            handleInput(req, resp, page,  StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
+        if (!Regex.validate(UserRegexEnum.USER_EMAIL, userEmail)) {
+            handleInput(req, resp, page, StatusCodeEnum.USER_EMAIL_ERROR.getStatusCode());
             return false;
         }
         if (!Regex.validate(UserRegexEnum.USER_FULL_NAME, userFullName)) {
@@ -127,6 +122,7 @@ public class SignupController extends HttpServlet {
         }
         return true;
     }
+
     private void handleInput(HttpServletRequest req, HttpServletResponse resp, Page page, int statusError) {
         page.putError(statusError);
         page.render(req, resp);

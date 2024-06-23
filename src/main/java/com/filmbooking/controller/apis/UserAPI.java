@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.filmbooking.controller.apis.apiResponse.APIJSONResponse;
 import com.filmbooking.controller.apis.apiResponse.RespCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
@@ -60,7 +59,6 @@ public class UserAPI extends HttpServlet {
 
         System.out.println("form fields: " + formFields);
 
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
         User user = userServicesLog.select(username);

@@ -4,11 +4,12 @@ import com.filmbooking.model.LogModel;
 import com.filmbooking.repository.mapper.LogMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class LogRepository extends AbstractRepository<LogModel>{
-    public LogRepository(Class<LogModel> modelClass) {
-        super(modelClass);
+    public LogRepository() {
+        super(LogModel.class);
     }
 
     @Override
@@ -18,19 +19,19 @@ public class LogRepository extends AbstractRepository<LogModel>{
 
     @Override
     public Map<String, Object> mapToRow(LogModel logModel) {
-        return Map.ofEntries(
-                Map.entry("log_id", logModel.getLogID()),
-                Map.entry("username", logModel.getUsername()),
-                Map.entry("req_ip", logModel.getReqIP()),
-                Map.entry("ip_country", logModel.getIpCountry()),
-                Map.entry("log_level", logModel.getLevel()),
-                Map.entry("target_table", logModel.getTargetTable()),
-                Map.entry("action", logModel.getAction()),
-                Map.entry("is_action_success", logModel.isActionSuccess()),
-                Map.entry("before_data", logModel.getBeforeValueJSON()),
-                Map.entry("after_data", logModel.getAfterValueJSON()),
-                Map.entry("created_at", logModel.getCreatedAt()),
-                Map.entry("updated_at", logModel.getUpdatedAt())
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("username", logModel.getUsername());
+        result.put("req_ip", logModel.getReqIP());
+        result.put("ip_country", logModel.getIpCountry());
+        result.put("log_level", logModel.getLevel());
+        result.put("target_table", logModel.getTargetTable());
+        result.put("actions", logModel.getAction());
+        result.put("is_action_success", logModel.isActionSuccess());
+        result.put("before_data", logModel.getBeforeValueJSON());
+        result.put("after_data", logModel.getAfterValueJSON());
+        result.put("created_at", logModel.getCreatedAt());
+        result.put("updated_at", logModel.getUpdatedAt());
+
+        return result;
     }
 }

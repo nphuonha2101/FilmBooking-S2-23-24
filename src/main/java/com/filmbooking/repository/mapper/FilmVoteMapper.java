@@ -11,10 +11,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class FilmVoteMapper implements RowMapper<FilmVote> {
-    private FilmRepository filmRepository;
     @Override
     public FilmVote map(ResultSet rs, StatementContext ctx) throws SQLException {
-        filmRepository = new FilmRepository(Film.class);
+        FilmRepository filmRepository = new FilmRepository();
         return new FilmVote(
                 rs.getLong("film_vote_id"),
                 filmRepository.select(rs.getLong("film_id")),

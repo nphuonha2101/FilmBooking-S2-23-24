@@ -6,12 +6,10 @@ package com.filmbooking.controller.customer;
  *  @author nphuonha
  */
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.services.impls.FilmServicesImpl;
 import com.filmbooking.services.impls.FilmVoteServicesImpl;
-import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

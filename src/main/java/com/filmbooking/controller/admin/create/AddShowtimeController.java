@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.create;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Showtime;
@@ -27,13 +26,10 @@ public class AddShowtimeController extends HttpServlet {
     private CRUDServicesLogProxy<Film> filmServices;
     private CRUDServicesLogProxy<Showtime> showtimeServices;
     private CRUDServicesLogProxy<Room> roomServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-
         filmServices = new CRUDServicesLogProxy<>(new FilmServicesImpl(), req, Film.class);
         roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, Room.class);
 
@@ -44,13 +40,10 @@ public class AddShowtimeController extends HttpServlet {
         addShowtimePage.putAttribute("filmData", filmServices.selectAll());
         addShowtimePage.putAttribute("roomData", roomServices.selectAll());
         addShowtimePage.render(req, resp);
-
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
 
         showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
         roomServices = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, Room.class);
@@ -71,7 +64,6 @@ public class AddShowtimeController extends HttpServlet {
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.ADD_SHOWTIME_SUCCESSFUL.getStatusCode());
         doGet(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
@@ -79,6 +71,5 @@ public class AddShowtimeController extends HttpServlet {
         filmServices = null;
         roomServices = null;
         showtimeServices = null;
-        hibernateSessionProvider = null;
     }
 }

@@ -5,12 +5,13 @@ import com.filmbooking.repository.mapper.TokenModelMapper;
 import org.jdbi.v3.core.mapper.RowMapper;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TokenModelRepository extends AbstractRepository<TokenModel> {
 
-    public TokenModelRepository(Class<TokenModel> modelClass) {
-        super(modelClass);
+    public TokenModelRepository() {
+        super(TokenModel.class);
     }
 
     @Override
@@ -20,12 +21,13 @@ public class TokenModelRepository extends AbstractRepository<TokenModel> {
 
     @Override
     Map<String, Object> mapToRow(TokenModel tokenModel) {
-        return Map.of(
-                "token", tokenModel.getToken(),
-                "username", tokenModel.getUsername(),
-                "expiry_date", Timestamp.valueOf(tokenModel.getExpiryDate()),
-                "token_type", tokenModel.getTokenType(),
-                "token_state", tokenModel.getTokenState()
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("token", tokenModel.getToken());
+        result.put("username", tokenModel.getUsername());
+        result.put("expiry_date", tokenModel.getExpiryDate());
+        result.put("token_type", tokenModel.getTokenType());
+        result.put("token_state", tokenModel.getTokenState());
+
+        return result;
     }
 }

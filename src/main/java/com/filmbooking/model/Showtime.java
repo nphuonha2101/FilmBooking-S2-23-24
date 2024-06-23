@@ -3,9 +3,9 @@ package com.filmbooking.model;
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.FilmBookingRepository;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,6 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -52,6 +51,23 @@ public class Showtime implements IModel {
         this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
+    /**
+     * Use for retrieve data from database
+     */
+    public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, String slug) {
+        this.showtimeID = showtimeID;
+        this.film = film;
+        this.room = room;
+        this.showtimeDate = showtimeDate;
+        this.seatsData = seatsData;
+        this.slug = slug;
+    }
+
+    public List<FilmBooking> getFilmBookingList() {
+        if (this.filmBookingList == null)
+            this.filmBookingList = new FilmBookingRepository().sellectAllByShowtimeId(this.showtimeID);
+        return filmBookingList;
+    }
 
     public void setFilm(Film film) {
         this.film = film;
@@ -198,15 +214,5 @@ public class Showtime implements IModel {
         return this.showtimeID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "showtime_id", this.showtimeID,
-                "film_id", this.film.getFilmID(),
-                "room_id", this.room.getRoomID(),
-                "showtime_date", this.showtimeDate,
-                "seats_data", this.seatsData,
-                "slug", this.slug
-        );
-    }
 
 }

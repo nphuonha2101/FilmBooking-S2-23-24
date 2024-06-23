@@ -47,13 +47,5 @@ public class FilmVote implements IModel {
         return this.id;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "film_vote_id", this.id,
-                "film_id", this.film.getFilmID(),
-                "scores", this.scores
-        );
-    }
-
 
 }

@@ -28,7 +28,7 @@
 <c:set var="theater" value="${room.theater}"/>
 <section>
     <c:forEach var="seat" items="${filmBooking.bookedSeats}" varStatus="loop">
-        <div class="centered-vertical-content">
+        <div class="d-flex flex-column align-items-center">
             <p>================================================</p>
 
             <p><fmt:message key="documentTypeNo" bundle="${msg}"/> : FBInvoice-0123</p>

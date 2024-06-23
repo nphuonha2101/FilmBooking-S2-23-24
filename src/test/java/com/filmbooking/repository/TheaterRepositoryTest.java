@@ -10,7 +10,7 @@ class TheaterRepositoryTest {
     @Test
     void select() {
         assertDoesNotThrow(() -> {
-            TheaterRepository theaterRepository = new TheaterRepository(Theater.class);
+            TheaterRepository theaterRepository = new TheaterRepository();
             System.out.println(theaterRepository.select(1));
         });
     }
