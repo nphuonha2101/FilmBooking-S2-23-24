@@ -46,7 +46,4 @@ public class ShowtimeServicesImpl extends AbstractService<Showtime> implements I
         return result;
     }
 
-
-
-
 }
