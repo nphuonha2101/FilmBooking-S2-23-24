@@ -292,9 +292,19 @@ button {
     box-sizing: border-box;
 }
 
+.w-30 {
+    width: calc(30vw) !important;
+}
+
 .w-50 {
     width: calc(50vw) !important;
 }
+
+.w-75 {
+    width: calc(75vw) !important;
+}
+
+
 
 .block-list {
     display: inline-block;

@@ -24,7 +24,7 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form class="row g-3" action="<c:url value="${pageContext.request.contextPath}/login" />" method="post"
+        <form class="w-30 mb-3 row g-3" action="<c:url value="${pageContext.request.contextPath}/login" />" method="post"
               id="login-form">
             <div class="form-floating">
                 <input class="form-control" type="text" name="usernameOrEmail" id="usernameOrEmail"

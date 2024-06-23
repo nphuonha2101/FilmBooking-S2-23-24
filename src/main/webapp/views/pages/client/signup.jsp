@@ -29,9 +29,9 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form class="row g-3" action="<c:url value="${pageContext.request.contextPath}/signup"/>" method="post">
-            <div class="form-floating">
-                <input class="form-control px-3" type="text" name="username" id="username"
+        <form class="w-30 row" action="<c:url value="${pageContext.request.contextPath}/signup"/>" method="post">
+            <div class="form-floating mb-3">
+                <input class="form-control" type="text" name="username" id="username"
                        placeholder="<fmt:message bundle="${msg}" key="username"/>"
                        autocomplete="true" required>
                 <label class="text-secondary" for="username">
@@ -41,7 +41,7 @@
             </div>
 
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input class="form-control px-3" type="text" name="user-full-name" id="user-full-name"
                        placeholder="<fmt:message bundle="${msg}" key="fullname"/>" autocomplete="true"
                        required>
@@ -52,7 +52,7 @@
             </div>
 
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input class="form-control px-3" type="email" name="email" id="email" placeholder="Email"
                        autocomplete="true" required>
                 <label class="text-secondary" for="email">
@@ -61,7 +61,7 @@
                 </label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input class="form-control px-3" type="password" name="password" id="password"
                        placeholder="<fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
                 <label class="text-secondary" for="password">
@@ -70,7 +70,7 @@
                 </label>
             </div>
 
-            <div class="form-floating">
+            <div class="form-floating mb-3">
                 <input class="form-control px-3" type="password" name="confirm-password" id="confirm-password"
                        placeholder="<fmt:message bundle="${msg}" key="confirmPassword"/>"
                        autocomplete="true" required>

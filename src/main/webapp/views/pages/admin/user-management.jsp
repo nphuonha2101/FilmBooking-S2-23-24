@@ -122,7 +122,7 @@
             $('#username').attr('value', username);
             $('#full-name').attr('value', fullName);
             $('#email').attr('value', email);
-            $('#role').attr('value', role);
+            $('#role').val(role);
         }
     </script>
 
