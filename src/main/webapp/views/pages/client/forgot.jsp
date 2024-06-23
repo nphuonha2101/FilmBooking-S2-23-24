@@ -28,33 +28,38 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>" method="post">
-            <label for="username">
-                <span class="material-symbols-rounded">person</span>
-                <fmt:message key="username" bundle="${msg}"/>:
-                <span class="warning-color"> *</span>
-            </label>
-            <input type="text" name="username" id="username"
-                   placeholder=" <fmt:message key="username" bundle="${msg}"/>"
-                   autocomplete="true" required>
+        <form class="w-30 mb-3" action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>"
+              method="post">
+            <div class="form-floating mb-3">
+                <input type="text" name="username" id="username"
+                       placeholder=" <fmt:message key="username" bundle="${msg}"/>"
+                       autocomplete="true" required>
+                <label for="username">
+                    <span class="material-symbols-rounded">person</span>
+                    <fmt:message key="username" bundle="${msg}"/>:
+                    <span class="warning-color"> *</span>
+                </label>
+            </div>
 
-            <label for="email">
-                <span class="material-symbols-rounded">mail</span>
-                <fmt:message key="email" bundle="${msg}"/>:
-                <span class="warning-color"> *</span>
-            </label>
-            <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>"
-                   autocomplete="true" required>
+            <div class="form-floating mb-3">
+                <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>"
+                       autocomplete="true" required>
+                <label for="email">
+                    <span class="material-symbols-rounded">mail</span>
+                    <fmt:message key="email" bundle="${msg}"/>:
+                    <span class="warning-color"> *</span>
+                </label>
+            </div>
 
             <input type="submit" class="primary-filled-button button"
                    value=" <fmt:message key="send" bundle="${msg}"/>">
-
-            <div class="d-flex flex-column align-items-center">
-                <p><fmt:message key="return" bundle="${msg}"/>
-                    <span> <a class="links" href="<c:url value="${pageContext.request.contextPath}/login"/>">
-                        <fmt:message key="login" bundle="${msg}"/>!</a></span>
-                </p>
-            </div>
         </form>
+
+        <div class="mt-3 d-flex flex-column align-items-center">
+            <p><fmt:message key="return" bundle="${msg}"/>
+                <span> <a class="links" href="<c:url value="${pageContext.request.contextPath}/login"/>">
+                        <fmt:message key="login" bundle="${msg}"/>!</a></span>
+            </p>
+        </div>
     </div>
 </section>
