@@ -4,9 +4,13 @@ package com.filmbooking.model;
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.FilmVoteRepository;
+import com.filmbooking.repository.GenreRepository;
+import com.filmbooking.repository.ShowtimeRepository;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,9 +26,9 @@ import java.util.Set;
 @TableName("films")
 @TableIdName("film_id")
 @IdAutoIncrement
+@AllArgsConstructor
 public class Film implements IModel {
     public static final String TABLE_NAME = "films";
-
     @Expose
     private long filmID;
     @Expose
@@ -45,27 +49,10 @@ public class Film implements IModel {
     private String imgPath;
     @Expose
     private String slug;
-    @Expose
+
     private List<Genre> genreList;
     private List<Showtime> showtimeList;
     private List<FilmVote> filmVoteList;
-
-    public Film() {
-    }
-
-
-    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath, String slug) {
-        this.filmID = filmID;
-        this.filmName = filmName;
-        this.filmPrice = filmPrice;
-        this.director = director;
-        this.cast = cast;
-        this.filmLength = filmLength;
-        this.filmDescription = filmDescription;
-        this.filmTrailerLink = filmTrailerLink;
-        this.imgPath = imgPath;
-        this.slug = slug;
-    }
 
     /**
      * For add new Film constructor
@@ -85,9 +72,24 @@ public class Film implements IModel {
         this.slug = StringUtils.createSlug(this.filmName, 50);
     }
 
+    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath, String slug) {
+        this.filmID = filmID;
+        this.filmName = filmName;
+        this.filmPrice = filmPrice;
+        this.director = director;
+        this.cast = cast;
+        this.filmLength = filmLength;
+        this.filmDescription = filmDescription;
+        this.filmTrailerLink = filmTrailerLink;
+        this.imgPath = imgPath;
+        this.slug = slug;
+    }
+
     public String getFilmVoteScoresStr() {
         DecimalFormat decimalFormat = new DecimalFormat("#0.00");
         double totalScores = 0;
+
+        getFilmVoteList();
 
         if (!this.filmVoteList.isEmpty()) {
             for (FilmVote filmVote : this.filmVoteList) {
@@ -99,13 +101,33 @@ public class Film implements IModel {
         return String.valueOf(totalScores);
     }
 
-    public String getFilmGenresStr
-            () {
+    public String getFilmGenresStr() {
+        getGenreList();
+
         StringBuilder result = new StringBuilder();
         for (Genre genre : this.genreList) {
             result.append(genre.getGenreName()).append(" ");
         }
         return result.toString().trim();
+    }
+
+
+    public List<FilmVote> getFilmVoteList() {
+        if (this.filmVoteList == null)
+            this.filmVoteList = new FilmVoteRepository().selectAllByFilmId(this.filmID);
+        return this.filmVoteList;
+    }
+
+    public List<Genre> getGenreList() {
+        if (this.genreList == null)
+            this.genreList = new GenreRepository().selectAllByFilmId(this.filmID);
+        return this.genreList;
+    }
+
+    public List<Showtime> getShowtimeList() {
+        if (this.showtimeList == null)
+            this.showtimeList = new ShowtimeRepository().selectAllByFilmId(this.filmID);
+        return this.showtimeList;
     }
 
     @Override
@@ -128,22 +150,4 @@ public class Film implements IModel {
     public Object getIdValue() {
         return this.filmID;
     }
-
-
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "film_id", this.filmID,
-                "film_name", this.filmName,
-                "film_price", this.filmPrice,
-                "film_director", this.director,
-                "film_cast", this.cast,
-                "film_length", this.filmLength,
-                "film_description", this.filmDescription,
-                "film_trailer_link", this.filmTrailerLink,
-                "img_path", this.imgPath,
-                "slug", this.slug
-        );
-    }
-
-
 }

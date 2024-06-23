@@ -10,7 +10,7 @@ public class LogRepositoryTest {
     @Test
     void selectAll(){
         assertDoesNotThrow(() -> {
-            LogRepository logRepository = new LogRepository(LogModel.class);
+            LogRepository logRepository = new LogRepository();
             System.out.println(logRepository.selectAll());
         });
     }

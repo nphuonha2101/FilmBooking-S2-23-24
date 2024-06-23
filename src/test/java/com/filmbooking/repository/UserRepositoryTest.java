@@ -1,5 +1,6 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.model.User;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +10,7 @@ class UserRepositoryTest {
     @Test
     void selectAll() {
         assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository(User.class);
+            UserRepository userRepository = new UserRepository();
             System.out.println(userRepository.selectAll());
         });
     }
@@ -17,7 +18,7 @@ class UserRepositoryTest {
     @Test
     void selectById() {
         assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository(User.class);
+            UserRepository userRepository = new UserRepository();
             System.out.println(userRepository.select("nphuonha"));
             assertEquals("nphuonha", userRepository.select("nphuonha").getUsername());
         });
@@ -26,15 +27,15 @@ class UserRepositoryTest {
     @Test
     void insert() {
         assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository(User.class);
+            UserRepository userRepository = new UserRepository();
             User user = new User("nphuonha2",
                     "Nguyen Phuong Nha",
                     "abc@gmail.com",
                     "123456",
-                    "admin",
+                    AccountRoleEnum.ADMIN,
                     "normal",
-                    1,
-                    null);
+                    1
+            );
 
             assertTrue(userRepository.insert(user));
 
@@ -44,7 +45,7 @@ class UserRepositoryTest {
     @Test
     void update() {
         assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository(User.class);
+            UserRepository userRepository = new UserRepository();
             User user = userRepository.select("nphuonha1");
             user.setUserFullName("Nguyen Phuong Nha 1");
 
@@ -56,7 +57,7 @@ class UserRepositoryTest {
     @Test
     void delete() {
         assertDoesNotThrow(() -> {
-            UserRepository userRepository = new UserRepository(User.class);
+            UserRepository userRepository = new UserRepository();
             User user = userRepository.select("nphuonha1");
             assertTrue(userRepository.delete(user));
             assertNull(userRepository.select("nphuonha1"));

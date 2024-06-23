@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.read;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.Page;
@@ -13,7 +12,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(name = "roomManagement", value = "/admin/management/room")
 public class RoomManagementController extends HttpServlet {

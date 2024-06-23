@@ -7,14 +7,12 @@ package com.filmbooking.controller.customer.checkOutAndPayment.auth;
  */
 
 import com.filmbooking.enumsAndConstants.enums.PaymentStatus;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.payment.VNPay;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
-import com.filmbooking.utils.WebAppPathUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -26,7 +24,6 @@ import java.io.IOException;
 
 @WebServlet("/auth/checkout")
 public class CheckoutController extends HttpServlet {
-    private HibernateSessionProvider hibernateSessionProvider;
     private FilmBookingServicesImpl filmBookingServices;
     private ShowtimeServicesImpl showtimeServices;
 
@@ -42,9 +39,8 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmBookingServices = new FilmBookingServicesImpl(hibernateSessionProvider);
-        showtimeServices = new ShowtimeServicesImpl(hibernateSessionProvider);
+        filmBookingServices = new FilmBookingServicesImpl();
+        showtimeServices = new ShowtimeServicesImpl();
 
         String paymentMethod = req.getParameter("payment-method");
 
@@ -87,14 +83,10 @@ public class CheckoutController extends HttpServlet {
             }
         } else
             PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
-
-        hibernateSessionProvider.closeSession();
-
     }
 
     @Override
     public void destroy() {
-        hibernateSessionProvider = null;
         filmBookingServices = null;
         showtimeServices = null;
     }

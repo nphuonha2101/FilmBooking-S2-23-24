@@ -2,7 +2,6 @@ package com.filmbooking.controller.apis;
 
 import com.filmbooking.controller.apis.apiResponse.APIJSONResponse;
 import com.filmbooking.controller.apis.apiResponse.RespCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.utils.APIUtils;
@@ -19,7 +18,6 @@ public class FilmBookingAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
         FilmBookingServicesImpl filmBookingServices = new FilmBookingServicesImpl();
 
         String command = req.getParameter("command");
@@ -45,6 +43,5 @@ public class FilmBookingAPI extends HttpServlet {
         apiUtils.processRequest(command);
         apiUtils.writeResponse(null, 0);
 
-        sessionProvider.closeSession();
     }
 }

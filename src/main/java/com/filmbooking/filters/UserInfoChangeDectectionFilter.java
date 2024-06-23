@@ -1,13 +1,11 @@
 package com.filmbooking.filters;
 
 import com.filmbooking.controller.customer.account.LogoutController;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebFilter;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +19,6 @@ public class UserInfoChangeDectectionFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         // Check if user info has changed
-        HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
         User currentUser = (User) req.getSession().getAttribute("loginUser");
 
         if (currentUser == null) {
@@ -29,7 +26,6 @@ public class UserInfoChangeDectectionFilter extends HttpFilter {
             return;
         }
         UserServicesImpl userServices = new UserServicesImpl();
-        userServices.setSessionProvider(hibernateSessionProvider);
 
         User currentUserInDB = userServices.getByUsername(currentUser.getUsername());
 
@@ -38,7 +34,6 @@ public class UserInfoChangeDectectionFilter extends HttpFilter {
             return;
         }
 
-        hibernateSessionProvider.closeSession();
         chain.doFilter(req, res);
     }
 }

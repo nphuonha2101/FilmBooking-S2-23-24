@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
@@ -24,14 +23,10 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet("/login/facebook")
 public class FacebookLoginController extends HttpServlet {
 	private CRUDServicesLogProxy<User> userServicesLog;
-	private UserServicesImpl userServices;
-	private String name = null;
-	private String email = null;
-	private String id= null;
 
-	@Override
+    @Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		userServices = new UserServicesImpl();
+        UserServicesImpl userServices = new UserServicesImpl();
 
 		// Đọc dữ liệu được gửi từ client-side
 		StringBuilder requestData = new StringBuilder();
@@ -46,9 +41,9 @@ public class FacebookLoginController extends HttpServlet {
 		JsonObject jsonObject = JsonParser.parseString(requestData.toString()).getAsJsonObject();
 
 		// Lấy tên từ dữ liệu JSON
-		name = jsonObject.get("name").getAsString();
-		email = jsonObject.has("email") ? jsonObject.get("email").getAsString() : "Email không có sẵn";
-		id = jsonObject.get("id").getAsString();
+        String name = jsonObject.get("name").getAsString();
+        String email = jsonObject.has("email") ? jsonObject.get("email").getAsString() : "Email không có sẵn";
+        String id = jsonObject.get("id").getAsString();
 		System.out.println(name + "," + email +"," + id);
 
 		User loginUser = userServices.getByUsername(id);

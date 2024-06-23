@@ -3,6 +3,7 @@ package com.filmbooking.model;
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.RoomRepository;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,6 @@ import java.util.Set;
 @TableName("theaters")
 @TableIdName("theater_id")
 @IdAutoIncrement
-@AllArgsConstructor
 public class Theater implements IModel {
     public static final String TABLE_NAME = "theaters";
 
@@ -32,11 +32,24 @@ public class Theater implements IModel {
     private String taxCode;
     @Expose
     private String theaterAddress;
+
     private List<Room> roomList;
 
-    public Theater() {}
-    public Theater(long theaterID){
+    public Theater(long theaterID, String theaterName, String taxCode, String theaterAddress) {
         this.theaterID = theaterID;
+        this.theaterName = theaterName;
+        this.taxCode = taxCode;
+        this.theaterAddress = theaterAddress;
+    }
+
+    public Theater(long theaterID) {
+        this.theaterID = theaterID;
+    }
+
+    public List<Room> getRoomList() {
+        if (this.roomList == null)
+            this.roomList = new RoomRepository().selectAllByTheaterId(this.theaterID);
+        return roomList;
     }
 
     @Override
@@ -45,8 +58,7 @@ public class Theater implements IModel {
             return this.theaterID == theater.getTheaterID()
                     && this.theaterName.equals(theater.getTheaterName())
                     && this.taxCode.equals(theater.getTaxCode())
-                    && this.theaterAddress.equals(theater.getTheaterAddress())
-                    && this.roomList.equals(theater.getRoomList());
+                    && this.theaterAddress.equals(theater.getTheaterAddress());
         }
         return false;
     }
@@ -56,12 +68,4 @@ public class Theater implements IModel {
         return this.theaterID;
     }
 
-    public Map<String, Object> mapToRow() {
-        return Map.of(
-                "theater_id", this.theaterID,
-                "theater_name", this.theaterName,
-                "tax_code", this.taxCode,
-                "theater_address", this.theaterAddress
-        );
-    }
 }

@@ -1,6 +1,5 @@
 package com.filmbooking.controller.customer.film.auth;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
@@ -26,11 +25,9 @@ public class BookingFilmController extends HttpServlet {
     private ShowtimeServicesImpl showtimeServices;
     private FilmBooking filmBooking;
     private Film bookedFilm;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl();
         CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(showtimeServices, req, Showtime.class);
 
@@ -54,12 +51,10 @@ public class BookingFilmController extends HttpServlet {
 
         bookFilmPage.render(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
         showtimeServices = new ShowtimeServicesImpl();
         CRUDServicesLogProxy<Showtime> showtimeServicesLog = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), req, Showtime.class);
 
@@ -90,7 +85,6 @@ public class BookingFilmController extends HttpServlet {
             req.setAttribute("statusCodeErr", StatusCodeEnum.PLS_CHOOSE_SEAT.getStatusCode());
             doGet(req, resp);
         }
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
@@ -98,7 +92,6 @@ public class BookingFilmController extends HttpServlet {
         showtimeServices = null;
         filmBooking = null;
         bookedFilm = null;
-        hibernateSessionProvider = null;
     }
 
 
