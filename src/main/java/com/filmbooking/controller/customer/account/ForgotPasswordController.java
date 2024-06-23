@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @WebServlet(name = "forgotPassword", value = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
-    private UserServicesLogProxy<User> userServicesLog;
+    private UserServicesLogProxy userServicesLog;
 
     @Override
     public void init() throws ServletException {
@@ -40,7 +40,7 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        userServicesLog = new UserServicesLogProxy<>(new UserServicesImpl(), req, User.class);
+        userServicesLog = new UserServicesLogProxy(new UserServicesImpl(), req);
 
         String username = req.getParameter("username");
         String userEmail = req.getParameter("email");

@@ -18,8 +18,6 @@ public class FilmRepository extends AbstractRepository<Film>{
 
     @Override
     public boolean delete(Film film) {
-        if (!new ShowtimeRepository().deleteByFilmId(film.getFilmID()))
-            return false;
         if (!new GenreRepository().deleteByFilmId(film.getFilmID()))
             return false;
         if (!new FilmVoteRepository().deleteByFilmId(film.getFilmID()))
@@ -30,8 +28,6 @@ public class FilmRepository extends AbstractRepository<Film>{
 
     @Override
     public boolean update(Film film) {
-        if (!new ShowtimeRepository().updateByFilm(film))
-            return false;
         if (!new GenreRepository().updateByFilm(film))
             return false;
         if (!new FilmVoteRepository().updateByFilm(film))
