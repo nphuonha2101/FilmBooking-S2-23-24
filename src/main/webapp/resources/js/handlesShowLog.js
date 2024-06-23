@@ -1,5 +1,5 @@
 $(function() {
-    $('#myTable').DataTable({
+    const table = $('#myTable').DataTable({
         ajax: {
             url: '/api/v1/logs?command=all',
             dataSrc: 'data'
@@ -30,19 +30,8 @@ $(function() {
             url: `/api/v1/logs/${data.logID}`,
             type: 'GET',
             success: function(result) {
-                $('#logID').text(result.logID);
-                $('#username').text(result.user.username);
-                $('#action').text(result.action);
-                $('#level').text(result.level);
-                $('#targetTable').text(result.targetTable);
-                $('#beforeValue').text(result.beforeValue);
-                $('#afterValue').text(result.afterValue);
-                $('#createdAt').text(result.createdAt);
-                $('#updatedAt').text(result.updatedAt);
+
                 $('#detailsModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                alert('Error fetching log details: ' + xhr.responseText);
             }
         });
     });
