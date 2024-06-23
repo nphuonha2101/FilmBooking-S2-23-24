@@ -55,6 +55,32 @@ To change this template use File | Settings | File Templates.
         <jsp:include page="/views/components/pagination.jsp"/>
 
     </div>
-
+    <!-- Modal for Details -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalLabel">Log Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>LogID:</strong> <span id="logID"></span></p>
+                    <p><strong>Username:</strong> <span id="username"></span></p>
+                    <p><strong>Action:</strong> <span id="action"></span></p>
+                    <p><strong>Level:</strong> <span id="level"></span></p>
+                    <p><strong>Target Table:</strong> <span id="targetTable"></span></p>
+                    <p><strong>Before Value:</strong> <span id="beforeValue"></span></p>
+                    <p><strong>After Value:</strong> <span id="afterValue"></span></p>
+                    <p><strong>Created At:</strong> <span id="createdAt"></span></p>
+                    <p><strong>Updated At:</strong> <span id="updatedAt"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
 </section>
