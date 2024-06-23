@@ -33,11 +33,7 @@ public class Pagination<T> {
         int totalPages = (int) Math.ceil((double) totalRecords / limit);
 
         if (page < 1 || page > totalPages) {
-            try {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            return null;
         }
 
 
@@ -46,6 +42,6 @@ public class Pagination<T> {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
 
-        return service.selectAll(limit, 0);
+        return service.selectAll(limit, offset);
     }
 }

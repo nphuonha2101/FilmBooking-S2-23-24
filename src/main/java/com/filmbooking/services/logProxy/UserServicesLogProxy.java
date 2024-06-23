@@ -46,7 +46,11 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
             else
                 user = userServices.getByEmail(usernameOrEmail);
         }
-        logModel.setUsername(user.getUsername());
+        if (user != null){
+            logModel.setUsername(user.getUsername());
+        }else{
+            logModel.setUsername(null);
+        }
         logModelServices.insert(logModel);
         return serviceResult;
     }

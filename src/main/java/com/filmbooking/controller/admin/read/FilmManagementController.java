@@ -22,7 +22,6 @@ public class FilmManagementController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         FilmServicesImpl filmServices = new FilmServicesImpl();
 
-
         Page filmManagementPage = new AdminPage(
                 "filmManagementTitle",
                 "film-management",
@@ -31,7 +30,6 @@ public class FilmManagementController extends HttpServlet {
 
         Pagination<Film> pagination = new Pagination<>(filmServices, req, resp, LIMIT, "admin/management/film");
         filmManagementPage.putAttribute("filmsData", pagination.getPaginatedRecords());
-
         filmManagementPage.render(req, resp);
     }
 
