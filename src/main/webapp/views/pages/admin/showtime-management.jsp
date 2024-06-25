@@ -85,12 +85,12 @@
                 method: 'POST',
                 data: {showtime: showtimeSlug},
                 success: function (data) {
-                    alert('Showtime deleted successfully');
+                    alert('Xóa suất chiếu thành công!');
                     $('#showtime-row-' + id).remove();
                     // $('.room-table tbody').reload();
                 },
                 error: function (xhr, status, error) {
-                    alert('Error deleting showtime: ' + error);
+                    alert('Có lỗi xảy ra khi xóa suất chiếu : ' + error);
                 }
             });
         }

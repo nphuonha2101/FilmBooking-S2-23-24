@@ -26,7 +26,7 @@ import java.util.Map;
 @WebServlet(name = "login", value = "/login")
 @MultipartConfig
 public class LoginController extends HttpServlet {
-    private UserServicesLogProxy<User> userServices;
+    private UserServicesLogProxy userServices;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
 
@@ -97,9 +97,7 @@ public class LoginController extends HttpServlet {
             return;
         }
 
-
-        userServices = new UserServicesLogProxy<>(new UserServicesImpl(), req, User.class);
-
+        userServices = new UserServicesLogProxy(new UserServicesImpl(), req);
 
         User loginUser = null;
 

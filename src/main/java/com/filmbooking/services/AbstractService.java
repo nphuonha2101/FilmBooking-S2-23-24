@@ -3,6 +3,7 @@ package com.filmbooking.services;
 import com.filmbooking.model.IModel;
 import com.filmbooking.repository.AbstractRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,10 @@ public abstract class AbstractService<T extends IModel> implements IService<T> {
 
     @Override
     public T getBySlug(String slug) {
-        return repository.selectAll(1, 0, null,  Map.of("slug", slug)).get(0);
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("slug_=", slug);
+        List<T> result = repository.selectAll(conditions);
+        return result.isEmpty() ? null : result.get(0);
     }
 
     @Override

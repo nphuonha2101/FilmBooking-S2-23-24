@@ -13,11 +13,11 @@ import jakarta.servlet.http.HttpServletRequest;
  * @ide IntelliJ IDEA
  * @project_name FilmBooking-S2-23-24
  */
-public class FilmServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IFilmServices {
+public class FilmServicesLogProxy extends AbstractServicesLogProxy<Film> implements IFilmServices {
     private final FilmServicesImpl filmServices;
 
-    public FilmServicesLogProxy(FilmServicesImpl filmServices, HttpServletRequest req, Class<T> modelClass) {
-        super(req,modelClass);
+    public FilmServicesLogProxy(FilmServicesImpl filmServices, HttpServletRequest req) {
+        super(req, Film.class);
         this.filmServices = filmServices;
 //        this.logModelServices.setSessionProvider(sessionProvider);
 //        this.filmServices.setSessionProvider(sessionProvider);
@@ -25,10 +25,10 @@ public class FilmServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public boolean update(Film film, String... genreIDs) {
-        LogModel logModel = buildLogModel(LogModel.UPDATE, (T) film, (AbstractService<T>) filmServices, true);
+        LogModel logModel = buildLogModel(LogModel.UPDATE, film, filmServices, true);
 
-//        boolean updateState = filmServices.update(film, genreIDs);
-        boolean updateState = filmServices.update(film);
+        boolean updateState = filmServices.update(film, genreIDs);
+//        boolean updateState = filmServices.update(film);
 
         logModel.setActionSuccess(updateState);
         logModelServices.insert(logModel);
@@ -38,10 +38,9 @@ public class FilmServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public boolean save(Film film, String... genreIDs) {
-        LogModel logModel = buildLogModel(LogModel.INSERT, (T) film, (AbstractService<T>) filmServices, true);
+        LogModel logModel = buildLogModel(LogModel.INSERT, film, filmServices, true);
 
-        boolean saveState = filmServices.insert(film);
-        //boolean saveState = filmServices.insert(film, genreIDs);
+        boolean saveState = filmServices.insert(film, genreIDs);
         logModel.setActionSuccess(saveState);
         logModelServices.insert(logModel);
 

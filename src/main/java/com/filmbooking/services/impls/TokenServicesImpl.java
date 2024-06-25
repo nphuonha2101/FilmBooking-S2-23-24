@@ -1,9 +1,12 @@
 package com.filmbooking.services.impls;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
+import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.model.TokenModel;
 import com.filmbooking.repository.TokenModelRepository;
 import com.filmbooking.services.AbstractService;
@@ -33,7 +36,7 @@ public class TokenServicesImpl extends AbstractService<TokenModel> {
      * @return TokenModel
      */
     public TokenModel getToken(String token, String username, String type) {
-        Map<String, Object> filters = Map.of("token_=", token, "username_=", username, "tokenType_=", type);
+        Map<String, Object> filters = new HashMap<>(Map.of("token_=", token, "username_=", username, "token_type_=", type));
         return this.selectAll(filters).get(0);
     }
 
@@ -56,6 +59,8 @@ public class TokenServicesImpl extends AbstractService<TokenModel> {
             if (tokenModel.getExpiryDate().isBefore(LocalDateTime.now())) {
                 return new ServiceResult(StatusCodeEnum.TOKEN_EXPIRED);
             }
+            if (tokenModel.getTokenState().equals(TokenStateEnum.USED.getTokenState()))
+                return new ServiceResult(StatusCodeEnum.TOKEN_USED);
         }
         return new ServiceResult(StatusCodeEnum.TOKEN_VERIFIED, tokenModel);
     }
