@@ -28,31 +28,37 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form class="w-30 mb-3" action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>"
-              method="post">
+        <form
+                class="w-30 mb-3"
+                action="<c:url value="${pageContext.request.contextPath}/forgot-password"/>"
+                method="post"
+        >
             <div class="form-floating mb-3">
-                <input type="text" name="username" id="username"
+                <input class="form-control" type="text" name="username" id="username"
                        placeholder=" <fmt:message key="username" bundle="${msg}"/>"
-                       autocomplete="true" required>
+                       autocomplete="true" required
+                >
                 <label for="username">
-                    <span class="material-symbols-rounded">person</span>
                     <fmt:message key="username" bundle="${msg}"/>:
                     <span class="warning-color"> *</span>
                 </label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="email" name="email" id="email" placeholder=" <fmt:message key="email" bundle="${msg}"/>"
-                       autocomplete="true" required>
+                <input class="form-control" type="email" name="email" id="email"
+                       placeholder=" <fmt:message key="email" bundle="${msg}"/>"
+                       autocomplete="true" required
+                >
                 <label for="email">
-                    <span class="material-symbols-rounded">mail</span>
                     <fmt:message key="email" bundle="${msg}"/>:
                     <span class="warning-color"> *</span>
                 </label>
             </div>
 
-            <input type="submit" class="primary-filled-button button"
-                   value=" <fmt:message key="send" bundle="${msg}"/>">
+            <div>
+                <input type="submit" class="primary-filled-button button rounded-button w-100"
+                       value=" <fmt:message key="send" bundle="${msg}"/>">
+            </div>
         </form>
 
         <div class="mt-3 d-flex flex-column align-items-center">

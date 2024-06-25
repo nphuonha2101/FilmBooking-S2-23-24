@@ -34,7 +34,11 @@
 
             <div class="form-floating mb-3">
                 <input class="form-control" type="password" name="new-password" id="new-password"
-                       placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
+                       placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required
+                <c:if test="${sessionScope.tokenVerifyStatus != 'token-verified'}">
+                       disabled
+                </c:if>
+                >
                 <label for="new-password">
                     <span class="material-symbols-rounded">password</span>
                     <fmt:message bundle="${msg}" key="newPassword"/>
@@ -43,15 +47,23 @@
 
             <div class="form-floating mb-3">
                 <input class="form-control" type="password" name="confirm-new-password" id="confirm-new-password"
-                       placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
+                       placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required
+                <c:if test="${sessionScope.tokenVerifyStatus != 'token-verified'}">
+                       disabled
+                </c:if>
+                >
                 <label for="confirm-new-password">
                     <span class="material-symbols-rounded">password</span>
                     <fmt:message bundle="${msg}" key="confirmPassword"/>
                 </label>
             </div>
 
-            <input type="submit" class="primary-filled-button button"
-                   value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
+            <input type="submit" class="primary-filled-button button w-100 rounded-button"
+                   value=" <fmt:message bundle="${msg}" key="changePasswd"/>"
+            <c:if test="${sessionScope.tokenVerifyStatus != 'token-verified'}">
+                   disabled
+            </c:if>
+            >
         </form>
         <p class="mt-3"><fmt:message bundle="${msg}" key="return"/>
             <span><a class="links" href="${pageContext.request.contextPath}/login">
