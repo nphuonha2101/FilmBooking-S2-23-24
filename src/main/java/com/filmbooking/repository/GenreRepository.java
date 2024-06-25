@@ -40,7 +40,7 @@ public class GenreRepository extends AbstractRepository<Genre> {
             System.out.println("Delete by film id SQL: " + sql);
             return handle.createUpdate(sql)
                     .bind("film_id", filmId)
-                    .execute() == 1;
+                    .execute() >= 1;
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return false;
@@ -51,12 +51,13 @@ public class GenreRepository extends AbstractRepository<Genre> {
 
     public boolean updateByFilm(Film film) {
         try {
-            if (!deleteByFilmId(film.getFilmID()))
-                return false;
+            deleteByFilmId(film.getFilmID());
 
             List<Genre> genres = film.getGenreList();
 
-            if (genres == null) {
+            System.out.println("Genre Repository - updateByFilm: " + genres);
+
+            if (genres == null || genres.isEmpty()) {
                 return true;
             }
 
@@ -64,15 +65,12 @@ public class GenreRepository extends AbstractRepository<Genre> {
             Handle handle = JdbiDBConnection.openHandle();
 
             for (Genre genre : genres) {
-                boolean updateResult = handle.createUpdate(sql)
+                handle.createUpdate(sql)
                         .bind("film_id", film.getFilmID())
                         .bind("genre_id", genre.getGenreID())
-                        .execute() == 1;
-
-                if (!updateResult) {
-                    return false;
-                }
+                        .execute();
             }
+
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return false;

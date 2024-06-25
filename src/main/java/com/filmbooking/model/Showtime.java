@@ -180,7 +180,7 @@ public class Showtime implements IModel {
 
 
     public int countAvailableSeats() {
-        System.out.println(seatsData);
+
         String seatMatrix[][] = StringUtils.convertTo2DArr(this.seatsData);
 
         int count = 0;

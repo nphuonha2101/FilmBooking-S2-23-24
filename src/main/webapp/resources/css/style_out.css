@@ -12,6 +12,7 @@
     font-display: block;
     src: url("/resources/fonts/material-symbols-rounded.woff2") format("woff2");
 }
+
 .material-symbols-rounded {
     font-family: "Material Symbols Rounded", system-ui;
     font-weight: normal;
@@ -118,14 +119,13 @@ a {
 }
 
 .rotate-icon .material-symbols-rounded, .rotate-icon.material-symbols-rounded {
-   transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .rotate-icon:hover .material-symbols-rounded, .rotate-icon.material-symbols-rounded:hover {
     transform: rotate(360deg);
     transition: 0.3s ease-out;
 }
-
 
 
 button {
@@ -334,7 +334,6 @@ button {
 .w-75 {
     width: calc(75vw) !important;
 }
-
 
 
 .block-list {
@@ -849,7 +848,7 @@ button {
     top: 6rem;
     left: 1rem;
     z-index: 999;
-    width: fit-content!important;
+    width: fit-content !important;
     padding: 1rem;
     border-radius: 10px;
     background-color: #fff;
@@ -905,6 +904,7 @@ table {
     animation-name: scale-in-ver-top;
     animation-duration: 0.3s;
 }
+
 
 .hidden-table {
     border: none !important;
@@ -1197,7 +1197,8 @@ input[type='radio'] + label {
     width: 20px;
     padding: 9px;
 }
-svg{
+
+svg {
     height: 20px !important;
     width: 20px !important;
 
@@ -1269,8 +1270,6 @@ svg{
 }
 
 
-
-
 .fb-item_horizontal-card {
     display: flex;
     flex-direction: row;
@@ -1313,7 +1312,7 @@ svg{
     visibility: hidden !important;
 }
 
-.search-item-card img{
+.search-item-card img {
     max-height: 15rem;
 }
 
