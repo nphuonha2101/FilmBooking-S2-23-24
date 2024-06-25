@@ -128,7 +128,7 @@
             <div class="wrapper d-flex flex-column align-items-center">
                 <form action="<c:url value="${pageContext.request.contextPath}/film-info"/>" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
-                    <input class="primary-filled-button button" type="submit"
+                    <input class="primary-filled-button rounded-button button" type="submit"
                            value="<fmt:message bundle="${msg}" key="continue"/>">
                 </form>
             </div>
