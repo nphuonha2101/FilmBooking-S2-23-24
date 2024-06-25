@@ -86,7 +86,6 @@
                 </div>
 
                 <div class="form-floating mb-3">
-
                     <input class="form-control" type="datetime-local"
                            placeholder="<fmt:message bundle="${adminMsg}" key="showtimeDate"/>"
                            name="showtime-datetime" id="showtime-datetime"

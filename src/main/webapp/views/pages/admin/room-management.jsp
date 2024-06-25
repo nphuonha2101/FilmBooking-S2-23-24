@@ -86,12 +86,12 @@
                 method: 'POST',
                 data: {room: roomSlug},
                 success: function (data) {
-                    alert('Room deleted successfully');
+                    alert('Xoá phòng thành công!');
                     $('#room-row-' + id).remove();
                     // $('.room-table tbody').reload();
                 },
                 error: function (xhr, status, error) {
-                    alert('Error deleting room: ' + error);
+                    alert('Có lỗi khi xóa phòng: ' + error);
                 }
             });
         }

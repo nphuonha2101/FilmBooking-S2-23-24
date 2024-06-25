@@ -35,7 +35,6 @@ public class RecaptchaVerification {
         Map<String, String> paramsMap = new MultipartsFormUtils(req).getFormFields(requestParams);
 
         String recaptchaResponse = paramsMap.get("g-recaptcha-response");
-        System.out.println("Captcha: " + recaptchaResponse);
 
         // Verify reCAPTCHA token
         String verifyUrl = SITE_VERIFY_URL + "?secret=" + this.secretKey + "&response=" + recaptchaResponse;

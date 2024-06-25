@@ -20,12 +20,12 @@ public class FilmBookingServicesImpl extends AbstractService<FilmBooking> {
      * @return a list of film bookings
      */
     public List<FilmBooking> selectAllByUser(User user) {
-        Map<String, Object> conditions = Map.of("username", user.getUsername());
+        Map<String, Object> conditions = Map.of("username_=", user.getUsername());
         return this.selectAll(conditions);
     }
 
     public List<FilmBooking> sellectAllByFilmId(Long filmId) {
-        Map<String, Object> conditions = Map.of("film_id", filmId);
+        Map<String, Object> conditions = Map.of("film_id_=", filmId);
         return this.selectAll(conditions);
     }
 

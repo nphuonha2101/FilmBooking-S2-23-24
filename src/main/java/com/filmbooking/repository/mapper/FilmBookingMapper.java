@@ -18,7 +18,7 @@ public class FilmBookingMapper implements RowMapper<FilmBooking> {
         UserRepository userRepository = new UserRepository();
         return new FilmBooking(
                 showtimeRepository.select(rs.getLong("showtime_id")),
-                userRepository.select(rs.getLong("user_id")),
+                userRepository.select(rs.getLong("username")),
                 rs.getTimestamp("booking_date").toLocalDateTime(),
                 rs.getString("booked_seats").split(","),
                 rs.getDouble("total_fee")

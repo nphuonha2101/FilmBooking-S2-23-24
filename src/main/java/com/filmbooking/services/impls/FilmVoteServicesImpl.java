@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 
 
+import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmVote;
 import com.filmbooking.repository.FilmVoteRepository;
 import com.filmbooking.services.AbstractService;
@@ -32,5 +33,9 @@ public class FilmVoteServicesImpl extends AbstractService<FilmVote> {
     @Override
     public boolean delete(FilmVote filmVote) {
         throw new UnsupportedOperationException("This method is not supported for FilmVote");
+    }
+
+    public boolean deleteByFilm(Film film) {
+        return ((FilmVoteRepository) this.repository).deleteByFilmId(film.getFilmID());
     }
 }

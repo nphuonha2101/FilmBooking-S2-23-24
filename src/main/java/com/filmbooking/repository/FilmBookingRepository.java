@@ -24,6 +24,7 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
     Map<String, Object> mapToRow(FilmBooking filmBooking) {
         Map<String, Object> map = new HashMap<>();
         map.put("username", filmBooking.getUser().getUsername());
+        map.put("showtime_id", filmBooking.getShowtime().getIdValue());
         map.put("booking_date", filmBooking.getBookingDate());
         map.put("seats", String.join(",", filmBooking.getBookedSeats()));
         map.put("total_fee", filmBooking.getTotalFee());
