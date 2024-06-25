@@ -119,7 +119,7 @@ public class JdbiBuilder<T extends IModel> {
     public String buildSelectAllSQL(Map<String, Object> filters) {
         StringBuilder sql = new StringBuilder("SELECT * FROM " + this.tableName + " WHERE ");
         for (String key : filters.keySet()) {
-            String[] keyParts = key.split("_");
+            String[] keyParts = key.split("_(?=[^_]*$)", 2);
             key = keyParts[0] + " " + keyParts[1];
 
             sql.append(key).append(" :").append(keyParts[0]).append(" AND ");
@@ -171,7 +171,7 @@ public class JdbiBuilder<T extends IModel> {
     public String buildSelectAllSQL(int limit, int offset, String order, Map<String, Object> filters) {
         sql = new StringBuilder("SELECT * FROM " + this.tableName + " WHERE ");
         for (String key : filters.keySet()) {
-            String keyParts[] = key.split("_");
+            String keyParts[] = key.split("_(?=[^_]*$)", 2);
             key = keyParts[0] + " " + keyParts[1];
             sql.append(key).append(" :").append(keyParts[0]).append(" AND ");
         }

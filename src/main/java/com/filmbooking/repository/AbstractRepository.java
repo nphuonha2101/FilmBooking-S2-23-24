@@ -139,9 +139,9 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             System.out.println("Select All SQL: " + sql);
 
             Map<String, Object> modifiedFilters = new HashMap<>();
-            filters.forEach((k, v) -> modifiedFilters.put(k.split("_")[0], v));
+            filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
 
-            System.out.println("Filters: " + filters);
+            System.out.println("Filters: " + modifiedFilters);
 
             return handle.createQuery(sql)
                     .bindMap(modifiedFilters)
@@ -202,7 +202,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             System.out.println("Select All SQL: " + sql);
 
             Map<String, Object> modifiedFilters = new HashMap<>();
-            filters.forEach((k, v) -> modifiedFilters.put(k.split("_")[0], v));
+            filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
 
             return handle.createQuery(sql)
                     .bindMap(modifiedFilters)
