@@ -22,8 +22,8 @@ public abstract class AbstractService<T extends IModel> implements IService<T> {
     @Override
     public T getBySlug(String slug) {
         Map<String, Object> conditions = new HashMap<>();
-        conditions.put("slug", slug);
-        List<T> result = repository.selectAll(1, 0, null, conditions);
+        conditions.put("slug_=", slug);
+        List<T> result = repository.selectAll(conditions);
         return result.isEmpty() ? null : result.get(0);
     }
 

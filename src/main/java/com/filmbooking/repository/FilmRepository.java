@@ -16,26 +16,6 @@ public class FilmRepository extends AbstractRepository<Film>{
         super(Film.class);
     }
 
-    @Override
-    public boolean delete(Film film) {
-        if (!new GenreRepository().deleteByFilmId(film.getFilmID()))
-            return false;
-        if (!new FilmVoteRepository().deleteByFilmId(film.getFilmID()))
-            return false;
-
-        return super.delete(film);
-    }
-
-    @Override
-    public boolean update(Film film) {
-        if (!new GenreRepository().updateByFilm(film))
-            return false;
-        if (!new FilmVoteRepository().updateByFilm(film))
-            return false;
-
-        return super.update(film);
-    }
-
     public List<Film> selectAll(String genreId) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
@@ -62,6 +42,7 @@ public class FilmRepository extends AbstractRepository<Film>{
     @Override
     Map<String, Object> mapToRow(Film film) {
         Map<String, Object> map = new HashMap<>();
+        map.put("film_id", film.getFilmID());
         map.put("film_name", film.getFilmName());
         map.put("film_price", film.getFilmPrice());
         map.put("film_director", film.getDirector());

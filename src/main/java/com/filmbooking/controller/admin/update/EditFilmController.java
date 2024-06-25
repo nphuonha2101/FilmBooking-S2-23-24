@@ -119,9 +119,12 @@ public class EditFilmController extends HttpServlet {
                 System.out.println(oldFile.getAbsolutePath());
 
                 editFilm.setImgPath(filmImgPath);
-                filmServicesLog.update(editFilm, filmGenreIDs);
 
-                req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+                if (!filmServicesLog.update(editFilm, filmGenreIDs))
+                    req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
+                else
+                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+
                 doGet(req, resp);
             } else {
                 req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());

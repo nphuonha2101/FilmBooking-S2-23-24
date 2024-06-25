@@ -32,7 +32,7 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
     public User getByEmail(String email) {
         try {
             Map<String, Object> filters = new HashMap<>();
-            filters.put("user_email", email);
+            filters.put("user_email_=", email);
             List<User> result=  this.selectAll(filters);
 
             if (result.isEmpty()) {
@@ -48,7 +48,7 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
     public User getByUsername(String username){
         try {
             Map<String, Object> filters = new HashMap<>();
-            filters.put("username", username);
+            filters.put("username_=", username);
             return this.selectAll(filters).get(0);
         } catch (NoResultException e) {
             return null;
