@@ -4,6 +4,8 @@ import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
 import com.filmbooking.repository.FilmBookingRepository;
+import com.filmbooking.repository.FilmRepository;
+import com.filmbooking.repository.RoomRepository;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
@@ -28,9 +30,9 @@ public class Showtime implements IModel {
     @Expose
     private long showtimeID;
     @Expose
-    private Film film;
+    private long filmId;
     @Expose
-    private Room room;
+    private long roomId;
     @Expose
     private LocalDateTime showtimeDate;
     @Expose
@@ -43,21 +45,21 @@ public class Showtime implements IModel {
     }
 
     public Showtime(Film film, Room room, LocalDateTime showtimeDate) {
-        this.film = film;
-        this.room = room;
+        this.filmId = film.getFilmID();
+        this.roomId = room.getRoomID();
         this.showtimeDate = showtimeDate;
         this.seatsData = room.getSeatData();
         this.filmBookingList = new ArrayList<>();
-        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
+        this.slug = StringUtils.createSlug(film.getFilmName() + " " + room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     /**
      * Use for retrieve data from database
      */
-    public Showtime(long showtimeID, Film film, Room room, LocalDateTime showtimeDate, String seatsData, String slug) {
+    public Showtime(long showtimeID, long filmId, long roomId, LocalDateTime showtimeDate, String seatsData, String slug) {
         this.showtimeID = showtimeID;
-        this.film = film;
-        this.room = room;
+        this.filmId = filmId;
+        this.roomId = roomId;
         this.showtimeDate = showtimeDate;
         this.seatsData = seatsData;
         this.slug = slug;
@@ -69,19 +71,27 @@ public class Showtime implements IModel {
         return filmBookingList;
     }
 
+    public Film getFilm() {
+        return  new FilmRepository().select(this.filmId);
+    }
+
     public void setFilm(Film film) {
-        this.film = film;
-        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
+        this.filmId = film.getFilmID();
+        this.slug = StringUtils.createSlug(film.getFilmName() + " " + getRoom().getRoomName() + " " + this.getShowtimeDate(), 60);
+    }
+
+    public Room getRoom() {
+        return new RoomRepository().select(this.roomId);
     }
 
     public void setRoom(Room room) {
-        this.room = room;
-        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
+        this.roomId = room.getRoomID();
+        this.slug = StringUtils.createSlug(getFilm().getFilmName() + " " + room.getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
     public void setShowtimeDate(LocalDateTime showtimeDate) {
         this.showtimeDate = showtimeDate;
-        this.slug = StringUtils.createSlug(this.film.getFilmName() + " " + this.room.getRoomName() + " " + this.getShowtimeDate(), 60);
+        this.slug = StringUtils.createSlug(getFilm().getFilmName() + " " + getRoom().getRoomName() + " " + this.getShowtimeDate(), 60);
     }
 
 
@@ -197,17 +207,6 @@ public class Showtime implements IModel {
         return StringUtils.convertTo2DArr(this.seatsData);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Showtime showtime) {
-            return this.showtimeID == showtime.getShowtimeID()
-                    && this.film.equals(showtime.getFilm())
-                    && this.room.equals(showtime.getRoom())
-                    && this.showtimeDate.equals(showtime.getShowtimeDate())
-                    && this.seatsData.equals(showtime.getSeatsData());
-        }
-        return false;
-    }
 
     @Override
     public Object getIdValue() {

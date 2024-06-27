@@ -18,8 +18,8 @@ public class ShowtimeMapper implements RowMapper<Showtime> {
     public Showtime map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new Showtime(
                 rs.getLong("showtime_id"),
-                new FilmRepository().select(rs.getLong("film_id")),
-                new RoomRepository().select(rs.getLong("room_id")),
+                rs.getLong("film_id"),
+                rs.getLong("room_id"),
                 rs.getTimestamp("showtime_date").toLocalDateTime(),
                 rs.getString("seats_data"),
                 rs.getString("slug")
