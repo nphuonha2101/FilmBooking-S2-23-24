@@ -53,17 +53,6 @@ public class Theater implements IModel {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Theater theater) {
-            return this.theaterID == theater.getTheaterID()
-                    && this.theaterName.equals(theater.getTheaterName())
-                    && this.taxCode.equals(theater.getTaxCode())
-                    && this.theaterAddress.equals(theater.getTheaterAddress());
-        }
-        return false;
-    }
-
-    @Override
     public Object getIdValue() {
         return this.theaterID;
     }

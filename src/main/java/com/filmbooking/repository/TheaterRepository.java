@@ -1,5 +1,6 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.model.Room;
 import com.filmbooking.model.Theater;
 import com.filmbooking.repository.mapper.TheaterMapper;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class TheaterRepository extends AbstractRepository<Theater>{
-
     public TheaterRepository() {
         super(Theater.class);
     }
