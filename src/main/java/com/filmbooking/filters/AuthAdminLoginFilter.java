@@ -23,19 +23,19 @@ public class AuthAdminLoginFilter extends HttpFilter {
     public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException,
             ServletException {
 
-//        HttpSession userSession = req.getSession();
-//        User loginUser = (User) userSession.getAttribute("loginUser");
-//        if (loginUser == null) {
-//
-//            RedirectPageUtils.redirectPage(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"), null, req, resp);
-//            return;
-//        } else {
-//            String accountRole = loginUser.getAccountRole();
-//            if (!accountRole.equals("admin")) {
-//                resp.sendError(HttpServletResponse.SC_FORBIDDEN);
-//                return;
-//            }
-//        }
+        HttpSession userSession = req.getSession();
+        User loginUser = (User) userSession.getAttribute("loginUser");
+        if (loginUser == null) {
+
+            RedirectPageUtils.redirectPage(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"), null, req, resp);
+            return;
+        } else {
+            String accountRole = loginUser.getAccountRole();
+            if (!accountRole.equals("admin")) {
+                resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+                return;
+            }
+        }
 
         chain.doFilter(req, resp);
     }
