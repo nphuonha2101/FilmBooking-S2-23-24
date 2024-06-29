@@ -51,4 +51,14 @@ $(function() {
             }
         });
     });
+    // Xóa nội dung của modal khi nó bị đóng
+    $('#detailsModal').on('hidden.bs.modal', function () {
+        console.log('Modal is hidden'); // Kiểm tra xem sự kiện này có được gọi khi đóng modal hay không
+        $('#modal-body-content').empty();
+    });
+
+    $('#closeModalBtn').click(function() {
+        $('#detailsModal').modal('hide'); // Đóng modal
+        $('#modal-body-content').empty(); // Xóa nội dung của bảng trong modal
+    });
 });
