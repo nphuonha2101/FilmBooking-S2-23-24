@@ -17,11 +17,11 @@ import jakarta.servlet.http.HttpServletRequest;
  * @ide IntelliJ IDEA
  * @project_name FilmBooking-S2-23-24
  */
-public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IUserServices {
+public class UserServicesLogProxy extends AbstractServicesLogProxy<User> implements IUserServices {
     private final UserServicesImpl userServices;
 
-    public UserServicesLogProxy(UserServicesImpl userServices, HttpServletRequest req, Class<T> modelClass) {
-        super(req, modelClass);
+    public UserServicesLogProxy(UserServicesImpl userServices, HttpServletRequest req) {
+        super(req, User.class);
         this.userServices = userServices;
     }
 
@@ -32,11 +32,11 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user;
 
         if (serviceResult.getStatus() == StatusCodeEnum.FOUND_USER) {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, (AbstractService<T>) userServices, true);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, userServices, true);
             // set user for log model because current user not in session yet
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, (AbstractService<T>) userServices, false);
+            logModel = buildLogModel(LogModel.LOGIN_SERVICE, null, userServices, false);
             // default log level is INFO, but when user login fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
             // get user by username or email
@@ -46,7 +46,11 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
             else
                 user = userServices.getByEmail(usernameOrEmail);
         }
-        logModel.setUsername(user.getUsername());
+        if (user != null){
+            logModel.setUsername(user.getUsername());
+        }else{
+            logModel.setUsername(null);
+        }
         logModelServices.insert(logModel);
         return serviceResult;
     }
@@ -58,10 +62,10 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user = null;
 
         if (serviceResult.getStatus() == StatusCodeEnum.SUCCESSFUL) {
-            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, (AbstractService<T>) userServices, true);
+            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, userServices, true);
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, (AbstractService<T>) userServices, false);
+            logModel = buildLogModel(LogModel.FORGOT_PASSWORD_SERVICE, null, userServices, false);
             // default log level is INFO, but when user forgot password fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
             user = userServices.select(username);
@@ -80,10 +84,10 @@ public class UserServicesLogProxy<T extends IModel> extends AbstractServicesLogP
         User user = null;
 
         if (serviceResult.getStatus() == StatusCodeEnum.PASSWORD_CHANGE_SUCCESSFUL) {
-            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractService<T>) userServices, true);
+            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, null, userServices, true);
             user = (User) serviceResult.getData();
         } else {
-            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE, (T) null, (AbstractService<T>) userServices, false);
+            logModel = buildLogModel(LogModel.CHANGE_PASSWORD_SERVICE,null, userServices, false);
             // default log level is INFO, but when user change password fail, we need to alert
             logModel.setLevel(LogModel.LOG_LVL_ALERT);
             user = userServices.select(username);

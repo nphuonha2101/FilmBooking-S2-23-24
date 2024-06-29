@@ -1,3 +1,35 @@
+@font-face {
+    font-family: 'Google Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/resources/fonts/GoogleSansTextBeta-Regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: "Material Symbols Rounded";
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("/resources/fonts/material-symbols-rounded.woff2") format("woff2");
+}
+
+.material-symbols-rounded {
+    font-family: "Material Symbols Rounded", system-ui;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga";
+}
 
 .material-symbols-rounded {
     margin: 0 0.5rem;
@@ -22,8 +54,8 @@ section {
 }
 
 * {
-    font-family: 'Inter', sans-serif;
-    font-size: .96rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
     font-weight: 400;
 }
 
@@ -46,7 +78,7 @@ span {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
-    font-family: 'Fira Sans', serif;
+    font-family: 'Google Sans', sans-serif;
 }
 
 h1 {
@@ -87,14 +119,13 @@ a {
 }
 
 .rotate-icon .material-symbols-rounded, .rotate-icon.material-symbols-rounded {
-   transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .rotate-icon:hover .material-symbols-rounded, .rotate-icon.material-symbols-rounded:hover {
     transform: rotate(360deg);
     transition: 0.3s ease-out;
 }
-
 
 
 button {
@@ -155,7 +186,7 @@ button {
     top: 0;
     left: 0;
     width: 100%;
-    height: 4rem;
+    height: 3.5rem;
     z-index: 9;
     background-color: #fff;
     -moz-animation-name: fade;
@@ -292,9 +323,18 @@ button {
     box-sizing: border-box;
 }
 
+.w-30 {
+    width: calc(30vw) !important;
+}
+
 .w-50 {
     width: calc(50vw) !important;
 }
+
+.w-75 {
+    width: calc(75vw) !important;
+}
+
 
 .block-list {
     display: inline-block;
@@ -808,7 +848,7 @@ button {
     top: 6rem;
     left: 1rem;
     z-index: 999;
-    width: fit-content!important;
+    width: fit-content !important;
     padding: 1rem;
     border-radius: 10px;
     background-color: #fff;
@@ -864,6 +904,7 @@ table {
     animation-name: scale-in-ver-top;
     animation-duration: 0.3s;
 }
+
 
 .hidden-table {
     border: none !important;
@@ -1115,8 +1156,8 @@ input[type='radio'] + label {
 }
 
 /*GG login*/
-
 .gsi-material-button {
+
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
@@ -1124,7 +1165,9 @@ input[type='radio'] + label {
     background-color: WHITE;
     background-image: none;
     border: 1px solid #747775;
-    border-radius: 20px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     color: #1f1f1f;
     cursor: pointer;
@@ -1137,28 +1180,37 @@ input[type='radio'] + label {
     padding: 0;
     position: relative;
     text-align: center;
+    -webkit-transition: background-color .218s, border-color .218s, box-shadow .218s;
     transition: background-color .218s, border-color .218s, box-shadow .218s;
     vertical-align: middle;
     white-space: nowrap;
     width: 40px;
     max-width: 400px;
-    min-width: -moz-min-content;
     min-width: min-content;
 }
 
 .gsi-material-button .gsi-material-button-icon {
     height: 20px;
     margin-right: 12px;
+    margin-bottom: 15px;
     min-width: 20px;
     width: 20px;
-    margin: 0;
     padding: 9px;
 }
 
+svg {
+    height: 20px !important;
+    width: 20px !important;
+
+}
+
 .gsi-material-button .gsi-material-button-content-wrapper {
+    -webkit-align-items: center;
     align-items: center;
     display: flex;
+    -webkit-flex-direction: row;
     flex-direction: row;
+    -webkit-flex-wrap: nowrap;
     flex-wrap: nowrap;
     height: 100%;
     justify-content: space-between;
@@ -1167,6 +1219,7 @@ input[type='radio'] + label {
 }
 
 .gsi-material-button .gsi-material-button-contents {
+    -webkit-flex-grow: 1;
     flex-grow: 1;
     font-family: 'Roboto', arial, sans-serif;
     font-weight: 500;
@@ -1176,6 +1229,7 @@ input[type='radio'] + label {
 }
 
 .gsi-material-button .gsi-material-button-state {
+    -webkit-transition: opacity .218s;
     transition: opacity .218s;
     bottom: 0;
     left: 0;
@@ -1206,6 +1260,7 @@ input[type='radio'] + label {
 }
 
 .gsi-material-button:not(:disabled):hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .30), 0 1px 3px 1px rgba(60, 64, 67, .15);
 }
 
@@ -1218,7 +1273,6 @@ input[type='radio'] + label {
 .fb-item_horizontal-card {
     display: flex;
     flex-direction: row;
-    width: -moz-fit-content;
     width: fit-content;
     align-items: center;
     justify-content: center;
@@ -1228,7 +1282,6 @@ input[type='radio'] + label {
 
 #film-booking_menu-content {
     left: -12rem;
-    width: -moz-max-content;
     width: max-content;
     max-height: calc(60vh);
     overflow-y: auto;
@@ -1236,7 +1289,6 @@ input[type='radio'] + label {
 
 .fb-item_horizontal-card div {
     margin: 0.25rem 0.5rem;
-    width: -moz-fit-content;
     width: fit-content;
 }
 
@@ -1260,7 +1312,7 @@ input[type='radio'] + label {
     visibility: hidden !important;
 }
 
-.search-item-card img{
+.search-item-card img {
     max-height: 15rem;
 }
 

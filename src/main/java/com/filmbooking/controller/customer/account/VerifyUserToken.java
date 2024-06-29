@@ -35,7 +35,7 @@ public class VerifyUserToken extends HttpServlet {
 
         if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_NOT_FOUND)) {
             req.setAttribute("statusCodeErr", StatusCodeEnum.TOKEN_NOT_FOUND.getStatusCode());
-            req.setAttribute("verifyStatus","token-not-found" );
+            req.getSession().setAttribute("tokenVerifyStatus","token-not-found" );
             req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
                     .forward(req, resp);
             return;
@@ -45,7 +45,7 @@ public class VerifyUserToken extends HttpServlet {
         // case token type is password reset
         if (tokenType.equals("PASSWORD_RESET")) {
             if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_VERIFIED)) {
-                req.setAttribute("verifyStatus", "token-verified");
+                req.getSession().setAttribute("tokenVerifyStatus", "token-verified");
                 req.setAttribute("username", username);
                 // send token to session
                 req.getSession(false).setAttribute("token", tokenModel);
@@ -54,11 +54,20 @@ public class VerifyUserToken extends HttpServlet {
                 return;
             }
             if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_EXPIRED)) {
-                req.setAttribute("verifyStatus", "token-expired");
+                req.getSession().setAttribute("tokenVerifyStatus", "token-expired");
                 req.setAttribute("statusCodeErr", StatusCodeEnum.TOKEN_EXPIRED.getStatusCode());
                 req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
                         .forward(req, resp);
                 // remove token from session if token is expired
+                req.getSession(false).removeAttribute("token");
+                return;
+            }
+            if (serviceResult.getStatus().equals(StatusCodeEnum.TOKEN_USED)) {
+                req.getSession().setAttribute("tokenVerifyStatus", "token-used");
+                req.setAttribute("statusCodeErr", StatusCodeEnum.TOKEN_USED.getStatusCode());
+                req.getRequestDispatcher(WebAppPathUtils.getURLWithContextPath(req, resp, "/reset-password"))
+                        .forward(req, resp);
+                // remove token from session if token is used
                 req.getSession(false).removeAttribute("token");
                 return;
             }

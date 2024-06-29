@@ -34,6 +34,27 @@ public class RoomRepository extends AbstractRepository<Room>{
             JdbiDBConnection.closeHandle();
        }
     }
+    @Override
+    public boolean update(Room room) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "UPDATE rooms SET room_name = :room_name, seat_rows = :seat_rows, seat_cols = :seat_cols, seats_data = :seats_data, theater_id = :theater_id, slug = :slug WHERE room_id = :room_id";
+            handle.createUpdate(sql)
+                    .bind("room_id", room.getRoomID())
+                    .bind("room_name", room.getRoomName())
+                    .bind("seat_rows", room.getSeatRows())
+                    .bind("seat_cols", room.getSeatCols())
+                    .bind("seats_data", room.getSeatData())
+                    .bind("theater_id", room.getTheater().getTheaterID())
+                    .bind("slug", room.getSlug())
+                    .execute();
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
+        }
+    }
+
 
     @Override
     public boolean delete(Room room) {
@@ -62,7 +83,7 @@ public class RoomRepository extends AbstractRepository<Room>{
         result.put("room_name", room.getRoomName());
         result.put("seat_rows", room.getSeatRows());
         result.put("seat_cols", room.getSeatCols());
-        result.put("seat_data", room.getSeatData());
+        result.put("seats_data", room.getSeatData());
         result.put("theater_id", room.getTheater().getTheaterID());
         result.put("slug", room.getSlug());
         

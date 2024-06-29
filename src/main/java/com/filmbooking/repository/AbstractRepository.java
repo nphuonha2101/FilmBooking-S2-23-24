@@ -2,10 +2,12 @@ package com.filmbooking.repository;
 
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.jdbi.builder.JdbiBuilder;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.IModel;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,10 +49,11 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             jdbiBuilder.setMapToRow(mapToRow(t));
             String sql = jdbiBuilder.buildUpdateSQL();
-            System.out.println("Update SQL: " + sql);
+
+            System.out.println("Map to row: " + mapToRow(t));
 
             handle.createUpdate(sql)
-                    .bindMap(jdbiBuilder.getMapToRow())
+                    .bindMap(mapToRow(t))
                     .execute();
 
             return true;
@@ -71,6 +74,8 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             System.out.println("Delete SQL: " + sql);
 
             Object id = t.getIdValue();
+
+            System.out.println("AbstractRepository: delete: " + id + ", key name: " + jdbiBuilder.getPrimaryKeyName());
 
             handle.createUpdate(sql)
                     .bind(jdbiBuilder.getPrimaryKeyName(), id)
@@ -133,7 +138,13 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             String sql = jdbiBuilder.buildSelectAllSQL(filters);
             System.out.println("Select All SQL: " + sql);
 
+            Map<String, Object> modifiedFilters = new HashMap<>();
+            filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
+
+            System.out.println("Filters: " + modifiedFilters);
+
             return handle.createQuery(sql)
+                    .bindMap(modifiedFilters)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {
@@ -190,8 +201,11 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             String sql = jdbiBuilder.buildSelectAllSQL(limit, offset, order, filters);
             System.out.println("Select All SQL: " + sql);
 
+            Map<String, Object> modifiedFilters = new HashMap<>();
+            filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
+
             return handle.createQuery(sql)
-                    .bindMap(filters)
+                    .bindMap(modifiedFilters)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {

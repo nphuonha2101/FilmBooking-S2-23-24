@@ -24,6 +24,7 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
     Map<String, Object> mapToRow(FilmBooking filmBooking) {
         Map<String, Object> map = new HashMap<>();
         map.put("username", filmBooking.getUser().getUsername());
+        map.put("showtime_id", filmBooking.getShowtime().getIdValue());
         map.put("booking_date", filmBooking.getBookingDate());
         map.put("seats", String.join(",", filmBooking.getBookedSeats()));
         map.put("total_fee", filmBooking.getTotalFee());
@@ -72,6 +73,41 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return false;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public List<FilmBooking> selectAllByTheaterId(Long theaterId) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM film_bookings WHERE showtime_id IN (" +
+                    "SELECT showtime_id FROM showtimes WHERE room_id IN (" +
+                    "SELECT room_id FROM rooms WHERE theater_id = :theater_id)) AND payment_status = 1";
+            return handle.createQuery(sql)
+                    .bind("theater_id", theaterId)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public List<FilmBooking> selectAllByDates(String startDate, String endDate) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM film_bookings WHERE booking_date BETWEEN :start_date AND :end_date AND payment_status = 1";
+            return handle.createQuery(sql)
+                    .bind("start_date", startDate)
+                    .bind("end_date", endDate)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
         } finally {
             JdbiDBConnection.closeHandle();
         }

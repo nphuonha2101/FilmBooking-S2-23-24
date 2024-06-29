@@ -30,7 +30,7 @@ public class ReCaptchaVerifyController extends HttpServlet {
 
         // verify captcha
         boolean captchaVerified = new RecaptchaVerification().verify(req, resp);
-        System.out.println("Captcha verified (Recaptcha controller): " + captchaVerified);
+
         req.getSession().setAttribute("captchaVerified", captchaVerified);
 
         switch (action) {
@@ -44,42 +44,5 @@ public class ReCaptchaVerifyController extends HttpServlet {
 
     }
 
-    private void sendDataToController(HttpServletRequest req, String handleControllerPath, Map<String, String> paramValues, String method) throws IOException {
-        String servletContextPath = req.getServletContext().getContextPath();
-        String scheme = req.getScheme(); // http
-        String serverName = req.getServerName(); // hostname.com
-        int serverPort = req.getServerPort(); // 8080
-
-        String redirectPath = scheme + "://" + serverName + ":" + serverPort + servletContextPath + handleControllerPath;
-
-        System.out.println("Redirect path: " + redirectPath);
-
-        URL url = new URL(redirectPath);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setDoOutput(true);
-        connection.setRequestMethod(method);
-
-        // prepare data to send
-        StringBuilder postData = new StringBuilder();
-        for (Map.Entry<String, String> param : paramValues.entrySet()) {
-            if (!postData.isEmpty()) postData.append('&');
-
-            postData.append(param.getKey());
-            postData.append('=');
-            postData.append(URLEncoder.encode(param.getValue(), StandardCharsets.UTF_8));
-        }
-
-        // send data
-        try (OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream())) {
-            writer.write(postData.toString());
-            writer.flush();
-        }
-
-        // Get the response
-        int responseCode = connection.getResponseCode();
-        System.out.println("Response Code : " + responseCode);
-
-
-    }
 
 }

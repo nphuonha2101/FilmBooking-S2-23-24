@@ -3,16 +3,16 @@ package com.filmbooking.controller.customer.account;
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.GoogleUserInfo;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.WebAppPathUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
-import com.filmbooking.model.GoogleUserInfo;
-import com.filmbooking.utils.PropertiesUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +26,7 @@ import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class GoogleLoginController extends HttpServlet {
 
             User loginUser = userServices.getByEmail(userEmail);
             if (loginUser == null) {
-                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType(),1);
+                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER.getAccountRole(), AccountTypeEnum.GOOGLE.getAccountType(),1);
                 userServices.insert(loginUser);
 
             }
