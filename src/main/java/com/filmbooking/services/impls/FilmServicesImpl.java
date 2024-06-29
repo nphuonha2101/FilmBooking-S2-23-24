@@ -9,9 +9,11 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.repository.FilmRepository;
 import com.filmbooking.services.AbstractService;
+import org.glassfish.jaxb.runtime.v2.runtime.output.SAXOutput;
 
 public class FilmServicesImpl extends AbstractService<Film>{
     private final GenreServicesImpl genreServices = new GenreServicesImpl();
+    private final FilmVoteServicesImpl filmVoteServices = new FilmVoteServicesImpl();
 
     public FilmServicesImpl() {
         super(new FilmRepository());
@@ -25,7 +27,10 @@ public class FilmServicesImpl extends AbstractService<Film>{
         }
         film.setGenreList(genreList);
 
-        return this.repository.insert(film);
+        if (this.repository.insert(film))
+            return genreServices.updateFilmGenres(film);
+
+        return false;
     }
 
     public boolean update(Film film, String... genreIDs) {
@@ -33,12 +38,25 @@ public class FilmServicesImpl extends AbstractService<Film>{
         for (String genreID : genreIDs) {
             genreList.add(genreServices.select(genreID));
         }
+
         film.setGenreList(genreList);
 
-        return this.repository.update(film);
+        if (this.repository.update(film)) {
+            genreServices.updateFilmGenres(film);
+            return true;
+        }
+
+        return false;
     }
 
-//    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
+    @Override
+    public boolean delete(Film film) {
+        genreServices.deleteFilmGenres(film);
+        filmVoteServices.deleteByFilm(film);
+        return super.delete(film);
+    }
+
+    //    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
 //        Map<String, Object> conditions = new HashMap<>();
 //
 //        if (!searchQuery.isBlank()) {

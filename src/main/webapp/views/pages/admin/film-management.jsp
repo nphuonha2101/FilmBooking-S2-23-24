@@ -81,12 +81,12 @@
                 method: 'POST',
                 data: {film: slug},
                 success: function (data) {
-                    alert('Film deleted successfully');
+                    alert('Xoá phim thành công!');
                     $('#film-row-' + filmID).remove();
                     // $('.film-table tbody').reload();
                 },
                 error: function (xhr, status, error) {
-                    alert('Error deleting film: ' + error);
+                    alert('Có lỗi khi xóa phim: ' + error);
                 }
             });
         }

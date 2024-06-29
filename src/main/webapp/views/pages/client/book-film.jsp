@@ -5,7 +5,7 @@
   Time: 9:48 AM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
@@ -22,8 +22,8 @@
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
 
-<section class="section centered-vertical-content">
-    <div class="container centered-vertical-content wrapper">
+<section class="section d-flex flex-column align-items-center">
+    <div class="container d-flex flex-column align-items-center wrapper">
         <c:set var="bookedShowtime" value="${bookedShowtime}"/>
         <c:set var="bookedFilm" value="${bookedShowtime.film}"/>
         <c:set var="bookedRoom" value="${bookedShowtime.room}"/>
@@ -34,12 +34,12 @@
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <div class="wrapper two-col__wrapper align-top">
-            <div class="wrapper centered-vertical-content">
-                <h3><fmt:message bundle="${msg}" key="chooseYourSeat"/></h3>
+        <div class="wrapper row">
+            <div class="col-8 d-flex flex-column align-items-center">
+                <h3 class="mb-4"><fmt:message bundle="${msg}" key="chooseYourSeat"/></h3>
 
                 <div class="wrapper">
-                    <div class="wrapper centered-vertical-content">
+                    <div class="wrapper d-flex flex-column align-items-center overflow-auto">
 
                         <%--Seats table--%>
                         <table class="seats-table">
@@ -60,7 +60,6 @@
                                             </c:choose>
                                         </td>
                                     </c:forEach>
-
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -69,8 +68,8 @@
                 </div>
             </div>
 
-            <div class="wrapper centered-vertical-content">
-                <h3><fmt:message bundle="${msg}" key="infoBooking"/></h3>
+            <div class="col-4 d-flex flex-column align-items-center">
+                <h3 class="mb-4"><fmt:message bundle="${msg}" key="infoBooking"/></h3>
 
                 <div class="wrapper">
                     <p class="font-bold"><fmt:message bundle="${msg}" key="filmName"/>:
@@ -99,10 +98,10 @@
 
         </div>
 
-        <div class="wrapper centered-vertical-content">
+        <div class="wrapper d-flex flex-column align-items-center">
             <form action="<c:url value="${pageContext.request.contextPath}/auth/book-film"/>" method="post">
                 <input type="hidden" name="seats" id="seats">
-                <input type="submit" class="primary-filled-button button" value="<fmt:message bundle="${msg}" key="booking"/>">
+                <input type="submit" class="primary-filled-button rounded-button button" value="<fmt:message bundle="${msg}" key="booking"/>">
             </form>
         </div>
     </div>

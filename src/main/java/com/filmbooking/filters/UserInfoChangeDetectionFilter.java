@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @WebFilter("/*")
-public class UserInfoChangeDectectionFilter extends HttpFilter {
+public class UserInfoChangeDetectionFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -29,10 +29,14 @@ public class UserInfoChangeDectectionFilter extends HttpFilter {
 
         User currentUserInDB = userServices.getByUsername(currentUser.getUsername());
 
-        if (!Objects.equals(currentUser.getAccountRole(), currentUserInDB.getAccountRole())) {
-            LogoutController.handleLogOut(req, res);
-            return;
+        if (currentUserInDB != null) {
+            if (!Objects.equals(currentUser.getAccountRole(), currentUserInDB.getAccountRole())) {
+                LogoutController.handleLogOut(req, res);
+                return;
+            }
         }
+
+
 
         chain.doFilter(req, res);
     }

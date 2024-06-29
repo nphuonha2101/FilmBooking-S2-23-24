@@ -17,18 +17,18 @@ import java.io.IOException;
 public class DeleteExpiredFilmBookingFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpSession session = req.getSession(false);
-        FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
-        Showtime showtime = filmBooking.getShowtime();
-
-        if (showtime != null && filmBooking.getBookedSeats() != null && filmBooking.isExpired()) {
-            System.out.println("Expired: " + filmBooking.isExpired());
-
-            ShowtimeServicesImpl showtimeServices = new ShowtimeServicesImpl();
-
-            showtime.releaseSeats(filmBooking.getBookedSeats());
-            showtimeServices.update(showtime);
-        }
+//        HttpSession session = req.getSession(false);
+//        FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
+//        Showtime showtime = filmBooking.getShowtime();
+//
+//        if (showtime != null && filmBooking.getBookedSeats() != null && filmBooking.isExpired()) {
+//            System.out.println("Expired: " + filmBooking.isExpired());
+//
+//            ShowtimeServicesImpl showtimeServices = new ShowtimeServicesImpl();
+//
+//            showtime.releaseSeats(filmBooking.getBookedSeats());
+//            showtimeServices.update(showtime);
+//        }
 
         chain.doFilter(req, res);
     }
