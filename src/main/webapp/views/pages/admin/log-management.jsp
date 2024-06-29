@@ -33,64 +33,23 @@ To change this template use File | Settings | File Templates.
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <table id="logTable" class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>LogID</th>
-                    <th>Username</th>
-                    <th>Request IP</th>
-                    <th>Action</th>
-                    <th>Level</th>
-                    <th>Target table</th>
-
-<%--                    <th>Before Value</th>--%>
-<%--                    <th>After Value</th>--%>
-<%--                    <th>Created At</th>--%>
-<%--                    <th>Update At</th>--%>
-                    <th></th>
-
-                </tr>
-                </thead>
-            </table>
+                <table id="logTable" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>LogID</th>
+                        <th>Username</th>
+                        <th>Request IP</th>
+                        <th>Action</th>
+                        <th>Level</th>
+                        <th>Target table</th>
+                    </tr>
+                    </thead>
+                </table>
         </div>
 
         <%--        Pagination--%>
         <jsp:include page="/views/components/pagination.jsp"/>
+    </div>
 
-    </div>
-    <!-- Modal for Details -->
-    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="detailsModalLabel">Log Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table id="modal-body" class="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            <th>LogID</th>
-                            <th>Username</th>
-                            <th>Action</th>
-                            <th>Level</th>
-                            <th>Target table</th>
-                            <th>Before Value</th>
-                            <th>After Value</th>
-                            <th>Created At</th>
-                            <th>Update At</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
 </section>
