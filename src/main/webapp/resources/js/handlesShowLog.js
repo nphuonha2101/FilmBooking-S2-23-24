@@ -1,5 +1,6 @@
 
 $(function() {
+    let selectLogId = 0;
     const table = $('#logTable').DataTable({
         ajax: {
             url: '/api/v1/logs?command=all',
@@ -21,6 +22,7 @@ $(function() {
     });
     $('#logTable tbody').on('click', '.details-btn', function() {
         const data = table.row($(this).parents('tr')).data();
+
         $.ajax({
             url: `/api/v1/logs?command=id&id=${data.logID}`,
             type: 'GET',
@@ -30,6 +32,7 @@ $(function() {
 
                 // Tạo một hàng mới với dữ liệu nhận được từ API
                 const logDetails = result.data;
+                selectLogId = logDetails.logID;
                 const row = `
                     <tr>
                         <td>${logDetails.logID}</td>
@@ -51,14 +54,24 @@ $(function() {
             }
         });
     });
-    // Xóa nội dung của modal khi nó bị đóng
-    $('#detailsModal').on('hidden.bs.modal', function () {
-        console.log('Modal is hidden'); // Kiểm tra xem sự kiện này có được gọi khi đóng modal hay không
-        $('#modal-body-content').empty();
-    });
 
     $('#closeModalBtn').click(function() {
-        $('#detailsModal').modal('hide'); // Đóng modal
-        $('#modal-body-content').empty(); // Xóa nội dung của bảng trong modal
+        $('#detailsModal').modal('hide');
+        $('#modal-body-content').empty();
+
+        $.ajax({
+            url: '/admin/management/log',
+            type: 'POST',
+            data: {
+                message: 'convert-level',
+                logID: selectLogId
+            },
+            success: function(response) {
+                console.log('Message sent successfully');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message: ' + error);
+            }
+        });
     });
 });
