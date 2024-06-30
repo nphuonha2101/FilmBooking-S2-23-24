@@ -28,4 +28,17 @@ public class LogManagementController extends HttpServlet {
 
         logManagementPage.render(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String message = req.getParameter("message");
+        String logID = req.getParameter("logID");
+
+        if (message != null && !message.isEmpty() && logID != null && !logID.isEmpty()) {
+            System.out.println("Received message: " + message);
+            System.out.println("Received logID: " + logID);
+        }else {
+            System.out.println("Don't received message");
+        }
+    }
 }
