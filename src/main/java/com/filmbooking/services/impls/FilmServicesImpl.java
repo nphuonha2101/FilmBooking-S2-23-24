@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
+import com.filmbooking.repository.CacheRepository;
 import com.filmbooking.repository.FilmRepository;
 import com.filmbooking.services.AbstractService;
 import org.glassfish.jaxb.runtime.v2.runtime.output.SAXOutput;
@@ -16,7 +19,10 @@ public class FilmServicesImpl extends AbstractService<Film>{
     private final FilmVoteServicesImpl filmVoteServices = new FilmVoteServicesImpl();
 
     public FilmServicesImpl() {
-        super(new FilmRepository());
+        super(
+                new CacheRepository<>(new FilmRepository(),
+                        new CacheManager(1, TimeUnit.MINUTES))
+        );
     }
 
 

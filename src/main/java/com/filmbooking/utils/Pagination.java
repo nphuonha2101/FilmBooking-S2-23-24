@@ -14,7 +14,8 @@ public class Pagination<T> {
     private final IService<T> service;
     private final String pageUrl;
 
-    public Pagination(IService<T> service, HttpServletRequest request, HttpServletResponse resp, int limit, String pageUrl) {
+    public Pagination(IService<T> service, HttpServletRequest request, HttpServletResponse resp, int limit,
+            String pageUrl) {
         this.request = request;
         this.response = resp;
         this.limit = 10;
@@ -25,6 +26,7 @@ public class Pagination<T> {
 
     /**
      * Get paginated records from database
+     * 
      * @return list of records
      */
     public List<T> getPaginatedRecords() {
@@ -40,6 +42,6 @@ public class Pagination<T> {
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
 
-        return service.selectAll(limit, 0);
+        return service.selectAll(limit, offset);
     }
 }

@@ -35,7 +35,7 @@ public class Room implements IModel {
     @Expose
     private String seatData;
     @Expose
-    private Theater theater;
+    private long theaterId;
     private List<Showtime> showtimeList;
     @Expose
     private String slug;
@@ -50,22 +50,22 @@ public class Room implements IModel {
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;
-        this.theater = theater;
-        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
+        this.theaterId = theater.getTheaterID();
+        this.slug = StringUtils.createSlug(this.roomName + " " + theater.getTheaterName(), 50);
         generateSeatsData();
     }
 
     /**
      * Use for retrieve data from database
      */
-    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, Theater theater, String slug) {
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, long theaterId, String slug) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;
         this.seatData = seatData;
         this.seatMatrix = StringUtils.convertTo2DArr(seatData);
-        this.theater = theater;
+        this.theaterId = theaterId;
         this.slug = slug;
     }
 
@@ -85,15 +85,21 @@ public class Room implements IModel {
         this.seatData = stringBuilder.toString().trim();
     }
 
+    public Theater getTheater() {
+        return new TheaterRepository().select(this.theaterId);
+    }
+
+    public void setTheater(Theater theater) {
+        this.theaterId = theater.getTheaterID();
+    }
+
     public List<Showtime> getShowtimeList() {
-        if (this.showtimeList == null)
-            this.showtimeList = new ShowtimeRepository().selectAllByRoomId(this.roomID);
-        return showtimeList;
+        return new ShowtimeRepository().selectAllByRoomId(this.roomID);
     }
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
-        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
+        this.slug = StringUtils.createSlug(this.roomName + " " + getTheater().getTheaterName(), 50);
     }
 
     public void setSeatRows(int seatRows) {
@@ -108,19 +114,6 @@ public class Room implements IModel {
 
     public String[][] getSeatMatrix() {
         return StringUtils.convertTo2DArr(this.seatData);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Room room) {
-            return this.roomID == room.getRoomID()
-                    && this.roomName.equals(room.getRoomName())
-                    && this.seatRows == room.getSeatRows()
-                    && this.seatCols == room.getSeatCols()
-                    && this.seatData.equals(room.getSeatData())
-                    && this.theater.equals(room.getTheater());
-        }
-        return false;
     }
 
     @Override
