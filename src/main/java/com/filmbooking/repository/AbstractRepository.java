@@ -4,6 +4,7 @@ import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.jdbi.builder.JdbiBuilder;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.IModel;
+import lombok.Getter;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
@@ -14,9 +15,11 @@ import java.util.Map;
 
 public abstract class AbstractRepository<T extends IModel> implements IRepository<T> {
     protected final JdbiBuilder<T> jdbiBuilder;
+    @Getter
+    private final Class<T> modelClass;
 
     public AbstractRepository(Class<T> modelClass) {
-        System.out.println("AbstractRepository: " + modelClass);
+        this.modelClass = modelClass;
         this.jdbiBuilder = new JdbiBuilder<>(modelClass);
     }
 
@@ -240,7 +243,7 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
      *
      * @return a class that implements {@link RowMapper}
      */
-    abstract RowMapper<T> getRowMapper();
+     abstract RowMapper<T> getRowMapper();
 
     /**
      * Map the model to a row in the database.

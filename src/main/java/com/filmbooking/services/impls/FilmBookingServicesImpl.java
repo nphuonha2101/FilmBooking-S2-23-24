@@ -1,5 +1,6 @@
 package com.filmbooking.services.impls;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +21,15 @@ public class FilmBookingServicesImpl extends AbstractService<FilmBooking> {
      * @return a list of film bookings
      */
     public List<FilmBooking> selectAllByUser(User user) {
-        Map<String, Object> conditions = Map.of("username_=", user.getUsername());
+        Map<String, Object> conditions = new HashMap<>();
+        conditions.put("username_=", user.getUsername());
         return this.selectAll(conditions);
     }
 
-    public List<FilmBooking> sellectAllByFilmId(Long filmId) {
+    public List<FilmBooking> selectAllByFilmId(Long filmId) {
         Map<String, Object> conditions = Map.of("film_id_=", filmId);
         return this.selectAll(conditions);
     }
-
-
 
 
 }

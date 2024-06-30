@@ -335,6 +335,10 @@ button {
     width: calc(75vw) !important;
 }
 
+.modal {
+    backdrop-filter: blur(5px);
+}
+
 
 .block-list {
     display: inline-block;

@@ -1,13 +1,17 @@
 package com.filmbooking.services.impls;
 
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.model.Theater;
+import com.filmbooking.repository.CacheRepository;
 import com.filmbooking.repository.TheaterRepository;
 import com.filmbooking.services.AbstractService;
+
+import java.util.concurrent.TimeUnit;
 
 public class TheaterServicesImpl extends AbstractService<Theater> {
 
     public TheaterServicesImpl() {
-        super(new TheaterRepository());
+        super(new CacheRepository<>(new TheaterRepository(), new CacheManager(10, TimeUnit.MINUTES)));
     }
 
     @Override
