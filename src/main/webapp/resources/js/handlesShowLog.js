@@ -68,6 +68,7 @@ $(function() {
             },
             success: function(response) {
                 console.log('Message sent successfully');
+                location.reload();
             },
             error: function(xhr, status, error) {
                 console.error('Error sending message: ' + error);
