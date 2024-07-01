@@ -10,8 +10,13 @@ import com.filmbooking.services.AbstractService;
  * @project_name FilmBooking-S2-23-24
  */
 public class LogModelServicesImpl extends AbstractService<LogModel> {
+    private LogRepository logRepository;
     public LogModelServicesImpl() {
         super(new LogRepository());
+        logRepository = new LogRepository();
     }
 
+    public boolean updateLogLevel(LogModel logModel){
+        return logRepository.updateLogLevel(logModel);
+    }
 }
