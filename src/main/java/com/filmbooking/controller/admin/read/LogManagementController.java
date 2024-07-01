@@ -3,6 +3,7 @@ package com.filmbooking.controller.admin.read;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.Page;
+import com.filmbooking.repository.LogRepository;
 import com.filmbooking.services.impls.LogModelServicesImpl;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,13 +46,13 @@ public class LogManagementController extends HttpServlet {
             System.out.println(logModel.toString());
             if(logModel.getLevel().equals("ALERT") || logModel.getLevel().equals("WARN")){
                 logModel.setLevel("INFO");
-//                logModelServices.update(logModel);
+                logModelServices.updateLogLevel(logModel);
                 System.out.println("Update success");
                 System.out.println(logModel.getLevel());
             }else {
                 System.out.println("Update fail");
             }
-            logModelServices.update(logModel);
+
         }else {
             System.out.println("Don't received message");
         }
