@@ -79,20 +79,6 @@ To change this template use File | Settings | File Templates.
                             </div>
                             <div class="modal-body">
                                 <table id="modal-body" class="table table-striped table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>LogID</th>
-                                        <th>Username</th>
-                                        <th>Request IP</th>
-                                        <th>Action</th>
-                                        <th>Level</th>
-                                        <th>Target Table</th>
-                                        <th>Before Value</th>
-                                        <th>After Value</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
-                                    </tr>
-                                    </thead>
                                     <tbody id="modal-body-content">
                                     </tbody>
                                 </table>
