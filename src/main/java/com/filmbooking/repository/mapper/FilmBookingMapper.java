@@ -17,10 +17,11 @@ public class FilmBookingMapper implements RowMapper<FilmBooking> {
         ShowtimeRepository showtimeRepository = new ShowtimeRepository();
         UserRepository userRepository = new UserRepository();
         return new FilmBooking(
-                showtimeRepository.select(rs.getLong("showtime_id")),
-                userRepository.select(rs.getLong("username")),
+                rs.getLong("film_booking_id"),
+                rs.getString("username"),
+                rs.getLong("showtime_id"),
                 rs.getTimestamp("booking_date").toLocalDateTime(),
-                rs.getString("booked_seats").split(","),
+                rs.getString("seats").split(","),
                 rs.getDouble("total_fee")
         );
     }

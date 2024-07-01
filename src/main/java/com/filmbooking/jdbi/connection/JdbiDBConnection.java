@@ -1,8 +1,12 @@
 package com.filmbooking.jdbi.connection;
 
 import com.filmbooking.utils.PropertiesUtils;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
+
+import javax.sql.DataSource;
 
 
 public class JdbiDBConnection {
@@ -12,11 +16,9 @@ public class JdbiDBConnection {
 
     private JdbiDBConnection() throws ClassNotFoundException {
         Class.forName(PropertiesUtils.getProperty("db.driver"));
-        jdbi = Jdbi.create(
-                PropertiesUtils.getProperty("db.url"),
-                PropertiesUtils.getProperty("db.username"),
-                PropertiesUtils.getProperty("db.password")
-        );
+
+        HikariDataSource dataSource = initHikariCP();
+        jdbi = Jdbi.create(dataSource);
     }
 
     public static JdbiDBConnection getInstance() throws ClassNotFoundException {
@@ -24,6 +26,16 @@ public class JdbiDBConnection {
             instance = new JdbiDBConnection();
         }
         return instance;
+    }
+
+    private HikariDataSource initHikariCP() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(PropertiesUtils.getProperty("db.url"));
+        config.setUsername(PropertiesUtils.getProperty("db.username"));
+        config.setPassword(PropertiesUtils.getProperty("db.password"));
+        config.setMaximumPoolSize(10);
+
+        return new HikariDataSource(config);
     }
 
     public static Handle openHandle() {

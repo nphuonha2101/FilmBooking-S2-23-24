@@ -229,25 +229,28 @@
 <%--</nav>--%>
 
 <nav class="top-nav row">
-    <div class="col-4 d-flex align-items-center justify-content-center ">
-        <div class="w-100 d-flex align-items-center justify-content-center">
+    <div class="col-6 d-flex align-items-center justify-content-center ">
+        <div class="d-flex align-items-center justify-content-center">
             <%--            Logo--%>
             <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>
 
             <%--            Search--%>
-            <button
-                    class="btn btn-light search-button ms-4"
+            <input
+                    class="form-control ms-4"
+                    style="width: calc(15vw);"
                     data-bs-toggle="modal"
                     data-bs-target="#search-modal"
-            >
-                <span class="material-symbols-rounded">search</span>
-            </button>
+                    type="text"
+                    placeholder="<fmt:message key="search" bundle="${msg}"/>"
+                    id="search-input-toggle"
+                    readonly
+            />
 
         </div>
     </div>
 
 
-    <div class="col-8 d-flex align-items-center justify-content-center">
+    <div class="col-6 d-flex align-items-center justify-content-center">
         <div class="w-100 d-flex align-items-center justify-content-center">
             <ul class="list-inline align-items-center">
                 <li
@@ -272,7 +275,9 @@
                             id="film-booking_menu"
                             href="#">
                         <span class="material-symbols-rounded">history</span>
+
                     </a>
+                    <div id="film-booking_menu-content"></div>
                 </li>
 
                 <c:if test="${not empty sessionScope.loginUser}">
@@ -421,12 +426,9 @@
                         </li>
                     </ul>
                 </li>
-
             </ul>
         </div>
     </div>
-
-
 </nav>
 
 <jsp:include page="/views/components/modals/search-modal.jsp"/>
