@@ -25,7 +25,7 @@ public class RoomMapper implements RowMapper<Room> {
                 rs.getInt("seat_rows"),
                 rs.getInt("seat_cols"),
                 rs.getString("seats_data"),
-                theaterRepository.select(rs.getLong("theater_id")),
+                rs.getLong("theater_id"),
                 rs.getString("slug")
         );
 

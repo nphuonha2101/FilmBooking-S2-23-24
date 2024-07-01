@@ -16,7 +16,7 @@ public class FilmVoteMapper implements RowMapper<FilmVote> {
         FilmRepository filmRepository = new FilmRepository();
         return new FilmVote(
                 rs.getLong("film_vote_id"),
-                filmRepository.select(rs.getLong("film_id")),
+                rs.getLong("film_id"),
                 rs.getInt("scores")
         );
     }
