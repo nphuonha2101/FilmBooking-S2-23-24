@@ -19,7 +19,28 @@ To change this template use File | Settings | File Templates.
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
+<style>
+ 
+    .modal-dialog {
+        max-width: 90%;
+        width: auto;
+    }
 
+    .modal-content {
+        height: auto;
+        max-height: 90vh; 
+        overflow-y: auto; 
+    }
+
+    /* Điều chỉnh bảng bên trong modal */
+    #modal-body-content {
+        display: table-row-group;
+    }
+
+    #modal-body table {
+        width: 100%;
+    }
+</style>
 <section class="section align-top d-flex flex-column align-items-center">
 
     <jsp:include page="/views/components/admin-panel.jsp"/>
@@ -33,27 +54,43 @@ To change this template use File | Settings | File Templates.
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <table id="logTable" class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>LogID</th>
-                    <th>Username</th>
-                    <th>Request IP</th>
-                    <th>Action</th>
-                    <th>Level</th>
-                    <th>Target table</th>
-                    <th>Created At</th>
-                    <th>Update At</th>
-                </tr>
-                </thead>
-            </table>
+                <table id="logTable" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>LogID</th>
+                        <th>Username</th>
+                        <th>Request IP</th>
+                        <th>Action</th>
+                        <th>Level</th>
+                        <th>Target table</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+
+                <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="detailsModalLabel">Log Details</h5>
+                                <button type="button" id="closeModalBtn" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table id="modal-body" class="table table-striped table-bordered">
+                                    <tbody id="modal-body-content">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
 
         <%--        Pagination--%>
         <jsp:include page="/views/components/pagination.jsp"/>
-
     </div>
 
     <script type="module" src="<c:url value="/resources/js/handlesShowLog.js"/>"></script>
-
 </section>
