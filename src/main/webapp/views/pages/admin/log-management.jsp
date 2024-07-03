@@ -20,25 +20,25 @@ To change this template use File | Settings | File Templates.
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 <style>
-    /* Điều chỉnh chiều cao của modal */
+ 
     .modal-dialog {
-        max-width: 90%; /* Tùy chỉnh chiều rộng tối đa */
+        max-width: 90%;
         width: auto;
     }
 
     .modal-content {
-        height: auto; /* Chiều cao tự động để chứa nội dung */
-        max-height: 90vh; /* Chiều cao tối đa của modal là 90% chiều cao của viewport */
-        overflow-y: auto; /* Thêm cuộn dọc nếu nội dung quá dài */
+        height: auto;
+        max-height: 90vh; 
+        overflow-y: auto; 
     }
 
     /* Điều chỉnh bảng bên trong modal */
     #modal-body-content {
-        display: table-row-group; /* Hiển thị các hàng của bảng */
+        display: table-row-group;
     }
 
     #modal-body table {
-        width: 100%; /* Chiều rộng của bảng là 100% */
+        width: 100%;
     }
 </style>
 <section class="section align-top d-flex flex-column align-items-center">
