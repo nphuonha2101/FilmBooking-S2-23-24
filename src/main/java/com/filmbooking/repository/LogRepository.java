@@ -1,7 +1,9 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.repository.mapper.LogMapper;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
 import java.util.HashMap;
@@ -33,5 +35,20 @@ public class LogRepository extends AbstractRepository<LogModel>{
         result.put("updated_at", logModel.getUpdatedAt());
 
         return result;
+    }
+
+    public boolean updateLogLevel(LogModel logModel) {
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "UPDATE logs SET log_level = :log_level WHERE log_id = :log_id";
+            handle.createUpdate(sql)
+                    .bind("log_id", logModel.getLogID())
+                    .bind("log_level", logModel.getLevel())
+                    .execute();
+            return true;
+        }catch (Exception e) {
+            e.printStackTrace(System.out);
+            return false;
+        }
     }
 }
