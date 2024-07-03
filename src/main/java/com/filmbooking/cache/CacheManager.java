@@ -16,6 +16,7 @@ public class CacheManager {
     }
 
     public Object get(String key) {
+        System.out.println("CacheManager: get " + key);
         return this.cache.getIfPresent(key);
     }
 

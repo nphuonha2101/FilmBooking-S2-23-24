@@ -4,6 +4,7 @@ package com.filmbooking.model;
 import com.filmbooking.annotations.IdAutoIncrement;
 import com.filmbooking.annotations.TableIdName;
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.repository.FilmVoteRepository;
 import com.filmbooking.repository.GenreRepository;
 import com.filmbooking.repository.ShowtimeRepository;
@@ -19,6 +20,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 @Setter
@@ -119,8 +121,10 @@ public class Film implements IModel {
     }
 
     public List<Genre> getGenreList() {
-        if (this.genreList == null)
-            this.genreList = new GenreRepository().selectAllByFilmId(this.filmID);
+        if (this.genreList == null) {
+            CacheManager cacheManager = new CacheManager(5, TimeUnit.MINUTES);
+            this.genreList = new GenreRepository(cacheManager).selectAllByFilmId(this.filmID);
+        }
         return this.genreList;
     }
 

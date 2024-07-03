@@ -963,8 +963,15 @@ thead {
     background-color: #0556f3;
     padding: 0.5rem;
     position: sticky;
-    top: 4rem;
+    top: 3.5rem;
     z-index: 9;
+}
+
+thead td {
+    color: #fff;
+    font-weight: 700;
+    padding: 0.5rem;
+    text-align: center;
 }
 
 td {
