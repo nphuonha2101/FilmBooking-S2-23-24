@@ -77,8 +77,6 @@ public class LoginController extends HttpServlet {
                 loginPage.putError(StatusCodeEnum.LOGIN_AGAIN_AFTER_5_MINUTES.getStatusCode());
                 getHtmlRespFromPage(req, resp, loginPage);
                 return;
-            } else if (failedLogin.getLockTime().isBefore(LocalDateTime.now())) {
-                failedLoginServices.delete(failedLogin);
             }
         }
 
@@ -122,22 +120,14 @@ public class LoginController extends HttpServlet {
             loginUser = (User) serviceResult.getData();
 
             System.out.println(loginUser.getUserEmail() + " logged in");
-
             session.setAttribute("loginUser", loginUser);
             FilmBooking filmBooking = new FilmBooking();
             filmBooking.setUser(loginUser);
             session.setAttribute("filmBooking", filmBooking);
-
             System.out.println("Test login found user");
 
-            /* return to previous page that was visited before login
-             * if it has no previous page, return to home page
-             */
-//            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
-
-            PrintWriter out = resp.getWriter();
-            resp.setContentType("text/plain");
-            out.println("/home");
+            failedLoginServices.delete(failedLogin);
+            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
 
         }
     }
