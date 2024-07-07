@@ -29,6 +29,7 @@ public class LoginController extends HttpServlet {
     private UserServicesLogProxy userServices;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
+    int countFailedLogin = 0 ;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -71,15 +72,19 @@ public class LoginController extends HttpServlet {
         FailedLoginServicesImpl failedLoginServices = new FailedLoginServicesImpl();
         FailedLogin failedLogin = failedLoginServices.select(req.getRemoteAddr());
 
+
         if (failedLogin != null) {
             if (failedLogin.getLockTime().isAfter(LocalDateTime.now())) {
                 System.out.println("Login after 5 minutes");
                 loginPage.putError(StatusCodeEnum.LOGIN_AGAIN_AFTER_5_MINUTES.getStatusCode());
                 getHtmlRespFromPage(req, resp, loginPage);
+
                 return;
             } else if (failedLogin.getLockTime().isBefore(LocalDateTime.now())) {
                 failedLoginServices.delete(failedLogin);
+
             }
+
         }
 
         // verify captcha
@@ -113,6 +118,8 @@ public class LoginController extends HttpServlet {
                 failedLoginServices.insert(failedLogin);
             } else {
                 failedLoginServices.update(failedLogin);
+                countFailedLogin = countFailedLogin + 1;
+                System.out.println("count: "+countFailedLogin);
             }
             loginPage.putError(serviceResult.getStatus().getStatusCode());
             getHtmlRespFromPage(req, resp, loginPage);

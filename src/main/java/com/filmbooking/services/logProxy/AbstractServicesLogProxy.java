@@ -1,6 +1,9 @@
 package com.filmbooking.services.logProxy;
 
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.email.AbstractSendEmail;
+import com.filmbooking.email.SendResetPasswordEmail;
+import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
@@ -64,7 +67,7 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
             case LogModel.INSERT:
                 level = LogModel.LOG_LVL_ALERT;
                 afterValue = gson.toJson(t);
-
+                sendEmail("Alert Notification");
                 return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, true);
 
             case LogModel.UPDATE:
@@ -81,10 +84,26 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
                 return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, false);
             case LogModel.LOGIN_SERVICE, LogModel.FORGOT_PASSWORD_SERVICE, LogModel.CHANGE_PASSWORD_SERVICE:
                 level = LogModel.LOG_LVL_INFO;
-
+                sendEmail("INFO Notification");
                 return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, false);
 
         }
+
+        if (LogModel.LOG_LVL_ALERT.equals(level)) {
+            sendEmail("IF Notification");
+        }
+
         return null;
     }
+
+    protected void sendEmail(String message) {
+        AbstractSendEmail sendEmail = new SendResetPasswordEmail();
+        sendEmail
+                .putEmailInfo("alertMessage", message)
+                .putEmailInfo("level",LogModel.LOG_LVL_ALERT)
+                .loadHTMLEmail(LanguageEnum.ENGLISH)
+                .loadEmailContent()
+                .sendEmailToUser("milepro98@gmail.com", "Alert Notification");
+    }
+
 }
