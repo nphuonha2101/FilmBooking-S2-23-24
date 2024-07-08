@@ -127,7 +127,15 @@ public class LoginController extends HttpServlet {
             System.out.println("Test login found user");
 
             failedLoginServices.delete(failedLogin);
-            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
+
+            /* return to previous page that was visited before login
+             * if it has no previous page, return to home page
+             */
+//            RedirectPageUtils.redirectPreviousPageIfExist(req, resp);
+
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("text/plain");
+            out.println("/home");
 
         }
     }
