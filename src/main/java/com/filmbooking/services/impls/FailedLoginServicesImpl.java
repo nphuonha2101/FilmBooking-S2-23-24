@@ -18,11 +18,11 @@ public class FailedLoginServicesImpl extends AbstractService<FailedLogin> {
         int count = failedLogin.getLoginCount();
         if (count < 5) {
             failedLogin.setLoginCount(count + 1);
+            System.out.println("Failed login count: " + failedLogin.getLoginCount());
         }
         if (count >= 4) {
             failedLogin.setLockTime(LocalDateTime.now().plusMinutes(5));
         }
         return this.repository.update(failedLogin);
     }
-
 }
