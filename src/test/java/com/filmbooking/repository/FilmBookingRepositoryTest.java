@@ -12,7 +12,7 @@ public class FilmBookingRepositoryTest {
         assertDoesNotThrow(() -> {
             FilmBookingRepository filmBookingRepository = new FilmBookingRepository();
             double totalFee = 0;
-            for (FilmBooking filmBooking : filmBookingRepository.selectAllByDates("2021-12-01", "2024-12-31")) {
+            for (FilmBooking filmBooking : filmBookingRepository.selectAllByDates("01/01/2024","01/01/2025")) {
                 totalFee += filmBooking.getTotalFee();
                 System.out.println("FilmBookingRepositoryTest: select" + totalFee);
             }

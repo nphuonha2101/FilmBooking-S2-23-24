@@ -28,6 +28,13 @@
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#myAccordion">
             <div class="accordion-body d-flex flex-column align-items-center mt-4">
                 <h4><fmt:message key="managementTools" bundle="${adminMsg}"/></h4>
+                <a
+                        class="links button rounded-button"
+                        href="<c:url value="${pageContext.request.contextPath}/admin/management/revenue"/>"
+                >
+                    <fmt:message key="revenueManagement"
+                                 bundle="${adminMsg}"/>
+                </a>
 
                 <a
                         class="links button rounded-button"

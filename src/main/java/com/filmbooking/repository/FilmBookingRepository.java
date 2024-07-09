@@ -6,6 +6,9 @@ import com.filmbooking.repository.mapper.FilmBookingMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,6 +88,39 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
             return handle.createQuery(sql)
                     .bind("start_date", startDate)
                     .bind("end_date", endDate)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public List<FilmBooking> selectAllByMonth(String month, String year){
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM film_bookings WHERE EXTRACT(MONTH FROM booking_date) = :month AND EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
+            return handle.createQuery(sql)
+                    .bind("month", month)
+                    .bind("year", year)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public List<FilmBooking> selectAllByYear(String year){
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM film_bookings WHERE  EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
+            return handle.createQuery(sql)
+                    .bind("year", year)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {
