@@ -2,8 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 0;
+            border-radius: 8px 8px 0 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px 0;
+            color: #777777;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello world</h1>
+<div class="email-container">
+    <div class="header">
+        <h1>Failed Login Alert</h1>
+    </div>
+    <div class="content">
+        <p>Dear <strong>/username/</strong>,</p>
+        <p>We have noticed multiple failed login attempts to your account from the IP address <strong>/reqIp/</strong>.</p>
+        <p>Your account has been temporarily locked until <strong>/lockTime/</strong> for security reasons.</p>
+        <p>If you did not attempt to log in, please contact our support team immediately.</p>
+        <p>Thank you for your attention.</p>
+        <p>Best regards,</p>
+        <p>The FilmBooking Team</p>
+    </div>
+    <div class="footer">
+        <p>&copy; 2024 FilmBooking. All rights reserved.</p>
+    </div>
+</div>
 </body>
 </html>
