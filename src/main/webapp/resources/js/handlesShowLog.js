@@ -112,6 +112,12 @@ $(function () {
                         <td class="text-start">${logDetails.targetTable}</td>
                     </tr>
                     <tr>
+                        <th>Action Result</th>
+                        <td class="text-start fw-bold">
+                        ${logDetails.isActionSuccess === true ? `<span class="badge bg-success">${logDetails.isActionSuccess}</span>` : `<span class="badge bg-danger">${logDetails.isActionSuccess}</span>`}
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Before Value</th>
                         <td class="text-start">${stringifiedBeforeValue}</td>
                     </tr>
@@ -174,7 +180,5 @@ $(function () {
                 console.error('Error sending message: ' + error);
             }
         });
-
-
     });
 });

@@ -25,7 +25,6 @@ public class APIJSONResponse implements Serializable {
     private int status;
     @Expose
     private String message;
-    @Expose
     private String language;
     @Expose
     private Object data;
