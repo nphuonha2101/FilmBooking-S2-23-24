@@ -28,6 +28,8 @@ public class UserRepository extends AbstractRepository<User> {
         result.put("account_role", user.getAccountRole());
         result.put("account_type", user.getAccountType());
         result.put("account_status", user.getAccountStatus());
+        result.put("created_at", user.getCreatedAt());
+        result.put("updated_at", user.getUpdatedAt());
 
         return result;
     }

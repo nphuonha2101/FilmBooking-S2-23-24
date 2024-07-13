@@ -17,6 +17,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -29,7 +30,7 @@ import java.util.concurrent.TimeUnit;
 @TableIdName("film_id")
 @IdAutoIncrement
 @AllArgsConstructor
-public class Film implements IModel {
+public class Film extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "films";
     @Expose
     private long filmID;
@@ -74,7 +75,9 @@ public class Film implements IModel {
         this.slug = StringUtils.createSlug(this.filmName, 50);
     }
 
-    public Film(long filmID, String filmName, double filmPrice, String director, String cast, int filmLength, String filmDescription, String filmTrailerLink, String imgPath, String slug) {
+    public Film(long filmID, String filmName, double filmPrice, String director,
+                String cast, int filmLength, String filmDescription, String filmTrailerLink,
+                String imgPath, String slug, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.filmID = filmID;
         this.filmName = filmName;
         this.filmPrice = filmPrice;
@@ -85,6 +88,8 @@ public class Film implements IModel {
         this.filmTrailerLink = filmTrailerLink;
         this.imgPath = imgPath;
         this.slug = slug;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getFilmVoteScoresStr() {

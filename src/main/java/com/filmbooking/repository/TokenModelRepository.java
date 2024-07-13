@@ -27,6 +27,8 @@ public class TokenModelRepository extends AbstractRepository<TokenModel> {
         result.put("expiry_date", tokenModel.getExpiryDate());
         result.put("token_type", tokenModel.getTokenType());
         result.put("token_state", tokenModel.getTokenState());
+        result.put("created_at", tokenModel.getCreatedAt());
+        result.put("updated_at", tokenModel.getUpdatedAt());
 
         return result;
     }

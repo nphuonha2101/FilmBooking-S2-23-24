@@ -115,6 +115,8 @@ public class GenreRepository extends AbstractRepository<Genre> {
         Map<String, Object> result = new HashMap<>();
         result.put("genre_id", genre.getGenreID());
         result.put("genre_name", genre.getGenreName());
+        result.put("created_at", genre.getCreatedAt());
+        result.put("updated_at", genre.getUpdatedAt());
 
         return result;
     }
