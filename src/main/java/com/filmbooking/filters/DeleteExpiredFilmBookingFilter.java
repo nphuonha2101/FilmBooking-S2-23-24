@@ -28,6 +28,10 @@ public class DeleteExpiredFilmBookingFilter extends HttpFilter {
 
             showtime.releaseSeats(filmBooking.getBookedSeats());
             showtimeServices.update(showtime);
+
+            FilmBooking newFilmBooking = new FilmBooking();
+            newFilmBooking.setUser(filmBooking.getUser());
+            session.setAttribute("filmBooking", newFilmBooking);
         }
 
         chain.doFilter(req, res);
