@@ -29,6 +29,8 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         map.put("seats", String.join(",", filmBooking.getBookedSeats()));
         map.put("total_fee", filmBooking.getTotalFee());
         map.put("payment_status", filmBooking.getPaymentStatus());
+        map.put("created_at", filmBooking.getCreatedAt());
+        map.put("updated_at", filmBooking.getUpdatedAt());
         return map;
     }
     public List<FilmBooking> sellectAllByUsername(String username) {

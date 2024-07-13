@@ -22,7 +22,9 @@ public class ShowtimeMapper implements RowMapper<Showtime> {
                 rs.getLong("room_id"),
                 rs.getTimestamp("showtime_date").toLocalDateTime(),
                 rs.getString("seats_data"),
-                rs.getString("slug")
+                rs.getString("slug"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

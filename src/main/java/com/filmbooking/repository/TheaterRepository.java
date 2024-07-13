@@ -42,6 +42,8 @@ public class TheaterRepository extends AbstractRepository<Theater>{
         result.put("theater_name", theater.getTheaterName());
         result.put("tax_code", theater.getTaxCode());
         result.put("theater_address", theater.getTheaterAddress());
+        result.put("created_at", theater.getCreatedAt());
+        result.put("updated_at", theater.getUpdatedAt());
 
         return result;
     }

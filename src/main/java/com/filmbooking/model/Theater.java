@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +22,7 @@ import java.util.Set;
 @TableName("theaters")
 @TableIdName("theater_id")
 @IdAutoIncrement
-public class Theater implements IModel {
+public class Theater extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "theaters";
 
     @Expose
@@ -35,11 +36,14 @@ public class Theater implements IModel {
 
     private List<Room> roomList;
 
-    public Theater(long theaterID, String theaterName, String taxCode, String theaterAddress) {
+    public Theater(long theaterID, String theaterName, String taxCode, String theaterAddress,
+                   LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.theaterID = theaterID;
         this.theaterName = theaterName;
         this.taxCode = taxCode;
         this.theaterAddress = theaterAddress;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Theater(long theaterID) {
