@@ -114,7 +114,7 @@ $(function () {
                     <tr>
                         <th>Action Result</th>
                         <td class="text-start fw-bold">
-                        ${logDetails.isActionSuccess === true ? `<span class="badge bg-success">${logDetails.isActionSuccess}</span>` : `<span class="badge bg-danger">${logDetails.isActionSuccess}</span>`}
+                        ${logDetails.isActionSuccess === true ? `<span class="badge bg-success">Success</span>` : `<span class="badge bg-danger">Failed</span>`}
                         </td>
                     </tr>
                     <tr>
