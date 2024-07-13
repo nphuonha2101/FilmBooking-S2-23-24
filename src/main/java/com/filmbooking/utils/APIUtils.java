@@ -142,6 +142,29 @@ public class APIUtils<T extends IModel> {
      * @throws IOException if an I/O error occurs when getting the writer
      */
     public void writeResponse(List<String> corsDomains, int cacheTime) throws IOException {
+        initResp(corsDomains, cacheTime);
+        resp.getWriter().write(jsonResponse.getResponse());
+    }
+
+
+    /**
+     * Write response to client
+     * @param json JSON response
+     * @param corsDomains List of domain to allow CORS. Use can use <code>List.of("domain_name1", "domain_name2") to allow specified domain</code>
+     * @param cacheTime Cache time in seconds
+     * @throws IOException if an I/O error occurs when getting the writer
+     */
+    public void writeResponse(String json, List<String> corsDomains, int cacheTime) throws IOException {
+        initResp(corsDomains, cacheTime);
+        resp.getWriter().write(json);
+    }
+
+    /**
+     * Initialize response header
+     * @param corsDomains List of domain to allow CORS
+     * @param cacheTime Cache time in seconds
+     */
+    private void initResp(List<String> corsDomains, int cacheTime) {
         if (corsDomains != null) {
             this.resp.setHeader("Access-Control-Allow-Origin", String.join(",", corsDomains));
             this.resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -151,7 +174,6 @@ public class APIUtils<T extends IModel> {
         resp.setHeader("Cache-Control", "max-age=" + cacheTime);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonResponse.getResponse());
     }
 }
 
