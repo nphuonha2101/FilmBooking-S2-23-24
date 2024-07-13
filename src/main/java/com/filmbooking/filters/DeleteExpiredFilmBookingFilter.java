@@ -26,7 +26,9 @@ public class DeleteExpiredFilmBookingFilter extends HttpFilter {
 
             ShowtimeServicesImpl showtimeServices = new ShowtimeServicesImpl();
 
-            showtime.releaseSeats(filmBooking.getBookedSeats());
+            if (showtime.releaseSeats(filmBooking.getBookedSeats()))
+                filmBooking.setSeatsData(showtime.getSeatsData());
+
             showtimeServices.update(showtime);
 
             FilmBooking newFilmBooking = new FilmBooking();
