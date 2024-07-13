@@ -41,7 +41,7 @@
                     <div class="d-flex justify-content-center align-items-center fit-content-width">
                         <div class="film_score_box p-2">
                             <h3 class="m-0">
-                              ${filmScores}/5
+                                ${filmScores}/5
                             </h3>
                             <span> (${totalFilmVotes} <fmt:message key="votes" bundle="${msg}"/>)</span>
                         </div>
@@ -128,8 +128,19 @@
             <div class="wrapper d-flex flex-column align-items-center">
                 <form action="<c:url value="${pageContext.request.contextPath}/film-info"/>" method="post">
                     <input type="hidden" name="showtime-id" id="showtime-id">
-                    <input class="primary-filled-button rounded-button button" type="submit"
-                           value="<fmt:message bundle="${msg}" key="continue"/>">
+
+                    <c:choose>
+                        <c:when test="${film.showtimeList.size() eq 0}">
+                            <input class="primary-filled-button rounded-button button btn" type="submit"
+                                   value="<fmt:message bundle="${msg}" key="continue"/>" disabled>
+                        </c:when>
+
+                        <c:otherwise>
+                            <input class="primary-filled-button rounded-button button" type="submit"
+                                   value="<fmt:message bundle="${msg}" key="continue"/>">
+                        </c:otherwise>
+                    </c:choose>
+
                 </form>
             </div>
         </div>
