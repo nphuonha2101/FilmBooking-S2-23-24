@@ -185,7 +185,7 @@ button {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: calc(100vw);
     height: 3.5rem;
     z-index: 9;
     background-color: #fff;
