@@ -12,6 +12,8 @@ import com.filmbooking.model.LogModel;
 import com.filmbooking.utils.PropertiesUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * This class is to use create instance to send "Reset Password Email" using token
  * <br>
@@ -51,6 +53,11 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
 
     @Override
     public AbstractSendEmail loadLogData(LogModel logModel) {
+        return null;
+    }
+
+    @Override
+    public AbstractSendEmail sendEmailstoAdmins(List<String> emails, String emailSubject) {
         return null;
     }
 }
