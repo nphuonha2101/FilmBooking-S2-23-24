@@ -18,7 +18,9 @@ public class UserMapper implements RowMapper<User> {
                 rs.getString("user_password"),
                 rs.getString("account_role"),
                 rs.getString("account_type"),
-                rs.getInt("account_status")
+                rs.getInt("account_status"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

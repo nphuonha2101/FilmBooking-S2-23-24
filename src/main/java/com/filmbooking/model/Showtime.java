@@ -24,7 +24,7 @@ import java.util.List;
 @TableIdName("showtime_id")
 @IdAutoIncrement
 @AllArgsConstructor
-public class Showtime implements IModel {
+public class Showtime extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "showtimes";
 
     @Expose
@@ -56,13 +56,16 @@ public class Showtime implements IModel {
     /**
      * Use for retrieve data from database
      */
-    public Showtime(long showtimeID, long filmId, long roomId, LocalDateTime showtimeDate, String seatsData, String slug) {
+    public Showtime(long showtimeID, long filmId, long roomId, LocalDateTime showtimeDate,
+                    String seatsData, String slug, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.showtimeID = showtimeID;
         this.filmId = filmId;
         this.roomId = roomId;
         this.showtimeDate = showtimeDate;
         this.seatsData = seatsData;
         this.slug = slug;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public List<FilmBooking> getFilmBookingList() {

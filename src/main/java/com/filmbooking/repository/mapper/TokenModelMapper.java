@@ -16,7 +16,9 @@ public class TokenModelMapper implements RowMapper<TokenModel> {
                 rs.getString("username"),
                 rs.getTimestamp("expiry_date").toLocalDateTime(),
                 rs.getString("token_type"),
-                rs.getString("token_state")
+                rs.getString("token_state"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

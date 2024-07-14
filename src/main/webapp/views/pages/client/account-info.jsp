@@ -25,7 +25,7 @@
         <h2 class="title"><fmt:message key="accountInfoSectionTitle" bundle="${pageTitle}"/></h2>
 
         <c:set var="loginUser" value="${sessionScope.loginUser}"/>
-        <table class="hidden-table">
+        <table class="hidden-table w-50">
             <tbody>
             <tr>
                 <td><fmt:message bundle="${msg}" key="fullname"/>:</td>
@@ -51,7 +51,7 @@
             </tbody>
         </table>
 
-        <div class="wrapper justify-right-row">
+        <div class="w-50 wrapper d-flex justify-content-between align-items-center">
             <a class="links" style="margin: 0 1rem;" href="<c:url value="${pageContext.request.contextPath}/auth/change-password"/>"><fmt:message bundle="${msg}"
                                                                                          key="changePasswd"/></a>
             <a class="primary-filled-button button rounded-button"

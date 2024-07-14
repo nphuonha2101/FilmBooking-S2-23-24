@@ -3,6 +3,7 @@ package com.filmbooking.services;
 import com.filmbooking.model.IModel;
 import com.filmbooking.repository.AbstractRepository;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +30,15 @@ public abstract class AbstractService<T extends IModel> implements IService<T> {
 
     @Override
     public boolean insert(T t) {
+        t.setCreatedAt(LocalDateTime.now());
+        t.setUpdatedAt(LocalDateTime.now());
         return repository.insert(t);
     }
 
     @Override
     public boolean update(T t) {
+        t.setCreatedAt(t.getCreatedAt());
+        t.setUpdatedAt(LocalDateTime.now());
         return repository.update(t);
     }
 

@@ -16,7 +16,9 @@ public class TheaterMapper implements RowMapper<Theater> {
                 rs.getLong("theater_id"),
                 rs.getString("theater_name"),
                 rs.getString("tax_code"),
-                rs.getString("theater_address")
+                rs.getString("theater_address"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

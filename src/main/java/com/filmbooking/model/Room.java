@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,7 @@ import java.util.List;
 @TableName("rooms")
 @TableIdName("room_id")
 @IdAutoIncrement
-public class Room implements IModel {
+public class Room extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "rooms";
 
     @Expose
@@ -58,7 +59,8 @@ public class Room implements IModel {
     /**
      * Use for retrieve data from database
      */
-    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData, long theaterId, String slug) {
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData,
+                long theaterId, String slug, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.roomID = roomID;
         this.roomName = roomName;
         this.seatRows = seatRows;
@@ -67,6 +69,8 @@ public class Room implements IModel {
         this.seatMatrix = StringUtils.convertTo2DArr(seatData);
         this.theaterId = theaterId;
         this.slug = slug;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     private void generateSeatsData() {

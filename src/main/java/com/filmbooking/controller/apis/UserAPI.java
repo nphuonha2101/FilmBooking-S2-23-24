@@ -18,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {"/api/v1/users/*", "/api/v1/users"})
@@ -31,8 +32,28 @@ public class UserAPI extends HttpServlet {
         APIUtils<User> apiUtils = new APIUtils<>(userServicesImpl, req, resp);
         String command = req.getParameter("command");
 
+        if (command.equals("loginUser")) {
+            APIJSONResponse apiResponse = getApijsonResponse(req);
+            apiUtils.setJsonResponse(apiResponse);
+            apiUtils.writeResponse(null, 0);
+            return;
+        }
+
         apiUtils.processRequest(command);
         apiUtils.writeResponse(null, 0);
+    }
+
+    private APIJSONResponse getApijsonResponse(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        APIJSONResponse apiResponse = null;
+        if (loginUser == null) {
+            apiResponse = new APIJSONResponse(RespCodeEnum.UNAUTHORIZED.getCode(), RespCodeEnum.UNAUTHORIZED.getMessage(), "default", null);
+        } else {
+            apiResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), "Get login user successfully", "default", loginUser);
+        }
+        return apiResponse;
     }
 
     @Override
@@ -45,7 +66,8 @@ public class UserAPI extends HttpServlet {
 
     /**
      * Handle PATCH request
-     * @param req request
+     *
+     * @param req  request
      * @param resp response
      * @throws IOException exception. It is thrown cause of PrintWriter
      */

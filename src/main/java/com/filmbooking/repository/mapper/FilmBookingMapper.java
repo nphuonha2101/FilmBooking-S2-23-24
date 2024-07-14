@@ -10,6 +10,7 @@ import org.jdbi.v3.core.statement.StatementContext;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class FilmBookingMapper implements RowMapper<FilmBooking> {
     @Override
@@ -22,7 +23,10 @@ public class FilmBookingMapper implements RowMapper<FilmBooking> {
                 rs.getLong("showtime_id"),
                 rs.getTimestamp("booking_date").toLocalDateTime(),
                 rs.getString("seats").split(","),
-                rs.getDouble("total_fee")
+                rs.getDouble("total_fee"),
+                rs.getString("payment_status"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

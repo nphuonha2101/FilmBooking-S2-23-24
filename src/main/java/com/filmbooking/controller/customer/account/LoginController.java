@@ -1,5 +1,8 @@
 package com.filmbooking.controller.customer.account;
 
+import com.filmbooking.email.AbstractSendEmail;
+import com.filmbooking.email.SendFailLogin5TimesEmail;
+import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.FailedLogin;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.User;
@@ -27,8 +30,11 @@ import java.util.Map;
 @MultipartConfig
 public class LoginController extends HttpServlet {
     private UserServicesLogProxy userServices;
+
+    private UserServicesImpl userServicesimpl ;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
+    int countFailedLogin = 0 ;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -71,6 +77,7 @@ public class LoginController extends HttpServlet {
         FailedLoginServicesImpl failedLoginServices = new FailedLoginServicesImpl();
         FailedLogin failedLogin = failedLoginServices.select(req.getRemoteAddr());
 
+
         if (failedLogin != null) {
             if (failedLogin.getLockTime().isAfter(LocalDateTime.now())) {
                 System.out.println("Login after 5 minutes");
@@ -78,6 +85,7 @@ public class LoginController extends HttpServlet {
                 getHtmlRespFromPage(req, resp, loginPage);
                 return;
             }
+
         }
 
         // verify captcha
@@ -96,6 +104,8 @@ public class LoginController extends HttpServlet {
         }
 
         userServices = new UserServicesLogProxy(new UserServicesImpl(), req);
+        userServicesimpl = new UserServicesImpl();
+        String currentLanguage = (String) req.getSession().getAttribute("lang");
 
         User loginUser = null;
 
@@ -111,6 +121,10 @@ public class LoginController extends HttpServlet {
                 failedLoginServices.insert(failedLogin);
             } else {
                 failedLoginServices.update(failedLogin);
+                if(failedLogin.getLoginCount() >= 5){
+                    User user = userServicesimpl.getByUsername(username);
+                    sendFailLoginEmail(username, failedLogin.getLockTime().toString(),failedLogin.getReqIp(), user.getUserEmail(), currentLanguage);
+                }
             }
             loginPage.putError(serviceResult.getStatus().getStatusCode());
             getHtmlRespFromPage(req, resp, loginPage);
@@ -138,6 +152,19 @@ public class LoginController extends HttpServlet {
             out.println("/home");
 
         }
+    }
+
+    private static void sendFailLoginEmail(String username, String lockTime, String reqIp, String email,String language) {
+        LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE
+                : LanguageEnum.ENGLISH;
+        AbstractSendEmail emailSender = new SendFailLogin5TimesEmail();
+        emailSender
+                .loadHTMLEmail(languageEnum)
+                .putEmailInfo("username", username)
+                .putEmailInfo("lockTime", lockTime)
+                .putEmailInfo("reqIp", reqIp)
+                .loadEmailContent()
+                .sendEmailToUser(email, "Your account has been locked");
     }
 
     private void getHtmlRespFromPage(HttpServletRequest req, HttpServletResponse resp, Page page) throws ServletException, IOException {

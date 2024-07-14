@@ -21,7 +21,7 @@ import java.util.Map;
 @TableIdName("film_booking_id")
 @IdAutoIncrement
 @AllArgsConstructor
-public class FilmBooking implements IModel {
+public class FilmBooking extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "film_bookings";
     private static final int EXPIRE_TIME = 15;
 
@@ -46,9 +46,11 @@ public class FilmBooking implements IModel {
     private String seatsData;
     @Setter
     @Getter
+    @Expose
     private double totalFee;
     @Getter
     @Setter
+    @Expose
     private String paymentStatus;
     private LocalDateTime expireDate;
     @Getter
@@ -64,7 +66,9 @@ public class FilmBooking implements IModel {
         this.totalFee = totalFee;
     }
 
-    public FilmBooking(long id, String username, long showtimeId, LocalDateTime bookingDate, String[] bookedSeats, double totalFee) {
+    public FilmBooking(long id, String username, long showtimeId, LocalDateTime bookingDate,
+                       String[] bookedSeats, double totalFee, String paymentStatus,
+                       LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.filmBookingID = id;
         this.showtimeId = showtimeId;
         this.username = username;
@@ -72,6 +76,9 @@ public class FilmBooking implements IModel {
         this.bookedSeats = bookedSeats;
         this.seatsData = String.join(", ", bookedSeats);
         this.totalFee = totalFee;
+        this.paymentStatus = paymentStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public FilmBooking() {

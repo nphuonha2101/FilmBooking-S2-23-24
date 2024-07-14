@@ -23,7 +23,9 @@ public class FilmMapper implements RowMapper<Film> {
                 rs.getString("film_description"),
                 rs.getString("film_trailer_link"),
                 rs.getString("img_path"),
-                rs.getString("slug")
+                rs.getString("slug"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

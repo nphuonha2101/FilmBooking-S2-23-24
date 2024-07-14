@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-//@WebFilter("/auth")
+@WebFilter("/auth")
 public class DeleteExpiredFilmBookingFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -26,8 +26,14 @@ public class DeleteExpiredFilmBookingFilter extends HttpFilter {
 
             ShowtimeServicesImpl showtimeServices = new ShowtimeServicesImpl();
 
-            showtime.releaseSeats(filmBooking.getBookedSeats());
+            if (showtime.releaseSeats(filmBooking.getBookedSeats()))
+                filmBooking.setSeatsData(showtime.getSeatsData());
+
             showtimeServices.update(showtime);
+
+            FilmBooking newFilmBooking = new FilmBooking();
+            newFilmBooking.setUser(filmBooking.getUser());
+            session.setAttribute("filmBooking", newFilmBooking);
         }
 
         chain.doFilter(req, res);
