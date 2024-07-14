@@ -24,8 +24,5 @@ public class SendFailLogin5TimesEmail extends AbstractSendEmail{
         return null;
     }
 
-    @Override
-    public AbstractSendEmail sendEmailstoAdmins(List<String> emails, String emailSubject) {
-        return null;
-    }
+
 }

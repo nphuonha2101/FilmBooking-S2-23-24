@@ -26,13 +26,8 @@ public class SendLogEmail extends AbstractSendEmail{
         this.putEmailInfo("isActionSuccess", String.valueOf(logModel.isActionSuccess()));
         this.putEmailInfo("beforeValueJSON", logModel.getBeforeValueJSON());
         this.putEmailInfo("afterValueJSON", logModel.getAfterValueJSON());
-        this.putEmailInfo("createdAt", logModel.getCreatedAt().toString());
+        this.putEmailInfo("createdAt", logModel.getCreatedAt() == null ? LocalDateTime.now().toString() : logModel.getCreatedAt().toString());
         return this;
-    }
-
-    @Override
-    public AbstractSendEmail sendEmailstoAdmins(List<String> emails, String emailSubject) {
-        return null;
     }
 
 
