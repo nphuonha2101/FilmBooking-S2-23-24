@@ -4,6 +4,7 @@ import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.LogModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SendLogEmail extends AbstractSendEmail{
     public  SendLogEmail() {
@@ -23,8 +24,11 @@ public class SendLogEmail extends AbstractSendEmail{
         this.putEmailInfo("targetTable", logModel.getTargetTable());
         this.putEmailInfo("action", logModel.getAction());
         this.putEmailInfo("isActionSuccess", String.valueOf(logModel.isActionSuccess()));
+        this.putEmailInfo("beforeValueJSON", logModel.getBeforeValueJSON());
         this.putEmailInfo("afterValueJSON", logModel.getAfterValueJSON());
-        this.putEmailInfo("createdAt", logModel.getCreatedAt().toString());
+        this.putEmailInfo("createdAt", logModel.getCreatedAt() == null ? LocalDateTime.now().toString() : logModel.getCreatedAt().toString());
         return this;
     }
+
+
 }

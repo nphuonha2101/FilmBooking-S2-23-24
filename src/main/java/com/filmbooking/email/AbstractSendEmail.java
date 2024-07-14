@@ -19,10 +19,7 @@ import jakarta.mail.internet.MimeMultipart;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * This class is used to send email to user
@@ -180,4 +177,14 @@ public abstract class AbstractSendEmail {
     }
 
     public abstract AbstractSendEmail loadLogData(LogModel logModel);
+
+    public void sendEmailstoAdmins(List<String> emails, String emailSubject){
+        if(emails != null && !emails.isEmpty()){
+            for(String email: emails){
+                sendEmailToUser(email, emailSubject);
+            }
+        }else {
+            System.out.println("No email to send");
+        }
+    }
 }
