@@ -4,6 +4,7 @@ import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.LogModel;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class SendFailLogin5TimesEmail extends AbstractSendEmail{
 
@@ -20,6 +21,11 @@ public class SendFailLogin5TimesEmail extends AbstractSendEmail{
 
     @Override
     public AbstractSendEmail loadLogData(LogModel logModel) {
+        return null;
+    }
+
+    @Override
+    public AbstractSendEmail sendEmailstoAdmins(List<String> emails, String emailSubject) {
         return null;
     }
 }

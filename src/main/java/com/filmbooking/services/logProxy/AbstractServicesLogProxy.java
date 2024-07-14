@@ -77,10 +77,10 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
         switch (action) {
             case LogModel.INSERT:
                 level = LogModel.LOG_LVL_ALERT;
+                beforeValue = gson.toJson(t);
                 afterValue = gson.toJson(t);
 
                 LogModel logModel = new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
-
                 sendEmail(logModel);
                 return logModel;
 
