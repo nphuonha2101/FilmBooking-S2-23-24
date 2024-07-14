@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Revenue implements Serializable {
-    private double yearRevenue;
-    private double[] monthlyRevenues;
+public class Revenue {
+    private String filmName;
+    private double filmRevenue;
 }

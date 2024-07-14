@@ -1,17 +1,16 @@
 package com.filmbooking.repository;
 
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.Showtime;
 import com.filmbooking.repository.mapper.FilmBookingMapper;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
     public FilmBookingRepository() {
@@ -123,6 +122,21 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
             String sql = "SELECT * FROM film_bookings WHERE  EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
             return handle.createQuery(sql)
                     .bind("year", year)
+                    .map(getRowMapper())
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+    public List<FilmBooking> selectAllByFilmID(long filmID){
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT * FROM film_bookings WHERE showtime_id IN (SELECT showtime_id FROM showtimes WHERE film_id = :film_id)";
+            return handle.createQuery(sql)
+                    .bind("film_id", filmID)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {
