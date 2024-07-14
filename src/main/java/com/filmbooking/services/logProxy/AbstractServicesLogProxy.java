@@ -11,6 +11,7 @@ import com.filmbooking.model.User;
 import com.filmbooking.repository.LogRepository;
 import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.impls.LogModelServicesImpl;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.utils.annotation.ClazzAnnotationProcessor;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author nphuo
@@ -26,6 +28,7 @@ import java.time.LocalDateTime;
  */
 public abstract class AbstractServicesLogProxy<T extends IModel> {
     protected LogModelServicesImpl logModelServices;
+    protected UserServicesImpl userServices;
     protected HttpServletRequest request;
     @Setter
     protected User user;
@@ -35,6 +38,7 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
 
     public AbstractServicesLogProxy(HttpServletRequest request, Class<T> modelClass) {
         this.logModelServices = new LogModelServicesImpl();
+        this.userServices = new UserServicesImpl();
         this.gson = GSONUtils.getGson();
         this.user = (User) request.getSession().getAttribute("loginUser");
         this.request = request;
@@ -61,6 +65,7 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
             }
         }
         String ip = request.getRemoteAddr();
+        String language = (String) request.getSession().getAttribute("lang");
         String targetTable = this.tableName;
         String level = null;
         String beforeValue = null;
@@ -68,6 +73,8 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
 
         LocalDateTime createdAt = null;
         LocalDateTime updatedAt = null;
+
+        List<String> emails = userServices.getAdminEmails();
 
         if (t != null) {
             createdAt = t.getCreatedAt();
@@ -77,11 +84,11 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
         switch (action) {
             case LogModel.INSERT:
                 level = LogModel.LOG_LVL_ALERT;
+                beforeValue = gson.toJson(t);
                 afterValue = gson.toJson(t);
 
                 LogModel logModel = new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
-
-                sendEmail(logModel);
+                sendEmail(logModel, language, emails);
                 return logModel;
 
             case LogModel.UPDATE:
@@ -106,13 +113,15 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
     }
 
 
-    protected void sendEmail(LogModel logModel) {
+    protected void sendEmail(LogModel logModel, String language, List<String> emailAdmin) {
+        LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE
+                : LanguageEnum.ENGLISH;
         AbstractSendEmail sendEmail = new SendLogEmail();
         sendEmail
-                .loadHTMLEmail(LanguageEnum.ENGLISH)
+                .loadHTMLEmail(languageEnum)
                 .loadLogData(logModel)
                 .loadEmailContent()
-                .sendEmailToUser("milepro98@gmail.com", "Alert Notification");
+                .sendEmailstoAdmins(emailAdmin, "Alert Notification");
     }
 
 }

@@ -153,10 +153,6 @@ $(function () {
                 message: 'convert-level',
                 logID: selectLogId
             },
-            // success: function(response) {
-            //     console.log('Message sent successfully');
-            //     location.reload();
-            // },
             success: function (response) {
                 console.log('Message sent successfully');
                 $.ajax({

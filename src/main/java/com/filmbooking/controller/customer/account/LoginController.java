@@ -105,6 +105,7 @@ public class LoginController extends HttpServlet {
 
         userServices = new UserServicesLogProxy(new UserServicesImpl(), req);
         userServicesimpl = new UserServicesImpl();
+        String currentLanguage = (String) req.getSession().getAttribute("lang");
 
         User loginUser = null;
 
@@ -122,7 +123,7 @@ public class LoginController extends HttpServlet {
                 failedLoginServices.update(failedLogin);
                 if(failedLogin.getLoginCount() >= 5){
                     User user = userServicesimpl.getByUsername(username);
-                    sendFailLoginEmail(username, failedLogin.getLockTime().toString(),failedLogin.getReqIp(), user.getUserEmail());
+                    sendFailLoginEmail(username, failedLogin.getLockTime().toString(),failedLogin.getReqIp(), user.getUserEmail(), currentLanguage);
                 }
             }
             loginPage.putError(serviceResult.getStatus().getStatusCode());
@@ -153,10 +154,12 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    private static void sendFailLoginEmail(String username, String lockTime, String reqIp, String email) {
+    private static void sendFailLoginEmail(String username, String lockTime, String reqIp, String email,String language) {
+        LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE
+                : LanguageEnum.ENGLISH;
         AbstractSendEmail emailSender = new SendFailLogin5TimesEmail();
         emailSender
-                .loadHTMLEmail(LanguageEnum.ENGLISH)
+                .loadHTMLEmail(languageEnum)
                 .putEmailInfo("username", username)
                 .putEmailInfo("lockTime", lockTime)
                 .putEmailInfo("reqIp", reqIp)
