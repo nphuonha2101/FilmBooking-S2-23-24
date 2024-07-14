@@ -1,10 +1,13 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.User;
 import com.filmbooking.repository.mapper.UserMapper;
+import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.mapper.RowMapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserRepository extends AbstractRepository<User> {
@@ -34,4 +37,44 @@ public class UserRepository extends AbstractRepository<User> {
         return result;
     }
 
+//    public List<String> getAdminEmails() {
+//        try {
+//            Handle handle = JdbiDBConnection.openHandle();
+//            String sql = "SELECT * FROM user_infos WHERE account_role = 'admin'";
+//            System.out.println("Get Admin Emails SQL: " + sql);
+//            return handle.createQuery(sql)
+//                    .mapToBean(String.class)
+//                    .list();
+//        }  catch (Exception e) {
+//            e.printStackTrace(System.out);
+//            return null;
+//        } finally {
+//            JdbiDBConnection.closeHandle();
+//        }
+//
+//    }
+    public List<String> getAdminEmails() {
+
+        try {
+            Handle handle = JdbiDBConnection.openHandle();
+            String sql = "SELECT user_email FROM user_infos WHERE account_role = 'admin'";
+            System.out.println("Get Admin Emails SQL: " + sql);
+            return handle.createQuery(sql)
+                    .mapTo(String.class)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            return null;
+        } finally {
+            JdbiDBConnection.closeHandle();
+        }
+    }
+
+    public static void main(String[] args) {
+        UserRepository userRepository = new UserRepository();
+        List<String> adminEmails = userRepository.getAdminEmails();
+        for (String email : adminEmails) {
+            System.out.println(email);
+        }
+    }
 }
