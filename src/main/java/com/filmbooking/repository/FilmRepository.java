@@ -52,6 +52,8 @@ public class FilmRepository extends AbstractRepository<Film>{
         map.put("film_trailer_link", film.getFilmTrailerLink());
         map.put("img_path", film.getImgPath());
         map.put("slug", film.getSlug());
+        map.put("created_at", film.getCreatedAt());
+        map.put("updated_at", film.getUpdatedAt());
         return map;
     }
 

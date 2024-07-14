@@ -21,8 +21,8 @@
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
-<section class="content section centered-vertical-content">
-    <div class="centered-vertical-content container form__container">
+<section class="content section d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center container">
         <h2 class="title"><fmt:message key="changePasswordSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
@@ -55,7 +55,7 @@
                     <fmt:message bundle="${msg}" key="confirmPassword"/>
                 </label>
             </div>
-            <input type="submit" class="primary-filled-button button"
+            <input type="submit" class="primary-filled-button button rounded-button w-100"
                    value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>
 

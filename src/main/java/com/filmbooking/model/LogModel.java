@@ -39,6 +39,7 @@ public class LogModel implements IModel {
     public static final String LOGIN_SERVICE = "LOGIN";
     public static final String FORGOT_PASSWORD_SERVICE = "FORGOT_PASSWORD_SERVICE";
     public static final String CHANGE_PASSWORD_SERVICE = "CHANGE_PASSWORD_SERVICE";
+    public static final String PAYMENT = "PAYMENT";
 
     // log levels
     public static final String LOG_LVL_INFO = "INFO";
@@ -67,11 +68,12 @@ public class LogModel implements IModel {
     @Expose
     private String afterValueJSON;
     @Expose
-    private Timestamp createdAt;
+    private LocalDateTime createdAt;
     @Expose
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
-    public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON, boolean isCreate) {
+    public LogModel(User user, String reqIP, String level, String targetTable, String action, boolean isActionSuccess, String beforeValueJSON, String afterValueJSON
+    , LocalDateTime createdAt, LocalDateTime updatedAt) {
         if (user != null)
             this.username = user.getUsername();
         this.reqIP = reqIP;
@@ -82,11 +84,9 @@ public class LogModel implements IModel {
         this.isActionSuccess = isActionSuccess;
         this.beforeValueJSON = beforeValueJSON;
         this.afterValueJSON = afterValueJSON;
-        if (isCreate) {
-            this.createdAt = new Timestamp(new Date().getTime());
-        } else {
-            this.updatedAt = new Timestamp(new Date().getTime());
-        }
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+
     }
 
     public LogModel() {

@@ -96,6 +96,8 @@ public class FilmVoteRepository extends AbstractRepository<FilmVote> {
         Map<String, Object> result = new HashMap<>();
         result.put("film_id", filmVote.getFilm().getFilmID());
         result.put("scores", filmVote.getScores());
+        result.put("created_at", filmVote.getCreatedAt());
+        result.put("updated_at", filmVote.getUpdatedAt());
 
         return result;
     }

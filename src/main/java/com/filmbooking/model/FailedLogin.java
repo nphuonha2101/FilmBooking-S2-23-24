@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 @TableIdName("req_ip")
 @TableName("failed_logins")
-public class FailedLogin implements IModel {
+public class FailedLogin extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "failed_logins";
     private String reqIp;
     private int loginCount;
@@ -26,6 +26,14 @@ public class FailedLogin implements IModel {
         this.reqIp = reqIp;
         this.loginCount = loginCount;
         this.lockTime = lockTime;
+    }
+
+    public FailedLogin(String reqIp, int loginCount, LocalDateTime lockTime, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.reqIp = reqIp;
+        this.loginCount = loginCount;
+        this.lockTime = lockTime;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @Override

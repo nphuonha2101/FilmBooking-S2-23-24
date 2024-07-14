@@ -16,7 +16,9 @@ public class FailedLoginMapper implements RowMapper<FailedLogin> {
         return new FailedLogin(
                 rs.getString("req_ip"),
                 rs.getInt("login_count"),
-                LocalDateTime.parse(rs.getString("lock_time"), formatter)
+                LocalDateTime.parse(rs.getString("lock_time"), formatter),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

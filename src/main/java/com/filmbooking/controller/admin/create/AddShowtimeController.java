@@ -55,6 +55,12 @@ public class AddShowtimeController extends HttpServlet {
         String showtimeDate = req.getParameter("showtime-datetime");
         LocalDateTime showtimeLDT = LocalDateTime.parse(showtimeDate, DateTimeFormatter.ISO_DATE_TIME);
 
+        if (showtimeLDT.isBefore(LocalDateTime.now())) {
+            req.setAttribute("statusCodeErr", StatusCodeEnum.ADD_SHOWTIME_FAILED.getStatusCode());
+            doGet(req, resp);
+            return;
+        }
+
         Film film = filmServices.select(filmID);
 
         Showtime newShowtime = new Showtime(film, showtimeRoom, showtimeLDT);

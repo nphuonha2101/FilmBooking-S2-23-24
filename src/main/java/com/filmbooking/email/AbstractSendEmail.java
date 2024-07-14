@@ -8,6 +8,7 @@ package com.filmbooking.email;
 
 import com.filmbooking.enumsAndConstants.constants.PathConstant;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
+import com.filmbooking.model.LogModel;
 import com.filmbooking.utils.PropertiesUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
@@ -18,10 +19,7 @@ import jakarta.mail.internet.MimeMultipart;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * This class is used to send email to user
@@ -176,5 +174,17 @@ public abstract class AbstractSendEmail {
 
     public static void main(String[] args) throws IOException {
 
+    }
+
+    public abstract AbstractSendEmail loadLogData(LogModel logModel);
+
+    public void sendEmailstoAdmins(List<String> emails, String emailSubject){
+        if(emails != null && !emails.isEmpty()){
+            for(String email: emails){
+                sendEmailToUser(email, emailSubject);
+            }
+        }else {
+            System.out.println("No email to send");
+        }
     }
 }

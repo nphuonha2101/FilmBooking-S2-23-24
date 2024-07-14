@@ -26,7 +26,9 @@ public class RoomMapper implements RowMapper<Room> {
                 rs.getInt("seat_cols"),
                 rs.getString("seats_data"),
                 rs.getLong("theater_id"),
-                rs.getString("slug")
+                rs.getString("slug"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
 
     }

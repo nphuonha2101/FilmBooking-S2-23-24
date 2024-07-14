@@ -197,6 +197,15 @@ public class UserServicesImpl extends AbstractService<User> implements IUserServ
         return StringUtils.generateSHA256String(password + passwordSecretKey);
     }
 
+    public List<String> getAdminEmails() {
+        return ((UserRepository) this.repository).getAdminEmails();
+    }
 
-
+    public static void main(String[] args) {
+        UserServicesImpl userServices = new UserServicesImpl();
+        List<String> adminEmails = userServices.getAdminEmails();
+        for (String email : adminEmails) {
+            System.out.println(email);
+        }
+    }
 }

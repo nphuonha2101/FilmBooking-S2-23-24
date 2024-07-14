@@ -86,6 +86,8 @@ public class RoomRepository extends AbstractRepository<Room>{
         result.put("seats_data", room.getSeatData());
         result.put("theater_id", room.getTheater().getTheaterID());
         result.put("slug", room.getSlug());
+        result.put("created_at", room.getCreatedAt());
+        result.put("updated_at", room.getUpdatedAt());
         
         return result;
     }

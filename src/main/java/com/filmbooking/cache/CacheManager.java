@@ -16,11 +16,13 @@ public class CacheManager {
     }
 
     public Object get(String key) {
+        System.out.println("CacheManager: get " + key);
         return this.cache.getIfPresent(key);
     }
 
     public void put(String key, Object value) {
-        this.cache.put(key, value);
+        if (key != null && value != null)
+            this.cache.put(key, value);
     }
 
     public void remove(String key) {
