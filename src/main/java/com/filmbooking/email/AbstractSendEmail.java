@@ -8,6 +8,7 @@ package com.filmbooking.email;
 
 import com.filmbooking.enumsAndConstants.constants.PathConstant;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
+import com.filmbooking.model.LogModel;
 import com.filmbooking.utils.PropertiesUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
@@ -177,4 +178,6 @@ public abstract class AbstractSendEmail {
     public static void main(String[] args) throws IOException {
 
     }
+
+    public abstract AbstractSendEmail loadLogData(LogModel logModel);
 }
