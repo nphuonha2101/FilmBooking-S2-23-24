@@ -13,11 +13,12 @@ import java.util.List;
 public class FilmVoteMapper implements RowMapper<FilmVote> {
     @Override
     public FilmVote map(ResultSet rs, StatementContext ctx) throws SQLException {
-        FilmRepository filmRepository = new FilmRepository();
         return new FilmVote(
                 rs.getLong("film_vote_id"),
                 rs.getLong("film_id"),
-                rs.getInt("scores")
+                rs.getInt("scores"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 

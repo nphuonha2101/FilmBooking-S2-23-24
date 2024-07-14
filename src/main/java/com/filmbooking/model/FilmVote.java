@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Getter
@@ -25,7 +26,7 @@ import java.util.Map;
 @TableIdName("film_vote_id")
 @IdAutoIncrement
 @AllArgsConstructor
-public class FilmVote implements IModel {
+public class FilmVote extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "film_votes";
 
     @Getter
@@ -49,10 +50,12 @@ public class FilmVote implements IModel {
         this.scores = scores;
     }
 
-    public FilmVote(long id, long filmId, int scores) {
+    public FilmVote(long id, long filmId, int scores, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.filmId = filmId;
         this.scores = scores;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     @Override

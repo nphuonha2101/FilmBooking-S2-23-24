@@ -14,13 +14,13 @@ import java.util.concurrent.TimeUnit;
 public class GenreServicesImpl extends AbstractService<Genre> implements IService<Genre> {
 
     public GenreServicesImpl() {
-        super(new CacheRepository<>(new GenreRepository(),
-                new CacheManager(10, TimeUnit.MINUTES)));
+        super(new GenreRepository());
     }
 
     public boolean updateFilmGenres(Film film) {
         return ((GenreRepository) this.repository).updateByFilm(film);
     }
+
     public boolean deleteFilmGenres(Film film) {
         return ((GenreRepository) this.repository).deleteByFilmId(film.getFilmID());
     }

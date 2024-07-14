@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-//@WebFilter(urlPatterns = {"/auth/*", "/logout"})
+@WebFilter(urlPatterns = {"/auth/*", "/logout"})
 public class AuthLoginFilter extends HttpFilter {
 
     @Override

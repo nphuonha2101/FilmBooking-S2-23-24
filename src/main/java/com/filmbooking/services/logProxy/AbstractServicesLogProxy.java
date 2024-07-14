@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * @author nphuo
  * @ide IntelliJ IDEA
@@ -64,11 +66,21 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
         String beforeValue = null;
         String afterValue = null;
 
+        LocalDateTime createdAt = null;
+        LocalDateTime updatedAt = null;
+
+        if (t != null) {
+            createdAt = t.getCreatedAt();
+            updatedAt = t.getUpdatedAt();
+        }
+
         switch (action) {
             case LogModel.INSERT:
                 level = LogModel.LOG_LVL_ALERT;
                 afterValue = gson.toJson(t);
-                LogModel logModel = new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, true);
+
+                LogModel logModel = new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
+
                 sendEmail(logModel);
                 return logModel;
 
@@ -77,17 +89,17 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
                 beforeValue = gson.toJson(oldT);
                 afterValue = gson.toJson(t);
 
-                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, false);
+                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
 
             case LogModel.DELETE:
                 level = LogModel.LOG_LVL_WARN;
                 beforeValue = gson.toJson(oldT);
 
-                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, false);
+                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
             case LogModel.LOGIN_SERVICE, LogModel.FORGOT_PASSWORD_SERVICE, LogModel.CHANGE_PASSWORD_SERVICE:
                 level = LogModel.LOG_LVL_INFO;
-                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, false);
 
+                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
         }
 
         return null;

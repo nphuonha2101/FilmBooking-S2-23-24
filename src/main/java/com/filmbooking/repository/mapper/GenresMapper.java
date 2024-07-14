@@ -13,7 +13,9 @@ public class GenresMapper implements RowMapper<Genre> {
     public Genre map(ResultSet rs, StatementContext ctx) throws SQLException {
         return new Genre(
                 rs.getString("genre_id"),
-                rs.getString("genre_name")
+                rs.getString("genre_name"),
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

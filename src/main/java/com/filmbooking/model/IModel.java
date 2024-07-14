@@ -1,5 +1,7 @@
 package com.filmbooking.model;
 
+import java.time.LocalDateTime;
+
 /**
  * @author nphuo
  * @ide IntelliJ IDEA
@@ -7,4 +9,8 @@ package com.filmbooking.model;
  */
 public interface IModel {
     Object getIdValue();
+    LocalDateTime getCreatedAt();
+    LocalDateTime getUpdatedAt();
+    void setCreatedAt(LocalDateTime createdAt);
+    void setUpdatedAt(LocalDateTime updatedAt);
 }

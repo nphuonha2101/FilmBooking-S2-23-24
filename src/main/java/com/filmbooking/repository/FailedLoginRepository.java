@@ -25,6 +25,8 @@ public class FailedLoginRepository extends AbstractRepository<FailedLogin> {
         result.put("req_ip", failedLogin.getReqIp());
         result.put("login_count", failedLogin.getLoginCount());
         result.put("lock_time", failedLogin.getLockTime());
+        result.put("created_at", failedLogin.getCreatedAt());
+        result.put("updated_at", failedLogin.getUpdatedAt());
 
         return result;
     }

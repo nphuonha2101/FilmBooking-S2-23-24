@@ -27,7 +27,7 @@ import java.util.Map;
 @TableName("user_tokens")
 @TableIdName("token")
 @AllArgsConstructor
-public class TokenModel implements IModel {
+public class TokenModel extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "user_tokens";
 
     @Expose
@@ -53,6 +53,18 @@ public class TokenModel implements IModel {
         this.tokenType = tokenType.getTokenType();
         this.tokenState = TokenStateEnum.ACTIVE.getTokenState();
     }
+
+    public TokenModel(String token, String username, LocalDateTime expiryDate, String tokenType, String tokenState,
+                      LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.token = token;
+        this.username = username;
+        this.expiryDate = expiryDate;
+        this.tokenType = tokenType;
+        this.tokenState = tokenState;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
 
     /**
      * Constructor (custom expiry date)

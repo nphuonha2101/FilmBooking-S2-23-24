@@ -41,7 +41,7 @@ public class BookingFilmController extends HttpServlet {
         HashMap<Long, String[][]> showtimeIDAndSeatMatrix = showtimeServices.getShowtimeIDAndSeatMatrix();
 
         Page bookFilmPage = new ClientPage(
-                "bookFilmTitle",
+                "bookingFilmTitle",
                 "book-film",
                 "master"
         );
