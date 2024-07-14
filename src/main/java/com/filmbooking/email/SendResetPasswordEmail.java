@@ -56,8 +56,5 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
         return null;
     }
 
-    @Override
-    public AbstractSendEmail sendEmailstoAdmins(List<String> emails, String emailSubject) {
-        return null;
-    }
+
 }
