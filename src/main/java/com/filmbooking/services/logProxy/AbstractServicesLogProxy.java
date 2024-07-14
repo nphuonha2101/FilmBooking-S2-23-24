@@ -1,6 +1,10 @@
 package com.filmbooking.services.logProxy;
 
 import com.filmbooking.annotations.TableName;
+import com.filmbooking.email.AbstractSendEmail;
+import com.filmbooking.email.SendLogEmail;
+import com.filmbooking.email.SendResetPasswordEmail;
+import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.model.User;
@@ -75,8 +79,10 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
                 level = LogModel.LOG_LVL_ALERT;
                 afterValue = gson.toJson(t);
 
+                LogModel logModel = new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
 
-                return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
+                sendEmail(logModel);
+                return logModel;
 
             case LogModel.UPDATE:
                 level = LogModel.LOG_LVL_WARN;
@@ -94,8 +100,19 @@ public abstract class AbstractServicesLogProxy<T extends IModel> {
                 level = LogModel.LOG_LVL_INFO;
 
                 return new LogModel(user, ip, level, targetTable, action, isActionSuccess, beforeValue, afterValue, createdAt, updatedAt);
-
         }
+
         return null;
     }
+
+
+    protected void sendEmail(LogModel logModel) {
+        AbstractSendEmail sendEmail = new SendLogEmail();
+        sendEmail
+                .loadHTMLEmail(LanguageEnum.ENGLISH)
+                .loadLogData(logModel)
+                .loadEmailContent()
+                .sendEmailToUser("milepro98@gmail.com", "Alert Notification");
+    }
+
 }
