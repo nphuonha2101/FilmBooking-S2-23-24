@@ -62,6 +62,10 @@ public class FilmServicesImpl extends AbstractService<Film>{
         return super.delete(film);
     }
 
+    public Film findById(long filmID) {
+        return this.repository.select(filmID);
+    }
+
     //    public List<Film> searchFilms(String searchQuery, double beginPriceNumber, double endPriceNumber) {
 //        Map<String, Object> conditions = new HashMap<>();
 //

@@ -30,8 +30,16 @@
             <div class="col">
                 <div id="titleYear"></div>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                <div class="year-selector d-flex justify-content-center align-items-center">
+                    <button id="decreaseYear" class="btn btn-secondary">-</button>
+                    <span id="yearDisplay" class="mx-3">2024</span>
+                    <button id="increaseYear" class="btn btn-secondary">+</button>
+                </div>
+
             </div>
             <div class="col">
+                <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+                <div id="dailyRevenueDisplay">Doanh thu ngày: <span id="dailyRevenue"></span></div>
                 <div class="form-group row">
                     <label for="dateStart" class="col-form-label col-sm-3">Chọn ngày bắt đầu: </label>
                     <div class="col-sm-3">
@@ -44,14 +52,28 @@
                         <input type="date" id="dateEnd" class="form-control">
                     </div>
                 </div>
-
-
                 <button id="okButton" class="btn btn-primary mb-2" onclick="revenueDates($('#dateStart').val(), $('#dateEnd').val())">OK</button>
-                <div id="dailyRevenueDisplay">Doanh thu ngày: <span id="dailyRevenue"></span></div>
+
             </div>
         </div>
     </div>
     <script>
+        var yearDisplay = $('#yearDisplay');
+        yearDisplay.text(getCurrentYear());
+
+        document.getElementById('increaseYear').addEventListener('click', function() {
+            var yearDisplay = document.getElementById('yearDisplay');
+            var currentYear = parseInt(yearDisplay.textContent);
+            yearDisplay.textContent = currentYear + 1;
+            drawChart(currentYear + 1);
+        });
+
+        document.getElementById('decreaseYear').addEventListener('click', function() {
+            var yearDisplay = document.getElementById('yearDisplay');
+            var currentYear = parseInt(yearDisplay.textContent);
+            yearDisplay.textContent = currentYear - 1;
+            drawChart(currentYear - 1);
+        });
         function drawChart(year) {
             var revenues ;
             var url = 'http://localhost:8080/api/v1/revenues?command=year&year=' + year;
@@ -76,18 +98,18 @@
                             {
                                 type: "column",
                                 dataPoints: [
-                                    { label: "T01",  y: revenues[1]  },
-                                    { label: "T02", y: revenues[2]  },
-                                    { label: "T03", y: revenues[3]  },
-                                    { label: "T04",  y: revenues[4]  },
-                                    { label: "T05",  y: revenues[5]  },
-                                    { label: "T06",  y: revenues[6]  },
-                                    { label: "T07",  y: revenues[7]  },
-                                    { label: "T08",  y: revenues[8]  },
-                                    { label: "T09",  y: revenues[9]  },
-                                    { label: "T10",  y: revenues[10]  },
-                                    { label: "T11",  y: revenues[11]  },
-                                    { label: "T12",  y: revenues[12]  }
+                                    { label: "Jan",  y: revenues[1]  },
+                                    { label: "Feb", y: revenues[2]  },
+                                    { label: "Mar", y: revenues[3]  },
+                                    { label: "Apr",  y: revenues[4]  },
+                                    { label: "May",  y: revenues[5]  },
+                                    { label: "Jun",  y: revenues[6]  },
+                                    { label: "Jul",  y: revenues[7]  },
+                                    { label: "Aug",  y: revenues[8]  },
+                                    { label: "Sep",  y: revenues[9]  },
+                                    { label: "Oct",  y: revenues[10]  },
+                                    { label: "Nov",  y: revenues[11]  },
+                                    { label: "Dec",  y: revenues[12]  }
                                 ]
                             }
                         ]
@@ -117,8 +139,52 @@
                     console.error('There was a problem with your fetch operation:', error);
                 });
         }
-        drawChart(new Date().getFullYear());
+        drawChart(getCurrentYear());
 
+        function getCurrentYear() {
+            return new Date().getFullYear();
+        }
+
+        function fetchAndRenderFilmChartData() {
+            var url = 'http://localhost:8080/api/v1/revenues?command=films';
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var dataPoints = data.map(film => ({
+                        y: film.filmRevenue,
+                        label: film.filmName
+                    }));
+                    renderFilmChart(dataPoints);
+                })
+                .catch(error => {
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+        }
+        function renderFilmChart(dataPoints) {
+            var chart = new CanvasJS.Chart("chartContainer2", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                // exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "Doanh thu phim"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - {y}%",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+        fetchAndRenderFilmChartData();
 
     </script>
 </section>
