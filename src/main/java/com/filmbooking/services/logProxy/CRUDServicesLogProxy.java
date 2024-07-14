@@ -104,7 +104,7 @@ public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogP
 
     @Override
     public List<T> selectAll(int limit, int offset, String order, Map<String, Object> filters) {
-        return selectAll(limit, offset, order, filters);
+        return crudService.selectAll(limit, offset, order, filters);
     }
 
 }

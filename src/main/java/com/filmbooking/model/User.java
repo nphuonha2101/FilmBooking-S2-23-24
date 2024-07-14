@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString
 @TableName("user_infos")
 @TableIdName("username")
-public class User implements IModel {
+public class User extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "user_infos";
     @Expose
     private String username;
@@ -49,6 +50,20 @@ public class User implements IModel {
         this.accountRole = accountRole;
         this.accountType = accountType;
         this.accountStatus = accountStatus;
+    }
+
+    public User(String username, String userFullName, String userEmail, String userPassword,
+                String accountRole, String accountType, int accountStatus,
+                LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.username = username;
+        this.userFullName = userFullName;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.accountRole = accountRole;
+        this.accountType = accountType;
+        this.accountStatus = accountStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public List<FilmBooking> getFilmBookingList() {

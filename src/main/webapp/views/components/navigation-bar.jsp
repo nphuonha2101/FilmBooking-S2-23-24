@@ -21,212 +21,6 @@
 
 <fmt:setBundle basename="properties.message" var="msg"/>
 
-<%--<nav class="navbar navbar-expand-lg navbar-light bg-light top-nav" id="navigation-bar">--%>
-<%--    <div class="d-flex w-100">--%>
-<%--        <div class="flex-grow-1 flex-nowrap d-flex align-items-center justify-content-center" id="left-nav">--%>
-<%--            <a class="site-logo" href="<c:url value="${pageContext.request.contextPath}/home"/>">FilmBooking</a>--%>
-<%--            <div class="search-box">--%>
-<%--                <button--%>
-<%--                        class="btn btn-light search-button ms-4"--%>
-<%--                        data-bs-toggle="modal"--%>
-<%--                        data-bs-target="#search-modal"--%>
-<%--                >--%>
-<%--                    <span class="material-symbols-rounded">search</span>--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-
-
-<%--        <div class="flex-grow-1 d-flex align-items-center justify-content-center" id="right-nav">--%>
-<%--            <ul class="navbar-nav flex-nowrap d-flex me-auto mb-2 mb-lg-0">--%>
-
-<%--                &lt;%&ndash;Home&ndash;%&gt;--%>
-<%--                <li--%>
-<%--                        class="nav-item"--%>
-<%--                        data-bs-toggle="tooltip"--%>
-<%--                        data-bs-title="<fmt:message key="home" bundle="${msg}"/>"--%>
-<%--                >--%>
-<%--                    <a class="nav-link"--%>
-<%--                       id="home"--%>
-<%--                       href="<c:url value="${pageContext.request.contextPath}/home"/>">--%>
-<%--                        <span class="material-symbols-rounded">home</span>--%>
-<%--                    </a>--%>
-<%--                </li>--%>
-
-<%--                &lt;%&ndash;Booking History&ndash;%&gt;--%>
-<%--                <c:if test="${not empty sessionScope.loginUser}">--%>
-<%--                    <li--%>
-<%--                            class="nav-item"--%>
-<%--                            data-bs-toggle="tooltip"--%>
-<%--                            data-bs-title="<fmt:message key="bookingHistory" bundle="${msg}"/>"--%>
-<%--                    >--%>
-<%--                        <a--%>
-<%--                                class="nav-link"--%>
-<%--                                id="film-booking_menu"--%>
-<%--                                href="#"--%>
-<%--                        >--%>
-<%--                            <span class="material-symbols-rounded">history</span>--%>
-
-<%--                            <div class="drop-down-contents" id="film-booking_menu-content">--%>
-<%--                            </div>--%>
-<%--                        </a>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-
-<%--                &lt;%&ndash;Account Info&ndash;%&gt;--%>
-<%--                <c:if test="${not empty sessionScope.loginUser}">--%>
-<%--                    <li--%>
-<%--                            class="nav-item dropdown"--%>
-<%--                            data-bs-toggle="tooltip"--%>
-<%--                            data-bs-title="<fmt:message key="accountInfo" bundle="${msg}"/>"--%>
-<%--                    >--%>
-
-<%--                        <a class="nav-link dropdown-toggle"--%>
-<%--                           href="#"--%>
-<%--                           role="button"--%>
-<%--                           data-bs-toggle="dropdown"--%>
-<%--                           aria-expanded="false"--%>
-<%--                           id="account-info">--%>
-
-<%--                        </a>--%>
-
-<%--                        <ul class="dropdown-menu">--%>
-<%--                            <li>--%>
-<%--                                <p class="dropdown-item font-FiraSans"> ${sessionScope.loginUser.userFullName}</p>--%>
-<%--                            </li>--%>
-<%--                            <li>--%>
-<%--                                <a class="dropdown-item"--%>
-<%--                                   href="<c:url value="${pageContext.request.contextPath}/auth/booking-history"/>">--%>
-<%--                                    <fmt:message key="bookingHistory" bundle="${msg}"/>--%>
-<%--                                </a>--%>
-<%--                            </li>--%>
-
-<%--                            <c:choose>--%>
-<%--                                <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">--%>
-<%--                                    <li>--%>
-<%--                                        <a class="dropdown-item"--%>
-<%--                                           href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>">--%>
-<%--                                            <fmt:message key="adminPage" bundle="${msg}"/>--%>
-<%--                                        </a>--%>
-<%--                                    </li>--%>
-<%--                                </c:when>--%>
-<%--                            </c:choose>--%>
-<%--                            <li>--%>
-<%--                                <a class="dropdown-item"--%>
-<%--                                   href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">--%>
-<%--                                    <fmt:message key="yourAccount" bundle="${msg}"/>--%>
-<%--                                </a>--%>
-<%--                            </li>--%>
-<%--                        </ul>--%>
-<%--                    </li>--%>
-<%--                </c:if>--%>
-
-
-<%--                <c:choose>--%>
-<%--                    <c:when test="${empty sessionScope.loginUser.username}">--%>
-<%--                        &lt;%&ndash;Register&ndash;%&gt;--%>
-<%--                        <li--%>
-<%--                                class="nav-item"--%>
-<%--                                data-bs-toggle="tooltip"--%>
-<%--                                data-bs-title="<fmt:message key="register" bundle="${msg}"/>"--%>
-<%--                        >--%>
-<%--                            <a class="nav-link"--%>
-<%--                               href="<c:url value="${pageContext.request.contextPath}/signup"/>" id="signup">--%>
-<%--                                <span class="material-symbols-rounded">person_add</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-
-<%--                        &lt;%&ndash;Login&ndash;%&gt;--%>
-<%--                        <li--%>
-<%--                                class="nav-item"--%>
-<%--                                data-bs-toggle="tooltip"--%>
-<%--                                data-bs-title="<fmt:message key="login" bundle="${msg}"/>"--%>
-<%--                        >--%>
-<%--                            <a class="nav-link"--%>
-<%--                               href="<c:url value="${pageContext.request.contextPath}/login"/>" id="login">--%>
-<%--                                <span class="material-symbols-rounded">login</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                    </c:when>--%>
-<%--                </c:choose>--%>
-
-<%--                <c:choose>--%>
-<%--                    <c:when test="${not empty sessionScope.loginUser.username}">--%>
-<%--                        &lt;%&ndash;Logout&ndash;%&gt;--%>
-<%--                        <li--%>
-<%--                                class="nav-item"--%>
-<%--                                data-bs-toggle="tooltip"--%>
-<%--                                data-bs-title="<fmt:message key="logout" bundle="${msg}"/>"--%>
-<%--                        >--%>
-<%--                            <a class="nav-link"--%>
-<%--                               href="<c:url value="${pageContext.request.contextPath}/logout"/>" id="logout">--%>
-<%--                                <span class="material-symbols-rounded">logout</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                    </c:when>--%>
-<%--                </c:choose>--%>
-
-<%--                &lt;%&ndash;Change Language&ndash;%&gt;--%>
-<%--                <li--%>
-<%--                        class="nav-item dropdown ms-3"--%>
-<%--                >--%>
-<%--                    <c:choose>--%>
-<%--                        <c:when test="${sessionScope.lang eq 'default' || empty sessionScope.lang}">--%>
-<%--                            <a class="nav-link dropdown-toggle"--%>
-<%--                               href="#"--%>
-<%--                               role="button"--%>
-<%--                               data-bs-toggle="dropdown"--%>
-<%--                               aria-expanded="false"--%>
-<%--                               id="language">--%>
-<%--                                <img class="img-language"--%>
-<%--                                     src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "--%>
-<%--                                     alt="default Vietnamese">--%>
-<%--                                <span> &ensp; VI</span>--%>
-<%--                            </a>--%>
-<%--                        </c:when>--%>
-<%--                        <c:otherwise>--%>
-<%--                            <a class="nav-link dropdown-toggle"--%>
-<%--                               href="#"--%>
-<%--                               role="button"--%>
-<%--                               data-bs-toggle="dropdown"--%>
-<%--                               aria-expanded="false"--%>
-<%--                               id="language">--%>
-<%--                                <img class="img-language"--%>
-<%--                                     src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "--%>
-<%--                                     alt="English">--%>
-<%--                                <span> &ensp; EN</span>--%>
-<%--                            </a>--%>
-<%--                        </c:otherwise>--%>
-<%--                    </c:choose>--%>
-
-<%--                    <ul class="dropdown-menu">--%>
-<%--                        <li>--%>
-<%--                            <a class="dropdown-item"--%>
-<%--                               href="<c:url value="${pageContext.request.contextPath}/lang?name=default"/>">--%>
-<%--                                <img--%>
-<%--                                        class="img-language"--%>
-<%--                                        src="<c:url value='/resources/images/icons8-vietnam-flag-48.png'/> "--%>
-<%--                                        alt="default Vietnamese">--%>
-<%--                                <span> &ensp; Tiếng Việt</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-
-<%--                        <li>--%>
-<%--                            <a class="dropdown-item"--%>
-<%--                               href="<c:url value="${pageContext.request.contextPath}/lang?name=en_US"/>">--%>
-<%--                                <img--%>
-<%--                                        class="img-language"--%>
-<%--                                        src="<c:url value='/resources/images/icons8-usa-flag-48.png'/> "--%>
-<%--                                        alt="default Vietnamese">--%>
-<%--                                <span> &ensp; English</span>--%>
-<%--                            </a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
-<%--                </li>--%>
-<%--            </ul>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--</nav>--%>
 
 <nav class="top-nav row">
     <div class="col-6 d-flex align-items-center justify-content-center ">
@@ -252,7 +46,7 @@
 
     <div class="col-6 d-flex align-items-center justify-content-center">
         <div class="w-100 d-flex align-items-center justify-content-center">
-            <ul class="list-inline align-items-center">
+            <ul class="m-0 list-inline align-items-center">
                 <li
                         class="list-inline-item m-0"
                         data-bs-toggle="tooltip"
@@ -265,20 +59,19 @@
                     </a>
                 </li>
 
-                <li
-                        class="list-inline-item m-0"
-                        data-bs-toggle="tooltip"
-                        data-bs-title="<fmt:message key="bookingHistory" bundle="${msg}"/>"
-                >
-                    <a
-                            class="nav-link"
-                            id="film-booking_menu"
-                            href="#">
-                        <span class="material-symbols-rounded">history</span>
-
-                    </a>
-                    <div id="film-booking_menu-content"></div>
-                </li>
+                <c:if test="${not empty sessionScope.loginUser}">
+                    <li
+                            class="list-inline-item m-0"
+                           data-bs-toggle="modal"
+                            data-bs-target="#booking-history-modal"
+                    >
+                        <a class="nav-link"
+                           id="film-booking_menu"
+                           href="#">
+                            <span class="material-symbols-rounded">history</span>
+                        </a>
+                    </li>
+                </c:if>
 
                 <c:if test="${not empty sessionScope.loginUser}">
                     <li
@@ -432,5 +225,6 @@
 </nav>
 
 <jsp:include page="/views/components/modals/search-modal.jsp"/>
+<jsp:include page="/views/components/modals/booking-history-modal.jsp"/>
 
 <script type="module" src="<c:url value="/resources/js/handlesShowFilmBookingHistory.js"/>"></script>

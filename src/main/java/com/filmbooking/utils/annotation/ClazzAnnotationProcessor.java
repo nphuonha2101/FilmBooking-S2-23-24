@@ -3,17 +3,17 @@ package com.filmbooking.utils.annotation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ClazzAnnotationProcessor {
     private static ClazzAnnotationProcessor instance;
     private static List<AnnotationResult> annotationResults;
 
     private ClazzAnnotationProcessor(Class<?> clazz) {
-        annotationResults = new ArrayList<>();
+        annotationResults = new CopyOnWriteArrayList<>();
         processAnnotations(clazz);
     }
 

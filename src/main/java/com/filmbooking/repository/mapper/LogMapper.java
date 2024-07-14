@@ -21,8 +21,8 @@ public class LogMapper implements RowMapper<LogModel> {
                 rs.getBoolean("is_action_success"),
                 rs.getString("before_data"),
                 rs.getString("after_data"),
-                rs.getTimestamp("created_at"),
-                rs.getTimestamp("updated_at")
+                rs.getTimestamp("created_at").toLocalDateTime(),
+                rs.getTimestamp("updated_at").toLocalDateTime()
         );
     }
 }

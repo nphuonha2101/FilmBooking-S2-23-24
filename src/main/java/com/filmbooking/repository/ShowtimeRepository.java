@@ -119,6 +119,8 @@ public class ShowtimeRepository extends AbstractRepository<Showtime> {
         result.put("showtime_date", showtime.getShowtimeDate());
         result.put("seats_data", showtime.getSeatsData());
         result.put("slug", showtime.getSlug());
+        result.put("created_at", showtime.getCreatedAt());
+        result.put("updated_at", showtime.getUpdatedAt());
 
         return result;
     }

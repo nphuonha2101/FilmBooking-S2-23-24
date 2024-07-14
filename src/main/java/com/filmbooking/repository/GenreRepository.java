@@ -1,5 +1,6 @@
 package com.filmbooking.repository;
 
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
@@ -12,19 +13,42 @@ import java.util.List;
 import java.util.Map;
 
 public class GenreRepository extends AbstractRepository<Genre> {
+    private CacheManager cacheManager;
+
+    public GenreRepository(CacheManager cacheManager) {
+        super(Genre.class);
+        this.cacheManager = cacheManager;
+    }
+
     public GenreRepository() {
         super(Genre.class);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Genre> selectAllByFilmId(long filmId) {
+        if (cacheManager != null) {
+            List<Genre> genres = (List<Genre>) cacheManager.get("genres_by_film_id_" + filmId);
+            System.out.println("Cache genres: " + genres);
+            if (genres != null) {
+                return genres;
+            }
+        }
+
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM genres WHERE genre_id IN (SELECT genre_id FROM film_genres WHERE film_id = :film_id)";
             System.out.println("Select all SQL: " + sql);
-            return handle.createQuery(sql)
+            List<Genre> genreList = handle.createQuery(sql)
                     .bind("film_id", filmId)
                     .map(getRowMapper())
                     .list();
+
+            if (cacheManager != null) {
+                cacheManager.put("genres_by_film_id_" + filmId, genreList);
+            }
+
+            return genreList;
+
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
@@ -91,6 +115,8 @@ public class GenreRepository extends AbstractRepository<Genre> {
         Map<String, Object> result = new HashMap<>();
         result.put("genre_id", genre.getGenreID());
         result.put("genre_name", genre.getGenreName());
+        result.put("created_at", genre.getCreatedAt());
+        result.put("updated_at", genre.getUpdatedAt());
 
         return result;
     }
