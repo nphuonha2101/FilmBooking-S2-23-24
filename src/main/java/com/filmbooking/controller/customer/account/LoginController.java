@@ -1,7 +1,6 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.email.AbstractSendEmail;
-import com.filmbooking.email.SendFailLogin5TimesEmail;
+import com.filmbooking.email.EmailSendRunnable;
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.model.FailedLogin;
 import com.filmbooking.model.FilmBooking;
@@ -31,10 +30,10 @@ import java.util.Map;
 public class LoginController extends HttpServlet {
     private UserServicesLogProxy userServices;
 
-    private UserServicesImpl userServicesimpl ;
+    private UserServicesImpl userServicesimpl;
     private final String VIEW_PATH = WebAppPathUtils.getClientPagesPath("login.jsp");
     private final String LAYOUT_PATH = WebAppPathUtils.getLayoutPath("master.jsp");
-    int countFailedLogin = 0 ;
+    int countFailedLogin = 0;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -121,9 +120,9 @@ public class LoginController extends HttpServlet {
                 failedLoginServices.insert(failedLogin);
             } else {
                 failedLoginServices.update(failedLogin);
-                if(failedLogin.getLoginCount() >= 5){
+                if (failedLogin.getLoginCount() >= 5) {
                     User user = userServicesimpl.getByUsername(username);
-                    sendFailLoginEmail(username, failedLogin.getLockTime().toString(),failedLogin.getReqIp(), user.getUserEmail(), currentLanguage);
+                    sendFailLoginEmail(username, failedLogin.getLockTime().toString(), failedLogin.getReqIp(), user.getUserEmail(), currentLanguage);
                 }
             }
             loginPage.putError(serviceResult.getStatus().getStatusCode());
@@ -154,17 +153,11 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    private static void sendFailLoginEmail(String username, String lockTime, String reqIp, String email,String language) {
+    private void sendFailLoginEmail(String username, String lockTime, String reqIp, String email, String language) {
         LanguageEnum languageEnum = language == null || language.equals("default") ? LanguageEnum.VIETNAMESE
                 : LanguageEnum.ENGLISH;
-        AbstractSendEmail emailSender = new SendFailLogin5TimesEmail();
-        emailSender
-                .loadHTMLEmail(languageEnum)
-                .putEmailInfo("username", username)
-                .putEmailInfo("lockTime", lockTime)
-                .putEmailInfo("reqIp", reqIp)
-                .loadEmailContent()
-                .sendEmailToUser(email, "Your account has been locked");
+        EmailSendRunnable emailSendRunable = new EmailSendRunnable(username, lockTime, reqIp, email, languageEnum);
+        new Thread(emailSendRunable).start();
     }
 
     private void getHtmlRespFromPage(HttpServletRequest req, HttpServletResponse resp, Page page) throws ServletException, IOException {

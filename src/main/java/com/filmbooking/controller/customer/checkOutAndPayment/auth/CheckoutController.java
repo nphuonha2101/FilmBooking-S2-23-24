@@ -82,7 +82,7 @@ public class CheckoutController extends HttpServlet {
                 resp.sendRedirect(paymentUrl);
             }
         } else
-            PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
+            PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.SUCCESS);
     }
 
     @Override
