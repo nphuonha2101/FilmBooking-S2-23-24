@@ -12,7 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
+public class FilmBookingRepository extends AbstractRepository<FilmBooking> {
     public FilmBookingRepository() {
         super(FilmBooking.class);
     }
@@ -35,11 +35,12 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         map.put("updated_at", filmBooking.getUpdatedAt());
         return map;
     }
+
     public List<FilmBooking> sellectAllByUsername(String username) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM film_bookings WHERE username = :username";
-               return handle.createQuery(sql)
+            return handle.createQuery(sql)
                     .bind("username", username)
                     .map(getRowMapper())
                     .list();
@@ -91,6 +92,7 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
                     .bind("end_date", endDate)
                     .map(getRowMapper())
                     .list();
+
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return null;
@@ -99,7 +101,7 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         }
     }
 
-    public List<FilmBooking> selectAllByMonth(String month, String year){
+    public List<FilmBooking> selectAllByMonth(String month, String year) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM film_bookings WHERE EXTRACT(MONTH FROM booking_date) = :month AND EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
@@ -116,27 +118,12 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking>{
         }
     }
 
-    public List<FilmBooking> selectAllByYear(String year){
+    public List<FilmBooking> selectAllByYear(String year) {
         try {
             Handle handle = JdbiDBConnection.openHandle();
             String sql = "SELECT * FROM film_bookings WHERE  EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
             return handle.createQuery(sql)
                     .bind("year", year)
-                    .map(getRowMapper())
-                    .list();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return null;
-        } finally {
-            JdbiDBConnection.closeHandle();
-        }
-    }
-    public List<FilmBooking> selectAllByFilmID(long filmID){
-        try {
-            Handle handle = JdbiDBConnection.openHandle();
-            String sql = "SELECT * FROM film_bookings WHERE showtime_id IN (SELECT showtime_id FROM showtimes WHERE film_id = :film_id)";
-            return handle.createQuery(sql)
-                    .bind("film_id", filmID)
                     .map(getRowMapper())
                     .list();
         } catch (Exception e) {

@@ -11,5 +11,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Revenue {
     private String filmName;
+    private int ticketSold;
     private double filmRevenue;
 }

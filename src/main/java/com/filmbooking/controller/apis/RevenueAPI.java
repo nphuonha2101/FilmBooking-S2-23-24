@@ -23,46 +23,39 @@ public class RevenueAPI extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         RevenueServiecsImpl revenueServiecs = new RevenueServiecsImpl();
-        FilmServicesImpl filmServices = new FilmServicesImpl();
 
 
         String command = req.getParameter("command");
         String jsonResp = "";
-        Gson gson = GSONUtils.getGson();
+
+
         if (command.equalsIgnoreCase("year")) {
             String year = req.getParameter("year");
-            List<Double> revenues = new ArrayList<>();
-            System.out.println(year);
-            double resultYear = revenueServiecs.calculateRevenueByYear(year);
-            revenues.add(resultYear);
-            System.out.println(resultYear);
-            for (int i = 1; i < 13; i++) {
-                revenues.add(revenueServiecs.calculateRevenueByMonth(year, "0" + i));
+            List<Revenue> result = new ArrayList<>();
+            double total = 0;
+            int count = 0;
+            List<Revenue> revenues = revenueServiecs.calculateRevenueByYear(year);
+            for (Revenue revenue : revenues) {
+                total += revenue.getFilmRevenue();
+                count += revenue.getTicketSold();
             }
-            jsonResp = gson.toJson(revenues);
+            Revenue yearRevenue = new Revenue(year, count, total);
+            result.add(yearRevenue);
+            for (int i =1 ; i<13;i++){
+                Revenue revenue = revenueServiecs.calculateRevenueByMonth(year, i+"");
+                result.add(revenue);
+            }
+            Gson newGson = new Gson();
+            jsonResp = newGson.toJson(result);
 
         } else if (command.equalsIgnoreCase("dates")) {
             String dateStart = req.getParameter("dateStart");
             dateStart = dateStart.replace("-", "/");
             String dateEnd = req.getParameter("dateEnd");
             dateEnd = dateEnd.replace("-", "/");
-            System.out.println(dateStart);
-            System.out.println(dateEnd);
-            double result = revenueServiecs.calculateRevenueByDate(dateStart, dateEnd);
-            jsonResp = gson.toJson(result);
-        }else if (command.equalsIgnoreCase("films")){
-           List<Film> films = filmServices.selectAll();
-           List<Revenue> revenues = new ArrayList<>();
-                for (Film film : films) {
-                    double revenue = revenueServiecs.calculateRevenueByFilm(film.getFilmID());
-                    revenues.add(new Revenue(film.getFilmName(), revenue));
-                }
-                for (Revenue revenue : revenues) {
-                    System.out.println(revenue.getFilmName());
-                    System.out.println(revenue.getFilmRevenue());
-                }
-                Gson newGson = new Gson();
-            jsonResp = newGson.toJson(revenues);
+            List<Revenue> result = revenueServiecs.getByDates(dateStart, dateEnd);
+            Gson newGson = new Gson();
+            jsonResp = newGson.toJson(result);
         }
 
         resp.setContentType("application/json");
