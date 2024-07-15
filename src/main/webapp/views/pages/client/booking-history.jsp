@@ -97,7 +97,7 @@
                                         </p>
                                     </div>
                                 </div>
-                                <c:if test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                                <c:if test="${sessionScope.loginUser.accountRole eq 'admin'|| sessionScope.loginUser.accountRole eq 'superadmin'}">
                                     <div class="wrapper d-flex justify-content-end">
                                         <div class="d-flex justify-content-end wrapper">
                                             <a class="primary-filled-button button rounded-button" target="_blank"
