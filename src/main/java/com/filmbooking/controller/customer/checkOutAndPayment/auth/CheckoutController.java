@@ -13,6 +13,7 @@ import com.filmbooking.page.Page;
 import com.filmbooking.payment.VNPay;
 import com.filmbooking.services.impls.FilmBookingServicesImpl;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.utils.FilmBookingUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -39,51 +40,59 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        filmBookingServices = new FilmBookingServicesImpl();
-        showtimeServices = new ShowtimeServicesImpl();
+        String checkoutState = req.getParameter("checkout-state");
 
-        String paymentMethod = req.getParameter("payment-method");
+        if (checkoutState.equals("buy")) {
+            filmBookingServices = new FilmBookingServicesImpl();
+            showtimeServices = new ShowtimeServicesImpl();
 
-        HttpSession session = req.getSession(false);
-        FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
+            String paymentMethod = req.getParameter("payment-method");
 
-        if (!filmBooking.isExpired()) {
-            if (paymentMethod.equalsIgnoreCase("cash")) {
-                filmBooking.setPaymentStatus("pending");
-                PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.PENDING);
-            }
-            // get vnpay payment url
-            else {
-                double amount = filmBooking.getTotalFee();
-                String locate = "";
-                String language = (String) session.getAttribute("lang");
+            HttpSession session = req.getSession(false);
+            FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
 
-                if (language == null || language.equals("default"))
-                    locate = "vn";
-                else
-                    locate = "us";
+            if (!filmBooking.isExpired()) {
+                if (paymentMethod.equalsIgnoreCase("cash")) {
+                    filmBooking.setPaymentStatus("pending");
+                    PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.PENDING);
+                }
+                // get vnpay payment url
+                else {
+                    double amount = filmBooking.getTotalFee();
+                    String locate = "";
+                    String language = (String) session.getAttribute("lang");
 
-                String orderInfo = "";
-                if (locate.equals("vn"))
-                    orderInfo = "THANH TOAN FILMBOOKING ";
-                else
-                    orderInfo = "FILM BOOKING PAYMENT ";
+                    if (language == null || language.equals("default"))
+                        locate = "vn";
+                    else
+                        locate = "us";
 
-                orderInfo += filmBooking.getFilmBookingID() + " - " + filmBooking.getShowtime().getFilm().getFilmName() + " - " + filmBooking.getUser().getUsername() + " - " + filmBooking.getBookingDate();
+                    String orderInfo = "";
+                    if (locate.equals("vn"))
+                        orderInfo = "THANH TOAN FILMBOOKING ";
+                    else
+                        orderInfo = "FILM BOOKING PAYMENT ";
 
-                VNPay vnPay = new VNPay();
-                String paymentUrl = vnPay.addAmount(amount)
-                        .addTxnRef(filmBooking.getVnpayTxnRef())
-                        .addOrderInfo(orderInfo)
-                        .addLocale(req)
-                        .addCustomerIP(req)
-                        .getPaymentURL();
+                    orderInfo += filmBooking.getFilmBookingID() + " - " + filmBooking.getShowtime().getFilm().getFilmName() + " - " + filmBooking.getUser().getUsername() + " - " + filmBooking.getBookingDate();
 
-                resp.sendRedirect(paymentUrl);
-            }
-        } else
-            PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
+                    VNPay vnPay = new VNPay();
+                    String paymentUrl = vnPay.addAmount(amount)
+                            .addTxnRef(filmBooking.getVnpayTxnRef())
+                            .addOrderInfo(orderInfo)
+                            .addLocale(req)
+                            .addCustomerIP(req)
+                            .getPaymentURL();
+
+                    resp.sendRedirect(paymentUrl);
+                }
+            } else
+                PaymentController.handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
+        } else if (checkoutState.equals("cancel")) {
+            FilmBookingUtil.cancelFilmBooking(req);
+            resp.sendRedirect("/home");
+        }
     }
+
 
     @Override
     public void destroy() {
