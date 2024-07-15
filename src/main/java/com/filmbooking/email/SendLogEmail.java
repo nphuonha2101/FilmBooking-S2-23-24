@@ -6,10 +6,11 @@ import com.filmbooking.model.LogModel;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class SendLogEmail extends AbstractSendEmail{
-    public  SendLogEmail() {
+public class SendLogEmail extends AbstractSendEmail {
+    public SendLogEmail() {
         super();
     }
+
     @Override
     public AbstractSendEmail loadHTMLEmail(LanguageEnum language) {
         String currentYear = String.valueOf(LocalDateTime.now().getYear());
@@ -17,6 +18,7 @@ public class SendLogEmail extends AbstractSendEmail{
         this.putEmailInfo("currentYear", currentYear);
         return this;
     }
+
     public AbstractSendEmail loadLogData(LogModel logModel) {
         this.putEmailInfo("logID", String.valueOf(logModel.getLogID()));
         this.putEmailInfo("reqIP", logModel.getReqIP());

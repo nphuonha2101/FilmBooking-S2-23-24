@@ -67,7 +67,7 @@ public abstract class AbstractSendEmail {
             }
         });
     }
-    
+
     /**
      * <ul>
      *      <li>
@@ -178,12 +178,12 @@ public abstract class AbstractSendEmail {
 
     public abstract AbstractSendEmail loadLogData(LogModel logModel);
 
-    public void sendEmailstoAdmins(List<String> emails, String emailSubject){
-        if(emails != null && !emails.isEmpty()){
-            for(String email: emails){
+    public void sendEmailstoAdmins(List<String> emails, String emailSubject) {
+        if (emails != null && !emails.isEmpty()) {
+            for (String email : emails) {
                 sendEmailToUser(email, emailSubject);
             }
-        }else {
+        } else {
             System.out.println("No email to send");
         }
     }

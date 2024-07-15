@@ -3,6 +3,8 @@ package com.filmbooking.repository;
 import com.filmbooking.model.FilmBooking;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -12,9 +14,9 @@ public class FilmBookingRepositoryTest {
         assertDoesNotThrow(() -> {
             FilmBookingRepository filmBookingRepository = new FilmBookingRepository();
             double totalFee = 0;
-            for (FilmBooking filmBooking : filmBookingRepository.selectAllByDates("2021-12-01", "2024-12-31")) {
+            for (FilmBooking filmBooking : filmBookingRepository.selectAllByDates("2021/01/01", "2025/01/01")) {;
                 totalFee += filmBooking.getTotalFee();
-                System.out.println("FilmBookingRepositoryTest: select" + totalFee);
+                System.out.println("FilmBookingRepositoryTest: select " + totalFee);
             }
             System.out.println(totalFee);
         });
