@@ -46,8 +46,4 @@ public class ShowtimeServicesImpl extends AbstractService<Showtime> implements I
         return result;
     }
 
-    public Showtime findById(Long id) {
-        return this.repository.select(id);
-    }
-
 }
