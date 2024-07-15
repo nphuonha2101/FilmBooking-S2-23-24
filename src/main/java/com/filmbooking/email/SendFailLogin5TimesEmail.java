@@ -24,5 +24,4 @@ public class SendFailLogin5TimesEmail extends AbstractSendEmail{
         return null;
     }
 
-
 }

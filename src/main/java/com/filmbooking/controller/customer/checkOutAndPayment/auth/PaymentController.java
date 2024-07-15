@@ -47,11 +47,10 @@ public class PaymentController extends HttpServlet {
         if (vnPayRespCode.equals("00")) {
             handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.SUCCESS);
             System.out.println("OK");
+        } else {
+            handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
+            System.out.println("Not OK");
         }
-//        } else {
-//            handlePayment(req, resp, filmBooking, showtimeServices, filmBookingServices, PaymentStatus.FAILED);
-//            System.out.println("Not OK");
-//        }
     }
 
     // TODO: handle payment log

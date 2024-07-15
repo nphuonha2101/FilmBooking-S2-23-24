@@ -31,7 +31,7 @@
                 <div id="titleYear"></div>
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
                 <div class="year-selector d-flex justify-content-center align-items-center">
-                    <button id="decreaseYear" class="btn btn-secondary" > <</button>
+                    <button id="decreaseYear" class="btn btn-secondary"> <</button>
                     <span id="yearDisplay" class="mx-3">2024</span>
                     <button id="increaseYear" class="btn btn-secondary"> ></button>
                 </div>
@@ -65,5 +65,5 @@
             </div>
         </div>
     </div>
-<script src="${pageContext.request.contextPath}/resources/js/handesRevenue.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/handesRevenue.js"></script>
 </section>
