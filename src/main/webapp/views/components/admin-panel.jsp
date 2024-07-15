@@ -29,40 +29,75 @@
             <div class="accordion-body d-flex flex-column align-items-center mt-4">
                 <h4><fmt:message key="managementTools" bundle="${adminMsg}"/></h4>
 
-                <a
-                        class="links button rounded-button"
-                        href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>"
-                >
-                    <fmt:message key="filmManagement"
-                                 bundle="${adminMsg}"/>
-                </a>
+                <c:choose>
+                    <c:when test="${sessionScope.loginUser.accountRole eq 'superadmin'}">
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/revenue"/>"
+                        >
+                            <fmt:message key="revenueManagement"
+                                         bundle="${adminMsg}"/>
+                        </a>
 
-                <a
-                        class=" links button rounded-button"
-                        href="<c:url value="${pageContext.request.contextPath}/admin/management/showtime"/>"
-                >
-                    <fmt:message key="showtimeManagement" bundle="${adminMsg}"/>
-                </a>
-                <a
-                        class="links button rounded-button"
-                        href="<c:url value="${pageContext.request.contextPath}/admin/management/room"/>"
-                >
-                    <fmt:message key="roomManagement" bundle="${adminMsg}"/>
-                </a>
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>"
+                        >
+                            <fmt:message key="filmManagement"
+                                         bundle="${adminMsg}"/>
+                        </a>
 
-                <a
-                        class="links button rounded-button"
-                        href="<c:url value="${pageContext.request.contextPath}/admin/management/log"/>"
-                >
-                    <fmt:message key="logManagement" bundle="${adminMsg}"/>
+                        <a
+                                class=" links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/showtime"/>"
+                        >
+                            <fmt:message key="showtimeManagement" bundle="${adminMsg}"/>
+                        </a>
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/room"/>"
+                        >
+                            <fmt:message key="roomManagement" bundle="${adminMsg}"/>
+                        </a>
 
-                </a>
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/log"/>"
+                        >
+                            <fmt:message key="logManagement" bundle="${adminMsg}"/>
 
-                <a
-                        class="links button rounded-button"
-                        href="<c:url value="${pageContext.request.contextPath}/admin/management/user"/>"
-                ><fmt:message key="userManagement" bundle="${adminMsg}"/>
-                </a>
+                        </a>
+
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/user"/>"
+                        ><fmt:message key="userManagement" bundle="${adminMsg}"/>
+                        </a>
+                    </c:when>
+                    <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/film"/>"
+                        >
+                            <fmt:message key="filmManagement"
+                                         bundle="${adminMsg}"/>
+                        </a>
+
+                        <a
+                                class=" links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/showtime"/>"
+                        >
+                            <fmt:message key="showtimeManagement" bundle="${adminMsg}"/>
+                        </a>
+                        <a
+                                class="links button rounded-button"
+                                href="<c:url value="${pageContext.request.contextPath}/admin/management/room"/>"
+                        >
+                            <fmt:message key="roomManagement" bundle="${adminMsg}"/>
+                        </a>
+                    </c:when>
+                </c:choose>
+
             </div>
         </div>
     </div>

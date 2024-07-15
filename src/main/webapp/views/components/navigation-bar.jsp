@@ -99,6 +99,14 @@
                             </li>
 
                             <c:choose>
+                                <c:when test="${sessionScope.loginUser.accountRole eq 'superadmin'}">
+                                    <li>
+                                        <a class="dropdown-item"
+                                           href="<c:url value="${pageContext.request.contextPath}/admin/management/revenue"/>">
+                                            <fmt:message key="adminPage" bundle="${msg}"/>
+                                        </a>
+                                    </li>
+                                </c:when>
                                 <c:when test="${sessionScope.loginUser.accountRole eq 'admin'}">
                                     <li>
                                         <a class="dropdown-item"

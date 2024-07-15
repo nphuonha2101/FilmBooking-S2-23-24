@@ -38,3 +38,6 @@
 
 <link rel="stylesheet" href="<c:url value='/resources/css/style_out.css'/>"/>
 <link rel="stylesheet" href="<c:url value='/resources/css/custom-dataTables.css'/>"/>
+
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>

@@ -6,6 +6,7 @@ package com.filmbooking.enumsAndConstants.enums;
  * @project_name FilmBooking-S2-23-24
  */
 public enum AccountRoleEnum {
+    SUPERADMIN("superadmin"),
     ADMIN("admin"),
     CUSTOMER("customer");
 
