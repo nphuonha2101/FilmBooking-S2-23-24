@@ -38,6 +38,7 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
     public SendResetPasswordEmail() {
         super();
     }
+
     @Override
     public AbstractSendEmail loadHTMLEmail(LanguageEnum language) {
         String tokenVerifyUrl = PropertiesUtils.getProperty("verify_token.url");
