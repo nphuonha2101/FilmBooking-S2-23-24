@@ -30,7 +30,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             jdbiBuilder.setMapToRow(mapToRow(t));
             String sql = jdbiBuilder.buildInsertSQL();
-            System.out.println("Insert SQL: " + sql);
 
             handle.createUpdate(sql)
                     .bindMap(jdbiBuilder.getMapToRow())
@@ -52,8 +51,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             jdbiBuilder.setMapToRow(mapToRow(t));
             String sql = jdbiBuilder.buildUpdateSQL();
-
-            System.out.println("Map to row: " + mapToRow(t));
 
             handle.createUpdate(sql)
                     .bindMap(mapToRow(t))
@@ -78,8 +75,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
 
             Object id = t.getIdValue();
 
-            System.out.println("AbstractRepository: delete: " + id + ", key name: " + jdbiBuilder.getPrimaryKeyName());
-
             handle.createUpdate(sql)
                     .bind(jdbiBuilder.getPrimaryKeyName(), id)
                     .execute();
@@ -100,7 +95,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectSQL();
-            System.out.println("Select SQL: " + sql);
 
             return handle.createQuery(sql)
                     .bind(jdbiBuilder.getPrimaryKeyName(), id)
@@ -120,7 +114,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL();
-            System.out.println("Select All SQL: " + sql);
 
             return handle.createQuery(sql)
                     .map(getRowMapper())
@@ -139,12 +132,9 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL(filters);
-            System.out.println("Select All SQL: " + sql);
 
             Map<String, Object> modifiedFilters = new HashMap<>();
             filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
-
-            System.out.println("Filters: " + modifiedFilters);
 
             return handle.createQuery(sql)
                     .bindMap(modifiedFilters)
@@ -164,7 +154,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL(limit, offset);
-            System.out.println("Select All SQL: " + sql);
 
             return handle.createQuery(sql)
                     .map(getRowMapper())
@@ -183,7 +172,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL(limit, offset, order);
-            System.out.println("Select All SQL: " + sql);
 
             return handle.createQuery(sql)
                     .map(getRowMapper())
@@ -202,7 +190,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildSelectAllSQL(limit, offset, order, filters);
-            System.out.println("Select All SQL: " + sql);
 
             Map<String, Object> modifiedFilters = new HashMap<>();
             filters.forEach((k, v) -> modifiedFilters.put(k.split("_(?=[^_]*$)", 2)[0], v));
@@ -225,7 +212,6 @@ public abstract class AbstractRepository<T extends IModel> implements IRepositor
             Handle handle = JdbiDBConnection.openHandle();
 
             String sql = jdbiBuilder.buildCountSQL();
-            System.out.println("Count SQL: " + sql);
 
             return handle.createQuery(sql)
                     .mapTo(Long.class)
