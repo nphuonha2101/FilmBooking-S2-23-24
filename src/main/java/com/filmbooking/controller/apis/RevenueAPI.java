@@ -15,7 +15,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = {"/api/v1/revenues/*", "/api/v1/revenues"})
 public class RevenueAPI extends HttpServlet {
@@ -23,12 +25,8 @@ public class RevenueAPI extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         RevenueServiecsImpl revenueServiecs = new RevenueServiecsImpl();
-
-
         String command = req.getParameter("command");
         String jsonResp = "";
-
-
         if (command.equalsIgnoreCase("year")) {
             String year = req.getParameter("year");
             List<Revenue> result = new ArrayList<>();
@@ -41,12 +39,11 @@ public class RevenueAPI extends HttpServlet {
             }
             Revenue yearRevenue = new Revenue(year, count, total);
             result.add(yearRevenue);
-            for (int i =1 ; i<13;i++){
-                Revenue revenue = revenueServiecs.calculateRevenueByMonth(year, i+"");
+            for (int i = 1; i < 13; i++) {
+                Revenue revenue = revenueServiecs.calculateRevenueByMonth(year, i + "");
                 result.add(revenue);
             }
-            Gson newGson = new Gson();
-            jsonResp = newGson.toJson(result);
+            jsonResp = createJsonResponse(200, "Success", result);
 
         } else if (command.equalsIgnoreCase("dates")) {
             String dateStart = req.getParameter("dateStart");
@@ -54,12 +51,23 @@ public class RevenueAPI extends HttpServlet {
             String dateEnd = req.getParameter("dateEnd");
             dateEnd = dateEnd.replace("-", "/");
             List<Revenue> result = revenueServiecs.getByDates(dateStart, dateEnd);
-            Gson newGson = new Gson();
-            jsonResp = newGson.toJson(result);
+            jsonResp = createJsonResponse(200, "Success", result);
+        } else {
+            jsonResp = createJsonResponse(400, "Invalid command", null);
         }
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(jsonResp);
     }
+
+    private String createJsonResponse(int status, String message, List<Revenue> data) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", status);
+        response.put("message", message);
+        response.put("data", data);
+        Gson gson = new Gson();
+        return gson.toJson(response);
+    }
+
 }

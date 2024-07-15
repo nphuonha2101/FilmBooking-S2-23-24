@@ -26,8 +26,7 @@ function drawChart(year) {
             return response.json();
         })
         .then(data => {
-            revenues = data;
-            console.log(data);
+            revenues = data.data;
             var options = {
 
                 axisX: {
@@ -76,9 +75,10 @@ function revenueDates(dateStart, dateEnd) {
         .then(data => {
             let total = 0;
             let count = 0;
-            for (var i = 0; i < data.length; i++) {
-                total += data[i].filmRevenue;
-                count += data[i].ticketSold;
+            let revenues = data.data;
+            for (var i = 0; i < revenues.length; i++) {
+                total += revenues[i].filmRevenue;
+                count += revenues[i].ticketSold;
             }
             $("#dailyRevenue").html(total + " VNĐ" + " & Số vé: " + count);
             fetchAndRenderFilmChartData(dateStart, dateEnd);
@@ -103,7 +103,7 @@ function fetchAndRenderFilmChartData(dateStart, dateEnd) {
             return response.json();
         })
         .then(data => {
-            var dataPoints = data.map(film => ({
+            var dataPoints = data.data.map(film => ({
                 y: film.filmRevenue,
                 label: film.filmName + " Số vé: " + film.ticketSold
             }));
