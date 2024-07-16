@@ -30,17 +30,10 @@ public class RevenueAPI extends HttpServlet {
         if (command.equalsIgnoreCase("year")) {
             String year = req.getParameter("year");
             List<Revenue> result = new ArrayList<>();
-            double total = 0;
-            int count = 0;
-            List<Revenue> revenues = revenueServiecs.calculateRevenueByYear(year);
-            for (Revenue revenue : revenues) {
-                total += revenue.getFilmRevenue();
-                count += revenue.getTicketSold();
-            }
-            Revenue yearRevenue = new Revenue(year, count, total);
+            Revenue yearRevenue = revenueServiecs.calculateRevenueByYear(year);
             result.add(yearRevenue);
             for (int i = 1; i < 13; i++) {
-                Revenue revenue = revenueServiecs.calculateRevenueByMonth(year, i + "");
+                Revenue revenue = revenueServiecs.calculateRevenueByMonth(i + "",year );
                 result.add(revenue);
             }
             jsonResp = createJsonResponse(200, "Success", result);
