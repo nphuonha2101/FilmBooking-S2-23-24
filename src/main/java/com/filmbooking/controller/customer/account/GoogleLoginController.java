@@ -2,18 +2,17 @@ package com.filmbooking.controller.customer.account;
 
 import com.filmbooking.enumsAndConstants.enums.AccountRoleEnum;
 import com.filmbooking.enumsAndConstants.enums.AccountTypeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.GoogleUserInfo;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
+import com.filmbooking.utils.PropertiesUtils;
 import com.filmbooking.utils.WebAppPathUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
-import com.filmbooking.model.GoogleUserInfo;
-import com.filmbooking.utils.PropertiesUtils;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -27,8 +26,8 @@ import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
+
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,6 @@ import java.util.List;
 @WebServlet("/google/login")
 public class GoogleLoginController extends HttpServlet {
 
-    private final PropertiesUtils propertiesUtils = PropertiesUtils.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,8 +43,7 @@ public class GoogleLoginController extends HttpServlet {
         if (error != null && error.equals("access_denied")) {
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/login"));
         }else {
-            HibernateSessionProvider hibernateSessionProvider = new HibernateSessionProvider();
-            UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
+            UserServicesImpl userServices = new UserServicesImpl();
 
             String accessToken = null;
             try {
@@ -68,8 +65,8 @@ public class GoogleLoginController extends HttpServlet {
 
             User loginUser = userServices.getByEmail(userEmail);
             if (loginUser == null) {
-                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER, AccountTypeEnum.GOOGLE.getAccountType(),1);
-                userServices.save(loginUser);
+                loginUser = new User(id, userFullName, userEmail, null, AccountRoleEnum.CUSTOMER.getAccountRole(), AccountTypeEnum.GOOGLE.getAccountType(),1);
+                userServices.insert(loginUser);
 
             }
             HttpSession session = req.getSession();
@@ -84,13 +81,13 @@ public class GoogleLoginController extends HttpServlet {
     }
 
     private String getToken(final String code) throws IOException, ParseException {
-        HttpPost httpPost = new HttpPost(propertiesUtils.getProperty("link_get_token"));
+        HttpPost httpPost = new HttpPost(PropertiesUtils.getProperty("link_get_token"));
         List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("client_id", propertiesUtils.getProperty("client_id")));
-        params.add(new BasicNameValuePair("client_secret", propertiesUtils.getProperty("client_secret")));
-        params.add(new BasicNameValuePair("redirect_uri", propertiesUtils.getProperty("redirect_uri")));
+        params.add(new BasicNameValuePair("client_id", PropertiesUtils.getProperty("client_id")));
+        params.add(new BasicNameValuePair("client_secret", PropertiesUtils.getProperty("client_secret")));
+        params.add(new BasicNameValuePair("redirect_uri", PropertiesUtils.getProperty("redirect_uri")));
         params.add(new BasicNameValuePair("code", code));
-        params.add(new BasicNameValuePair("grant_type", propertiesUtils.getProperty("grant_type")));
+        params.add(new BasicNameValuePair("grant_type", PropertiesUtils.getProperty("grant_type")));
         httpPost.setEntity(new UrlEncodedFormEntity(params, StandardCharsets.UTF_8));
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -102,7 +99,7 @@ public class GoogleLoginController extends HttpServlet {
     }
 
     private GoogleUserInfo getUserInfo(final String accessToken) throws IOException, ParseException {
-        HttpGet httpGet = new HttpGet(propertiesUtils.getProperty("link_get_user_info") + accessToken);
+        HttpGet httpGet = new HttpGet(PropertiesUtils.getProperty("link_get_user_info") + accessToken);
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = httpClient.execute(httpGet);

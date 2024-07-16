@@ -31,7 +31,13 @@ public class AuthAdminLoginFilter extends HttpFilter {
             return;
         } else {
             String accountRole = loginUser.getAccountRole();
-            if (!accountRole.equals("admin")) {
+            String requestURI = req.getRequestURI();
+            if (requestURI.contains("/admin/management/log") || requestURI.contains("/admin/management/user")) {
+                if (!accountRole.equalsIgnoreCase("superAdmin")) {
+                    resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+                    return;
+                }
+            } else if (!accountRole.equalsIgnoreCase("admin") && !accountRole.equalsIgnoreCase("superAdmin")) {
                 resp.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }

@@ -1,107 +1,146 @@
 $(function () {
-    const filmBookingMenu = $('#film-booking_menu');
+    const bookingHistoryModal = $('#booking-history-modal');
     const filmBookingMenuContent = $('#film-booking_menu-content');
 
-    filmBookingMenu.on('click', function () {
+    console.log('bookingHistoryModal: ', bookingHistoryModal)
+
+    bookingHistoryModal.on('show.bs.modal', function () {
         let html = '';
 
-        const getCurrentFilmBooking = $.ajax({
-            url: '/api/v1/film-bookings?command=current',
+        const getLoginUser = $.ajax({
+            url: '/api/v1/users?command=loginUser',
             type: 'GET',
             cache: true,
             dataType: 'json'
         });
 
-        const getFilmBookingByOffset = $.ajax({
-            url: '/api/v1/film-bookings?command=offset&offset=0&limit=5',
-            type: 'GET',
-            cache: true,
-            dataType: 'json'
-        });
+        $.when(getLoginUser).done(function (loginUserResponse) {
+            console.log('loginUserResponse: ', loginUserResponse)
+            if (loginUserResponse.status === 401) {
+                filmBookingMenuContent.html(`<h4>Vui lòng đăng nhập</h4>`);
+                return;
+            } else {
+                const user = loginUserResponse.data;
 
-        $.when(getCurrentFilmBooking, getFilmBookingByOffset)
-            .done(function (currentFilmBookingResponse, filmBookingByOffsetResponse) {
-                console.log(currentFilmBookingResponse)
+                const getCurrentFilmBooking = $.ajax({
+                    url: '/api/v1/film-bookings?command=current',
+                    type: 'GET',
+                    cache: true,
+                    dataType: 'json'
+                });
 
-                // Current film booking
-                if (currentFilmBookingResponse[0].status === 200) {
-                    console.log('currentFilmBookingResponse: ', currentFilmBookingResponse)
-                    let filmBooking = currentFilmBookingResponse[0].data;
-                    let showtime = filmBooking.showtime;
+                const getFilmBookingByOffset = $.ajax({
+                    url: '/api/v1/film-bookings?command=byUsername&username=' + user.username,
+                    type: 'GET',
+                    cache: true,
+                    dataType: 'json'
+                });
 
-                    html = `<h4>Phim đang đặt</h4>`
-                    if (showtime !== undefined) {
-                        let film = showtime.film;
-                        html += `    
-                                <div class="fb-item_horizontal-card">
-                                    <div class="fb-item_horizontal-card__img">
-                                        <img src="${film.imgPath}" alt="poster">
-                                    </div>
-                                    
-                                    <div class="fb-item_horizontal-card__content">
-                                        <a href="http://localhost:8080/film-info?film=${film.slug}">
-                                            <h5>${film.filmName}</h5>
-                                        </a>
-                                        <p>Ghế ngồi: ${filmBooking.seatsData.replace(' ', '')}</p>
-                                        <p>Số tiền: ${filmBooking.totalFee} VNĐ</p>
-                                        <p>Thời gian đặt: ${showtime.showtimeDate}</p>
-                                    </div>
-                                    
-                                    <div class="fb-item_horizontal-card__status">
-                                        <a href="http://localhost:8080/auth/checkout" class="button rounded-button outlined-warning-button">Chưa thanh toán</a>
-                                    </div>
+                $.when(getCurrentFilmBooking, getFilmBookingByOffset)
+                    .done(function (currentFilmBookingResponse, filmBookingByOffsetResponse) {
+                        console.log('current filmbooking resp: ',  currentFilmBookingResponse)
+
+                        // Current film booking
+                        if (currentFilmBookingResponse[0]["status"] === 200) {
+                            console.log('currentFilmBookingResponse: ', currentFilmBookingResponse)
+                            const data = currentFilmBookingResponse[0].data;
+
+                            if (data === null || data === undefined) {
+                                filmBookingMenuContent.html('' +
+                                    '<h4>Đặt vé hiện tại</h4><p>Không có dữ liệu</p>');
+                                return;
+                            }
+
+                            const filmBooking = data.filmBooking;
+                            const showtime = data.showtime;
+                            const film = data.film;
+                            html += `<h4>Đặt vé hiện tại</h4>`
+                            html += `
+                            <div class="fb-item_horizontal-card">
+                                <div class="fb-item_horizontal-card__img">
+                                <img src="${film.imgPath}" alt="poster">
                                 </div>
+    
+                                <div class="fb-item_horizontal-card__content">
+                                    <a href="http://localhost:8080/film-info?film=${film.slug}">
+                                        <h5>${film.filmName}</h5>
+                                    </a>
+<!--                                    <p>Ghế ngồi: ${filmBooking.seatsData.replace(' ', '')}</p>-->
+                                    <p>Số tiền: ${filmBooking.totalFee} VNĐ</p>
+                                    <p>Thời gian đặt: ${showtime.showtimeDate}</p>
+                                </div>
+        
+                                <div class="fb-item_horizontal-card__status">
+                                      <p class="badge bg-danger"><a class="text-decoration-none text-light fw-bold" style="font-size: 0.95rem" href="/auth/checkout">Chưa thanh toán</a></p>
+                                </div>
+                            </div>
                         `;
-                    } else {
-                        html += '<p>Không có dữ liệu</p>';
-                    }
-                }
-
-                try {
-                    // 5 film-bookings history
-                    if (filmBookingByOffsetResponse[0].status === 200) {
-                        console.log('filmBookingByOffsetResponse: ', filmBookingByOffsetResponse)
-                        let filmBookings = filmBookingByOffsetResponse[0].data;
-
-                        html += `<h4>Lịch sử đặt vé</h4>`
-                        if (filmBookings.length > 0) {
-                            filmBookings.forEach(filmBooking => {
-                                let showtime = filmBooking.showtime;
-                                let film = showtime.film;
-
-                                html += `    
-                                <div class="fb-item_horizontal-card">
-                                    <div class="fb-item_horizontal-card__img">
-                                        <img src="${film.imgPath}" alt="poster">
-                                    </div>
-                                    
-                                    <div class="fb-item_horizontal-card__content">
-                                        <a href="http://localhost:8080/film-info?film=${film.slug}">
-                                            <h5>${film.filmName}</h5>
-                                        </a>
-                                        <p>Ghế ngồi: ${filmBooking.seatsData.replace(' ', '')}</p>
-                                        <p>Số tiền: ${filmBooking.totalFee} VNĐ</p>
-                                        <p>Thời gian: ${showtime.showtimeDate}</p>
-                                    </div>
-                                    
-                                    <div class="fb-item_horizontal-card__status">
-                                        <div class="light-filled-button rounded-button button">Đã thanh toán</div>
-                                    </div>
-                                </div>
-                            `;
-                            });
                         } else {
-                            html += '<p>Không có dữ liệu</p>';
+                            filmBookingMenuContent.html('' +
+                                '<h4>Đặt vé hiện tại</h4><p>Không có dữ liệu</p>');
                         }
-                    }
-                } catch (e) {
-                    console.error(e)
-                }
 
-                filmBookingMenuContent.html(html);
+                        try {
+                            // 5 film-bookings history
+                            if (filmBookingByOffsetResponse[0]["status"] === 200) {
+                                console.log('filmBookingByOffsetResponse: ', filmBookingByOffsetResponse)
+                                let data = filmBookingByOffsetResponse[0].data;
 
-            });
+                                if (data !== null && data !== undefined) {
 
-        filmBookingMenuContent.toggle();
+                                    data = data.filter(item => item.filmBooking.paymentStatus === 'paid')
+
+                                    data.map(item => {
+                                        const filmBooking = item.filmBooking;
+                                        const showtime = item.showtime;
+                                        const film = item.film;
+
+                                        html += `
+                                    <h4>Đặt vé trước</h4>
+                                    <div class="fb-item_horizontal-card" xmlns="http://www.w3.org/1999/html">
+                                        <div class="fb-item_horizontal-card__img">
+                                        <img src="${film.imgPath}" alt="poster">
+                                        </div>
+        
+                                        <div class="fb-item_horizontal-card__content">
+                                            <a href="http://localhost:8080/film-info?film=${film.slug}">
+                                                <h5>${film.filmName}</h5>
+                                            </a>
+<!--                                            <p>Ghế ngồi: ${filmBooking.seatsData.replace(' ', '')}</p>-->
+                                            <p>Số tiền: ${filmBooking.totalFee} VNĐ</p>
+                                            <p>Thời gian đặt: ${showtime.showtimeDate}</p>
+                                        </div>
+            
+                                        <div class="fb-item_horizontal-card__status">
+                                            <p class="badge bg-success" style="font-size: 0.95rem">Đã thanh toán</p>
+                                        </div>
+                                    </div>
+                                `;
+
+                                    })
+                                } else {
+                                    html = `<h4>Đặt vé hiện tại</h4><p>Không có dữ liệu</p>`
+                                }
+
+
+                            } else {
+                                html = `<h4>Đặt vé hiện tại</h4><p>Không có dữ liệu</p>`
+                            }
+                        } catch (e) {
+                            console.error(e)
+                        }
+
+                        console.log(html)
+
+                        filmBookingMenuContent.html(html);
+
+                    })
+            }
+        })
     });
 });
+
+
+
+
+

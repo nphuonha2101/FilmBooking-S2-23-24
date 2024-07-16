@@ -22,22 +22,22 @@
 <fmt:setBundle basename="properties.message" var="msg"/>
 <fmt:setBundle basename="properties.pageTitle" var="pageTitleMsg"/>
 
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-    <div class="container ">
-        <jsp:include page="/views/components/admin-panel.jsp"/>
-    </div>
-    <div class="container centered-vertical-content">
+<section class="section align-top d-flex flex-column align-items-center">
+
+    <jsp:include page="/views/components/admin-panel.jsp"/>
+
+    <div class="container d-flex flex-column align-items-center">
 
         <h2>
             <fmt:message bundle="${pageTitleMsg}" key="userManagementSectionTitle"/>
         </h2>
 
-        <div class="centered-vertical-content wrapper">
+        <div class="d-flex flex-column align-items-center wrapper">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <table id="myTable" class="display dataTable w-100 border-box">
+            <table id="myTable" class="display table-striped table-bordered table w-100 border-box">
                 <thead>
                 <tr>
                     <th></th>
@@ -70,7 +70,7 @@
     </div>
 
 
-    <jsp:include page="/views/components/modals/user-management-modal.jsp" />
+    <jsp:include page="/views/components/modals/user-management-modal.jsp"/>
 
 
     <script>
@@ -91,12 +91,13 @@
                     {data: 'userFullName'},
                     {data: 'userEmail'},
                     {data: 'accountRole'},
-                    {data: 'accountType',
+                    {
+                        data: 'accountType',
                         render: function (data, type, row) {
-                          if (data === 'normal')
-                              return 'Normal';
-                          if (data === 'google')
-                              return 'Google';
+                            if (data === 'normal')
+                                return 'Normal';
+                            if (data === 'google')
+                                return 'Google';
                             if (data === 'facebook')
                                 return 'Facebook';
                         }
@@ -104,7 +105,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            return '<button class="edit-button button light-filled-button rounded-button"><span class="material-symbols-rounded primary-color">edit</span></button>';
+                            return '<button data-bs-toggle="modal" data-bs-target="#user-management-modal" class="rotate-icon edit-button button light-filled-button rounded-button"><span class="material-symbols-rounded primary-color">edit</span></button>';
                         }
                     }
                 ]
@@ -120,12 +121,9 @@
         function handleEditUserModal(username, fullName, email, role) {
             $('#username').attr('value', username);
             $('#full-name').attr('value', fullName);
-            $('#email').attr('value',email);
-            $('#role').attr('value', role);
-            $('.modal').css('display', 'block');
+            $('#email').attr('value', email);
+            $('#role').val(role);
         }
-
-
     </script>
 
 </section>

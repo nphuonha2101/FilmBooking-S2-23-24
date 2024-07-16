@@ -1,61 +1,44 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.ShowtimeRepository;
+import com.filmbooking.repository.TheaterRepository;
 import com.filmbooking.utils.StringUtils;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
-@Entity
-@Table(name = Room.TABLE_NAME)
-public class Room implements IModel {
-    @Transient
+@Getter
+@Setter
+@ToString
+@TableName("rooms")
+@TableIdName("room_id")
+@IdAutoIncrement
+public class Room extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "rooms";
 
-    @Setter
-    @Getter
     @Expose
-    @Column(name = "room_id", updatable = false, insertable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomID;
-    @Getter
-    @Column(name = "room_name")
     @Expose
     private String roomName;
-    @Getter
     @Expose
-    @Column(name = "seat_rows")
     private int seatRows;
-    @Getter
     @Expose
-    @Column(name = "seat_cols")
     private int seatCols;
-    @Setter
-    @Transient
     private String[][] seatMatrix;
-    @Setter
-    @Getter
     @Expose
-    @Column(name = "seats_data")
     private String seatData;
     @Expose
-    @Setter
-    @Getter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
-    private Theater theater;
-    @Setter
-    @Getter
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Showtime> showtimeSet;
-    @Setter
-    @Getter
+    private long theaterId;
+    private List<Showtime> showtimeList;
     @Expose
-    @Column(name = "slug")
     private String slug;
 
     public Room() {
@@ -68,9 +51,26 @@ public class Room implements IModel {
         this.roomName = roomName;
         this.seatRows = seatRows;
         this.seatCols = seatCols;
-        this.theater = theater;
-        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
+        this.theaterId = theater.getTheaterID();
+        this.slug = StringUtils.createSlug(this.roomName + " " + theater.getTheaterName(), 50);
         generateSeatsData();
+    }
+
+    /**
+     * Use for retrieve data from database
+     */
+    public Room(long roomID, String roomName, int seatRows, int seatCols, String seatData,
+                long theaterId, String slug, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.roomID = roomID;
+        this.roomName = roomName;
+        this.seatRows = seatRows;
+        this.seatCols = seatCols;
+        this.seatData = seatData;
+        this.seatMatrix = StringUtils.convertTo2DArr(seatData);
+        this.theaterId = theaterId;
+        this.slug = slug;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     private void generateSeatsData() {
@@ -89,10 +89,21 @@ public class Room implements IModel {
         this.seatData = stringBuilder.toString().trim();
     }
 
+    public Theater getTheater() {
+        return new TheaterRepository().select(this.theaterId);
+    }
+
+    public void setTheater(Theater theater) {
+        this.theaterId = theater.getTheaterID();
+    }
+
+    public List<Showtime> getShowtimeList() {
+        return new ShowtimeRepository().selectAllByRoomId(this.roomID);
+    }
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
-        this.slug = StringUtils.createSlug(this.roomName + " " + this.theater.getTheaterName(), 50);
+        this.slug = StringUtils.createSlug(this.roomName + " " + getTheater().getTheaterName(), 50);
     }
 
     public void setSeatRows(int seatRows) {
@@ -110,21 +121,8 @@ public class Room implements IModel {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Room room) {
-            return this.roomID == room.getRoomID()
-                    && this.roomName.equals(room.getRoomName())
-                    && this.seatRows == room.getSeatRows()
-                    && this.seatCols == room.getSeatCols()
-                    && this.seatData.equals(room.getSeatData())
-                    && this.theater.equals(room.getTheater());
-        }
-        return false;
-    }
-
-    @Override
-    public String getStringID() {
-        return String.valueOf(this.roomID);
+    public Object getIdValue() {
+        return this.roomID;
     }
 
 }

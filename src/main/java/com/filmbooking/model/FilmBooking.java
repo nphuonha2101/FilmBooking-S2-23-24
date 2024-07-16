@@ -1,80 +1,90 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.ShowtimeRepository;
+import com.filmbooking.repository.UserRepository;
+import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.services.impls.UserServicesImpl;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
-@Entity
-@Table(name = FilmBooking.TABLE_NAME)
-public class FilmBooking implements Cloneable, IModel {
-    @Transient
+@TableName("film_bookings")
+@TableIdName("film_booking_id")
+@IdAutoIncrement
+@AllArgsConstructor
+public class FilmBooking extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "film_bookings";
     private static final int EXPIRE_TIME = 15;
 
     @Getter
     @Setter
     @Expose
-    @Column(name = "film_booking_id", insertable = false, updatable = false)
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long filmBookingID;
     @Getter
     @Setter
     @Expose
-    @ManyToOne()
-    @JoinColumn(name = "showtime_id")
-    private Showtime showtime;
-    @Getter
+    private long showtimeId;
     @Setter
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
-    private User user;
+    private String username;
     @Getter
     @Expose
-    @Column(name = "booking_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime bookingDate;
     @Expose
-    @Transient
     private String[] bookedSeats;
     @Getter
     @Expose
-    @Column(name = "seats")
     private String seatsData;
     @Setter
     @Getter
     @Expose
-    @Column(name = "total_fee")
     private double totalFee;
     @Getter
     @Setter
     @Expose
-    @Column(name = "payment_status")
     private String paymentStatus;
-
-    @Transient
     private LocalDateTime expireDate;
     @Getter
-    @Transient
     private String vnpayTxnRef;
 
+
     public FilmBooking(Showtime showtime, User user, LocalDateTime bookingDate, String[] bookedSeats, double totalFee) {
-        this.showtime = showtime;
-        this.user = user;
+        this.showtimeId = showtime.getShowtimeID();
+        this.username = user.getUsername();
         this.bookingDate = bookingDate;
         this.bookedSeats = bookedSeats;
         this.seatsData = String.join(", ", bookedSeats);
         this.totalFee = totalFee;
     }
 
+    public FilmBooking(long id, String username, long showtimeId, LocalDateTime bookingDate,
+                       String[] bookedSeats, double totalFee, String paymentStatus,
+                       LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.filmBookingID = id;
+        this.showtimeId = showtimeId;
+        this.username = username;
+        this.bookingDate = bookingDate;
+        this.bookedSeats = bookedSeats;
+        this.seatsData = String.join(", ", bookedSeats);
+        this.totalFee = totalFee;
+        this.paymentStatus = paymentStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     public FilmBooking() {
         this.filmBookingID = 0;
-        this.showtime = null;
-        this.user = null;
+        this.showtimeId = 0;
+        this.username = null;
         this.bookingDate = null;
         this.bookedSeats = null;
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
@@ -107,42 +117,26 @@ public class FilmBooking implements Cloneable, IModel {
         this.filmBookingID = 0;
         this.bookingDate = null;
         this.bookedSeats = new String[0];
-        this.showtime = null;
+        this.showtimeId = 0;
         this.totalFee = 0;
         this.paymentStatus = null;
         this.expireDate = null;
     }
 
-    @Override
-    public String toString() {
-        return this.showtime + ", " + this.filmBookingID + ", " + this.user;
+    public User getUser() {
+        return new UserServicesImpl().select(this.username);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof FilmBooking filmBooking) {
-            return this.filmBookingID == filmBooking.getFilmBookingID()
-                    && this.showtime.equals(filmBooking.getShowtime())
-                    && this.user.equals(filmBooking.getUser())
-                    && this.bookingDate.equals(filmBooking.getBookingDate())
-                    && this.totalFee == filmBooking.getTotalFee();
-        }
-        return false;
+    public Showtime getShowtime() {
+        return new ShowtimeServicesImpl().select(this.showtimeId);
     }
 
-    @Override
-    public FilmBooking clone() {
-        try {
-            FilmBooking clone = (FilmBooking) super.clone();
-            clone.setShowtime(this.showtime);
-            clone.setUser(this.user);
-            clone.setBookingDate(this.bookingDate);
-            clone.setSeatsData(this.seatsData);
-            clone.setTotalFee(this.totalFee);
-            return clone;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+    public void setShowtime(Showtime showtime) {
+        this.showtimeId = showtime.getShowtimeID();
+    }
+
+    public void setUser(User user) {
+        this.username = user.getUsername();
     }
 
     /**
@@ -161,10 +155,24 @@ public class FilmBooking implements Cloneable, IModel {
         this.vnpayTxnRef = String.valueOf((int) Math.floor(Math.random() * 1000000000));
     }
 
-
     @Override
-    public String getStringID() {
-        return String.valueOf(this.filmBookingID);
+    public Object getIdValue() {
+        return this.filmBookingID;
     }
 
+    @Override
+    public String toString() {
+        return "FilmBooking{" +
+                "filmBookingID=" + filmBookingID +
+                ", showtimeId=" + showtimeId +
+                ", username='" + username + '\'' +
+                ", bookingDate=" + bookingDate +
+                ", bookedSeats=" + bookedSeats +
+                ", seatsData='" + seatsData + '\'' +
+                ", totalFee=" + totalFee +
+                ", paymentStatus='" + paymentStatus + '\'' +
+                ", expireDate=" + expireDate +
+                ", vnpayTxnRef='" + vnpayTxnRef + '\'' +
+                '}';
+    }
 }

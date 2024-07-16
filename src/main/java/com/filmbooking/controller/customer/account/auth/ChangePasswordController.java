@@ -1,14 +1,11 @@
 package com.filmbooking.controller.customer.account.auth;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.PropertiesUtils;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.StringUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
@@ -25,7 +22,6 @@ import java.io.IOException;
 
 public class ChangePasswordController extends HttpServlet {
     private CRUDServicesLogProxy<User> userServicesLog;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,10 +36,9 @@ public class ChangePasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
 
-        UserServicesImpl userServices = new UserServicesImpl(hibernateSessionProvider);
-        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+        UserServicesImpl userServices = new UserServicesImpl();
+        userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
         String currentPassword = req.getParameter("current-password");
         String newPassword = StringUtils.handlesInputString(req.getParameter("new-password"));
@@ -82,12 +77,10 @@ public class ChangePasswordController extends HttpServlet {
             changePasswordPage.putError(StatusCodeEnum.PASSWORD_NOT_MATCH.getStatusCode());
             changePasswordPage.render(req, resp);
         }
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServicesLog = null;
-        hibernateSessionProvider = null;
     }
 }

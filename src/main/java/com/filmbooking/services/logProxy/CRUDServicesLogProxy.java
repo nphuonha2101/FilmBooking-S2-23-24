@@ -1,11 +1,9 @@
 package com.filmbooking.services.logProxy;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.IModel;
 import com.filmbooking.model.LogModel;
-import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
-import com.filmbooking.services.ICRUDServices;
+import com.filmbooking.services.AbstractService;
+import com.filmbooking.services.IService;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -22,103 +20,91 @@ import java.util.Map;
  * <li>This class is a proxy class for CRUD services</li>
  * <li>It is used to log CRUD actions</li>
  * <li>It extends {@link AbstractServicesLogProxy} and implements
- * {@link ICRUDServices}</li>
+ * {@link IService}</li>
  * <li>For more please see <b> Proxy design pattern </b></li>
  * </uL>
  * 
  * @param <T>
  */
-public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements ICRUDServices<T> {
-    private final ICRUDServices<T> crudServices;
+public class CRUDServicesLogProxy<T extends IModel> extends AbstractServicesLogProxy<T> implements IService<T> {
+    private final IService<T> crudService;
 
-    public CRUDServicesLogProxy(ICRUDServices<T> crudServices, HttpServletRequest req,
-            HibernateSessionProvider sessionProvider) {
-        super(req);
-        this.crudServices = crudServices;
-        this.logModelServices.setSessionProvider(sessionProvider);
-        this.crudServices.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.crudServices.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public ICRUDServices<T> getAll() {
-        return this.crudServices.getAll();
-    }
-
-    @Override
-    public ICRUDServices<T> getByOffset(int offset, int limit) {
-        return this.crudServices.getByOffset(offset, limit);
-    }
-
-    @Override
-    public ICRUDServices<T> getByPredicates(Map<String, Object> conditions) {
-        return this.crudServices.getByPredicates(conditions);
+    public CRUDServicesLogProxy(IService<T> crudService, HttpServletRequest req, Class<T> modelClass) {
+        super(req, modelClass);
+        this.crudService = crudService;
     }
 
     @Override
     public T getBySlug(String slug) {
-        return this.crudServices.getBySlug(slug);
+        return this.crudService.getBySlug(slug);
     }
 
     @Override
-    public T getByID(String id) {
-        return this.crudServices.getByID(id);
+    public T select(Object id) {
+        return this.crudService.select(id);
     }
 
     @Override
-    public long getTotalRecordRows() {
-        return this.crudServices.getTotalRecordRows();
+    public long countRecords() {
+        return this.crudService.countRecords();
     }
 
     @Override
-    public boolean save(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.INSERT, t, (AbstractCRUDServices<T>) this.crudServices, true);
-        boolean saveState = this.crudServices.save(t);
+    public boolean insert(T t) {
+        LogModel logModel = this.buildLogModel(LogModel.INSERT, t, (AbstractService<T>) this.crudService, true);
+        boolean saveState = this.crudService.insert(t);
 
         logModel.setActionSuccess(saveState);
-        this.logModelServices.save(logModel);
+        this.logModelServices.insert(logModel);
 
         return saveState;
     }
 
     @Override
     public boolean update(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.UPDATE, t, (AbstractCRUDServices<T>) this.crudServices, true);
-        boolean updateState = this.crudServices.update(t);
+        LogModel logModel = this.buildLogModel(LogModel.UPDATE, t, (AbstractService<T>) this.crudService, true);
+        boolean updateState = this.crudService.update(t);
 
         logModel.setActionSuccess(updateState);
-        this.logModelServices.save(logModel);
+        this.logModelServices.insert(logModel);
 
         return updateState;
     }
 
     @Override
     public boolean delete(T t) {
-        LogModel logModel = this.buildLogModel(LogModel.DELETE, t, (AbstractCRUDServices<T>) this.crudServices, true);
-        boolean deleteState = this.crudServices.delete(t);
+        LogModel logModel = this.buildLogModel(LogModel.DELETE, t, (AbstractService<T>) this.crudService, true);
+        boolean deleteState = this.crudService.delete(t);
 
         logModel.setActionSuccess(deleteState);
-        this.logModelServices.save(logModel);
+        this.logModelServices.insert(logModel);
 
         return deleteState;
     }
 
     @Override
-    public List<T> getMultipleResults() {
-        return this.crudServices.getMultipleResults();
+    public List<T> selectAll() {
+        return crudService.selectAll();
     }
 
     @Override
-    public T getSingleResult() {
-        return this.crudServices.getSingleResult();
+    public List<T> selectAll(int limit, int offset) {
+        return crudService.selectAll(limit, offset);
     }
 
     @Override
-    public String getTableName() {
-        return this.crudServices.getTableName();
+    public List<T> selectAll(Map<String, Object> filters) {
+        return crudService.selectAll(filters);
     }
+
+    @Override
+    public List<T> selectAll(int limit, int offset, String order) {
+        return crudService.selectAll(limit,offset,order);
+    }
+
+    @Override
+    public List<T> selectAll(int limit, int offset, String order, Map<String, Object> filters) {
+        return crudService.selectAll(limit, offset, order, filters);
+    }
+
 }

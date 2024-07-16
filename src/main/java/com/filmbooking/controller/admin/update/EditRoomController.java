@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.update;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.page.AdminPage;
 import com.filmbooking.page.Page;
@@ -8,7 +7,6 @@ import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.services.impls.TheaterServicesImpl;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,13 +22,11 @@ public class EditRoomController extends HttpServlet {
     private CRUDServicesLogProxy<Room> roomServicesLog;
     private TheaterServicesImpl theaterServices;
     private Room editRoom;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        roomServices = new RoomServicesImpl(hibernateSessionProvider);
-        theaterServices = new TheaterServicesImpl(hibernateSessionProvider);
+        roomServices = new RoomServicesImpl();
+        theaterServices = new TheaterServicesImpl();
 
         String roomSlug = req.getParameter("room");
         if (roomSlug != null)
@@ -41,17 +37,15 @@ public class EditRoomController extends HttpServlet {
                 "edit-room",
                 "master");
         editRoomPage.putAttribute("editRoom", editRoom);
-        editRoomPage.putAttribute("theaters", theaterServices.getAll().getMultipleResults());
+        editRoomPage.putAttribute("theaters", theaterServices.selectAll());
 
         editRoomPage.render(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        roomServicesLog = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, hibernateSessionProvider);
+        roomServicesLog = new CRUDServicesLogProxy<>(new RoomServicesImpl(), req, Room.class);
 
         String roomName = StringUtils.handlesInputString(req.getParameter("room-name"));
         int seatRows = Integer.parseInt(req.getParameter("seat-rows"));
@@ -66,14 +60,12 @@ public class EditRoomController extends HttpServlet {
         req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_ROOM_SUCCESSFUL.getStatusCode());
         doGet(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         roomServices = null;
         editRoom = null;
-        hibernateSessionProvider = null;
         theaterServices = null;
     }
 }

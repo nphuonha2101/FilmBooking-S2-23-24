@@ -2,7 +2,6 @@ package com.filmbooking.controller.apis;
 
 import java.io.IOException;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Room;
 import com.filmbooking.services.impls.RoomServicesImpl;
 import com.filmbooking.utils.APIUtils;
@@ -14,12 +13,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = { "/api/v1/rooms/*", "/api/v1/rooms" })
 public class RoomAPI extends HttpServlet {
-    RoomServicesImpl roomServicesImpl;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        roomServicesImpl = new RoomServicesImpl(sessionProvider);
+        RoomServicesImpl roomServicesImpl = new RoomServicesImpl();
 
         APIUtils<Room> apiUtils = new APIUtils<>(roomServicesImpl, req, resp);
         String command = req.getParameter("command");

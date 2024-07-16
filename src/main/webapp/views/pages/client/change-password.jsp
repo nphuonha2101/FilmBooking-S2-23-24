@@ -21,39 +21,45 @@
 <fmt:setBundle basename="properties.pageTitle" var="pageTitle"/>
 <fmt:setBundle basename="properties.statusCode" var="statusCodeMsg"/>
 
-<section class="content section centered-vertical-content">
-    <div class="centered-vertical-content container form__container">
+<section class="content section d-flex flex-column align-items-center">
+    <div class="d-flex flex-column align-items-center container">
         <h2 class="title"><fmt:message key="changePasswordSectionTitle" bundle="${pageTitle}"/></h2>
 
         <%--        Status Code Messages--%>
         <jsp:include page="/views/components/status-code-message.jsp"/>
 
-        <form action="<c:url value="${pageContext.request.contextPath}/auth/change-password"/>" method="post">
-            <label for="current-password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="password"/>
-            </label>
-            <input type="password" name="current-password" id="current-password"
-                   placeholder=" <fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
+        <form class="w-30 mb-3" action="<c:url value="${pageContext.request.contextPath}/auth/change-password"/>" method="post">
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="current-password" id="current-password"
+                       placeholder=" <fmt:message bundle="${msg}" key="password"/>" autocomplete="true" required>
+                <label for="current-password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="password"/>
+                </label>
+            </div>
 
-            <label for="new-password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="newPassword"/>
-            </label>
-            <input type="password" name="new-password" id="new-password"
-                   placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="new-password" id="new-password"
+                       placeholder=" <fmt:message bundle="${msg}" key="newPassword"/>" autocomplete="true" required>
+                <label for="new-password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="newPassword"/>
+                </label>
+            </div>
 
-            <label for="confirm-new-password">
-                <span class="material-symbols-rounded">password</span>
-                <fmt:message bundle="${msg}" key="confirmPassword"/>
-            </label>
-            <input type="password" name="confirm-new-password" id="confirm-new-password"
-                   placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
-
-            <input type="submit" class="primary-filled-button button"
+            <div class="form-floating mb-3">
+                <input class="form-control" type="password" name="confirm-new-password" id="confirm-new-password"
+                       placeholder=" <fmt:message bundle="${msg}" key="confirmPassword"/>" autocomplete="true" required>
+                <label for="confirm-new-password">
+                    <span class="material-symbols-rounded">password</span>
+                    <fmt:message bundle="${msg}" key="confirmPassword"/>
+                </label>
+            </div>
+            <input type="submit" class="primary-filled-button button rounded-button w-100"
                    value=" <fmt:message bundle="${msg}" key="changePasswd"/>">
         </form>
-        <p><fmt:message bundle="${msg}" key="return"/>
+
+        <p class="mt-3"><fmt:message bundle="${msg}" key="return"/>
             <span><a class="links" href="<c:url value="${pageContext.request.contextPath}/auth/account-info"/>">
             <fmt:message bundle="${msg}" key="info"/> </a> </span>
         </p>

@@ -31,14 +31,15 @@
 
 
 <section class="section" id="checkout_two-cols">
-    <div class="container wrapper centered-vertical-content">
-        <h2><fmt:message bundle="${pageTitle}" key="boookingInfoSectionTitle"/></h2>
-        <div class="wrapper">
+    <div class="container wrapper d-flex flex-column align-items-center">
+        <h2 ><fmt:message bundle="${pageTitle}" key="boookingInfoSectionTitle"/></h2>
+        <div class="wrapper m-5">
             <div class="two-col__wrapper">
                 <div class="film-img-box div-img" style="background-image: url('<c:url value="${film.imgPath}"/>')"
                      id="film-img"></div>
                 <div class="wrapper">
-                    <a href="<c:url value="${pageContext.request.contextPath}/film-info?film=${film.slug}"/>"><h3>${film.filmName}</h3>
+                    <a href="<c:url value="${pageContext.request.contextPath}/film-info?film=${film.slug}"/>">
+                        <h3>${film.filmName}</h3>
                     </a>
 
 
@@ -59,10 +60,10 @@
         </div>
     </div>
 
-    <div class="container wrapper centered-vertical-content">
+    <div class="container wrapper d-flex flex-column align-items-center">
         <h2><fmt:message bundle="${pageTitle}" key="paymentSectionTitle"/></h2>
 
-        <div class="wrapper">
+        <div class="wrapper mt-3">
             <table>
                 <tr>
                     <td>${bookedSeatsNumber}x</td>
@@ -84,30 +85,28 @@
             <h4><fmt:message bundle="${msg}" key="paymentMethod"/></h4>
 
             <form action="<c:url value="${pageContext.request.contextPath}/auth/checkout"/>" method="post">
-<%--                <div class="centered-horizontal-content wrapper justify-left-row">--%>
-<%--                    <input type="radio" id="cash-radio" name="payment-method" value="cash" checked>--%>
-<%--                    &nbsp;<label for="cash-radio">--%>
-<%--                        &nbsp;&nbsp;--%>
-<%--                        <img src="<c:url value="/resources/images/icons8-cash-35.png"/>" alt="cash">--%>
-<%--                        &nbsp;&nbsp;--%>
-<%--                        <span><fmt:message bundle="${msg}" key="cash"/></span>--%>
-<%--                    </label>--%>
-
-<%--                </div>--%>
                 <div class="centered-horizontal-content wrapper justify-left-row">
+                    <div class="form-check d-flex align-items-center">
+                        <input class="form-check-input" checked type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
+                        <input type="hidden" name="checkout-state" value="buy">
 
-                    <input type="radio" id="vnpay-radio" name="payment-method" value="vnpay">
-
-                    &nbsp;<label for="vnpay-radio">
-                        &nbsp;&nbsp;
-                        <img src="<c:url value="/resources/images/logo-vnpay.png"/>" alt="VNPay">
-                        &nbsp;&nbsp;
-                        <span>VNPAY</span>
-                    </label>
+                        &nbsp;<label class="form-check-label" for="vnpay-radio">
+                            &nbsp;&nbsp
+                            <img src="<c:url value="/resources/images/logo-vnpay.png"/>" alt="VNPay">
+                            &nbsp;&nbsp
+                            <span>VNPAY</span>
+                        </label>
+                    </div>
                 </div>
 
-                <input type="submit" class="primary-filled-button button rounded-button"
+                <input type="submit" class="mt-5 w-100 primary-filled-button button rounded-button"
                        value="<fmt:message bundle="${msg}" key="payment"/>"/>
+            </form>
+
+            <form class="mt-0" action="<c:url value="${pageContext.request.contextPath}/auth/checkout"/>" method="post">
+                        <input type="hidden" name="checkout-state" value="cancel">
+                        <input type="submit" class="mt-5 w-100 btn btn-danger button rounded-button"
+                               value="<fmt:message bundle="${msg}" key="cancel"/>"/>
             </form>
         </div>
     </div>

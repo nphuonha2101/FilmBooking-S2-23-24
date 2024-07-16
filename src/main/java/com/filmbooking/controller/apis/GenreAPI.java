@@ -1,6 +1,5 @@
 package com.filmbooking.controller.apis;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Genre;
 import com.filmbooking.services.impls.GenreServicesImpl;
 import com.filmbooking.utils.APIUtils;
@@ -14,12 +13,10 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/api/v1/genres/*", "/api/v1/genres"})
 public class GenreAPI extends HttpServlet {
-    private GenreServicesImpl genreServices;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        genreServices = new GenreServicesImpl(sessionProvider);
+        GenreServicesImpl genreServices = new GenreServicesImpl();
 
         APIUtils<Genre> apiUtils = new APIUtils<>(genreServices, req, resp);
         String command = req.getParameter("command");
