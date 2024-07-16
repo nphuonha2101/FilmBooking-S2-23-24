@@ -1,6 +1,5 @@
 package com.filmbooking.controller.admin.update;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
 import com.filmbooking.page.AdminPage;
@@ -23,25 +22,26 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @WebServlet(name = "editFilm", value = "/admin/edit/film")
 @MultipartConfig
 public class EditFilmController extends HttpServlet {
     private FilmServicesImpl filmServices;
-    private FilmServicesLogProxy<Film> filmServicesLog;
     private Film editFilm;
     private GenreServicesImpl genreServices;
-    private HibernateSessionProvider hibernateSessionProvider;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmServices = new FilmServicesImpl(hibernateSessionProvider);
-        genreServices = new GenreServicesImpl(hibernateSessionProvider);
+        filmServices = new FilmServicesImpl();
+        genreServices = new GenreServicesImpl();
 
         String filmSlug = req.getParameter("film");
         editFilm = filmServices.getBySlug(filmSlug);
+        if (editFilm == null) {
+            editFilm = (Film) req.getSession().getAttribute("editFilm");
+        }
 
         // retrieve film genres of film
         StringBuilder filmGenreIDs = new StringBuilder();
@@ -57,20 +57,18 @@ public class EditFilmController extends HttpServlet {
                 "edit-film",
                 "master");
 
+        req.getSession().setAttribute("editFilm", editFilm);
         editFilmPage.putAttribute("editFilm", editFilm);
-        editFilmPage.putAttribute("genres", genreServices.getAll());
+        editFilmPage.putAttribute("genres", genreServices.selectAll());
         editFilmPage.putAttribute("filmGenresStr", editFilm.getFilmGenresStr());
         editFilmPage.putAttribute("filmGenreIDs", filmGenreIDs.toString().trim());
 
         editFilmPage.render(req, resp);
-
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        filmServicesLog = new FilmServicesLogProxy<>(filmServices, req, hibernateSessionProvider);
+        FilmServicesLogProxy filmServicesLog = new FilmServicesLogProxy(filmServices, req);
 
         String filmName = StringUtils.handlesInputString(req.getParameter("film-name"));
         double filmPrice = Double.parseDouble(req.getParameter("film-price"));
@@ -89,6 +87,8 @@ public class EditFilmController extends HttpServlet {
             return;
         }
 
+        editFilm = (Film) req.getSession().getAttribute("editFilm");
+
         editFilm.setFilmName(filmName);
         editFilm.setFilmPrice(filmPrice);
         editFilm.setDirector(filmDirector);
@@ -98,9 +98,14 @@ public class EditFilmController extends HttpServlet {
         editFilm.setFilmTrailerLink(filmTrailerLink);
 
         // if not change image
-        if (filmImgName.isEmpty())
-            filmServicesLog.update(editFilm, filmGenreIDs);
-        else {
+        if (filmImgName.isEmpty()) {
+            if (filmServicesLog.update(editFilm, filmGenreIDs))
+                req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+            else
+                req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
+
+            doGet(req, resp);
+        } else {
             String uuidFileName = UUIDUtils.generateRandomUUID(filmImgName);
             String filmImgPath = WebAppPathUtils.getUploadFileRelativePath(uuidFileName);
 
@@ -114,9 +119,12 @@ public class EditFilmController extends HttpServlet {
                 System.out.println(oldFile.getAbsolutePath());
 
                 editFilm.setImgPath(filmImgPath);
-                filmServicesLog.update(editFilm, filmGenreIDs);
 
-                req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+                if (!filmServicesLog.update(editFilm, filmGenreIDs))
+                    req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
+                else
+                    req.setAttribute("statusCodeSuccess", StatusCodeEnum.UPDATE_FILM_SUCCESSFUL.getStatusCode());
+
                 doGet(req, resp);
             } else {
                 req.setAttribute("statusCodeErr", StatusCodeEnum.UPDATE_FILM_FAILED.getStatusCode());
@@ -124,16 +132,13 @@ public class EditFilmController extends HttpServlet {
             }
         }
 
-        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film"));
-
-        hibernateSessionProvider.closeSession();
+//        resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/admin/management/film"));
     }
 
     @Override
     public void destroy() {
         filmServices = null;
         editFilm = null;
-        hibernateSessionProvider = null;
         genreServices = null;
     }
 }

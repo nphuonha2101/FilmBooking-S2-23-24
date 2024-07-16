@@ -6,45 +6,71 @@ package com.filmbooking.model;
  *  @author nphuonha
  */
 
+import com.filmbooking.annotations.IdAutoIncrement;
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
+import com.filmbooking.repository.FilmRepository;
+import com.filmbooking.services.impls.FilmServicesImpl;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+import java.time.LocalDateTime;
+import java.util.Map;
+
 @Getter
 @Setter
-@Table(name = FilmVote.TABLE_NAME)
-public class FilmVote implements IModel {
-    @Transient
+@TableName("film_votes")
+@TableIdName("film_vote_id")
+@IdAutoIncrement
+@AllArgsConstructor
+public class FilmVote extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "film_votes";
 
     @Getter
     @Setter
-    @Id
     @Expose
-    @Column(name = "film_vote_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "film_id")
-    private Film film;
+    private long filmId;
     @Expose
-    @Column(name = "scores")
     private int scores;
 
-    public FilmVote() {}
+    // Temp data
+    private Film tempFilm;
+
+    public FilmVote() {
+    }
 
     public FilmVote(Film film, int scores) {
-        this.film = film;
+        this.filmId = film.getFilmID();
         this.scores = scores;
     }
 
+    public FilmVote(long id, long filmId, int scores, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.filmId = filmId;
+        this.scores = scores;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
+
     @Override
-    public String getStringID() {
-        return String.valueOf(this.id);
+    public Object getIdValue() {
+        return this.id;
+    }
+
+    public Film getFilm() {
+        if (this.tempFilm == null)
+            this.tempFilm = new FilmRepository().select(this.filmId);
+        return this.tempFilm;
+    }
+
+    public void setFilm(Film film) {
+        this.filmId = film.getFilmID();
     }
 
 

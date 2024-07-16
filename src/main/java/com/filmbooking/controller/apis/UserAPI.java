@@ -2,13 +2,11 @@ package com.filmbooking.controller.apis;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 import com.filmbooking.controller.apis.apiResponse.APIJSONResponse;
 import com.filmbooking.controller.apis.apiResponse.RespCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
@@ -20,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {"/api/v1/users/*", "/api/v1/users"})
@@ -28,14 +27,33 @@ public class UserAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        userServicesImpl = new UserServicesImpl(sessionProvider);
+        userServicesImpl = new UserServicesImpl();
 
         APIUtils<User> apiUtils = new APIUtils<>(userServicesImpl, req, resp);
         String command = req.getParameter("command");
 
+        if (command.equals("loginUser")) {
+            APIJSONResponse apiResponse = getApijsonResponse(req);
+            apiUtils.setJsonResponse(apiResponse);
+            apiUtils.writeResponse(null, 0);
+            return;
+        }
+
         apiUtils.processRequest(command);
         apiUtils.writeResponse(null, 0);
+    }
+
+    private APIJSONResponse getApijsonResponse(HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        User loginUser = (User) session.getAttribute("loginUser");
+
+        APIJSONResponse apiResponse = null;
+        if (loginUser == null) {
+            apiResponse = new APIJSONResponse(RespCodeEnum.UNAUTHORIZED.getCode(), RespCodeEnum.UNAUTHORIZED.getMessage(), "default", null);
+        } else {
+            apiResponse = new APIJSONResponse(RespCodeEnum.SUCCESS.getCode(), "Get login user successfully", "default", loginUser);
+        }
+        return apiResponse;
     }
 
     @Override
@@ -48,7 +66,8 @@ public class UserAPI extends HttpServlet {
 
     /**
      * Handle PATCH request
-     * @param req request
+     *
+     * @param req  request
      * @param resp response
      * @throws IOException exception. It is thrown cause of PrintWriter
      */
@@ -62,10 +81,9 @@ public class UserAPI extends HttpServlet {
 
         System.out.println("form fields: " + formFields);
 
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<User>(new UserServicesImpl(), req, sessionProvider);
+        CRUDServicesLogProxy<User> userServicesLog = new CRUDServicesLogProxy<>(new UserServicesImpl(), req, User.class);
 
-        User user = userServicesLog.getByID(username);
+        User user = userServicesLog.select(username);
         user.setUserFullName(fullName);
         user.setAccountRole(role);
 

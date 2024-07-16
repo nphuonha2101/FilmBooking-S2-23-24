@@ -1,6 +1,5 @@
 package com.filmbooking.controller.apis;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.LogModel;
 import com.filmbooking.services.impls.LogModelServicesImpl;
 import com.filmbooking.utils.APIUtils;
@@ -17,8 +16,7 @@ public class LogAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        logModelServices = new LogModelServicesImpl(sessionProvider);
+        logModelServices = new LogModelServicesImpl();
 
         APIUtils<LogModel> apiUtils = new APIUtils<>(logModelServices, req, resp);
         String command = req.getParameter("command");

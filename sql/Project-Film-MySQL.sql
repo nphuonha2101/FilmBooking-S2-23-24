@@ -6,7 +6,9 @@ create table user_infos
     user_password varchar(64) ,
     account_role  varchar(10)  not null,
 	account_type varchar(10) not null,
-	account_status int not null
+	account_status int not null,
+    created_at    timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at    timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table films
@@ -20,7 +22,9 @@ create table films
     film_description  varchar(5000)not null,
     film_trailer_link varchar(255),
     img_path          varchar(255) not null,
-    slug              varchar(100) not null
+    slug              varchar(100) not null,
+    created_at        timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at        timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table theaters
@@ -28,7 +32,9 @@ create table theaters
     theater_id      bigint auto_increment primary key,
     theater_name    varchar(255) not null,
     tax_code        varchar(20)  not null,
-    theater_address varchar(5000)not null
+    theater_address varchar(5000)not null,
+    created_at      timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table rooms
@@ -39,7 +45,9 @@ create table rooms
     seat_rows  int     not null,
     seat_cols  int     not null,
     seats_data varchar(1000) not null,
-    slug       varchar(100) not null
+    slug       varchar(100) not null,
+    created_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table showtimes
@@ -49,7 +57,9 @@ create table showtimes
     room_id       bigint references rooms (room_id),
     showtime_date timestamp 	not null,
     seats_data    varchar(1000) not null,
-    slug          varchar(100) not null
+    slug          varchar(100) not null,
+    created_at    timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at    timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table film_bookings
@@ -60,13 +70,17 @@ create table film_bookings
     booking_date    timestamp    not null,
     seats           varchar(100) not null,
     total_fee       numeric      not null,
-    payment_status  varchar(10)  not null default 'pending'
+    payment_status  varchar(10)  not null default 'pending',
+    created_at      timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at      timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table genres
 (
     genre_id   varchar(30) not null primary key,
-    genre_name varchar(50) not null
+    genre_name varchar(50) not null,
+    created_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table film_genres
@@ -81,7 +95,9 @@ create table film_votes
 (
     film_vote_id bigint auto_increment primary key,
     film_id      bigint references films (film_id),
-    scores        decimal not null
+    scores        decimal not null,
+    created_at   timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at   timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table user_tokens (
@@ -89,7 +105,9 @@ create table user_tokens (
     username varchar(50) references user_infos (username),
     expiry_date timestamp    not null,
     token_type varchar(20) not null,
-    token_state varchar(10) not null
+    token_state varchar(10) not null,
+    created_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table logs
@@ -104,17 +122,18 @@ create table logs
     is_action_success boolean     not null,
     before_data       varchar(5000),
     after_data        varchar(5000),
-    created_at        timestamp null,
-    updated_at        timestamp null
+    created_at        timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at        timestamp  DEFAULT CURRENT_TIMESTAMP
 );
 
 create table failed_logins 
 (
 	req_ip            varchar(50) not null PRIMARY KEY,
 	login_count int not null,
-	lock_time timestamp
-)
-
+	lock_time timestamp,
+    created_at timestamp  DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp  DEFAULT CURRENT_TIMESTAMP
+);
 
 -- Genre
 insert into genres (genre_id, genre_name) values ('haikich', 'Hài kịch');

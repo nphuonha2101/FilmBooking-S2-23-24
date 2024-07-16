@@ -1,7 +1,12 @@
 package com.filmbooking.services.serviceResult;
 
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
+import lombok.Getter;
+import lombok.ToString;
 
+
+@Getter
+@ToString
 public class ServiceResult {
     private final StatusCodeEnum status;
     private Object data;
@@ -15,19 +20,4 @@ public class ServiceResult {
         this.status = status;
     }
 
-    public StatusCodeEnum getStatus() {
-        return status;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    @Override
-    public String toString() {
-        return "ServiceResult{" +
-                "status=" + status +
-                ", data=" + data +
-                '}';
-    }
 }

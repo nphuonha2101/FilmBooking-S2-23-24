@@ -19,21 +19,22 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-    <div class="container ">
-        <jsp:include page="/views/components/admin-panel.jsp"/>
-    </div>
-    <div class="container centered-vertical-content">
+<section class="section justify-content-start d-flex flex-column align-items-center">
+
+    <jsp:include page="/views/components/admin-panel.jsp"/>
+
+    <div class="container d-flex flex-column align-items-center">
 
         <h2><fmt:message bundle="${adminMsg}" key="roomManagement"/></h2>
 
-        <div class="centered-vertical-content wrapper">
+        <div class="d-flex flex-column align-items-center wrapper">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <div class="justify-right-row wrapper">
-                <a href="<c:url value="${pageContext.request.contextPath}/admin/add/room"/>" class="primary-filled-button rounded-button button submit-button icon-button">
+            <div class="d-flex justify-content-end wrapper">
+                <a href="<c:url value="${pageContext.request.contextPath}/admin/add/room"/>"
+                   class="rotate-icon primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewRoom"/></span>
                 </a>
@@ -61,9 +62,10 @@
                         <td>${room.seatRows * room.seatCols}</td>
 
                         <td>
-                                <span onclick="deleteRoom('${room.roomID}','${room.slug}' )" class="material-symbols-rounded warning-color">delete</span>
+                            <span onclick="deleteRoom('${room.roomID}','${room.slug}' )"
+                                  class="rotate-icon material-symbols-rounded warning-color">delete</span>
                             <a href="<c:url value="${pageContext.request.contextPath}/admin/edit/room?room=${room.slug}"/>">
-                                <span class="material-symbols-rounded primary-color">edit</span>
+                                <span class="material-symbols-rounded primary-color rotate-icon">edit</span>
                             </a>
                         </td>
                     </tr>
@@ -77,23 +79,24 @@
 
     </div>
     <script>
-        function deleteRoom(roomId, roomSlug){
+        function deleteRoom(roomId, roomSlug) {
             let id = getIdRoom(roomId);
             $.ajax({
                 url: '${pageContext.request.contextPath}/admin/delete/room',
                 method: 'POST',
-                data: { room: roomSlug },
-                success: function(data) {
-                    alert('Room deleted successfully');
+                data: {room: roomSlug},
+                success: function (data) {
+                    alert('Xoá phòng thành công!');
                     $('#room-row-' + id).remove();
                     // $('.room-table tbody').reload();
                 },
-                error: function(xhr, status, error) {
-                    alert('Error deleting room: ' + error);
+                error: function (xhr, status, error) {
+                    alert('Có lỗi khi xóa phòng: ' + error);
                 }
             });
         }
-        function getIdRoom(roomId){
+
+        function getIdRoom(roomId) {
             return roomId;
         }
     </script>

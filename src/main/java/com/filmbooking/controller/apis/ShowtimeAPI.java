@@ -2,7 +2,6 @@ package com.filmbooking.controller.apis;
 
 import java.io.IOException;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.services.impls.ShowtimeServicesImpl;
 import com.filmbooking.utils.APIUtils;
@@ -18,8 +17,7 @@ public class ShowtimeAPI extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HibernateSessionProvider sessionProvider = new HibernateSessionProvider();
-        showtimeServicesImpl = new ShowtimeServicesImpl(sessionProvider);
+        showtimeServicesImpl = new ShowtimeServicesImpl();
 
         APIUtils<Showtime> apiUtils = new APIUtils<>(showtimeServicesImpl, req, resp);
         String command = req.getParameter("command");

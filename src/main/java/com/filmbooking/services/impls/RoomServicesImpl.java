@@ -1,42 +1,20 @@
 package com.filmbooking.services.impls;
 
-import java.util.Objects;
-
-import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.cache.CacheManager;
 import com.filmbooking.model.Room;
-import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.CacheRepository;
+import com.filmbooking.repository.RoomRepository;
+import com.filmbooking.repository.mapper.RoomMapper;
+import com.filmbooking.services.AbstractService;
 
-public class RoomServicesImpl extends AbstractCRUDServices<Room> {
+import java.util.concurrent.TimeUnit;
 
-
-    public RoomServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(Room.class);
-        this.setSessionProvider(sessionProvider);
-    }
+public class RoomServicesImpl extends AbstractService<Room> {
 
     public RoomServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(Room.class);
+        super(
+                new CacheRepository<>(new RoomRepository(),
+                        new CacheManager(5, TimeUnit.MINUTES))
+        );
     }
-
-    @Override
-    public String getTableName() {
-        return Room.TABLE_NAME;
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
-    }
-
-    @Override
-    public Room getByID(String id) {
-        if (!Objects.equals(id, "null"))
-            return this.decoratedDAO.getByID(id, true);
-        else
-            throw new RuntimeException("ID must not be null");
-    }
-
-
 }

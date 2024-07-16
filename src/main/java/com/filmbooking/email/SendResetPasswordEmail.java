@@ -8,9 +8,12 @@ package com.filmbooking.email;
 
 import com.filmbooking.enumsAndConstants.enums.LanguageEnum;
 import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
+import com.filmbooking.model.LogModel;
 import com.filmbooking.utils.PropertiesUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
 /**
  * This class is to use create instance to send "Reset Password Email" using token
  * <br>
@@ -35,9 +38,10 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
     public SendResetPasswordEmail() {
         super();
     }
+
     @Override
     public AbstractSendEmail loadHTMLEmail(LanguageEnum language) {
-        String tokenVerifyUrl = PropertiesUtils.getInstance().getProperty("verify_token.url");
+        String tokenVerifyUrl = PropertiesUtils.getProperty("verify_token.url");
         String currentYear = String.valueOf(LocalDateTime.now().getYear());
 
         // load email html template
@@ -47,4 +51,11 @@ public class SendResetPasswordEmail extends AbstractSendEmail {
         this.putEmailInfo("tokenType", TokenTypeEnum.PASSWORD_RESET.getTokenType());
         return this;
     }
+
+    @Override
+    public AbstractSendEmail loadLogData(LogModel logModel) {
+        return null;
+    }
+
+
 }

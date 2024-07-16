@@ -1,35 +1,21 @@
 package com.filmbooking.services.impls;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
-import com.filmbooking.dao.DataAccessObjects;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.enumsAndConstants.enums.TokenStateEnum;
+import com.filmbooking.enumsAndConstants.enums.TokenTypeEnum;
 import com.filmbooking.model.TokenModel;
-import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.TokenModelRepository;
+import com.filmbooking.services.AbstractService;
 import com.filmbooking.services.serviceResult.ServiceResult;
 
-public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
-
-    public TokenServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
-        this.setSessionProvider(sessionProvider);
-    }
+public class TokenServicesImpl extends AbstractService<TokenModel> {
 
     public TokenServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(TokenModel.class);
-    }
-
-    @Override
-    public String getTableName() {
-        return TokenModel.TABLE_NAME;
-    }
-
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
+        super(new TokenModelRepository());
     }
 
     @Override
@@ -38,7 +24,7 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
     }
 
     @Override
-    public TokenModel getByID(String id) {
+    public TokenModel select(Object id) {
         throw new UnsupportedOperationException("This method is not supported for TokenModel");
     }
 
@@ -50,8 +36,8 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
      * @return TokenModel
      */
     public TokenModel getToken(String token, String username, String type) {
-        Map<String, Object> conditions = Map.of("token_=", token, "username_=", username, "tokenType_=", type);
-        return this.getByPredicates(conditions).getSingleResult();
+        Map<String, Object> filters = new HashMap<>(Map.of("token_=", token, "username_=", username, "token_type_=", type));
+        return this.selectAll(filters).get(0);
     }
 
     /**
@@ -73,6 +59,8 @@ public class TokenServicesImpl extends AbstractCRUDServices<TokenModel> {
             if (tokenModel.getExpiryDate().isBefore(LocalDateTime.now())) {
                 return new ServiceResult(StatusCodeEnum.TOKEN_EXPIRED);
             }
+            if (tokenModel.getTokenState().equals(TokenStateEnum.USED.getTokenState()))
+                return new ServiceResult(StatusCodeEnum.TOKEN_USED);
         }
         return new ServiceResult(StatusCodeEnum.TOKEN_VERIFIED, tokenModel);
     }

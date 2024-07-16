@@ -1,30 +1,26 @@
 package com.filmbooking.model;
 
+import com.filmbooking.annotations.TableIdName;
+import com.filmbooking.annotations.TableName;
 import com.google.gson.annotations.Expose;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
-@Table(name = Genre.TABLE_NAME)
-public class Genre implements IModel {
-    @Transient
+@ToString
+@TableName("genres")
+@TableIdName("genre_id")
+public class Genre extends AbstractModel implements IModel {
     public static final String TABLE_NAME = "genres";
 
     @Expose
-    @Column(name = "genre_id")
-    @Id
     private String genreID;
     @Expose
-    @Column(name = "genre_name")
     private String genreName;
-    @ManyToMany(mappedBy = "genreList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Film> filmList;
 
     public Genre() {
     }
@@ -34,12 +30,12 @@ public class Genre implements IModel {
         this.genreName = genreName;
     }
 
-    public Genre(String genreID, String genreName, List<Film> filmList) {
+    public Genre(String genreID, String genreName, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.genreID = genreID;
         this.genreName = genreName;
-        this.filmList = filmList;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -51,12 +47,8 @@ public class Genre implements IModel {
     }
 
     @Override
-    public String toString() {
-        return this.genreID + ", " + this.genreName;
-    }
-
-    @Override
-    public String getStringID() {
+    public Object getIdValue() {
         return this.genreID;
     }
+
 }

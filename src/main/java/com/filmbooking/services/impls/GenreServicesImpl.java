@@ -1,46 +1,27 @@
 package com.filmbooking.services.impls;
 
-import java.util.Objects;
-
-import com.filmbooking.dao.DataAccessObjects;
-import com.filmbooking.hibernate.HibernateSessionProvider;
+import com.filmbooking.cache.CacheManager;
+import com.filmbooking.model.Film;
 import com.filmbooking.model.Genre;
-import com.filmbooking.model.User;
-import com.filmbooking.services.AbstractCRUDServices;
+import com.filmbooking.repository.AbstractRepository;
+import com.filmbooking.repository.CacheRepository;
+import com.filmbooking.repository.GenreRepository;
+import com.filmbooking.services.AbstractService;
+import com.filmbooking.services.IService;
 
-public class GenreServicesImpl extends AbstractCRUDServices<Genre> {
+import java.util.concurrent.TimeUnit;
 
-    public GenreServicesImpl(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO = new DataAccessObjects<>(Genre.class);
-        this.setSessionProvider(sessionProvider);
-    }
+public class GenreServicesImpl extends AbstractService<Genre> implements IService<Genre> {
 
     public GenreServicesImpl() {
-        this.decoratedDAO = new DataAccessObjects<>(Genre.class);
+        super(new GenreRepository());
     }
 
-    @Override
-    public String getTableName() {
-        return Genre.TABLE_NAME;
+    public boolean updateFilmGenres(Film film) {
+        return ((GenreRepository) this.repository).updateByFilm(film);
     }
 
-    @Override
-    public void setSessionProvider(HibernateSessionProvider sessionProvider) {
-        this.decoratedDAO.setSessionProvider(sessionProvider);
+    public boolean deleteFilmGenres(Film film) {
+        return ((GenreRepository) this.repository).deleteByFilmId(film.getFilmID());
     }
-
-    @Override
-    public Genre getBySlug(String slug) {
-        throw new UnsupportedOperationException("This method is not supported for Genre");
-    }
-
-
-    @Override
-    public Genre getByID(String id) {
-        if (!Objects.equals(id, "null"))
-            return this.decoratedDAO.getByID(id, false);
-        else
-            throw new RuntimeException("ID must not be null");
-    }
-
 }

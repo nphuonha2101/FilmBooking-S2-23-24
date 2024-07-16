@@ -18,20 +18,21 @@
     </c:otherwise>
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-    <div class="container ">
-        <jsp:include page="/views/components/admin-panel.jsp"/>
-    </div>
-    <div class="container centered-vertical-content">
+<section class="section justify-content-start d-flex flex-column align-items-center">
+
+    <jsp:include page="/views/components/admin-panel.jsp"/>
+
+    <div class="container d-flex flex-column align-items-center">
         <h2><fmt:message bundle="${adminMsg}" key="filmManagement"/></h2>
-        <div class="centered-vertical-content wrapper">
+        <div class="d-flex flex-column align-items-center wrapper">
 
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <div class="justify-right-row wrapper">
-                <a href="<c:url value="${pageContext.request.contextPath}/admin/add/film"/>" class="primary-filled-button rounded-button button submit-button icon-button">
+            <div class="d-flex justify-content-end wrapper">
+                <a href="<c:url value="${pageContext.request.contextPath}/admin/add/film"/>"
+                   class="rotate-icon primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewFilm"/></span>
                 </a>
@@ -58,9 +59,10 @@
                         <td>${film.cast}</td>
                         <td>${film.filmLength} <fmt:message bundle="${adminMsg}" key="minutes"/></td>
                         <td>
-                            <span onclick="deleteFilm('${film.slug}','${film.filmID}')" class="material-symbols-rounded warning-color delete_btn">delete</span>
+                            <span onclick="deleteFilm('${film.slug}','${film.filmID}')"
+                                  class="rotate-icon material-symbols-rounded warning-color delete_btn">delete</span>
                             <a href="<c:url value='${pageContext.request.contextPath}/admin/edit/film?film=${film.slug}'/>">
-                                <span class="material-symbols-rounded primary-color">edit</span>
+                                <span class="material-symbols-rounded primary-color rotate-icon">edit</span>
                             </a>
                         </td>
                     </tr>
@@ -72,23 +74,24 @@
         <jsp:include page="/views/components/pagination.jsp"/>
     </div>
     <script>
-        function deleteFilm(slug,id) {
+        function deleteFilm(slug, id) {
             var filmID = getFilmId(id);
             $.ajax({
                 url: '${pageContext.request.contextPath}/admin/delete/film',
                 method: 'POST',
-                data: { film: slug },
-                success: function(data) {
-                    alert('Film deleted successfully');
+                data: {film: slug},
+                success: function (data) {
+                    alert('Xoá phim thành công!');
                     $('#film-row-' + filmID).remove();
                     // $('.film-table tbody').reload();
                 },
-                error: function(xhr, status, error) {
-                    alert('Error deleting film: ' + error);
+                error: function (xhr, status, error) {
+                    alert('Có lỗi khi xóa phim: ' + error);
                 }
             });
         }
-        function getFilmId(filmId){
+
+        function getFilmId(filmId) {
             return filmId;
         }
     </script>

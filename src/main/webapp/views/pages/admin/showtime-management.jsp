@@ -19,22 +19,22 @@
 </c:choose>
 <fmt:setBundle basename="properties.messageAdmin" var="adminMsg"/>
 
-<section class="section align-top admin-two-cols__wrapper centered-vertical-content">
-    <div class="container ">
-        <jsp:include page="/views/components/admin-panel.jsp"/>
-    </div>
-    <div class="container centered-vertical-content">
+<section class="section align-top d-flex flex-column align-items-center">
+
+    <jsp:include page="/views/components/admin-panel.jsp"/>
+
+    <div class="container d-flex flex-column align-items-center">
 
         <h2><fmt:message bundle="${adminMsg}" key="showtimeManagement"/></h2>
 
-        <div class="centered-vertical-content wrapper">
+        <div class="d-flex flex-column align-items-center wrapper">
 
             <%--        Status Code Messages--%>
             <jsp:include page="/views/components/status-code-message.jsp"/>
 
-            <div class="justify-right-row wrapper">
+            <div class="d-flex justify-content-end wrapper">
                 <a href="<c:url value="${pageContext.request.contextPath}/admin/add/showtime"/>"
-                   class="primary-filled-button rounded-button button submit-button icon-button">
+                   class="rotate-icon primary-filled-button rounded-button button submit-button icon-button">
                     <span class="material-symbols-rounded">add</span>
                     <span class="hidden-span"><fmt:message bundle="${adminMsg}" key="addNewShowtime"/></span>
                 </a>
@@ -60,9 +60,10 @@
                         <td>${showtime.showtimeDate}</td>
 
                         <td>
-                                <span onclick="deleteShowtime('${showtime.showtimeID}','${showtime.slug}')" class="material-symbols-rounded warning-color">delete</span>
+                            <span onclick="deleteShowtime('${showtime.showtimeID}','${showtime.slug}')"
+                                  class="rotate-icon material-symbols-rounded warning-color">delete</span>
                             <a href="<c:url value="${pageContext.request.contextPath}/admin/edit/showtime?showtime=${showtime.slug}"/>">
-                                <span class="material-symbols-rounded primary-color">edit</span>
+                                <span class="material-symbols-rounded primary-color rotate-icon">edit</span>
                             </a>
                         </td>
                     </tr>
@@ -77,23 +78,24 @@
     </div>
 
     <script>
-        function deleteShowtime(showtimeId, showtimeSlug){
+        function deleteShowtime(showtimeId, showtimeSlug) {
             var id = getIdShowtime(showtimeId);
             $.ajax({
                 url: '${pageContext.request.contextPath}/admin/delete/showtime',
                 method: 'POST',
-                data: { showtime: showtimeSlug },
-                success: function(data) {
-                    alert('Showtime deleted successfully');
+                data: {showtime: showtimeSlug},
+                success: function (data) {
+                    alert('Xóa suất chiếu thành công!');
                     $('#showtime-row-' + id).remove();
                     // $('.room-table tbody').reload();
                 },
-                error: function(xhr, status, error) {
-                    alert('Error deleting showtime: ' + error);
+                error: function (xhr, status, error) {
+                    alert('Có lỗi xảy ra khi xóa suất chiếu : ' + error);
                 }
             });
         }
-        function getIdShowtime(showtimeId){
+
+        function getIdShowtime(showtimeId) {
             return showtimeId;
         }
     </script>

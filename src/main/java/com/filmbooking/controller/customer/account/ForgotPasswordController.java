@@ -1,6 +1,5 @@
 package com.filmbooking.controller.customer.account;
 
-import com.filmbooking.hibernate.HibernateSessionProvider;
 import com.filmbooking.model.User;
 import com.filmbooking.page.ClientPage;
 import com.filmbooking.page.Page;
@@ -8,7 +7,6 @@ import com.filmbooking.services.impls.UserServicesImpl;
 import com.filmbooking.services.logProxy.UserServicesLogProxy;
 import com.filmbooking.services.serviceResult.ServiceResult;
 import com.filmbooking.enumsAndConstants.enums.StatusCodeEnum;
-import com.filmbooking.utils.WebAppPathUtils;
 import com.filmbooking.utils.validateUtils.Regex;
 import com.filmbooking.utils.validateUtils.UserRegexEnum;
 import jakarta.servlet.ServletException;
@@ -21,8 +19,7 @@ import java.io.IOException;
 
 @WebServlet(name = "forgotPassword", value = "/forgot-password")
 public class ForgotPasswordController extends HttpServlet {
-    private UserServicesLogProxy<User> userServicesLog;
-    private HibernateSessionProvider hibernateSessionProvider;
+    private UserServicesLogProxy userServicesLog;
 
     @Override
     public void init() throws ServletException {
@@ -43,8 +40,7 @@ public class ForgotPasswordController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        hibernateSessionProvider = new HibernateSessionProvider();
-        userServicesLog = new UserServicesLogProxy<>(new UserServicesImpl(), req, hibernateSessionProvider);
+        userServicesLog = new UserServicesLogProxy(new UserServicesImpl(), req);
 
         String username = req.getParameter("username");
         String userEmail = req.getParameter("email");
@@ -74,12 +70,10 @@ public class ForgotPasswordController extends HttpServlet {
 
         forgotPassPage.render(req, resp);
 
-        hibernateSessionProvider.closeSession();
     }
 
     @Override
     public void destroy() {
         userServicesLog = null;
-        hibernateSessionProvider = null;
     }
 }
