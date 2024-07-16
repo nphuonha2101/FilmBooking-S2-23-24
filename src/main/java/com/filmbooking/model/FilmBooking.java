@@ -124,11 +124,11 @@ public class FilmBooking extends AbstractModel implements IModel {
     }
 
     public User getUser() {
-        return new UserRepository().select(this.username);
+        return new UserServicesImpl().select(this.username);
     }
 
     public Showtime getShowtime() {
-        return new ShowtimeRepository().select(this.showtimeId);
+        return new ShowtimeServicesImpl().select(this.showtimeId);
     }
 
     public void setShowtime(Showtime showtime) {
@@ -160,4 +160,19 @@ public class FilmBooking extends AbstractModel implements IModel {
         return this.filmBookingID;
     }
 
+    @Override
+    public String toString() {
+        return "FilmBooking{" +
+                "filmBookingID=" + filmBookingID +
+                ", showtimeId=" + showtimeId +
+                ", username='" + username + '\'' +
+                ", bookingDate=" + bookingDate +
+                ", bookedSeats=" + bookedSeats +
+                ", seatsData='" + seatsData + '\'' +
+                ", totalFee=" + totalFee +
+                ", paymentStatus='" + paymentStatus + '\'' +
+                ", expireDate=" + expireDate +
+                ", vnpayTxnRef='" + vnpayTxnRef + '\'' +
+                '}';
+    }
 }

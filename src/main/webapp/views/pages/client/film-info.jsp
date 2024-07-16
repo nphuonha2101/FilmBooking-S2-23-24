@@ -47,7 +47,7 @@
                         </div>
                         <c:forEach begin="1" end="5" step="1" varStatus="loop">
                             <a href="<c:url value="${pageContext.request.contextPath}/vote-film?film=${param.film}&scores=${loop.index}"/>"
-                               class="film-vote-stars d-flex align-items-center" id="${loop.index}">
+                               class="text-decoration-none film-vote-stars d-flex align-items-center" id="${loop.index}">
                                 <span class="material-symbols-rounded">
                                     star
                                 </span>

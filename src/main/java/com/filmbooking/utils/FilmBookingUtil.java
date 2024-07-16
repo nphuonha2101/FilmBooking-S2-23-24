@@ -4,13 +4,15 @@ import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.model.User;
+import com.filmbooking.services.impls.ShowtimeServicesImpl;
+import com.filmbooking.services.logProxy.CRUDServicesLogProxy;
 import com.filmbooking.utils.gsonUtils.GSONUtils;
 import com.google.gson.Gson;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.http.HttpRequest;
+import java.util.*;
 
 public class FilmBookingUtil {
     public static String generateFilmBookingJson(FilmBooking filmBooking) {
@@ -38,5 +40,24 @@ public class FilmBookingUtil {
             filmBookingJsonList.add(generateFilmBookingJson(filmBooking));
         }
         return filmBookingJsonList;
+    }
+
+    public static void cancelFilmBooking(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User loginUser = (User) session.getAttribute("loginUser");
+        FilmBooking filmBooking = (FilmBooking) session.getAttribute("filmBooking");
+        Showtime showtime = filmBooking.getShowtime();
+
+        if (filmBooking.getBookedSeats() != null && showtime != null) {
+            System.out.println(Arrays.toString(filmBooking.getBookedSeats()));
+            CRUDServicesLogProxy<Showtime> showtimeServices = new CRUDServicesLogProxy<>(new ShowtimeServicesImpl(), request, Showtime.class);
+            showtime.releaseSeats(filmBooking.getBookedSeats());
+            showtimeServices.update(showtime);
+        }
+
+        FilmBooking newFilmBooking = new FilmBooking();
+        newFilmBooking.setUser(loginUser);
+        session.setAttribute("filmBooking", newFilmBooking);
+
     }
 }
