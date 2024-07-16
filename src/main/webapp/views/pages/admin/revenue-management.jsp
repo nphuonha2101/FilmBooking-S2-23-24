@@ -65,5 +65,5 @@
             </div>
         </div>
     </div>
-    <script src="${pageContext.request.contextPath}/resources/js/handesRevenue.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/handlesRevenue.js"></script>
 </section>

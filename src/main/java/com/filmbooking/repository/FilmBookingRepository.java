@@ -3,6 +3,7 @@ package com.filmbooking.repository;
 import com.filmbooking.jdbi.connection.JdbiDBConnection;
 import com.filmbooking.model.Film;
 import com.filmbooking.model.FilmBooking;
+import com.filmbooking.model.Revenue;
 import com.filmbooking.model.Showtime;
 import com.filmbooking.repository.mapper.FilmBookingMapper;
 import org.jdbi.v3.core.Handle;
@@ -78,57 +79,6 @@ public class FilmBookingRepository extends AbstractRepository<FilmBooking> {
         } catch (Exception e) {
             e.printStackTrace(System.out);
             return false;
-        } finally {
-            JdbiDBConnection.closeHandle();
-        }
-    }
-
-    public List<FilmBooking> selectAllByDates(String startDate, String endDate) {
-        try {
-            Handle handle = JdbiDBConnection.openHandle();
-            String sql = "SELECT * FROM film_bookings WHERE booking_date BETWEEN :start_date AND :end_date AND payment_status = 'paid'";
-            return handle.createQuery(sql)
-                    .bind("start_date", startDate)
-                    .bind("end_date", endDate)
-                    .map(getRowMapper())
-                    .list();
-
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return null;
-        } finally {
-            JdbiDBConnection.closeHandle();
-        }
-    }
-
-    public List<FilmBooking> selectAllByMonth(String month, String year) {
-        try {
-            Handle handle = JdbiDBConnection.openHandle();
-            String sql = "SELECT * FROM film_bookings WHERE EXTRACT(MONTH FROM booking_date) = :month AND EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
-            return handle.createQuery(sql)
-                    .bind("month", month)
-                    .bind("year", year)
-                    .map(getRowMapper())
-                    .list();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return null;
-        } finally {
-            JdbiDBConnection.closeHandle();
-        }
-    }
-
-    public List<FilmBooking> selectAllByYear(String year) {
-        try {
-            Handle handle = JdbiDBConnection.openHandle();
-            String sql = "SELECT * FROM film_bookings WHERE  EXTRACT(YEAR FROM booking_date) = :year AND payment_status = 'paid'";
-            return handle.createQuery(sql)
-                    .bind("year", year)
-                    .map(getRowMapper())
-                    .list();
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-            return null;
         } finally {
             JdbiDBConnection.closeHandle();
         }
