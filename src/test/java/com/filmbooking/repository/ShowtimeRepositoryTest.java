@@ -10,8 +10,7 @@ public class ShowtimeRepositoryTest {
     @Test
     void select(){
         assertDoesNotThrow(() -> {
-            ShowtimeServicesImpl showtimeRepository = new ShowtimeServicesImpl();
-            showtimeRepository.getBySlug("oppenheimer-r001-vip-2024-06-27t20:28");
+            System.out.println(new ShowtimeRepository().select(1));
 
         });
     }

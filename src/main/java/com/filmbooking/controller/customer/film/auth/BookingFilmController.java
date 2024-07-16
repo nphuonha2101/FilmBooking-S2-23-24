@@ -77,6 +77,8 @@ public class BookingFilmController extends HttpServlet {
 
             showtime.reserveSeats(seats.split(", "));
 
+            System.out.println("Showtime reserved seats: " + showtime.getSeatsData());
+
             showtimeServicesLog.update(showtime);
 
             resp.sendRedirect(WebAppPathUtils.getURLWithContextPath(req, resp, "/auth/checkout"));
