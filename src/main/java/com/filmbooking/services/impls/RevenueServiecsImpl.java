@@ -87,7 +87,9 @@ public class RevenueServiecsImpl {
         List<Film> films = new ArrayList<>();
         List<Revenue> revenues = new ArrayList<>();
         if (filmBookings.size() == 0) {
-            return null;
+            Revenue revenue = new Revenue("None", 0, 0);
+            revenues.add(revenue);
+            return revenues;
         } else {
             for (FilmBooking filmBooking : filmBookings) {
                 if (!films.contains(filmBooking.getShowtime().getFilm())) {
