@@ -38,23 +38,23 @@ function drawChart(year) {
                     {
                         type: "column",
                         dataPoints: [
-                            {label: "Jan", y: revenues[1].filmRevenue},
-                            {label: "Feb", y: revenues[2].filmRevenue},
-                            {label: "Mar", y: revenues[3].filmRevenue},
-                            {label: "Apr", y: revenues[4].filmRevenue},
-                            {label: "May", y: revenues[5].filmRevenue},
-                            {label: "Jun", y: revenues[6].filmRevenue},
-                            {label: "Jul", y: revenues[7].filmRevenue},
-                            {label: "Aug", y: revenues[8].filmRevenue},
-                            {label: "Sep", y: revenues[9].filmRevenue},
-                            {label: "Oct", y: revenues[10].filmRevenue},
-                            {label: "Nov", y: revenues[11].filmRevenue},
-                            {label: "Dec", y: revenues[12].filmRevenue}
+                            {label: "Jan", y: revenues[1].totalRevenue},
+                            {label: "Feb", y: revenues[2].totalRevenue},
+                            {label: "Mar", y: revenues[3].totalRevenue},
+                            {label: "Apr", y: revenues[4].totalRevenue},
+                            {label: "May", y: revenues[5].totalRevenue},
+                            {label: "Jun", y: revenues[6].totalRevenue},
+                            {label: "Jul", y: revenues[7].totalRevenue},
+                            {label: "Aug", y: revenues[8].totalRevenue},
+                            {label: "Sep", y: revenues[9].totalRevenue},
+                            {label: "Oct", y: revenues[10].totalRevenue},
+                            {label: "Nov", y: revenues[11].totalRevenue},
+                            {label: "Dec", y: revenues[12].totalRevenue}
                         ]
                     }
                 ]
             };
-            $("#titleYear").html("<h3>Doanh thu năm " + year + ": " + revenues[0].filmRevenue + " VNĐ &" + " Số vé: " + revenues[0].ticketSold + "</h3>");
+            $("#titleYear").html("<h3>Doanh thu năm " + year + ": " + revenues[0].totalRevenue + " VNĐ &" + " Số vé: " + revenues[0].ticketSold + "</h3>");
             $("#chartContainer").CanvasJSChart(options);
         })
         .catch(error => {
@@ -77,11 +77,11 @@ function revenueDates(dateStart, dateEnd) {
             let count = 0;
             let revenues = data.data;
             for (var i = 0; i < revenues.length; i++) {
-                total += revenues[i].filmRevenue;
+                total += revenues[i].totalRevenue;
                 count += revenues[i].ticketSold;
             }
             $("#dailyRevenue").html(total + " VNĐ" + " & Số vé: " + count);
-            fetchAndRenderFilmChartData(dateStart, dateEnd);
+            drawPieChart(dateStart, dateEnd);
         })
         .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
@@ -93,7 +93,7 @@ function getCurrentYear() {
     return new Date().getFullYear();
 }
 
-function fetchAndRenderFilmChartData(dateStart, dateEnd) {
+function drawPieChart(dateStart, dateEnd) {
     var url = 'http://localhost:8080/api/v1/revenues?command=dates&dateStart=' + dateStart + '&dateEnd=' + dateEnd;
     fetch(url)
         .then(response => {
@@ -104,34 +104,30 @@ function fetchAndRenderFilmChartData(dateStart, dateEnd) {
         })
         .then(data => {
             var dataPoints = data.data.map(film => ({
-                y: film.filmRevenue,
-                label: film.filmName + " Số vé: " + film.ticketSold
+                y: film.totalRevenue,
+                label: film.revenueName + " Số vé: " + film.ticketSold
             }));
-            renderFilmChart(dataPoints);
+            var chart = new CanvasJS.Chart("chartContainer2", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                // exportEnabled: true,
+                animationEnabled: true,
+                title: {
+                    text: "Doanh thu phim hiện có"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 25,
+                    toolTipContent: "<b>{label}</b>: {y}",
+                    indexLabelFontSize: 16,
+                    indexLabel: "{label} - {y}",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
         })
         .catch(error => {
             console.error('There was a problem with your fetch operation:', error);
         });
-}
-
-function renderFilmChart(dataPoints) {
-    var chart = new CanvasJS.Chart("chartContainer2", {
-        theme: "light2", // "light1", "light2", "dark1", "dark2"
-        // exportEnabled: true,
-        animationEnabled: true,
-        title: {
-            text: "Doanh thu phim hiện có"
-        },
-        data: [{
-            type: "pie",
-            startAngle: 25,
-            toolTipContent: "<b>{label}</b>: {y}",
-            indexLabelFontSize: 16,
-            indexLabel: "{label} - {y}",
-            dataPoints: dataPoints
-        }]
-    });
-    chart.render();
 }
 
 
